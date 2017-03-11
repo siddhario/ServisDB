@@ -1,6 +1,6 @@
 ﻿namespace ServisDB
 {
-  partial class Form1
+  partial class FormMain
   {
     /// <summary>
     /// Required designer variable.
@@ -28,9 +28,14 @@
     /// </summary>
     private void InitializeComponent()
     {
+      this.components = new System.ComponentModel.Container();
       this.tabControl1 = new System.Windows.Forms.TabControl();
       this.tabPage1 = new System.Windows.Forms.TabPage();
-      this.dataGridView1 = new System.Windows.Forms.DataGridView();
+      this.btnReload = new System.Windows.Forms.Button();
+      this.label13 = new System.Windows.Forms.Label();
+      this.textBox2 = new System.Windows.Forms.TextBox();
+      this.textBox1 = new System.Windows.Forms.TextBox();
+      this.dgvPrijave = new System.Windows.Forms.DataGridView();
       this.tabPage2 = new System.Windows.Forms.TabPage();
       this.button2 = new System.Windows.Forms.Button();
       this.button1 = new System.Windows.Forms.Button();
@@ -60,12 +65,10 @@
       this.tbRedniBroj = new System.Windows.Forms.TextBox();
       this.btnBrisanje = new System.Windows.Forms.Button();
       this.btnStampa = new System.Windows.Forms.Button();
-      this.textBox1 = new System.Windows.Forms.TextBox();
-      this.textBox2 = new System.Windows.Forms.TextBox();
-      this.label13 = new System.Windows.Forms.Label();
+      this.tmrDelay = new System.Windows.Forms.Timer(this.components);
       this.tabControl1.SuspendLayout();
       this.tabPage1.SuspendLayout();
-      ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+      ((System.ComponentModel.ISupportInitialize)(this.dgvPrijave)).BeginInit();
       this.tabPage2.SuspendLayout();
       this.SuspendLayout();
       // 
@@ -84,10 +87,11 @@
       // 
       // tabPage1
       // 
+      this.tabPage1.Controls.Add(this.btnReload);
       this.tabPage1.Controls.Add(this.label13);
       this.tabPage1.Controls.Add(this.textBox2);
       this.tabPage1.Controls.Add(this.textBox1);
-      this.tabPage1.Controls.Add(this.dataGridView1);
+      this.tabPage1.Controls.Add(this.dgvPrijave);
       this.tabPage1.Location = new System.Drawing.Point(4, 25);
       this.tabPage1.Name = "tabPage1";
       this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
@@ -96,22 +100,59 @@
       this.tabPage1.Text = "Pregled";
       this.tabPage1.UseVisualStyleBackColor = true;
       // 
-      // dataGridView1
+      // btnReload
       // 
-      this.dataGridView1.AllowUserToAddRows = false;
-      this.dataGridView1.AllowUserToDeleteRows = false;
-      this.dataGridView1.AllowUserToOrderColumns = true;
-      this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-      this.dataGridView1.Location = new System.Drawing.Point(3, 29);
-      this.dataGridView1.Name = "dataGridView1";
-      this.dataGridView1.ReadOnly = true;
-      this.dataGridView1.RowHeadersVisible = false;
-      this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-      this.dataGridView1.Size = new System.Drawing.Size(1059, 680);
-      this.dataGridView1.TabIndex = 0;
-      this.dataGridView1.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentDoubleClick);
-      this.dataGridView1.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellDoubleClick);
-      this.dataGridView1.RowPrePaint += new System.Windows.Forms.DataGridViewRowPrePaintEventHandler(this.dataGridView1_RowPrePaint);
+      this.btnReload.Image = global::ServisDB.Properties.Resources.reload__1_;
+      this.btnReload.Location = new System.Drawing.Point(371, 3);
+      this.btnReload.Name = "btnReload";
+      this.btnReload.Size = new System.Drawing.Size(46, 22);
+      this.btnReload.TabIndex = 4;
+      this.btnReload.UseVisualStyleBackColor = true;
+      this.btnReload.Click += new System.EventHandler(this.btnReload_Click);
+      // 
+      // label13
+      // 
+      this.label13.AutoSize = true;
+      this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.label13.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+      this.label13.Location = new System.Drawing.Point(89, 6);
+      this.label13.Name = "label13";
+      this.label13.Size = new System.Drawing.Size(93, 16);
+      this.label13.TabIndex = 3;
+      this.label13.Text = "Pretraga - [F3]";
+      // 
+      // textBox2
+      // 
+      this.textBox2.Location = new System.Drawing.Point(184, 3);
+      this.textBox2.Name = "textBox2";
+      this.textBox2.Size = new System.Drawing.Size(181, 22);
+      this.textBox2.TabIndex = 2;
+      this.textBox2.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
+      // 
+      // textBox1
+      // 
+      this.textBox1.Location = new System.Drawing.Point(4, 3);
+      this.textBox1.Name = "textBox1";
+      this.textBox1.Size = new System.Drawing.Size(82, 22);
+      this.textBox1.TabIndex = 1;
+      this.textBox1.KeyUp += new System.Windows.Forms.KeyEventHandler(this.textBox1_KeyUp);
+      // 
+      // dgvPrijave
+      // 
+      this.dgvPrijave.AllowUserToAddRows = false;
+      this.dgvPrijave.AllowUserToDeleteRows = false;
+      this.dgvPrijave.AllowUserToOrderColumns = true;
+      this.dgvPrijave.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+      this.dgvPrijave.Location = new System.Drawing.Point(3, 29);
+      this.dgvPrijave.Name = "dgvPrijave";
+      this.dgvPrijave.ReadOnly = true;
+      this.dgvPrijave.RowHeadersVisible = false;
+      this.dgvPrijave.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+      this.dgvPrijave.Size = new System.Drawing.Size(1059, 680);
+      this.dgvPrijave.TabIndex = 0;
+      this.dgvPrijave.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentDoubleClick);
+      this.dgvPrijave.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellDoubleClick);
+      this.dgvPrijave.RowPrePaint += new System.Windows.Forms.DataGridViewRowPrePaintEventHandler(this.dataGridView1_RowPrePaint);
       // 
       // tabPage2
       // 
@@ -418,34 +459,7 @@
       this.btnStampa.UseVisualStyleBackColor = true;
       this.btnStampa.Click += new System.EventHandler(this.btnStampa_Click);
       // 
-      // textBox1
-      // 
-      this.textBox1.Location = new System.Drawing.Point(4, 3);
-      this.textBox1.Name = "textBox1";
-      this.textBox1.Size = new System.Drawing.Size(82, 22);
-      this.textBox1.TabIndex = 1;
-      this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
-      // 
-      // textBox2
-      // 
-      this.textBox2.Location = new System.Drawing.Point(184, 3);
-      this.textBox2.Name = "textBox2";
-      this.textBox2.Size = new System.Drawing.Size(181, 22);
-      this.textBox2.TabIndex = 2;
-      this.textBox2.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
-      // 
-      // label13
-      // 
-      this.label13.AutoSize = true;
-      this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.label13.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-      this.label13.Location = new System.Drawing.Point(89, 6);
-      this.label13.Name = "label13";
-      this.label13.Size = new System.Drawing.Size(93, 16);
-      this.label13.TabIndex = 3;
-      this.label13.Text = "Pretraga - [F3]";
-      // 
-      // Form1
+      // FormMain
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -453,7 +467,7 @@
       this.Controls.Add(this.btnBrisanje);
       this.Controls.Add(this.btnStampa);
       this.Controls.Add(this.tabControl1);
-      this.Name = "Form1";
+      this.Name = "FormMain";
       this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
       this.Text = "Evidencija servisnih prijava";
       this.Load += new System.EventHandler(this.Form1_Load);
@@ -461,7 +475,7 @@
       this.tabControl1.ResumeLayout(false);
       this.tabPage1.ResumeLayout(false);
       this.tabPage1.PerformLayout();
-      ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+      ((System.ComponentModel.ISupportInitialize)(this.dgvPrijave)).EndInit();
       this.tabPage2.ResumeLayout(false);
       this.tabPage2.PerformLayout();
       this.ResumeLayout(false);
@@ -499,12 +513,14 @@
     private System.Windows.Forms.TextBox tbBrojGarantnogLista;
     private System.Windows.Forms.DateTimePicker dtpDatum;
     private System.Windows.Forms.TextBox tbRedniBroj;
-    private System.Windows.Forms.DataGridView dataGridView1;
+    private System.Windows.Forms.DataGridView dgvPrijave;
     private System.Windows.Forms.Button btnBrisanje;
     private System.Windows.Forms.Button btnStampa;
     private System.Windows.Forms.TextBox textBox2;
     private System.Windows.Forms.TextBox textBox1;
     private System.Windows.Forms.Label label13;
+    private System.Windows.Forms.Timer tmrDelay;
+    private System.Windows.Forms.Button btnReload;
   }
 }
 

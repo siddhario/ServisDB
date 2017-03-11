@@ -15,23 +15,23 @@ using System.Windows.Forms;
 
 namespace ServisDB
 {
-  public partial class Form1 : Form
+  public partial class FormMain : Form
   {
 
-    public string conn_string = "Host=192.168.10.20;Username=postgres;Password=postgres;Database=servisdb";
-    public Form1()
+    public string conn_string = "Host=localhost;Username=postgres;Password=postgres;Database=servisdb";
+    public FormMain()
     {
       InitializeComponent();
-      ReadPrijava();
+      ReadPrijava(textBox1.Text,textBox2.Text);
       dtpZavrseno.Format = DateTimePickerFormat.Custom;
       dtpZavrseno.CustomFormat = " ";
-      dataGridView1.Focus();
-      dataGridView1.Select();
-      dataGridView1.DefaultCellStyle = new DataGridViewCellStyle() { SelectionBackColor = Color.LightBlue,SelectionForeColor = Color.Red  };
+      dgvPrijave.Focus();
+      dgvPrijave.Select();
+      dgvPrijave.DefaultCellStyle = new DataGridViewCellStyle() { SelectionBackColor = Color.LightBlue, SelectionForeColor = Color.Red };
 
     }
 
-    private void ReadPrijava()
+    private void ReadPrijava(string brojPrijave,string kupac)
     {
       using (var conn = new NpgsqlConnection(conn_string))
       {
@@ -39,17 +39,17 @@ namespace ServisDB
         using (var cmd = new NpgsqlCommand())
         {
           cmd.Connection = conn;
-          dataGridView1.DataSource = null;
-          dataGridView1.AutoGenerateColumns = false;
+          dgvPrijave.DataSource = null;
+          dgvPrijave.AutoGenerateColumns = false;
 
-          dataGridView1.Columns.Clear();
-          dataGridView1.Columns.Add(new DataGridViewTextBoxColumn() { Name = "R.broj", DataPropertyName = "redni_broj", Width = 80 });
-          dataGridView1.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Datum prijave", DataPropertyName = "datum", Width = 100, DefaultCellStyle = new DataGridViewCellStyle() { Format = "dd.MM.yyyy." } });
-          dataGridView1.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Kupac", DataPropertyName = "kupac_ime", Width = 180 });
-          dataGridView1.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Telefon", DataPropertyName = "kupac_telefon", Width = 130 });
-          dataGridView1.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Model", DataPropertyName = "model", Width = 150 });
-          dataGridView1.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Kvar", DataPropertyName = "opis_kvara", Width = 320 });
-          dataGridView1.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Završeno", DataPropertyName = "zavrseno", Width = 100, DefaultCellStyle = new DataGridViewCellStyle() { Format = "dd.MM.yyyy." } });
+          dgvPrijave.Columns.Clear();
+          dgvPrijave.Columns.Add(new DataGridViewTextBoxColumn() { Name = "R.broj", DataPropertyName = "redni_broj", Width = 80 });
+          dgvPrijave.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Datum prijave", DataPropertyName = "datum", Width = 100, DefaultCellStyle = new DataGridViewCellStyle() { Format = "dd.MM.yyyy." } });
+          dgvPrijave.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Kupac", DataPropertyName = "kupac_ime", Width = 180 });
+          dgvPrijave.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Telefon", DataPropertyName = "kupac_telefon", Width = 130 });
+          dgvPrijave.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Model", DataPropertyName = "model", Width = 150 });
+          dgvPrijave.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Kvar", DataPropertyName = "opis_kvara", Width = 320 });
+          dgvPrijave.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Završeno", DataPropertyName = "zavrseno", Width = 100, DefaultCellStyle = new DataGridViewCellStyle() { Format = "dd.MM.yyyy." } });
           // Retrieve all rows
           cmd.Parameters.Clear();
           Npgsql.NpgsqlParameter p1 = new NpgsqlParameter("@kupac_ime", DbType.String);
@@ -58,15 +58,15 @@ namespace ServisDB
           Npgsql.NpgsqlParameter p2 = new NpgsqlParameter("@redni_broj", DbType.String);
           cmd.Parameters.Add(p2);
 
-          if (textBox2.Text == "")
+          if (kupac == "")
             p1.Value = DBNull.Value;
           else
-            p1.Value = textBox2.Text;
+            p1.Value = kupac;
 
-          if (textBox1.Text == "")
+          if (brojPrijave == "")
             p2.Value = DBNull.Value;
           else
-            p2.Value = textBox1.Text;
+            p2.Value = brojPrijave;
           cmd.CommandText = @"SELECT broj, datum, broj_garantnog_lista, kupac_ime, kupac_telefon, 
        model, serijski_broj, dodatna_oprema, opis_kvara, napomena_servisera, 
        serviser, zavrseno, redni_broj FROM prijava where (redni_broj like concat(@redni_broj,'%') or @redni_broj is null) and (lower(kupac_ime) like concat(lower(@kupac_ime),'%') or @kupac_ime is null) order by broj desc";
@@ -74,14 +74,14 @@ namespace ServisDB
           {
             DataTable dt = new DataTable();
             dt.Load(reader);
-            dataGridView1.DataSource = dt;
-            dataGridView1.Refresh();
+            dgvPrijave.DataSource = dt;
+            dgvPrijave.Refresh();
           }
 
-        
+
         }
       }
-    
+
     }
 
 
@@ -168,7 +168,7 @@ where redni_broj=@redni_broj";
         InsertPrijava(dtpDatum.Value, tbBrojGarantnogLista.Text, tbKupac.Text, tbKupacaTelefon.Text, tbModel.Text, tbSerijskiBroj.Text, tbDodatnaOprema.Text, tbOpisKvara.Text, tbNapomenaServisera.Text, tbServiser.Text, zavrseno);
       else
         UpdatePrijava(tbRedniBroj.Text, dtpDatum.Value, tbBrojGarantnogLista.Text, tbKupac.Text, tbKupacaTelefon.Text, tbModel.Text, tbSerijskiBroj.Text, tbDodatnaOprema.Text, tbOpisKvara.Text, tbNapomenaServisera.Text, tbServiser.Text, zavrseno);
-      ReadPrijava();
+      ReadPrijava(textBox1.Text, textBox2.Text);
       tabControl1.SelectedIndex = 0;
       Clear();
     }
@@ -180,7 +180,9 @@ where redni_broj=@redni_broj";
 
     private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
     {
-      object o = dataGridView1.SelectedRows[0].DataBoundItem;
+      if (dgvPrijave.SelectedRows.Count == 0)
+        return;
+      object o = dgvPrijave.SelectedRows[0].DataBoundItem;
       tabControl1.SelectedIndex = 1;
       tbRedniBroj.Text = ((DataRowView)o).Row.ItemArray[12].ToString();
       dtpDatum.Value = (DateTime)((DataRowView)o).Row.ItemArray[1];
@@ -241,6 +243,11 @@ where redni_broj=@redni_broj";
     {
       if (tabControl1.SelectedIndex == 1)
         tbKupac.Focus();
+      else
+      {
+        textBox1.Focus();
+        textBox1.Select();
+          }
     }
 
     private void Form1_KeyDown(object sender, KeyEventArgs e)
@@ -257,14 +264,17 @@ where redni_broj=@redni_broj";
     {
       if (e.KeyData == Keys.Enter)
       {
-        if (tabControl1.SelectedIndex == 1)
+        if (!textBox1.Focused)
         {
-          e.SuppressKeyPress = true;
-          SelectNextControl(ActiveControl, true, true, true, true);
-        }
-        else
-        {
-          dataGridView1_CellDoubleClick(this, null);
+          if (tabControl1.SelectedIndex == 1)
+          {
+            e.SuppressKeyPress = true;
+            SelectNextControl(ActiveControl, true, true, true, true);
+          }
+          else
+          {
+            dataGridView1_CellDoubleClick(this, null);
+          }
         }
       }
       else if (e.KeyData == Keys.F3)
@@ -296,15 +306,15 @@ where redni_broj=@redni_broj";
       }
       else if (e.KeyData == Keys.F1)
       {
-        if(tabControl1.SelectedIndex==1)
-        button1_Click(this, null);
+        if (tabControl1.SelectedIndex == 1)
+          button1_Click(this, null);
       }
-      else if(e.KeyData==Keys.Down)
+      else if (e.KeyData == Keys.Down)
       {
         if (tabControl1.SelectedIndex == 0)
         {
-          dataGridView1.Focus();
-          dataGridView1.Select();
+          dgvPrijave.Focus();
+          dgvPrijave.Select();
         }
       }
 
@@ -312,19 +322,19 @@ where redni_broj=@redni_broj";
 
     private void dataGridView1_RowPrePaint(object sender, DataGridViewRowPrePaintEventArgs e)
     {
-      string i = dataGridView1.Rows[e.RowIndex].Cells[6].Value.ToString();
+      string i = dgvPrijave.Rows[e.RowIndex].Cells[6].Value.ToString();
       if (i != "")
       {
         //dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.PaleGreen;
         //dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.White;
-        dataGridView1.Rows[e.RowIndex].DefaultCellStyle.ForeColor = Color.Green;
-        dataGridView1.Rows[e.RowIndex].DefaultCellStyle.Font = new Font("Tahoma", 10, FontStyle.Italic);
+        dgvPrijave.Rows[e.RowIndex].DefaultCellStyle.ForeColor = Color.Green;
+        dgvPrijave.Rows[e.RowIndex].DefaultCellStyle.Font = new Font("Tahoma", 10, FontStyle.Italic);
       }
       else
       {
 
-        dataGridView1.Rows[e.RowIndex].DefaultCellStyle.ForeColor = Color.Blue;
-        dataGridView1.Rows[e.RowIndex].DefaultCellStyle.Font = new Font("Tahoma", 10, FontStyle.Regular);
+        dgvPrijave.Rows[e.RowIndex].DefaultCellStyle.ForeColor = Color.Blue;
+        dgvPrijave.Rows[e.RowIndex].DefaultCellStyle.Font = new Font("Tahoma", 10, FontStyle.Regular);
       }
     }
 
@@ -347,7 +357,7 @@ where redni_broj=@redni_broj";
 
       var sheet = doc.Worksheet(1);
 
-      object o = dataGridView1.SelectedRows[0].DataBoundItem;
+      object o = dgvPrijave.SelectedRows[0].DataBoundItem;
 
       string rednibroj = ((DataRowView)o).Row.ItemArray[12].ToString();
       string datum = ((DateTime)((DataRowView)o).Row.ItemArray[1]).Date.ToString();
@@ -374,9 +384,12 @@ where redni_broj=@redni_broj";
       string rb = parts[0];
       string year = parts[1];
       int rrb = int.Parse(rb);
-      rednibroj = rrb.ToString("D4")+"/"+year;
-      sheet.Cells("C17").Value =rednibroj;
+      rednibroj = rrb.ToString("D4") + "/" + year;
+      sheet.Cells("C17").Value = rednibroj;
       sheet.Cells("C17").DataType = XLCellValues.Text;
+      sheet.Cells("C15").Value = rednibroj;
+      sheet.Cells("C15").Style.Font.FontName = "Free 3 of 9 Extended";
+      sheet.Cells("C15").Style.Font.FontSize = 28;
       sheet.Cells("C18").Value = garantnilist;
       sheet.Cells("C21").Value = datum;
       sheet.Cells("C24").Value = kupac;
@@ -390,7 +403,7 @@ where redni_broj=@redni_broj";
       string fileName = dir + "\\" + rednibroj.Replace("/", "-") + ".xlsx";
       if (File.Exists(fileName) == true)
       {
-        DialogResult dr = MessageBox.Show("Štampana verzija već postoji. Napraviti novu ?", "Upozorenje", MessageBoxButtons.YesNo,MessageBoxIcon.Warning,MessageBoxDefaultButton.Button1);
+        DialogResult dr = MessageBox.Show("Štampana verzija već postoji. Napraviti novu ?", "Upozorenje", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1);
         if (dr == DialogResult.Yes)
         {
           try
@@ -416,23 +429,23 @@ where redni_broj=@redni_broj";
     private void textBox2_TextChanged(object sender, EventArgs e)
     {
 
-      ReadPrijava();
+      ReadPrijava(textBox1.Text, textBox2.Text);
     }
 
-    private void textBox1_TextChanged(object sender, EventArgs e)
-    {
-      ReadPrijava();
-    }
+    //private void textBox1_TextChanged(object sender, EventArgs e)
+    //{
+    //  //ReadPrijava();
+    //}
 
     private void btnBrisanje_Click(object sender, EventArgs e)
     {
-      object o = dataGridView1.SelectedRows[0].DataBoundItem;
+      object o = dgvPrijave.SelectedRows[0].DataBoundItem;
       string rb = ((DataRowView)o).Row.ItemArray[12].ToString();
-      if (MessageBox.Show(string.Format("Obrisati prijavu {0} ?", rb), "Potvrda", MessageBoxButtons.YesNo,MessageBoxIcon.Question,MessageBoxDefaultButton.Button2) == DialogResult.Yes)
+      if (MessageBox.Show(string.Format("Obrisati prijavu {0} ?", rb), "Potvrda", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.Yes)
       {
         BrisiPrijavu(rb);
-        MessageBox.Show(string.Format("Prijava {0} je uspješno obrisana!",  rb), "Poruka", MessageBoxButtons.OK, MessageBoxIcon.Information,MessageBoxDefaultButton.Button1);
-        ReadPrijava();
+        MessageBox.Show(string.Format("Prijava {0} je uspješno obrisana!", rb), "Poruka", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1);
+        ReadPrijava(textBox1.Text, textBox2.Text);
       }
     }
 
@@ -455,8 +468,45 @@ where redni_broj=@redni_broj";
 
     private void Form1_Load(object sender, EventArgs e)
     {
-      dataGridView1.Focus();
+      //dataGridView1.Focus();
+      textBox1.Focus();
+      textBox1.Select();
+
+    }
+
+
+    private void txtBarcode_KeyUp(object sender, KeyEventArgs e)
+    {
       
+    }
+
+
+
+    private void textBox1_KeyUp(object sender, KeyEventArgs e)
+    {
+       if (e.KeyCode == Keys.Enter)
+      {
+        string strCurrentString = textBox1.Text.Trim().ToString();
+        if (strCurrentString != "")
+        {
+          //Do something with the barcode entered 
+          //MessageBox.Show(textBox1.Text);
+          
+          ReadPrijava(textBox1.Text, "");
+          textBox1.Text = "";
+          dataGridView1_CellDoubleClick(this, null);
+          dtpZavrseno.Value = DateTime.Now;
+          tbNapomenaServisera.Focus();
+          tbNapomenaServisera.Select();
+          //textBox1.Text = "";
+        }
+      
+      }
+    }
+
+    private void btnReload_Click(object sender, EventArgs e)
+    {
+      ReadPrijava("", "");
     }
   }
 }
