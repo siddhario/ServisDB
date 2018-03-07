@@ -214,3 +214,7 @@ pip-log.txt
 
 #Mr Developer
 .mr.developer.cfg
+.vs/ServisDB/v15/Server/sqlite3/db.lock
+.vs/ServisDB/v15/Server/sqlite3/storage.ide
+.vs/ServisDB/v15/Server/sqlite3/storage.ide-shm
+.vs/ServisDB/v15/Server/sqlite3/storage.ide-wal
