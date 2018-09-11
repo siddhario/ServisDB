@@ -58,25 +58,52 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FormReklamacija.cs">
+    <Compile Include="Forme\FormGlavna.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormReklamacija.Designer.cs">
-      <DependentUpon>FormReklamacija.cs</DependentUpon>
+    <Compile Include="Forme\FormGlavna.Designer.cs">
+      <DependentUpon>FormGlavna.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormMain.cs">
+    <Compile Include="Forme\FormUgovor.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormMain.Designer.cs">
-      <DependentUpon>FormMain.cs</DependentUpon>
+    <Compile Include="Forme\FormUgovor.Designer.cs">
+      <DependentUpon>FormUgovor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forme\FormServisnaPrijava.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forme\FormServisnaPrijava.Designer.cs">
+      <DependentUpon>FormServisnaPrijava.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forme\FormPartner.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forme\FormPartner.Designer.cs">
+      <DependentUpon>FormPartner.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forme\FormServisniNalog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forme\FormServisniNalog.Designer.cs">
+      <DependentUpon>FormServisniNalog.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="FormReklamacija.resx">
-      <DependentUpon>FormReklamacija.cs</DependentUpon>
+    <EmbeddedResource Include="Forme\FormGlavna.resx">
+      <DependentUpon>FormGlavna.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormMain.resx">
-      <DependentUpon>FormMain.cs</DependentUpon>
+    <EmbeddedResource Include="Forme\FormUgovor.resx">
+      <DependentUpon>FormUgovor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forme\FormServisnaPrijava.resx">
+      <DependentUpon>FormServisnaPrijava.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forme\FormPartner.resx">
+      <DependentUpon>FormPartner.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forme\FormServisniNalog.resx">
+      <DependentUpon>FormServisniNalog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

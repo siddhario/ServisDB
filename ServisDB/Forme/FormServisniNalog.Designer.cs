@@ -1,6 +1,6 @@
-﻿namespace ServisDB
+﻿namespace ServisDB.Forme
 {
-  partial class FormMain
+  partial class FormServisniNalog
   {
     /// <summary>
     /// Required designer variable.

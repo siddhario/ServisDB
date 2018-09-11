@@ -13,13 +13,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace ServisDB
+namespace ServisDB.Forme
 {
-  public partial class FormMain : Form
+  public partial class FormServisniNalog : Form
   {
 
     public string conn_string = "Host=localhost;Username=postgres;Password=postgres;Database=servisdb";
-    public FormMain()
+    public FormServisniNalog()
     {
       InitializeComponent();
       ReadPrijava(textBox1.Text,textBox2.Text);

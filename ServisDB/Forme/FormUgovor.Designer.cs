@@ -1,33 +1,33 @@
-﻿namespace ServisDB
+﻿namespace ServisDB.Forme
 {
-  partial class FormReklamacija
+    partial class FormUgovor
     {
-    /// <summary>
-    /// Required designer variable.
-    /// </summary>
-    private System.ComponentModel.IContainer components = null;
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
 
-    /// <summary>
-    /// Clean up any resources being used.
-    /// </summary>
-    /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-    protected override void Dispose(bool disposing)
-    {
-      if (disposing && (components != null))
-      {
-        components.Dispose();
-      }
-      base.Dispose(disposing);
-    }
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
 
-    #region Windows Form Designer generated code
+        #region Windows Form Designer generated code
 
-    /// <summary>
-    /// Required method for Designer support - do not modify
-    /// the contents of this method with the code editor.
-    /// </summary>
-    private void InitializeComponent()
-    {
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
             this.components = new System.ComponentModel.Container();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
@@ -74,9 +74,6 @@
             // 
             // tabControl1
             // 
-            this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -145,9 +142,6 @@
             this.dgvPrijave.AllowUserToAddRows = false;
             this.dgvPrijave.AllowUserToDeleteRows = false;
             this.dgvPrijave.AllowUserToOrderColumns = true;
-            this.dgvPrijave.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvPrijave.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvPrijave.Location = new System.Drawing.Point(3, 29);
             this.dgvPrijave.Name = "dgvPrijave";
@@ -445,7 +439,6 @@
             // 
             // btnBrisanje
             // 
-            this.btnBrisanje.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnBrisanje.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnBrisanje.Location = new System.Drawing.Point(1075, 71);
             this.btnBrisanje.Name = "btnBrisanje";
@@ -457,7 +450,6 @@
             // 
             // btnStampa
             // 
-            this.btnStampa.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnStampa.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnStampa.Location = new System.Drawing.Point(1075, 28);
             this.btnStampa.Name = "btnStampa";
@@ -467,7 +459,7 @@
             this.btnStampa.UseVisualStyleBackColor = true;
             this.btnStampa.Click += new System.EventHandler(this.btnStampa_Click);
             // 
-            // FormReklamacija
+            // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -475,10 +467,9 @@
             this.Controls.Add(this.btnBrisanje);
             this.Controls.Add(this.btnStampa);
             this.Controls.Add(this.tabControl1);
-            this.Name = "FormReklamacija";
+            this.Name = "FormMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Reklamacije";
-            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.Text = "Evidencija servisnih prijava";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
             this.tabControl1.ResumeLayout(false);
@@ -489,47 +480,47 @@
             this.tabPage2.PerformLayout();
             this.ResumeLayout(false);
 
+        }
+
+        #endregion
+
+        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.DateTimePicker dtpZavrseno;
+        private System.Windows.Forms.TextBox tbServiser;
+        private System.Windows.Forms.TextBox tbNapomenaServisera;
+        private System.Windows.Forms.TextBox tbOpisKvara;
+        private System.Windows.Forms.TextBox tbDodatnaOprema;
+        private System.Windows.Forms.TextBox tbSerijskiBroj;
+        private System.Windows.Forms.TextBox tbModel;
+        private System.Windows.Forms.TextBox tbKupacaTelefon;
+        private System.Windows.Forms.TextBox tbKupac;
+        private System.Windows.Forms.TextBox tbBrojGarantnogLista;
+        private System.Windows.Forms.DateTimePicker dtpDatum;
+        private System.Windows.Forms.TextBox tbRedniBroj;
+        private System.Windows.Forms.DataGridView dgvPrijave;
+        private System.Windows.Forms.Button btnBrisanje;
+        private System.Windows.Forms.Button btnStampa;
+        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Timer tmrDelay;
+        private System.Windows.Forms.Button btnReload;
     }
-
-    #endregion
-
-    private System.Windows.Forms.TabControl tabControl1;
-    private System.Windows.Forms.TabPage tabPage1;
-    private System.Windows.Forms.TabPage tabPage2;
-    private System.Windows.Forms.Button button2;
-    private System.Windows.Forms.Button button1;
-    private System.Windows.Forms.Label label12;
-    private System.Windows.Forms.Label label11;
-    private System.Windows.Forms.Label label10;
-    private System.Windows.Forms.Label label9;
-    private System.Windows.Forms.Label label8;
-    private System.Windows.Forms.Label label7;
-    private System.Windows.Forms.Label label6;
-    private System.Windows.Forms.Label label5;
-    private System.Windows.Forms.Label label4;
-    private System.Windows.Forms.Label label3;
-    private System.Windows.Forms.Label label2;
-    private System.Windows.Forms.Label label1;
-    private System.Windows.Forms.DateTimePicker dtpZavrseno;
-    private System.Windows.Forms.TextBox tbServiser;
-    private System.Windows.Forms.TextBox tbNapomenaServisera;
-    private System.Windows.Forms.TextBox tbOpisKvara;
-    private System.Windows.Forms.TextBox tbDodatnaOprema;
-    private System.Windows.Forms.TextBox tbSerijskiBroj;
-    private System.Windows.Forms.TextBox tbModel;
-    private System.Windows.Forms.TextBox tbKupacaTelefon;
-    private System.Windows.Forms.TextBox tbKupac;
-    private System.Windows.Forms.TextBox tbBrojGarantnogLista;
-    private System.Windows.Forms.DateTimePicker dtpDatum;
-    private System.Windows.Forms.TextBox tbRedniBroj;
-    private System.Windows.Forms.DataGridView dgvPrijave;
-    private System.Windows.Forms.Button btnBrisanje;
-    private System.Windows.Forms.Button btnStampa;
-    private System.Windows.Forms.TextBox textBox2;
-    private System.Windows.Forms.TextBox textBox1;
-    private System.Windows.Forms.Label label13;
-    private System.Windows.Forms.Timer tmrDelay;
-    private System.Windows.Forms.Button btnReload;
-  }
 }
 
