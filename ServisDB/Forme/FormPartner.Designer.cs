@@ -37,6 +37,8 @@
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.dgvMain = new System.Windows.Forms.DataGridView();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.cbDobavljac = new System.Windows.Forms.CheckBox();
+            this.cbKupac = new System.Windows.Forms.CheckBox();
             this.rbPravnoLice = new System.Windows.Forms.RadioButton();
             this.rbFizickoLice = new System.Windows.Forms.RadioButton();
             this.button2 = new System.Windows.Forms.Button();
@@ -56,8 +58,6 @@
             this.btnBrisanje = new System.Windows.Forms.Button();
             this.btnStampa = new System.Windows.Forms.Button();
             this.tmrDelay = new System.Windows.Forms.Timer(this.components);
-            this.cbKupac = new System.Windows.Forms.CheckBox();
-            this.cbDobavljac = new System.Windows.Forms.CheckBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMain)).BeginInit();
@@ -72,7 +72,7 @@
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1073, 741);
+            this.tabControl1.Size = new System.Drawing.Size(1213, 741);
             this.tabControl1.TabIndex = 26;
             this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
             this.tabControl1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tabControl1_KeyDown);
@@ -87,7 +87,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 25);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(1065, 712);
+            this.tabPage1.Size = new System.Drawing.Size(1205, 712);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Pregled";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -140,10 +140,11 @@
             this.dgvMain.ReadOnly = true;
             this.dgvMain.RowHeadersVisible = false;
             this.dgvMain.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvMain.Size = new System.Drawing.Size(1059, 680);
+            this.dgvMain.Size = new System.Drawing.Size(1196, 680);
             this.dgvMain.TabIndex = 0;
             this.dgvMain.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellDoubleClick);
             this.dgvMain.RowPrePaint += new System.Windows.Forms.DataGridViewRowPrePaintEventHandler(this.dataGridView1_RowPrePaint);
+            this.dgvMain.SelectionChanged += new System.EventHandler(this.dgvMain_SelectionChanged);
             // 
             // tabPage2
             // 
@@ -168,15 +169,35 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 25);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(1065, 712);
+            this.tabPage2.Size = new System.Drawing.Size(1205, 712);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Unos [F2]";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // cbDobavljac
+            // 
+            this.cbDobavljac.AutoSize = true;
+            this.cbDobavljac.Location = new System.Drawing.Point(222, 266);
+            this.cbDobavljac.Name = "cbDobavljac";
+            this.cbDobavljac.Size = new System.Drawing.Size(89, 20);
+            this.cbDobavljac.TabIndex = 9;
+            this.cbDobavljac.Text = "Dobavljač";
+            this.cbDobavljac.UseVisualStyleBackColor = true;
+            // 
+            // cbKupac
+            // 
+            this.cbKupac.AutoSize = true;
+            this.cbKupac.Location = new System.Drawing.Point(125, 266);
+            this.cbKupac.Name = "cbKupac";
+            this.cbKupac.Size = new System.Drawing.Size(65, 20);
+            this.cbKupac.TabIndex = 8;
+            this.cbKupac.Text = "Kupac";
+            this.cbKupac.UseVisualStyleBackColor = true;
+            // 
             // rbPravnoLice
             // 
             this.rbPravnoLice.AutoSize = true;
-            this.rbPravnoLice.Location = new System.Drawing.Point(256, 37);
+            this.rbPravnoLice.Location = new System.Drawing.Point(222, 36);
             this.rbPravnoLice.Name = "rbPravnoLice";
             this.rbPravnoLice.Size = new System.Drawing.Size(93, 20);
             this.rbPravnoLice.TabIndex = 2;
@@ -187,7 +208,7 @@
             // rbFizickoLice
             // 
             this.rbFizickoLice.AutoSize = true;
-            this.rbFizickoLice.Location = new System.Drawing.Point(124, 37);
+            this.rbFizickoLice.Location = new System.Drawing.Point(125, 37);
             this.rbFizickoLice.Name = "rbFizickoLice";
             this.rbFizickoLice.Size = new System.Drawing.Size(92, 20);
             this.rbFizickoLice.TabIndex = 1;
@@ -305,7 +326,7 @@
             // tbTelefon
             // 
             this.tbTelefon.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbTelefon.Location = new System.Drawing.Point(124, 196);
+            this.tbTelefon.Location = new System.Drawing.Point(125, 196);
             this.tbTelefon.Name = "tbTelefon";
             this.tbTelefon.Size = new System.Drawing.Size(225, 22);
             this.tbTelefon.TabIndex = 6;
@@ -332,7 +353,7 @@
             // btnBrisanje
             // 
             this.btnBrisanje.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnBrisanje.Location = new System.Drawing.Point(1075, 71);
+            this.btnBrisanje.Location = new System.Drawing.Point(1219, 71);
             this.btnBrisanje.Name = "btnBrisanje";
             this.btnBrisanje.Size = new System.Drawing.Size(101, 36);
             this.btnBrisanje.TabIndex = 1;
@@ -343,7 +364,7 @@
             // btnStampa
             // 
             this.btnStampa.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnStampa.Location = new System.Drawing.Point(1075, 28);
+            this.btnStampa.Location = new System.Drawing.Point(1219, 28);
             this.btnStampa.Name = "btnStampa";
             this.btnStampa.Size = new System.Drawing.Size(101, 37);
             this.btnStampa.TabIndex = 0;
@@ -351,31 +372,11 @@
             this.btnStampa.UseVisualStyleBackColor = true;
             this.btnStampa.Click += new System.EventHandler(this.btnStampa_Click);
             // 
-            // cbKupac
-            // 
-            this.cbKupac.AutoSize = true;
-            this.cbKupac.Location = new System.Drawing.Point(125, 266);
-            this.cbKupac.Name = "cbKupac";
-            this.cbKupac.Size = new System.Drawing.Size(65, 20);
-            this.cbKupac.TabIndex = 8;
-            this.cbKupac.Text = "Kupac";
-            this.cbKupac.UseVisualStyleBackColor = true;
-            // 
-            // cbDobavljac
-            // 
-            this.cbDobavljac.AutoSize = true;
-            this.cbDobavljac.Location = new System.Drawing.Point(213, 266);
-            this.cbDobavljac.Name = "cbDobavljac";
-            this.cbDobavljac.Size = new System.Drawing.Size(89, 20);
-            this.cbDobavljac.TabIndex = 9;
-            this.cbDobavljac.Text = "Dobavljač";
-            this.cbDobavljac.UseVisualStyleBackColor = true;
-            // 
             // FormPartner
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1185, 741);
+            this.ClientSize = new System.Drawing.Size(1332, 741);
             this.Controls.Add(this.btnBrisanje);
             this.Controls.Add(this.btnStampa);
             this.Controls.Add(this.tabControl1);

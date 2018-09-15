@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ServisDB.Klase;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -15,18 +16,27 @@ namespace ServisDB.Forme
         public FormGlavna()
         {
             InitializeComponent();
+
+#if (DEBUG)
+            var connectionString = PersistanceManager.GetConnectionStringByName("ServisDBLocal");
+#else
+        var connectionString = PersistanceManager.GetConnectionStringByName("ServisDB");      
+#endif
+            PersistanceManager.SetConnection(connectionString);
+
         }
 
 
         private void btnServisnePrijave_Click(object sender, EventArgs e)
         {
-            FormServisnaPrijava frm = new FormServisnaPrijava();
+            frmServisnaPrijava frm = new frmServisnaPrijava();
             frm.ShowDialog();
         }
 
         private void btnServisniNalozi_Click(object sender, EventArgs e)
         {
-            FormServisniNalog frm = new FormServisniNalog();
+            frmServisnaPrijava frm = new frmServisnaPrijava();
+            frm.DynamicFilters = new List<string>() { "dobavljac_sifra is null" };
             frm.ShowDialog();
         }
 

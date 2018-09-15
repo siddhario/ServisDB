@@ -1,5 +1,6 @@
 ﻿using ClosedXML.Excel;
 using Npgsql;
+using ServisDB.Klase;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -12,25 +13,41 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static ServisDB.Klase.Enums;
 
 namespace ServisDB.Forme
 {
     public partial class FormPartner : Form
     {
-
+        public bool LookupConfirmed { get; private set; }
+        public AccessMode AccessMode { get; set; }
+        public List<string> DynamicFilters { get; set; }
+        public List<string> StaticFilters { get; set; }
+        public Partner Selected { get; private set; }
         public string conn_string = "Host=localhost;Username=postgres;Password=postgres;Database=servisdb";
         public FormPartner()
         {
             InitializeComponent();
-            ReadAll(textBox1.Text, textBox2.Text);
-            dgvMain.Focus();
-            dgvMain.Select();
-            dgvMain.DefaultCellStyle = new DataGridViewCellStyle() { SelectionBackColor = Color.LightBlue, SelectionForeColor = Color.Red };
-
+            //ReadAll(textBox1.Text, textBox2.Text);
+            //dgvMain.Focus();
+            //dgvMain.Select();
+            //dgvMain.DefaultCellStyle = new DataGridViewCellStyle() { SelectionBackColor = Color.LightBlue, SelectionForeColor = Color.Red };
+            LookupConfirmed = false;
+            AccessMode = AccessMode.NORMAL;
         }
 
         private void ReadAll(string sifra, string naziv)
         {
+
+            StaticFilters = new List<string>();
+            StaticFilters.Add("(sifra=@sifra or @sifra is null)");
+            StaticFilters.Add("((lower(naziv) like concat(lower(@naziv),'%') or @naziv is null))");
+
+            List<string> filters = new List<string>();
+            filters = filters.Concat(StaticFilters).ToList();
+            if (DynamicFilters != null)
+                filters = filters.Concat(DynamicFilters).ToList();
+
             using (var conn = new NpgsqlConnection(conn_string))
             {
                 conn.Open();
@@ -42,14 +59,15 @@ namespace ServisDB.Forme
 
                     dgvMain.Columns.Clear();
                     dgvMain.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Šifra", DataPropertyName = "sifra", Width = 80 });
-                    dgvMain.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Naziv", DataPropertyName = "naziv", Width = 100, DefaultCellStyle = new DataGridViewCellStyle() { Format = "dd.MM.yyyy." } });
-                    dgvMain.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Tip", DataPropertyName = "tip", Width = 80 });
-                    dgvMain.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Matični broj", DataPropertyName = "maticni_broj", Width = 180 });
-                    dgvMain.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Adresa", DataPropertyName = "adresa", Width = 150 });
-                    dgvMain.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Telefon", DataPropertyName = "telefon", Width = 320 });
-                    dgvMain.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Email", DataPropertyName = "email", Width = 100, DefaultCellStyle = new DataGridViewCellStyle() { Format = "dd.MM.yyyy." } });
-                    dgvMain.Columns.Add(new DataGridViewCheckBoxColumn() { Name = "Kupac", DataPropertyName = "kupac", Width = 80 });
-                    dgvMain.Columns.Add(new DataGridViewCheckBoxColumn() { Name = "Dobavljač", DataPropertyName = "dobavljac", Width = 80 });
+                    dgvMain.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Tip", DataPropertyName = "tip", Width = 100 });
+                    dgvMain.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Naziv", DataPropertyName = "naziv", Width = 180, DefaultCellStyle = new DataGridViewCellStyle() { Format = "dd.MM.yyyy." } });
+
+                    dgvMain.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Matični broj", DataPropertyName = "maticni_broj", Width = 100 });
+                    dgvMain.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Adresa", DataPropertyName = "adresa", Width = 300 });
+                    dgvMain.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Telefon", DataPropertyName = "telefon", Width = 140 });
+                    dgvMain.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Email", DataPropertyName = "email", Width = 160, DefaultCellStyle = new DataGridViewCellStyle() { Format = "dd.MM.yyyy." } });
+                    dgvMain.Columns.Add(new DataGridViewCheckBoxColumn() { Name = "Kupac", DataPropertyName = "kupac", Width = 50 });
+                    dgvMain.Columns.Add(new DataGridViewCheckBoxColumn() { Name = "Dobavljač", DataPropertyName = "dobavljac", Width = 75 });
                     // Retrieve all rows
                     cmd.Parameters.Clear();
                     Npgsql.NpgsqlParameter p1 = new NpgsqlParameter("@naziv", DbType.String);
@@ -68,7 +86,16 @@ namespace ServisDB.Forme
                     else
                         p2.Value = sifra;
                     cmd.CommandText = @"SELECT sifra, naziv, tip, maticni_broj, adresa, 
-       telefon, email,kupac,dobavljac FROM partner where (sifra=@sifra or @sifra is null) and (lower(naziv) like concat(lower(@naziv),'%') or @naziv is null) order by sifra asc";
+       telefon, email,kupac,dobavljac FROM partner";
+
+                    if (filters.Count > 0)
+                    {
+                        cmd.CommandText += " WHERE ";
+                        foreach (string f in filters)
+                            cmd.CommandText += f + " AND ";
+                        cmd.CommandText = cmd.CommandText.Substring(0, cmd.CommandText.Length - 4);
+                    }
+                    cmd.CommandText += " order by sifra asc";
                     using (var reader = cmd.ExecuteReader())
                     {
                         DataTable dt = new DataTable();
@@ -83,71 +110,13 @@ namespace ServisDB.Forme
 
         }
 
-
-
-        private void Update(int sifra,string naziv, string tip, string maticni_broj, string adresa, string telefon, string email,bool kupac,bool dobavljac)
-        {
-            using (var conn = new NpgsqlConnection(conn_string))
-            {
-                conn.Open();
-                using (var cmd = new NpgsqlCommand())
-                {
-                    cmd.Connection = conn;
-                    cmd.Parameters.AddWithValue("@sifra", sifra);
-                    cmd.Parameters.AddWithValue("@naziv", naziv);
-                    cmd.Parameters.AddWithValue("@tip", tip);
-                    cmd.Parameters.AddWithValue("@maticni_broj", maticni_broj);
-                    cmd.Parameters.AddWithValue("@adresa", adresa);
-                    cmd.Parameters.AddWithValue("@telefon", telefon);
-                    cmd.Parameters.AddWithValue("@email", email);
-                    cmd.Parameters.AddWithValue("@kupac", kupac);
-                    cmd.Parameters.AddWithValue("@dobavljac", dobavljac);
-
-                    // Insert some data
-                    cmd.CommandText = @"update partner set naziv=@naziv ,  tip=@tip,  maticni_broj=@maticni_broj, adresa= @adresa , 
-telefon=@telefon, email= @email,kupac=@kupac,dobavljac=@dobavljac
-where sifra=@sifra";
-                    cmd.ExecuteNonQuery();
-
-
-                }
-            }
-        }
-
-        private void Insert(string naziv, string tip, string maticni_broj, string adresa, string telefon, string email, bool kupac, bool dobavljac)
-        {
-            using (var conn = new NpgsqlConnection(conn_string))
-            {
-                conn.Open();
-                using (var cmd = new NpgsqlCommand())
-                {
-                    cmd.Connection = conn;
-
-                    cmd.Parameters.AddWithValue("@naziv", naziv);
-                    cmd.Parameters.AddWithValue("@tip", tip);
-                    cmd.Parameters.AddWithValue("@maticni_broj", maticni_broj);
-                    cmd.Parameters.AddWithValue("@adresa", adresa);
-                    cmd.Parameters.AddWithValue("@telefon", telefon);
-                    cmd.Parameters.AddWithValue("@email", email);
-                    cmd.Parameters.AddWithValue("@kupac", kupac);
-                    cmd.Parameters.AddWithValue("@dobavljac", dobavljac);
-
-                    // Insert some data
-                    cmd.CommandText = @"INSERT INTO partner (naziv ,  tip,  maticni_broj ,  adresa,  telefon,  email,kupac,dobavljac) 
-                    VALUES (@naziv ,  @tip,  @maticni_broj ,  @adresa,  @telefon,  @email, @kupac, @dobavljac)";
-                    cmd.ExecuteNonQuery();
-
-
-                }
-            }
-        }
-
         private void button1_Click(object sender, EventArgs e)
         {
+            int? kupacSifra = null;
             if (tbSifra.Text == "AUTO")
-                Insert(tbNaziv.Text, rbFizickoLice.Checked?"F":"P", tbMaticniBroj.Text, tbAdresa.Text, tbTelefon.Text, tbEmail.Text,cbKupac.Checked,cbDobavljac.Checked);
+                PersistanceManager.InsertPartner(tbNaziv.Text, rbFizickoLice.Checked ? "F" : "P", tbMaticniBroj.Text, tbAdresa.Text, tbTelefon.Text, tbEmail.Text, cbKupac.Checked, cbDobavljac.Checked,out kupacSifra);
             else
-                Update(int.Parse(tbSifra.Text), tbNaziv.Text, rbFizickoLice.Checked ? "F" : "P", tbMaticniBroj.Text, tbAdresa.Text, tbTelefon.Text, tbEmail.Text, cbKupac.Checked, cbDobavljac.Checked);
+                PersistanceManager.UpdatePartner(int.Parse(tbSifra.Text), tbNaziv.Text, rbFizickoLice.Checked ? "F" : "P", tbMaticniBroj.Text, tbAdresa.Text, tbTelefon.Text, tbEmail.Text, cbKupac.Checked, cbDobavljac.Checked);
             ReadAll(textBox1.Text, textBox2.Text);
             tabControl1.SelectedIndex = 0;
             Clear();
@@ -156,6 +125,13 @@ where sifra=@sifra";
 
         private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
+            if (AccessMode == AccessMode.LOOKUP)
+            {
+                Close();
+                LookupConfirmed = true;
+                return;
+            }
+
             if (dgvMain.SelectedRows.Count == 0)
                 return;
             object o = dgvMain.SelectedRows[0].DataBoundItem;
@@ -244,7 +220,10 @@ where sifra=@sifra";
             }
             else if (e.KeyData == Keys.Escape)
             {
-                button2_Click(this, null);
+                if (AccessMode == AccessMode.LOOKUP)
+                    Close();
+                else
+                    button2_Click(this, null);
             }
             else if (e.KeyData == Keys.F4)
             {
@@ -290,90 +269,90 @@ where sifra=@sifra";
 
         private void btnStampa_Click(object sender, EventArgs e)
         {
-            //string dir = Environment.SpecialFolder.MyDocuments + "\\ServisDB\\";
+            //  //string dir = Environment.SpecialFolder.MyDocuments + "\\ServisDB\\";
 
-            string dir = System.IO.Path.Combine(Environment.GetFolderPath(
-          Environment.SpecialFolder.MyDoc‌​uments), "ServisDB");
+            //  string dir = System.IO.Path.Combine(Environment.GetFolderPath(
+            //Environment.SpecialFolder.MyDoc‌​uments), "ServisDB");
 
-            if (Directory.Exists(dir) == false)
-            {
-                Directory.CreateDirectory(dir);
-            }
-
-
-
-            XLWorkbook doc = new XLWorkbook("PRIJEMNICA NA SERVIS.xlsx");
-            //doc.Worksheets.Add("PRIJAVA");
-
-            var sheet = doc.Worksheet(1);
-
-            object o = dgvMain.SelectedRows[0].DataBoundItem;
-
-            string rednibroj = ((DataRowView)o).Row.ItemArray[12].ToString();
-            string datum = ((DateTime)((DataRowView)o).Row.ItemArray[1]).Date.ToString();
-            string garantnilist = ((DataRowView)o).Row.ItemArray[2].ToString();
-            string kupac = ((DataRowView)o).Row.ItemArray[3].ToString();
-            string kupac_telefon = ((DataRowView)o).Row.ItemArray[4].ToString();
-            string model = ((DataRowView)o).Row.ItemArray[5].ToString();
-            string serijski_broj = ((DataRowView)o).Row.ItemArray[6].ToString();
-            string dodatna_oprema = ((DataRowView)o).Row.ItemArray[7].ToString();
-            string opis_kvara = ((DataRowView)o).Row.ItemArray[8].ToString();
-            string napomena_servisera = ((DataRowView)o).Row.ItemArray[9].ToString();
-            string serviser = ((DataRowView)o).Row.ItemArray[10].ToString();
-            string zavrseno = "";
-            if (((DataRowView)o).Row.ItemArray[11] == DBNull.Value)
-            {
-                zavrseno = "";
-            }
-            else
-            {
-                zavrseno = ((DateTime)((DataRowView)o).Row.ItemArray[1]).ToString();
-            }
-
-            string[] parts = rednibroj.Split('/');
-            string rb = parts[0];
-            string year = parts[1];
-            int rrb = int.Parse(rb);
-            rednibroj = rrb.ToString("D4") + "/" + year;
-            sheet.Cells("C17").Value = rednibroj;
-            sheet.Cells("C17").DataType = XLCellValues.Text;
-            sheet.Cells("C15").Value = rednibroj;
-            sheet.Cells("C15").Style.Font.FontName = "Free 3 of 9 Extended";
-            sheet.Cells("C15").Style.Font.FontSize = 28;
-            sheet.Cells("C18").Value = garantnilist;
-            sheet.Cells("C21").Value = datum;
-            sheet.Cells("C24").Value = kupac;
-            sheet.Cells("C25").Value = kupac_telefon;
-            sheet.Cells("C28").Value = model;
-            sheet.Cells("C29").Value = serijski_broj;
-            sheet.Cells("C31").Value = dodatna_oprema;
-            sheet.Cells("C32").Value = opis_kvara;
+            //  if (Directory.Exists(dir) == false)
+            //  {
+            //      Directory.CreateDirectory(dir);
+            //  }
 
 
-            string fileName = dir + "\\" + rednibroj.Replace("/", "-") + ".xlsx";
-            if (File.Exists(fileName) == true)
-            {
-                DialogResult dr = MessageBox.Show("Štampana verzija već postoji. Napraviti novu ?", "Upozorenje", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1);
-                if (dr == DialogResult.Yes)
-                {
-                    try
-                    {
-                        File.Delete(fileName);
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show("Zatvorite dokument pa pokušajte opet!");
-                        return;
-                    }
-                    doc.SaveAs(fileName);
-                    Process.Start(fileName);
-                }
-            }
-            else
-            {
-                doc.SaveAs(fileName);
-                Process.Start(fileName);
-            }
+
+            //  XLWorkbook doc = new XLWorkbook("PRIJEMNICA NA SERVIS.xlsx");
+            //  //doc.Worksheets.Add("PRIJAVA");
+
+            //  var sheet = doc.Worksheet(1);
+
+            //  object o = dgvMain.SelectedRows[0].DataBoundItem;
+
+            //  string rednibroj = ((DataRowView)o).Row.ItemArray[12].ToString();
+            //  string datum = ((DateTime)((DataRowView)o).Row.ItemArray[1]).Date.ToString();
+            //  string garantnilist = ((DataRowView)o).Row.ItemArray[2].ToString();
+            //  string kupac = ((DataRowView)o).Row.ItemArray[3].ToString();
+            //  string kupac_telefon = ((DataRowView)o).Row.ItemArray[4].ToString();
+            //  string model = ((DataRowView)o).Row.ItemArray[5].ToString();
+            //  string serijski_broj = ((DataRowView)o).Row.ItemArray[6].ToString();
+            //  string dodatna_oprema = ((DataRowView)o).Row.ItemArray[7].ToString();
+            //  string opis_kvara = ((DataRowView)o).Row.ItemArray[8].ToString();
+            //  string napomena_servisera = ((DataRowView)o).Row.ItemArray[9].ToString();
+            //  string serviser = ((DataRowView)o).Row.ItemArray[10].ToString();
+            //  string zavrseno = "";
+            //  if (((DataRowView)o).Row.ItemArray[11] == DBNull.Value)
+            //  {
+            //      zavrseno = "";
+            //  }
+            //  else
+            //  {
+            //      zavrseno = ((DateTime)((DataRowView)o).Row.ItemArray[1]).ToString();
+            //  }
+
+            //  string[] parts = rednibroj.Split('/');
+            //  string rb = parts[0];
+            //  string year = parts[1];
+            //  int rrb = int.Parse(rb);
+            //  rednibroj = rrb.ToString("D4") + "/" + year;
+            //  sheet.Cells("C17").Value = rednibroj;
+            //  sheet.Cells("C17").DataType = XLCellValues.Text;
+            //  sheet.Cells("C15").Value = rednibroj;
+            //  sheet.Cells("C15").Style.Font.FontName = "Free 3 of 9 Extended";
+            //  sheet.Cells("C15").Style.Font.FontSize = 28;
+            //  sheet.Cells("C18").Value = garantnilist;
+            //  sheet.Cells("C21").Value = datum;
+            //  sheet.Cells("C24").Value = kupac;
+            //  sheet.Cells("C25").Value = kupac_telefon;
+            //  sheet.Cells("C28").Value = model;
+            //  sheet.Cells("C29").Value = serijski_broj;
+            //  sheet.Cells("C31").Value = dodatna_oprema;
+            //  sheet.Cells("C32").Value = opis_kvara;
+
+
+            //  string fileName = dir + "\\" + rednibroj.Replace("/", "-") + ".xlsx";
+            //  if (File.Exists(fileName) == true)
+            //  {
+            //      DialogResult dr = MessageBox.Show("Štampana verzija već postoji. Napraviti novu ?", "Upozorenje", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1);
+            //      if (dr == DialogResult.Yes)
+            //      {
+            //          try
+            //          {
+            //              File.Delete(fileName);
+            //          }
+            //          catch (Exception ex)
+            //          {
+            //              MessageBox.Show("Zatvorite dokument pa pokušajte opet!");
+            //              return;
+            //          }
+            //          doc.SaveAs(fileName);
+            //          Process.Start(fileName);
+            //      }
+            //  }
+            //  else
+            //  {
+            //      doc.SaveAs(fileName);
+            //      Process.Start(fileName);
+            //  }
         }
 
         private void textBox2_TextChanged(object sender, EventArgs e)
@@ -382,55 +361,39 @@ where sifra=@sifra";
             ReadAll(textBox1.Text, textBox2.Text);
         }
 
-        //private void textBox1_TextChanged(object sender, EventArgs e)
-        //{
-        //  //ReadPrijava();
-        //}
-
         private void btnBrisanje_Click(object sender, EventArgs e)
         {
             object o = dgvMain.SelectedRows[0].DataBoundItem;
             string rb = ((DataRowView)o).Row.ItemArray[0].ToString();
             if (MessageBox.Show(string.Format("Obrisati partnera {0} ?", rb), "Potvrda", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.Yes)
             {
-                Brisi(int.Parse(rb));
+                PersistanceManager.DeletePartner(int.Parse(rb));
                 MessageBox.Show(string.Format("Partner {0} je uspješno obrisan!", rb), "Poruka", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1);
                 ReadAll(textBox1.Text, textBox2.Text);
             }
         }
 
-        private void Brisi(int sifra)
-        {
-            using (var conn = new NpgsqlConnection(conn_string))
-            {
-                conn.Open();
-                using (var cmd = new NpgsqlCommand())
-                {
-                    cmd.Connection = conn;
-
-                    cmd.Parameters.AddWithValue("@sifra", sifra);
-                    // Insert some data
-                    cmd.CommandText = @"delete from partner where sifra=@sifra";
-                    cmd.ExecuteNonQuery();
-                }
-            }
-        }
+     
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            ReadAll(textBox1.Text, textBox2.Text);
+            dgvMain.Focus();
+            dgvMain.Select();
+            dgvMain.DefaultCellStyle = new DataGridViewCellStyle() { SelectionBackColor = Color.LightBlue, SelectionForeColor = Color.Red };
             //dataGridView1.Focus();
-            textBox1.Focus();
-            textBox1.Select();
+            if (AccessMode == AccessMode.LOOKUP)
+            {
+                textBox2.Focus();
+                textBox2.Select();
+            }
+            else
+            {
+                textBox1.Focus();
+                textBox1.Select();
+            }
 
         }
-
-
-        private void txtBarcode_KeyUp(object sender, KeyEventArgs e)
-        {
-
-        }
-
-
 
         private void textBox1_KeyUp(object sender, KeyEventArgs e)
         {
@@ -458,6 +421,29 @@ where sifra=@sifra";
             ReadAll("", "");
         }
 
+        private void dgvMain_SelectionChanged(object sender, EventArgs e)
+        {
+            if (LookupConfirmed == true)
+                return;
+            if (dgvMain.SelectedRows.Count > 0)
+            {
+                if (dgvMain.SelectedRows.Count == 0)
+                    return;
+                object o = dgvMain.SelectedRows[0].DataBoundItem;
+                if (Selected == null)
+                    Selected = new Partner();
+                Selected.Sifra = (int)((DataRowView)o).Row.ItemArray[0];
+                Selected.Naziv = ((DataRowView)o).Row.ItemArray[1].ToString();
+                Selected.Telefon = ((DataRowView)o).Row.ItemArray[5].ToString();
+                Selected.MaticniBroj = ((DataRowView)o).Row.ItemArray[3].ToString();
+                Selected.Adresa = ((DataRowView)o).Row.ItemArray[4].ToString();
+                Selected.Tip = ((DataRowView)o).Row.ItemArray[2].ToString();
+                Selected.Email = ((DataRowView)o).Row.ItemArray[6].ToString();
+                Selected.Kupac = (bool)((DataRowView)o).Row.ItemArray[7];
+                Selected.Dobavljac = (bool)((DataRowView)o).Row.ItemArray[8];
 
+
+            }
+        }
     }
 }

@@ -1,0 +1,7 @@
+host:localhost
+catalog:servisdb
+user:delos
+pass:Delos2018
+port:5433
+locale:Serbian Latin BIh
+version:Postgres 10.5

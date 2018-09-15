@@ -1,5 +1,6 @@
 ﻿using ClosedXML.Excel;
 using Npgsql;
+using ServisDB.Klase;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -15,24 +16,34 @@ using System.Windows.Forms;
 
 namespace ServisDB.Forme
 {
-    public partial class FormServisnaPrijava : Form
+    public partial class frmServisnaPrijava : Form
     {
+        public List<string> DynamicFilters { get; set; }
+        public List<string> StaticFilters { get; set; }
+        NpgsqlConnection con = new NpgsqlConnection("Host=localhost;Username=postgres;Password=postgres;Database=servisdb");
 
         public string conn_string = "Host=localhost;Username=postgres;Password=postgres;Database=servisdb";
-        public FormServisnaPrijava()
+        private int? dobavljacStari;
+
+        public frmServisnaPrijava()
         {
             InitializeComponent();
-            ReadPrijava(textBox1.Text, textBox2.Text);
-            dtpZavrseno.Format = DateTimePickerFormat.Custom;
-            dtpZavrseno.CustomFormat = " ";
-            dgvPrijave.Focus();
-            dgvPrijave.Select();
-            dgvPrijave.DefaultCellStyle = new DataGridViewCellStyle() { SelectionBackColor = Color.LightBlue, SelectionForeColor = Color.Red };
+          
 
         }
 
+
         private void ReadPrijava(string brojPrijave, string kupac)
         {
+            StaticFilters = new List<string>();
+            StaticFilters.Add("(broj like concat(@broj,'%') or @broj is null)");
+            StaticFilters.Add("(lower(kupac_ime) like concat(lower(@kupac_ime),'%') or @kupac_ime is null)");
+
+            List<string> filters = new List<string>();
+            filters = filters.Concat(StaticFilters).ToList();
+            if (DynamicFilters != null)
+                filters = filters.Concat(DynamicFilters).ToList();
+
             using (var conn = new NpgsqlConnection(conn_string))
             {
                 conn.Open();
@@ -45,20 +56,25 @@ namespace ServisDB.Forme
                     dgvPrijave.Columns.Clear();
                     dgvPrijave.Columns.Add(new DataGridViewTextBoxColumn() { Name = "R.broj", DataPropertyName = "broj", Width = 80 });
                     dgvPrijave.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Datum prijema", DataPropertyName = "datum", Width = 100, DefaultCellStyle = new DataGridViewCellStyle() { Format = "dd.MM.yyyy." } });
+                    dgvPrijave.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Šifra kupca", DataPropertyName = "kupac_sifra", Width = 50, Visible = false });
                     dgvPrijave.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Kupac", DataPropertyName = "kupac_ime", Width = 180 });
                     dgvPrijave.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Adresa", DataPropertyName = "kupac_adresa", Width = 180 });
                     dgvPrijave.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Telefon", DataPropertyName = "kupac_telefon", Width = 130 });
-                    dgvPrijave.Columns.Add(new DataGridViewTextBoxColumn() { Name = "E-mail", DataPropertyName = "kupac_email", Width = 180 });
+                    dgvPrijave.Columns.Add(new DataGridViewTextBoxColumn() { Name = "E-mail", DataPropertyName = "kupac_email", Visible = false });
                     dgvPrijave.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Predmet", DataPropertyName = "predmet", Width = 250 });
+                    dgvPrijave.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Model", DataPropertyName = "model", Visible = false });
+                    dgvPrijave.Columns.Add(new DataGridViewTextBoxColumn() { Name = "SB", DataPropertyName = "serijski_broj", Visible = false });
+                    dgvPrijave.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Dodatna oprema", DataPropertyName = "dodatna_oprema", Visible = false });
                     dgvPrijave.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Dobavljač", DataPropertyName = "dobavljac_sifra", Width = 80 });
-                    dgvPrijave.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Email dobavljaču", DataPropertyName = "poslat_mejl_dobavljacu", Width = 100, DefaultCellStyle = new DataGridViewCellStyle() { Format = "dd.MM.yyyy." }});
+                    dgvPrijave.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Email dobavljaču", DataPropertyName = "poslat_mejl_dobavljacu", Width = 100, DefaultCellStyle = new DataGridViewCellStyle() { Format = "dd.MM.yyyy." } });
                     dgvPrijave.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Datum vraćanja", DataPropertyName = "datum_vracanja", Width = 100, DefaultCellStyle = new DataGridViewCellStyle() { Format = "dd.MM.yyyy." } });
+                    dgvPrijave.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Br.naloga", DataPropertyName = "broj_naloga", Width = 80 });
                     // Retrieve all rows
                     cmd.Parameters.Clear();
                     Npgsql.NpgsqlParameter p1 = new NpgsqlParameter("@kupac_ime", DbType.String);
                     cmd.Parameters.Add(p1);
 
-                    Npgsql.NpgsqlParameter p2 = new NpgsqlParameter("@redni_broj", DbType.String);
+                    Npgsql.NpgsqlParameter p2 = new NpgsqlParameter("@broj", DbType.String);
                     cmd.Parameters.Add(p2);
 
                     if (kupac == "")
@@ -70,8 +86,17 @@ namespace ServisDB.Forme
                         p2.Value = DBNull.Value;
                     else
                         p2.Value = brojPrijave;
-                    cmd.CommandText = @"SELECT broj, datum, kupac_ime, kupac_adresa, kupac_telefon, kupac_email, 
-       predmet,dobavljac_sifra, poslat_mejl_dobavljacu, datum_vracanja, serviser,redni_broj FROM reklamacija where (redni_broj like concat(@redni_broj,'%') or @redni_broj is null) and (lower(kupac_ime) like concat(lower(@kupac_ime),'%') or @kupac_ime is null) order by broj desc";
+                    cmd.CommandText = @"SELECT broj, broj_naloga, datum, kupac_sifra, kupac_ime, kupac_adresa, kupac_telefon, kupac_email, model, serijski_broj, dodatna_oprema, predmet, napomena_servisera, serviser, serviser_primio, zavrseno, dobavljac_sifra, dobavljac, datum_vracanja, poslat_mejl_dobavljacu, garantni_rok, broj_garantnog_lista, broj_racuna
+	 FROM prijava";
+                    if (filters.Count > 0)
+                    {
+                        cmd.CommandText += " WHERE ";
+                        foreach (string f in filters)
+                            cmd.CommandText += f + " AND ";
+                        cmd.CommandText = cmd.CommandText.Substring(0, cmd.CommandText.Length - 4);
+                    }
+                    cmd.CommandText += " order by datum desc";
+
                     using (var reader = cmd.ExecuteReader())
                     {
                         DataTable dt = new DataTable();
@@ -88,72 +113,6 @@ namespace ServisDB.Forme
 
 
 
-        private void UpdatePrijava(string redni_broj, DateTime datum, string broj_garantnog_lista, string kupac_ime, string kupac_telefon, string model, string serijski_broj,
-    string dodatna_oprema, string opis_kvara, string napomena_servisera, string serviser, DateTime? zavrseno)
-        {
-            using (var conn = new NpgsqlConnection(conn_string))
-            {
-                conn.Open();
-                using (var cmd = new NpgsqlCommand())
-                {
-                    cmd.Connection = conn;
-
-                    cmd.Parameters.AddWithValue("@redni_broj", redni_broj);
-                    cmd.Parameters.AddWithValue("@datum", datum);
-                    cmd.Parameters.AddWithValue("@broj_garantnog_lista", broj_garantnog_lista);
-                    cmd.Parameters.AddWithValue("@kupac_ime", kupac_ime);
-                    cmd.Parameters.AddWithValue("@kupac_telefon", kupac_telefon);
-                    cmd.Parameters.AddWithValue("@model", model);
-                    cmd.Parameters.AddWithValue("@serijski_broj", serijski_broj);
-                    cmd.Parameters.AddWithValue("@dodatna_oprema", dodatna_oprema);
-                    cmd.Parameters.AddWithValue("@opis_kvara", opis_kvara);
-                    cmd.Parameters.AddWithValue("@napomena_servisera", napomena_servisera);
-                    cmd.Parameters.AddWithValue("@serviser", serviser);
-                    cmd.Parameters.AddWithValue("@zavrseno", zavrseno.HasValue ? (object)zavrseno.Value : DBNull.Value);
-
-                    // Insert some data
-                    cmd.CommandText = @"update prijava set datum=@datum ,  broj_garantnog_lista=@broj_garantnog_lista,  kupac_ime=@kupac_ime, kupac_telefon= @kupac_telefon , 
-model=@model, serijski_broj= @serijski_broj, dodatna_oprema=@dodatna_oprema, opis_kvara= @opis_kvara,napomena_servisera=  @napomena_servisera,  serviser=@serviser,zavrseno= @zavrseno
-where redni_broj=@redni_broj";
-                    cmd.ExecuteNonQuery();
-
-
-                }
-            }
-        }
-
-        private void InsertPrijava(DateTime datum, string broj_garantnog_lista, string kupac_ime, string kupac_telefon, string model, string serijski_broj,
-      string dodatna_oprema, string opis_kvara, string napomena_servisera, string serviser, DateTime? zavrseno)
-        {
-            using (var conn = new NpgsqlConnection(conn_string))
-            {
-                conn.Open();
-                using (var cmd = new NpgsqlCommand())
-                {
-                    cmd.Connection = conn;
-
-                    cmd.Parameters.AddWithValue("@datum", datum);
-                    cmd.Parameters.AddWithValue("@broj_garantnog_lista", broj_garantnog_lista);
-                    cmd.Parameters.AddWithValue("@kupac_ime", kupac_ime);
-                    cmd.Parameters.AddWithValue("@kupac_telefon", kupac_telefon);
-                    cmd.Parameters.AddWithValue("@model", model);
-                    cmd.Parameters.AddWithValue("@serijski_broj", serijski_broj);
-                    cmd.Parameters.AddWithValue("@dodatna_oprema", dodatna_oprema);
-                    cmd.Parameters.AddWithValue("@opis_kvara", opis_kvara);
-                    cmd.Parameters.AddWithValue("@napomena_servisera", napomena_servisera);
-                    cmd.Parameters.AddWithValue("@serviser", serviser);
-                    cmd.Parameters.AddWithValue("@zavrseno", zavrseno.HasValue ? (object)zavrseno.Value : DBNull.Value);
-
-                    // Insert some data
-                    cmd.CommandText = @"INSERT INTO prijava (datum ,  broj_garantnog_lista,  kupac_ime,  kupac_telefon ,  model,  serijski_broj,
-  dodatna_oprema,  opis_kvara,  napomena_servisera,  serviser,  zavrseno,redni_broj) VALUES (@datum ,  @broj_garantnog_lista,  @kupac_ime,  @kupac_telefon ,  @model,  
-@serijski_broj, @dodatna_oprema,  @opis_kvara,  @napomena_servisera,  @serviser,  @zavrseno,(select concat((coalesce(max(broj),0)+1)::text,'/'," + DateTime.Now.Year.ToString() + ") from prijava where date_part('year',current_timestamp)=" + DateTime.Now.Year.ToString() + "))";
-                    cmd.ExecuteNonQuery();
-
-
-                }
-            }
-        }
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -166,38 +125,78 @@ where redni_broj=@redni_broj";
             {
                 zavrseno = dtpZavrseno.Value;
             }
-            if (tbRedniBroj.Text == "AUTO")
-                InsertPrijava(dtpDatum.Value, tbBrojGarantnogLista.Text, tbKupac.Text, tbKupacaTelefon.Text, tbModel.Text, tbSerijskiBroj.Text, tbDodatnaOprema.Text, tbOpisKvara.Text, tbNapomenaServisera.Text, tbServiser.Text, zavrseno);
+
+            DateTime? poslatMejlDobavljacu = null;
+            if (dtpPoslatMejlDobavljacu.Format == DateTimePickerFormat.Custom)
+            {
+                poslatMejlDobavljacu = null;
+            }
             else
-                UpdatePrijava(tbRedniBroj.Text, dtpDatum.Value, tbBrojGarantnogLista.Text, tbKupac.Text, tbKupacaTelefon.Text, tbModel.Text, tbSerijskiBroj.Text, tbDodatnaOprema.Text, tbOpisKvara.Text, tbNapomenaServisera.Text, tbServiser.Text, zavrseno);
-            ReadPrijava(textBox1.Text, textBox2.Text);
+            {
+                poslatMejlDobavljacu = dtpPoslatMejlDobavljacu.Value;
+            }
+
+            DateTime? datumVracanja = null;
+            if (dtpDatumVracanja.Format == DateTimePickerFormat.Custom)
+            {
+                datumVracanja = null;
+            }
+            else
+            {
+                datumVracanja = dtpDatumVracanja.Value;
+            }
+            bool dobavljacPromjenjen = false;
+            int? noviDobavljac = null;
+            if (tbDobavljacSifra.Text != "")
+                noviDobavljac = int.Parse(tbDobavljacSifra.Text);
+            if (dobavljacStari != noviDobavljac)
+                dobavljacPromjenjen = true;
+            int? kupacSifra;
+            if (tbKupacSifra.Text == "")
+            {
+                PersistanceManager.InsertPartner(tbKupac.Text, "F", "", tbAdresa.Text, tbKupacaTelefon.Text, tbEmail.Text, true, false, out kupacSifra);
+                tbKupacSifra.Text = kupacSifra.ToString();
+            }
+            else
+                PersistanceManager.UpdatePartner(int.Parse(tbKupacSifra.Text), tbAdresa.Text, tbKupacaTelefon.Text, tbEmail.Text);
+
+            if (tbRedniBroj.Text == "AUTO")
+                PersistanceManager.InsertPrijava(dtpDatum.Value, tbBrojGarantnogLista.Text, (tbKupacSifra.Text != "" ? int.Parse(tbKupacSifra.Text) : (int?)null), tbKupac.Text, tbAdresa.Text, tbKupacaTelefon.Text, tbEmail.Text,
+                    tbModel.Text, tbSerijskiBroj.Text, tbDodatnaOprema.Text, tbPredmet.Text, tbNapomenaServisera.Text, tbServiser.Text, tbServiserPrimio.Text, zavrseno, (tbDobavljacSifra.Text != "" ? int.Parse(tbDobavljacSifra.Text) : (int?)null)
+                    , tbDobavljac.Text, datumVracanja, poslatMejlDobavljacu, (tbGarantniRok.Text != "" ? int.Parse(tbGarantniRok.Text) : (int?)null), tbBrojRacuna.Text);
+            else
+                PersistanceManager.UpdatePrijava(tbRedniBroj.Text, dtpDatum.Value, tbBrojGarantnogLista.Text, (tbKupacSifra.Text != "" ? int.Parse(tbKupacSifra.Text) : (int?)null), tbKupac.Text, tbAdresa.Text, tbKupacaTelefon.Text, tbEmail.Text,
+                    tbModel.Text, tbSerijskiBroj.Text, tbDodatnaOprema.Text, tbPredmet.Text, tbNapomenaServisera.Text, tbServiser.Text, tbServiserPrimio.Text, zavrseno, (tbDobavljacSifra.Text != "" ? int.Parse(tbDobavljacSifra.Text) : (int?)null)
+                    , tbDobavljac.Text, datumVracanja, poslatMejlDobavljacu, (tbGarantniRok.Text != "" ? int.Parse(tbGarantniRok.Text) : (int?)null), tbBrojRacuna.Text, dobavljacPromjenjen);
             tabControl1.SelectedIndex = 0;
             Clear();
-        }
-
-        private void dataGridView1_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
-        {
-
+            ReadPrijava("", "");
         }
 
         private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
+
             if (dgvPrijave.SelectedRows.Count == 0)
                 return;
             object o = dgvPrijave.SelectedRows[0].DataBoundItem;
             tabControl1.SelectedIndex = 1;
-            tbRedniBroj.Text = ((DataRowView)o).Row.ItemArray[12].ToString();
-            dtpDatum.Value = (DateTime)((DataRowView)o).Row.ItemArray[1];
-            tbBrojGarantnogLista.Text = ((DataRowView)o).Row.ItemArray[2].ToString();
-            tbKupac.Text = ((DataRowView)o).Row.ItemArray[3].ToString();
-            tbKupacaTelefon.Text = ((DataRowView)o).Row.ItemArray[4].ToString();
-            tbModel.Text = ((DataRowView)o).Row.ItemArray[5].ToString();
-            tbSerijskiBroj.Text = ((DataRowView)o).Row.ItemArray[6].ToString();
-            tbDodatnaOprema.Text = ((DataRowView)o).Row.ItemArray[7].ToString();
-            tbOpisKvara.Text = ((DataRowView)o).Row.ItemArray[8].ToString();
-            tbNapomenaServisera.Text = ((DataRowView)o).Row.ItemArray[9].ToString();
-            tbServiser.Text = ((DataRowView)o).Row.ItemArray[10].ToString();
-            if (((DataRowView)o).Row.ItemArray[11] == DBNull.Value)
+            tbRedniBroj.Text = ((DataRowView)o).Row.ItemArray[0].ToString();
+            tbBrojNaloga.Text = ((DataRowView)o).Row.ItemArray[1].ToString();
+            dtpDatum.Value = (DateTime)((DataRowView)o).Row.ItemArray[2];
+            tbKupacSifra.Text = ((DataRowView)o).Row.ItemArray[3].ToString();
+            tbKupac.Text = ((DataRowView)o).Row.ItemArray[4].ToString();
+            tbAdresa.Text = ((DataRowView)o).Row.ItemArray[5].ToString();
+            tbKupacaTelefon.Text = ((DataRowView)o).Row.ItemArray[6].ToString();
+            tbEmail.Text = ((DataRowView)o).Row.ItemArray[7].ToString();
+            tbModel.Text = ((DataRowView)o).Row.ItemArray[8].ToString();
+            tbSerijskiBroj.Text = ((DataRowView)o).Row.ItemArray[9].ToString();
+            tbDodatnaOprema.Text = ((DataRowView)o).Row.ItemArray[10].ToString();
+            tbPredmet.Text = ((DataRowView)o).Row.ItemArray[11].ToString();
+            tbNapomenaServisera.Text = ((DataRowView)o).Row.ItemArray[12].ToString();
+            tbServiser.Text = ((DataRowView)o).Row.ItemArray[13].ToString();
+            tbServiserPrimio.Text = ((DataRowView)o).Row.ItemArray[14].ToString();
+
+            if (((DataRowView)o).Row.ItemArray[15] == DBNull.Value)
             {
                 dtpZavrseno.Format = DateTimePickerFormat.Custom;
                 dtpZavrseno.CustomFormat = " ";
@@ -206,9 +205,44 @@ where redni_broj=@redni_broj";
             else
             {
                 dtpZavrseno.Format = DateTimePickerFormat.Short;
-                dtpZavrseno.Value = (DateTime)((DataRowView)o).Row.ItemArray[1];
+                dtpZavrseno.Value = (DateTime)((DataRowView)o).Row.ItemArray[15];
+
+            }
+            if (((DataRowView)o).Row.ItemArray[16].ToString() != "")
+                dobavljacStari = int.Parse(((DataRowView)o).Row.ItemArray[16].ToString());
+            else
+                dobavljacStari = null;
+            tbDobavljacSifra.Text = ((DataRowView)o).Row.ItemArray[16].ToString();
+            tbDobavljac.Text = ((DataRowView)o).Row.ItemArray[17].ToString();
+
+            if (((DataRowView)o).Row.ItemArray[18] == DBNull.Value)
+            {
+                dtpDatumVracanja.Format = DateTimePickerFormat.Custom;
+                dtpDatumVracanja.CustomFormat = " ";
+            
+
+            }
+            else
+            {
+                dtpDatumVracanja.Format = DateTimePickerFormat.Short;
+                dtpDatumVracanja.Value = (DateTime)((DataRowView)o).Row.ItemArray[18];
             }
 
+            if (((DataRowView)o).Row.ItemArray[19] == DBNull.Value)
+            {
+                dtpPoslatMejlDobavljacu.Format = DateTimePickerFormat.Custom;
+                dtpPoslatMejlDobavljacu.CustomFormat = " ";
+            }
+            else
+            {
+                dtpPoslatMejlDobavljacu.Format = DateTimePickerFormat.Short;
+                dtpPoslatMejlDobavljacu.Value = (DateTime)((DataRowView)o).Row.ItemArray[19];
+            }
+
+            tbGarantniRok.Text = ((DataRowView)o).Row.ItemArray[20].ToString();
+            tbBrojGarantnogLista.Text = ((DataRowView)o).Row.ItemArray[21].ToString();
+            tbBrojRacuna.Text = ((DataRowView)o).Row.ItemArray[22].ToString();
+            SetVisibility();
         }
 
         private void dtpZavrseno_ValueChanged(object sender, EventArgs e)
@@ -230,14 +264,32 @@ where redni_broj=@redni_broj";
             tbBrojGarantnogLista.Text = "";
             tbKupac.Text = "";
             tbKupacaTelefon.Text = "";
+            tbKupacSifra.Text = "";
+            tbAdresa.Text = "";
+            tbEmail.Text = "";
+            tbServiserPrimio.Text = "";
+            tbBrojRacuna.Text = "";
+            tbGarantniRok.Text = "";
+            tbPredmet.Text = "";
             tbModel.Text = "";
             tbSerijskiBroj.Text = "";
             tbDodatnaOprema.Text = "";
-            tbOpisKvara.Text = "";
+            //tbOpisKvara.Text = "";
             tbNapomenaServisera.Text = "";
             tbServiser.Text = "";
             dtpZavrseno.Format = DateTimePickerFormat.Custom;
             dtpZavrseno.CustomFormat = " ";
+
+            dtpPoslatMejlDobavljacu.Format = DateTimePickerFormat.Custom;
+            dtpPoslatMejlDobavljacu.CustomFormat = " ";
+
+            dtpDatumVracanja.Format = DateTimePickerFormat.Custom;
+            dtpDatumVracanja.CustomFormat = " ";
+
+            tbDobavljac.Text = "";
+            tbDobavljacSifra.Text = "";
+            tbBrojNaloga.Text = "";
+            tbKupac.ReadOnly = false;
             tbKupac.Focus();
         }
 
@@ -250,16 +302,6 @@ where redni_broj=@redni_broj";
                 textBox1.Focus();
                 textBox1.Select();
             }
-        }
-
-        private void Form1_KeyDown(object sender, KeyEventArgs e)
-        {
-
-        }
-
-        private void tabPage2_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
-        {
-
         }
 
         private void tabControl1_KeyDown(object sender, KeyEventArgs e)
@@ -361,25 +403,25 @@ where redni_broj=@redni_broj";
 
             object o = dgvPrijave.SelectedRows[0].DataBoundItem;
 
-            string rednibroj = ((DataRowView)o).Row.ItemArray[12].ToString();
-            string datum = ((DateTime)((DataRowView)o).Row.ItemArray[1]).Date.ToString();
-            string garantnilist = ((DataRowView)o).Row.ItemArray[2].ToString();
-            string kupac = ((DataRowView)o).Row.ItemArray[3].ToString();
-            string kupac_telefon = ((DataRowView)o).Row.ItemArray[4].ToString();
-            string model = ((DataRowView)o).Row.ItemArray[5].ToString();
-            string serijski_broj = ((DataRowView)o).Row.ItemArray[6].ToString();
-            string dodatna_oprema = ((DataRowView)o).Row.ItemArray[7].ToString();
-            string opis_kvara = ((DataRowView)o).Row.ItemArray[8].ToString();
-            string napomena_servisera = ((DataRowView)o).Row.ItemArray[9].ToString();
-            string serviser = ((DataRowView)o).Row.ItemArray[10].ToString();
+            string rednibroj = ((DataRowView)o).Row.ItemArray[0].ToString();
+            string datum = ((DateTime)((DataRowView)o).Row.ItemArray[2]).Date.ToString();
+            string garantnilist = ((DataRowView)o).Row.ItemArray[21].ToString();
+            string kupac = ((DataRowView)o).Row.ItemArray[4].ToString();
+            string kupac_telefon = ((DataRowView)o).Row.ItemArray[6].ToString();
+            string model = ((DataRowView)o).Row.ItemArray[8].ToString();
+            string serijski_broj = ((DataRowView)o).Row.ItemArray[9].ToString();
+            string dodatna_oprema = ((DataRowView)o).Row.ItemArray[10].ToString();
+            string opis_kvara = ((DataRowView)o).Row.ItemArray[11].ToString();
+            string napomena_servisera = ((DataRowView)o).Row.ItemArray[12].ToString();
+            string serviser = ((DataRowView)o).Row.ItemArray[13].ToString();
             string zavrseno = "";
-            if (((DataRowView)o).Row.ItemArray[11] == DBNull.Value)
+            if (((DataRowView)o).Row.ItemArray[15] == DBNull.Value)
             {
                 zavrseno = "";
             }
             else
             {
-                zavrseno = ((DateTime)((DataRowView)o).Row.ItemArray[1]).ToString();
+                zavrseno = ((DateTime)((DataRowView)o).Row.ItemArray[15]).ToString();
             }
 
             string[] parts = rednibroj.Split('/');
@@ -434,55 +476,39 @@ where redni_broj=@redni_broj";
             ReadPrijava(textBox1.Text, textBox2.Text);
         }
 
-        //private void textBox1_TextChanged(object sender, EventArgs e)
-        //{
-        //  //ReadPrijava();
-        //}
-
         private void btnBrisanje_Click(object sender, EventArgs e)
         {
             object o = dgvPrijave.SelectedRows[0].DataBoundItem;
-            string rb = ((DataRowView)o).Row.ItemArray[12].ToString();
+            string rb = ((DataRowView)o).Row.ItemArray[0].ToString();
             if (MessageBox.Show(string.Format("Obrisati prijavu {0} ?", rb), "Potvrda", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.Yes)
             {
-                BrisiPrijavu(rb);
+                PersistanceManager.DeletePrijava(rb);
                 MessageBox.Show(string.Format("Prijava {0} je uspješno obrisana!", rb), "Poruka", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1);
                 ReadPrijava(textBox1.Text, textBox2.Text);
             }
         }
 
-        private void BrisiPrijavu(string rb)
-        {
-            using (var conn = new NpgsqlConnection(conn_string))
-            {
-                conn.Open();
-                using (var cmd = new NpgsqlCommand())
-                {
-                    cmd.Connection = conn;
 
-                    cmd.Parameters.AddWithValue("@redni_broj", rb);
-                    // Insert some data
-                    cmd.CommandText = @"delete from prijava where redni_broj=@redni_broj";
-                    cmd.ExecuteNonQuery();
-                }
-            }
-        }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            //dataGridView1.Focus();
+            ReadPrijava(textBox1.Text, textBox2.Text);
+            dtpZavrseno.Format = DateTimePickerFormat.Custom;
+            dtpZavrseno.CustomFormat = " ";
+
+            dtpDatumVracanja.Format = DateTimePickerFormat.Custom;
+            dtpDatumVracanja.CustomFormat = " ";
+
+            dtpPoslatMejlDobavljacu.Format = DateTimePickerFormat.Custom;
+            dtpPoslatMejlDobavljacu.CustomFormat = " ";
+
+            dgvPrijave.Focus();
+            dgvPrijave.Select();
+            dgvPrijave.DefaultCellStyle = new DataGridViewCellStyle() { SelectionBackColor = Color.LightBlue, SelectionForeColor = Color.Red };
+
             textBox1.Focus();
             textBox1.Select();
-
         }
-
-
-        private void txtBarcode_KeyUp(object sender, KeyEventArgs e)
-        {
-
-        }
-
-
 
         private void textBox1_KeyUp(object sender, KeyEventArgs e)
         {
@@ -502,13 +528,119 @@ where redni_broj=@redni_broj";
                     tbNapomenaServisera.Select();
                     //textBox1.Text = "";
                 }
-
             }
         }
 
         private void btnReload_Click(object sender, EventArgs e)
         {
             ReadPrijava("", "");
+        }
+
+        private void btnPartneri_Click(object sender, EventArgs e)
+        {
+            FormPartner frm = new FormPartner();
+            frm.DynamicFilters = new List<string>() { "kupac=true" };
+            frm.AccessMode = Klase.Enums.AccessMode.LOOKUP;
+            frm.ShowDialog();
+            if (frm.Selected != null)
+            {
+                tbKupacSifra.Text = frm.Selected.Sifra.ToString();
+                tbKupac.Text = frm.Selected.Naziv;
+                tbKupacaTelefon.Text = frm.Selected.Telefon;
+                tbEmail.Text = frm.Selected.Email;
+                tbAdresa.Text = frm.Selected.Adresa;
+                tbKupac.ReadOnly = true;
+            }
+        }
+
+        private void tabPage2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnDobavljaci_Click(object sender, EventArgs e)
+        {
+            FormPartner frm = new FormPartner();
+            frm.DynamicFilters = new List<string>() { "dobavljac=true" };
+            frm.AccessMode = Klase.Enums.AccessMode.LOOKUP;
+            frm.ShowDialog();
+            if (frm.Selected != null)
+            {
+                tbDobavljac.Text = frm.Selected.Naziv;
+                tbDobavljacSifra.Text = frm.Selected.Sifra.ToString();
+            }
+        }
+
+
+        private void btnKupacClear_Click(object sender, EventArgs e)
+        {
+            tbKupacSifra.Text = "";
+            tbKupacaTelefon.Text = "";
+            tbKupac.Text = "";
+            tbAdresa.Text = "";
+            tbEmail.Text = "";
+            tbKupac.ReadOnly = false;
+        }
+
+        private void btnDobavljacClear_Click(object sender, EventArgs e)
+        {
+            tbDobavljac.Text = "";
+            tbDobavljacSifra.Text = "";
+        }
+
+        private void dtpPoslatMejlDobavljacu_ValueChanged(object sender, EventArgs e)
+        {
+            dtpPoslatMejlDobavljacu.Format = DateTimePickerFormat.Short;
+        }
+
+        private void dtpDatumVracanja_ValueChanged(object sender, EventArgs e)
+        {
+            dtpDatumVracanja.Format = DateTimePickerFormat.Short;
+        }
+
+        private void tbDobavljacSifra_TextChanged(object sender, EventArgs e)
+        {
+            SetVisibility();
+        }
+
+        private void SetVisibility()
+        {
+            lblPoslatMejlDobavljacu.Visible = tbDobavljacSifra.Text != "";
+            dtpPoslatMejlDobavljacu.Visible = tbDobavljacSifra.Text != "";
+            lblDatumVracanja.Visible = tbDobavljacSifra.Text != "";
+            dtpDatumVracanja.Visible = tbDobavljacSifra.Text != "";
+            btnDpDatumVracanja.Visible = tbDobavljacSifra.Text != "";
+            btnDpPoslatMejlDobavljacu.Visible = tbDobavljacSifra.Text != "";
+
+            tbNapomenaServisera.Visible = tbDobavljacSifra.Text == "";
+            lblnapomenaServisera.Visible = tbDobavljacSifra.Text == "";
+            tbServiser.Visible = tbDobavljacSifra.Text == "";
+            lblServiser.Visible = tbDobavljacSifra.Text == "";
+            lblBrojNaloga.Visible = tbDobavljacSifra.Text == "";
+            tbBrojNaloga.Visible = tbDobavljacSifra.Text == "";
+            lblGarantniRok.Visible = tbDobavljacSifra.Text == "";
+            tbGarantniRok.Visible = tbDobavljacSifra.Text == "";
+            lblBrojGarantnogLista.Visible = tbDobavljacSifra.Text == "";
+            tbBrojGarantnogLista.Visible = tbDobavljacSifra.Text == "";
+            tbKupac.ReadOnly = tbKupacSifra.Text != "";
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            dtpDatumVracanja.Format = DateTimePickerFormat.Custom;
+            dtpDatumVracanja.CustomFormat = " ";
+        }
+
+        private void button3_Click_1(object sender, EventArgs e)
+        {
+            dtpPoslatMejlDobavljacu.Format = DateTimePickerFormat.Custom;
+            dtpPoslatMejlDobavljacu.CustomFormat = " ";
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            dtpZavrseno.Format = DateTimePickerFormat.Custom;
+            dtpZavrseno.CustomFormat = " ";
         }
     }
 }
