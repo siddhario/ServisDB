@@ -1,33 +1,33 @@
 ﻿namespace ServisDB.Forme
 {
-    partial class FormUgovor
+  partial class FormUgovor
     {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
-        private System.ComponentModel.IContainer components = null;
+    /// <summary>
+    /// Required designer variable.
+    /// </summary>
+    private System.ComponentModel.IContainer components = null;
 
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing && (components != null))
-            {
-                components.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+    /// <summary>
+    /// Clean up any resources being used.
+    /// </summary>
+    /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+    protected override void Dispose(bool disposing)
+    {
+      if (disposing && (components != null))
+      {
+        components.Dispose();
+      }
+      base.Dispose(disposing);
+    }
 
-        #region Windows Form Designer generated code
+    #region Windows Form Designer generated code
 
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
-        private void InitializeComponent()
-        {
+    /// <summary>
+    /// Required method for Designer support - do not modify
+    /// the contents of this method with the code editor.
+    /// </summary>
+    private void InitializeComponent()
+    {
             this.components = new System.ComponentModel.Container();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
@@ -37,43 +37,73 @@
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.dgvPrijave = new System.Windows.Forms.DataGridView();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.btnKupacClear = new System.Windows.Forms.Button();
+            this.tbKupacSifra = new System.Windows.Forms.TextBox();
+            this.lblBrojRacuna = new System.Windows.Forms.Label();
+            this.tbBrojRacuna = new System.Windows.Forms.TextBox();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.lblAdresa = new System.Windows.Forms.Label();
+            this.tbAdresa = new System.Windows.Forms.TextBox();
+            this.btnPartneri = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
-            this.label12 = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
+            this.lblRadnik = new System.Windows.Forms.Label();
+            this.lblnapomena = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.dtpZavrseno = new System.Windows.Forms.DateTimePicker();
-            this.tbServiser = new System.Windows.Forms.TextBox();
-            this.tbNapomenaServisera = new System.Windows.Forms.TextBox();
-            this.tbOpisKvara = new System.Windows.Forms.TextBox();
-            this.tbDodatnaOprema = new System.Windows.Forms.TextBox();
-            this.tbSerijskiBroj = new System.Windows.Forms.TextBox();
-            this.tbModel = new System.Windows.Forms.TextBox();
+            this.tbRadnik = new System.Windows.Forms.TextBox();
+            this.tbNapomena = new System.Windows.Forms.TextBox();
             this.tbKupacaTelefon = new System.Windows.Forms.TextBox();
             this.tbKupac = new System.Windows.Forms.TextBox();
-            this.tbBrojGarantnogLista = new System.Windows.Forms.TextBox();
             this.dtpDatum = new System.Windows.Forms.DateTimePicker();
             this.tbRedniBroj = new System.Windows.Forms.TextBox();
             this.btnBrisanje = new System.Windows.Forms.Button();
             this.btnStampa = new System.Windows.Forms.Button();
             this.tmrDelay = new System.Windows.Forms.Timer(this.components);
+            this.lblKupacBrojLk = new System.Windows.Forms.Label();
+            this.tbKupacBrojLk = new System.Windows.Forms.TextBox();
+            this.lblKupacMaticniBroj = new System.Windows.Forms.Label();
+            this.tbKupacMaticniBroj = new System.Windows.Forms.TextBox();
+            this.lbIIznosSaPdv = new System.Windows.Forms.Label();
+            this.tbIznosSaPDV = new System.Windows.Forms.TextBox();
+            this.tbSumaUplata = new System.Windows.Forms.TextBox();
+            this.lblSumaUplata = new System.Windows.Forms.Label();
+            this.tbInicijalnoUplaceno = new System.Windows.Forms.TextBox();
+            this.lblInicijalnoUplaceno = new System.Windows.Forms.Label();
+            this.tbBrojRata = new System.Windows.Forms.TextBox();
+            this.lblBrojRata = new System.Windows.Forms.Label();
+            this.tbPreostaloZaUplatu = new System.Windows.Forms.TextBox();
+            this.lblPreostaloZaUplatu = new System.Windows.Forms.Label();
+            this.lblStatus = new System.Windows.Forms.Label();
+            this.tbStatus = new System.Windows.Forms.TextBox();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.tbUplaceno = new System.Windows.Forms.TextBox();
+            this.lblUplaceno = new System.Windows.Forms.Label();
+            this.textBox7 = new System.Windows.Forms.TextBox();
+            this.lblIznosRate = new System.Windows.Forms.Label();
+            this.lblRokPlacanja = new System.Windows.Forms.Label();
+            this.dtpRokPlacanja = new System.Windows.Forms.DateTimePicker();
+            this.lblDatumUplate = new System.Windows.Forms.Label();
+            this.dtpDatumUplate = new System.Windows.Forms.DateTimePicker();
+            this.lblUgovorRataNapomena = new System.Windows.Forms.Label();
+            this.tbUgovorRataNapomena = new System.Windows.Forms.TextBox();
+            this.button3 = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPrijave)).BeginInit();
             this.tabPage2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
             // 
+            this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -142,6 +172,9 @@
             this.dgvPrijave.AllowUserToAddRows = false;
             this.dgvPrijave.AllowUserToDeleteRows = false;
             this.dgvPrijave.AllowUserToOrderColumns = true;
+            this.dgvPrijave.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvPrijave.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvPrijave.Location = new System.Drawing.Point(3, 29);
             this.dgvPrijave.Name = "dgvPrijave";
@@ -150,36 +183,61 @@
             this.dgvPrijave.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvPrijave.Size = new System.Drawing.Size(1059, 680);
             this.dgvPrijave.TabIndex = 0;
-            this.dgvPrijave.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentDoubleClick);
             this.dgvPrijave.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellDoubleClick);
             this.dgvPrijave.RowPrePaint += new System.Windows.Forms.DataGridViewRowPrePaintEventHandler(this.dataGridView1_RowPrePaint);
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.label2);
+            this.tabPage2.Controls.Add(this.button3);
+            this.tabPage2.Controls.Add(this.lblUgovorRataNapomena);
+            this.tabPage2.Controls.Add(this.tbUgovorRataNapomena);
+            this.tabPage2.Controls.Add(this.lblDatumUplate);
+            this.tabPage2.Controls.Add(this.dtpDatumUplate);
+            this.tabPage2.Controls.Add(this.lblRokPlacanja);
+            this.tabPage2.Controls.Add(this.dtpRokPlacanja);
+            this.tabPage2.Controls.Add(this.tbUplaceno);
+            this.tabPage2.Controls.Add(this.lblUplaceno);
+            this.tabPage2.Controls.Add(this.textBox7);
+            this.tabPage2.Controls.Add(this.lblIznosRate);
+            this.tabPage2.Controls.Add(this.dataGridView1);
+            this.tabPage2.Controls.Add(this.tbStatus);
+            this.tabPage2.Controls.Add(this.lblStatus);
+            this.tabPage2.Controls.Add(this.tbPreostaloZaUplatu);
+            this.tabPage2.Controls.Add(this.lblPreostaloZaUplatu);
+            this.tabPage2.Controls.Add(this.tbBrojRata);
+            this.tabPage2.Controls.Add(this.lblBrojRata);
+            this.tabPage2.Controls.Add(this.tbInicijalnoUplaceno);
+            this.tabPage2.Controls.Add(this.lblInicijalnoUplaceno);
+            this.tabPage2.Controls.Add(this.tbSumaUplata);
+            this.tabPage2.Controls.Add(this.lblSumaUplata);
+            this.tabPage2.Controls.Add(this.tbIznosSaPDV);
+            this.tabPage2.Controls.Add(this.lbIIznosSaPdv);
+            this.tabPage2.Controls.Add(this.lblKupacMaticniBroj);
+            this.tabPage2.Controls.Add(this.tbKupacMaticniBroj);
+            this.tabPage2.Controls.Add(this.lblKupacBrojLk);
+            this.tabPage2.Controls.Add(this.tbKupacBrojLk);
+            this.tabPage2.Controls.Add(this.btnKupacClear);
+            this.tabPage2.Controls.Add(this.tbKupacSifra);
+            this.tabPage2.Controls.Add(this.lblBrojRacuna);
+            this.tabPage2.Controls.Add(this.tbBrojRacuna);
+            this.tabPage2.Controls.Add(this.panel2);
+            this.tabPage2.Controls.Add(this.panel1);
+            this.tabPage2.Controls.Add(this.lblAdresa);
+            this.tabPage2.Controls.Add(this.tbAdresa);
+            this.tabPage2.Controls.Add(this.btnPartneri);
             this.tabPage2.Controls.Add(this.button2);
             this.tabPage2.Controls.Add(this.button1);
-            this.tabPage2.Controls.Add(this.label12);
-            this.tabPage2.Controls.Add(this.label11);
-            this.tabPage2.Controls.Add(this.label10);
-            this.tabPage2.Controls.Add(this.label9);
+            this.tabPage2.Controls.Add(this.lblRadnik);
+            this.tabPage2.Controls.Add(this.lblnapomena);
             this.tabPage2.Controls.Add(this.label8);
-            this.tabPage2.Controls.Add(this.label7);
-            this.tabPage2.Controls.Add(this.label6);
-            this.tabPage2.Controls.Add(this.label5);
             this.tabPage2.Controls.Add(this.label4);
             this.tabPage2.Controls.Add(this.label3);
-            this.tabPage2.Controls.Add(this.label2);
             this.tabPage2.Controls.Add(this.label1);
-            this.tabPage2.Controls.Add(this.dtpZavrseno);
-            this.tabPage2.Controls.Add(this.tbServiser);
-            this.tabPage2.Controls.Add(this.tbNapomenaServisera);
-            this.tabPage2.Controls.Add(this.tbOpisKvara);
-            this.tabPage2.Controls.Add(this.tbDodatnaOprema);
-            this.tabPage2.Controls.Add(this.tbSerijskiBroj);
-            this.tabPage2.Controls.Add(this.tbModel);
+            this.tabPage2.Controls.Add(this.tbRadnik);
+            this.tabPage2.Controls.Add(this.tbNapomena);
             this.tabPage2.Controls.Add(this.tbKupacaTelefon);
             this.tabPage2.Controls.Add(this.tbKupac);
-            this.tabPage2.Controls.Add(this.tbBrojGarantnogLista);
             this.tabPage2.Controls.Add(this.dtpDatum);
             this.tabPage2.Controls.Add(this.tbRedniBroj);
             this.tabPage2.Location = new System.Drawing.Point(4, 25);
@@ -189,12 +247,94 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Unos [F2]";
             this.tabPage2.UseVisualStyleBackColor = true;
-            this.tabPage2.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.tabPage2_PreviewKeyDown);
+            this.tabPage2.Click += new System.EventHandler(this.tabPage2_Click);
+            // 
+            // btnKupacClear
+            // 
+            this.btnKupacClear.Location = new System.Drawing.Point(435, 57);
+            this.btnKupacClear.Name = "btnKupacClear";
+            this.btnKupacClear.Size = new System.Drawing.Size(22, 23);
+            this.btnKupacClear.TabIndex = 83;
+            this.btnKupacClear.Text = "x";
+            this.btnKupacClear.UseVisualStyleBackColor = true;
+            this.btnKupacClear.Click += new System.EventHandler(this.btnKupacClear_Click);
+            // 
+            // tbKupacSifra
+            // 
+            this.tbKupacSifra.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbKupacSifra.Location = new System.Drawing.Point(125, 58);
+            this.tbKupacSifra.Name = "tbKupacSifra";
+            this.tbKupacSifra.ReadOnly = true;
+            this.tbKupacSifra.Size = new System.Drawing.Size(52, 22);
+            this.tbKupacSifra.TabIndex = 82;
+            // 
+            // lblBrojRacuna
+            // 
+            this.lblBrojRacuna.AutoSize = true;
+            this.lblBrojRacuna.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblBrojRacuna.Location = new System.Drawing.Point(513, 11);
+            this.lblBrojRacuna.Name = "lblBrojRacuna";
+            this.lblBrojRacuna.Size = new System.Drawing.Size(71, 16);
+            this.lblBrojRacuna.TabIndex = 74;
+            this.lblBrojRacuna.Text = "Br. računa:";
+            // 
+            // tbBrojRacuna
+            // 
+            this.tbBrojRacuna.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbBrojRacuna.Location = new System.Drawing.Point(628, 8);
+            this.tbBrojRacuna.Name = "tbBrojRacuna";
+            this.tbBrojRacuna.Size = new System.Drawing.Size(100, 22);
+            this.tbBrojRacuna.TabIndex = 9;
+            // 
+            // panel2
+            // 
+            this.panel2.BackColor = System.Drawing.Color.LightSteelBlue;
+            this.panel2.Location = new System.Drawing.Point(12, 303);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(982, 1);
+            this.panel2.TabIndex = 61;
+            // 
+            // panel1
+            // 
+            this.panel1.BackColor = System.Drawing.Color.LightSteelBlue;
+            this.panel1.Location = new System.Drawing.Point(12, 39);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(983, 1);
+            this.panel1.TabIndex = 60;
+            // 
+            // lblAdresa
+            // 
+            this.lblAdresa.AutoSize = true;
+            this.lblAdresa.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAdresa.Location = new System.Drawing.Point(8, 91);
+            this.lblAdresa.Name = "lblAdresa";
+            this.lblAdresa.Size = new System.Drawing.Size(55, 16);
+            this.lblAdresa.TabIndex = 58;
+            this.lblAdresa.Text = "Adresa:";
+            // 
+            // tbAdresa
+            // 
+            this.tbAdresa.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbAdresa.Location = new System.Drawing.Point(126, 91);
+            this.tbAdresa.Multiline = true;
+            this.tbAdresa.Name = "tbAdresa";
+            this.tbAdresa.Size = new System.Drawing.Size(265, 52);
+            this.tbAdresa.TabIndex = 2;
+            // 
+            // btnPartneri
+            // 
+            this.btnPartneri.Location = new System.Drawing.Point(397, 57);
+            this.btnPartneri.Name = "btnPartneri";
+            this.btnPartneri.Size = new System.Drawing.Size(37, 23);
+            this.btnPartneri.TabIndex = 53;
+            this.btnPartneri.Text = "...";
+            this.btnPartneri.UseVisualStyleBackColor = true;
+            this.btnPartneri.Click += new System.EventHandler(this.btnPartneri_Click);
             // 
             // button2
             // 
             this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button2.Location = new System.Drawing.Point(421, 349);
+            this.button2.Location = new System.Drawing.Point(503, 532);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(135, 36);
             this.button2.TabIndex = 51;
@@ -205,7 +345,7 @@
             // button1
             // 
             this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Location = new System.Drawing.Point(280, 349);
+            this.button1.Location = new System.Drawing.Point(362, 532);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(135, 36);
             this.button1.TabIndex = 50;
@@ -213,91 +353,41 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // label12
+            // lblRadnik
             // 
-            this.label12.AutoSize = true;
-            this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label12.Location = new System.Drawing.Point(6, 303);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(68, 16);
-            this.label12.TabIndex = 49;
-            this.label12.Text = "Završeno:";
+            this.lblRadnik.AutoSize = true;
+            this.lblRadnik.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblRadnik.Location = new System.Drawing.Point(513, 263);
+            this.lblRadnik.Name = "lblRadnik";
+            this.lblRadnik.Size = new System.Drawing.Size(54, 16);
+            this.lblRadnik.TabIndex = 48;
+            this.lblRadnik.Text = "Radnik:";
             // 
-            // label11
+            // lblnapomena
             // 
-            this.label11.AutoSize = true;
-            this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label11.Location = new System.Drawing.Point(437, 282);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(61, 16);
-            this.label11.TabIndex = 48;
-            this.label11.Text = "Serviser:";
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.Location = new System.Drawing.Point(436, 180);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(138, 16);
-            this.label10.TabIndex = 47;
-            this.label10.Text = "Napomena servisera:";
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.Location = new System.Drawing.Point(437, 55);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(38, 16);
-            this.label9.TabIndex = 46;
-            this.label9.Text = "Kvar:";
+            this.lblnapomena.AutoSize = true;
+            this.lblnapomena.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblnapomena.Location = new System.Drawing.Point(513, 172);
+            this.lblnapomena.Name = "lblnapomena";
+            this.lblnapomena.Size = new System.Drawing.Size(79, 16);
+            this.lblnapomena.TabIndex = 47;
+            this.lblnapomena.Text = "Napomena:";
             // 
             // label8
             // 
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.Location = new System.Drawing.Point(437, 14);
+            this.label8.Location = new System.Drawing.Point(259, 11);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(50, 16);
             this.label8.TabIndex = 45;
             this.label8.Text = "Datum:";
             // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(6, 233);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(113, 16);
-            this.label7.TabIndex = 44;
-            this.label7.Text = "Dodatna oprema:";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(6, 193);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(61, 16);
-            this.label6.TabIndex = 43;
-            this.label6.Text = "Ser. broj:";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(6, 156);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(49, 16);
-            this.label5.TabIndex = 42;
-            this.label5.Text = "Model:";
-            // 
             // label4
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(6, 120);
+            this.label4.Location = new System.Drawing.Point(8, 155);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(98, 16);
             this.label4.TabIndex = 41;
@@ -307,125 +397,63 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(6, 86);
+            this.label3.Location = new System.Drawing.Point(8, 60);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(49, 16);
             this.label3.TabIndex = 40;
             this.label3.Text = "Kupac:";
             // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(6, 45);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(118, 16);
-            this.label2.TabIndex = 39;
-            this.label2.Text = "Br. garantnog lista:";
-            // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(6, 11);
+            this.label1.Location = new System.Drawing.Point(8, 11);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(73, 16);
             this.label1.TabIndex = 38;
             this.label1.Text = "Redni broj:";
             // 
-            // dtpZavrseno
+            // tbRadnik
             // 
-            this.dtpZavrseno.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dtpZavrseno.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpZavrseno.Location = new System.Drawing.Point(125, 298);
-            this.dtpZavrseno.Name = "dtpZavrseno";
-            this.dtpZavrseno.Size = new System.Drawing.Size(152, 22);
-            this.dtpZavrseno.TabIndex = 37;
-            this.dtpZavrseno.ValueChanged += new System.EventHandler(this.dtpZavrseno_ValueChanged);
+            this.tbRadnik.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbRadnik.Location = new System.Drawing.Point(628, 260);
+            this.tbRadnik.Name = "tbRadnik";
+            this.tbRadnik.Size = new System.Drawing.Size(225, 22);
+            this.tbRadnik.TabIndex = 14;
             // 
-            // tbServiser
+            // tbNapomena
             // 
-            this.tbServiser.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbServiser.Location = new System.Drawing.Point(440, 300);
-            this.tbServiser.Name = "tbServiser";
-            this.tbServiser.Size = new System.Drawing.Size(225, 22);
-            this.tbServiser.TabIndex = 36;
-            // 
-            // tbNapomenaServisera
-            // 
-            this.tbNapomenaServisera.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbNapomenaServisera.Location = new System.Drawing.Point(440, 199);
-            this.tbNapomenaServisera.Multiline = true;
-            this.tbNapomenaServisera.Name = "tbNapomenaServisera";
-            this.tbNapomenaServisera.Size = new System.Drawing.Size(377, 74);
-            this.tbNapomenaServisera.TabIndex = 35;
-            // 
-            // tbOpisKvara
-            // 
-            this.tbOpisKvara.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbOpisKvara.Location = new System.Drawing.Point(440, 83);
-            this.tbOpisKvara.Multiline = true;
-            this.tbOpisKvara.Name = "tbOpisKvara";
-            this.tbOpisKvara.Size = new System.Drawing.Size(377, 87);
-            this.tbOpisKvara.TabIndex = 34;
-            // 
-            // tbDodatnaOprema
-            // 
-            this.tbDodatnaOprema.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbDodatnaOprema.Location = new System.Drawing.Point(125, 230);
-            this.tbDodatnaOprema.Multiline = true;
-            this.tbDodatnaOprema.Name = "tbDodatnaOprema";
-            this.tbDodatnaOprema.Size = new System.Drawing.Size(225, 43);
-            this.tbDodatnaOprema.TabIndex = 33;
-            // 
-            // tbSerijskiBroj
-            // 
-            this.tbSerijskiBroj.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbSerijskiBroj.Location = new System.Drawing.Point(125, 190);
-            this.tbSerijskiBroj.Name = "tbSerijskiBroj";
-            this.tbSerijskiBroj.Size = new System.Drawing.Size(225, 22);
-            this.tbSerijskiBroj.TabIndex = 32;
-            // 
-            // tbModel
-            // 
-            this.tbModel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbModel.Location = new System.Drawing.Point(125, 153);
-            this.tbModel.Name = "tbModel";
-            this.tbModel.Size = new System.Drawing.Size(225, 22);
-            this.tbModel.TabIndex = 31;
+            this.tbNapomena.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbNapomena.Location = new System.Drawing.Point(628, 169);
+            this.tbNapomena.Multiline = true;
+            this.tbNapomena.Name = "tbNapomena";
+            this.tbNapomena.Size = new System.Drawing.Size(367, 74);
+            this.tbNapomena.TabIndex = 13;
             // 
             // tbKupacaTelefon
             // 
             this.tbKupacaTelefon.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbKupacaTelefon.Location = new System.Drawing.Point(125, 117);
+            this.tbKupacaTelefon.Location = new System.Drawing.Point(125, 152);
             this.tbKupacaTelefon.Name = "tbKupacaTelefon";
-            this.tbKupacaTelefon.Size = new System.Drawing.Size(225, 22);
-            this.tbKupacaTelefon.TabIndex = 30;
+            this.tbKupacaTelefon.Size = new System.Drawing.Size(266, 22);
+            this.tbKupacaTelefon.TabIndex = 3;
             // 
             // tbKupac
             // 
             this.tbKupac.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbKupac.Location = new System.Drawing.Point(125, 83);
+            this.tbKupac.Location = new System.Drawing.Point(183, 58);
             this.tbKupac.Name = "tbKupac";
-            this.tbKupac.Size = new System.Drawing.Size(225, 22);
-            this.tbKupac.TabIndex = 29;
-            // 
-            // tbBrojGarantnogLista
-            // 
-            this.tbBrojGarantnogLista.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbBrojGarantnogLista.Location = new System.Drawing.Point(125, 42);
-            this.tbBrojGarantnogLista.Name = "tbBrojGarantnogLista";
-            this.tbBrojGarantnogLista.Size = new System.Drawing.Size(152, 22);
-            this.tbBrojGarantnogLista.TabIndex = 28;
+            this.tbKupac.Size = new System.Drawing.Size(208, 22);
+            this.tbKupac.TabIndex = 1;
             // 
             // dtpDatum
             // 
             this.dtpDatum.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dtpDatum.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpDatum.Location = new System.Drawing.Point(493, 9);
+            this.dtpDatum.Location = new System.Drawing.Point(316, 8);
             this.dtpDatum.Name = "dtpDatum";
             this.dtpDatum.Size = new System.Drawing.Size(137, 22);
-            this.dtpDatum.TabIndex = 27;
+            this.dtpDatum.TabIndex = 0;
             // 
             // tbRedniBroj
             // 
@@ -439,6 +467,7 @@
             // 
             // btnBrisanje
             // 
+            this.btnBrisanje.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnBrisanje.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnBrisanje.Location = new System.Drawing.Point(1075, 71);
             this.btnBrisanje.Name = "btnBrisanje";
@@ -450,6 +479,7 @@
             // 
             // btnStampa
             // 
+            this.btnStampa.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnStampa.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnStampa.Location = new System.Drawing.Point(1075, 28);
             this.btnStampa.Name = "btnStampa";
@@ -459,7 +489,258 @@
             this.btnStampa.UseVisualStyleBackColor = true;
             this.btnStampa.Click += new System.EventHandler(this.btnStampa_Click);
             // 
-            // FormMain
+            // lblKupacBrojLk
+            // 
+            this.lblKupacBrojLk.AutoSize = true;
+            this.lblKupacBrojLk.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblKupacBrojLk.Location = new System.Drawing.Point(9, 192);
+            this.lblKupacBrojLk.Name = "lblKupacBrojLk";
+            this.lblKupacBrojLk.Size = new System.Drawing.Size(53, 16);
+            this.lblKupacBrojLk.TabIndex = 89;
+            this.lblKupacBrojLk.Text = "Broj LK:";
+            // 
+            // tbKupacBrojLk
+            // 
+            this.tbKupacBrojLk.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbKupacBrojLk.Location = new System.Drawing.Point(126, 189);
+            this.tbKupacBrojLk.Name = "tbKupacBrojLk";
+            this.tbKupacBrojLk.Size = new System.Drawing.Size(167, 22);
+            this.tbKupacBrojLk.TabIndex = 87;
+            // 
+            // lblKupacMaticniBroj
+            // 
+            this.lblKupacMaticniBroj.AutoSize = true;
+            this.lblKupacMaticniBroj.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblKupacMaticniBroj.Location = new System.Drawing.Point(10, 232);
+            this.lblKupacMaticniBroj.Name = "lblKupacMaticniBroj";
+            this.lblKupacMaticniBroj.Size = new System.Drawing.Size(48, 16);
+            this.lblKupacMaticniBroj.TabIndex = 91;
+            this.lblKupacMaticniBroj.Text = "JMBG:";
+            // 
+            // tbKupacMaticniBroj
+            // 
+            this.tbKupacMaticniBroj.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbKupacMaticniBroj.Location = new System.Drawing.Point(127, 229);
+            this.tbKupacMaticniBroj.Name = "tbKupacMaticniBroj";
+            this.tbKupacMaticniBroj.Size = new System.Drawing.Size(166, 22);
+            this.tbKupacMaticniBroj.TabIndex = 90;
+            // 
+            // lbIIznosSaPdv
+            // 
+            this.lbIIznosSaPdv.AutoSize = true;
+            this.lbIIznosSaPdv.Location = new System.Drawing.Point(513, 60);
+            this.lbIIznosSaPdv.Name = "lbIIznosSaPdv";
+            this.lbIIznosSaPdv.Size = new System.Drawing.Size(95, 16);
+            this.lbIIznosSaPdv.TabIndex = 92;
+            this.lbIIznosSaPdv.Text = "Iznos ugovora:";
+            // 
+            // tbIznosSaPDV
+            // 
+            this.tbIznosSaPDV.Location = new System.Drawing.Point(628, 57);
+            this.tbIznosSaPDV.Name = "tbIznosSaPDV";
+            this.tbIznosSaPDV.Size = new System.Drawing.Size(100, 22);
+            this.tbIznosSaPDV.TabIndex = 93;
+            // 
+            // tbSumaUplata
+            // 
+            this.tbSumaUplata.Location = new System.Drawing.Point(628, 124);
+            this.tbSumaUplata.Name = "tbSumaUplata";
+            this.tbSumaUplata.Size = new System.Drawing.Size(100, 22);
+            this.tbSumaUplata.TabIndex = 95;
+            // 
+            // lblSumaUplata
+            // 
+            this.lblSumaUplata.AutoSize = true;
+            this.lblSumaUplata.Location = new System.Drawing.Point(513, 127);
+            this.lblSumaUplata.Name = "lblSumaUplata";
+            this.lblSumaUplata.Size = new System.Drawing.Size(86, 16);
+            this.lblSumaUplata.TabIndex = 94;
+            this.lblSumaUplata.Text = "Suma uplata:";
+            // 
+            // tbInicijalnoUplaceno
+            // 
+            this.tbInicijalnoUplaceno.Location = new System.Drawing.Point(895, 58);
+            this.tbInicijalnoUplaceno.Name = "tbInicijalnoUplaceno";
+            this.tbInicijalnoUplaceno.Size = new System.Drawing.Size(100, 22);
+            this.tbInicijalnoUplaceno.TabIndex = 97;
+            // 
+            // lblInicijalnoUplaceno
+            // 
+            this.lblInicijalnoUplaceno.AutoSize = true;
+            this.lblInicijalnoUplaceno.Location = new System.Drawing.Point(767, 61);
+            this.lblInicijalnoUplaceno.Name = "lblInicijalnoUplaceno";
+            this.lblInicijalnoUplaceno.Size = new System.Drawing.Size(122, 16);
+            this.lblInicijalnoUplaceno.TabIndex = 96;
+            this.lblInicijalnoUplaceno.Text = "Inicijalno uplaćeno:";
+            // 
+            // tbBrojRata
+            // 
+            this.tbBrojRata.Location = new System.Drawing.Point(628, 94);
+            this.tbBrojRata.Name = "tbBrojRata";
+            this.tbBrojRata.Size = new System.Drawing.Size(100, 22);
+            this.tbBrojRata.TabIndex = 99;
+            // 
+            // lblBrojRata
+            // 
+            this.lblBrojRata.AutoSize = true;
+            this.lblBrojRata.Location = new System.Drawing.Point(513, 94);
+            this.lblBrojRata.Name = "lblBrojRata";
+            this.lblBrojRata.Size = new System.Drawing.Size(61, 16);
+            this.lblBrojRata.TabIndex = 98;
+            this.lblBrojRata.Text = "Broj rata:";
+            // 
+            // tbPreostaloZaUplatu
+            // 
+            this.tbPreostaloZaUplatu.Location = new System.Drawing.Point(895, 124);
+            this.tbPreostaloZaUplatu.Name = "tbPreostaloZaUplatu";
+            this.tbPreostaloZaUplatu.Size = new System.Drawing.Size(100, 22);
+            this.tbPreostaloZaUplatu.TabIndex = 101;
+            // 
+            // lblPreostaloZaUplatu
+            // 
+            this.lblPreostaloZaUplatu.AutoSize = true;
+            this.lblPreostaloZaUplatu.Location = new System.Drawing.Point(767, 127);
+            this.lblPreostaloZaUplatu.Name = "lblPreostaloZaUplatu";
+            this.lblPreostaloZaUplatu.Size = new System.Drawing.Size(125, 16);
+            this.lblPreostaloZaUplatu.TabIndex = 100;
+            this.lblPreostaloZaUplatu.Text = "Preostalo za uplatu:";
+            // 
+            // lblStatus
+            // 
+            this.lblStatus.AutoSize = true;
+            this.lblStatus.Location = new System.Drawing.Point(767, 11);
+            this.lblStatus.Name = "lblStatus";
+            this.lblStatus.Size = new System.Drawing.Size(48, 16);
+            this.lblStatus.TabIndex = 102;
+            this.lblStatus.Text = "Status:";
+            // 
+            // tbStatus
+            // 
+            this.tbStatus.Location = new System.Drawing.Point(831, 8);
+            this.tbStatus.Name = "tbStatus";
+            this.tbStatus.ReadOnly = true;
+            this.tbStatus.Size = new System.Drawing.Size(163, 22);
+            this.tbStatus.TabIndex = 103;
+            // 
+            // dataGridView1
+            // 
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Location = new System.Drawing.Point(125, 345);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.Size = new System.Drawing.Size(376, 150);
+            this.dataGridView1.TabIndex = 104;
+            // 
+            // tbUplaceno
+            // 
+            this.tbUplaceno.Location = new System.Drawing.Point(628, 380);
+            this.tbUplaceno.Name = "tbUplaceno";
+            this.tbUplaceno.Size = new System.Drawing.Size(100, 22);
+            this.tbUplaceno.TabIndex = 108;
+            // 
+            // lblUplaceno
+            // 
+            this.lblUplaceno.AutoSize = true;
+            this.lblUplaceno.Location = new System.Drawing.Point(513, 380);
+            this.lblUplaceno.Name = "lblUplaceno";
+            this.lblUplaceno.Size = new System.Drawing.Size(70, 16);
+            this.lblUplaceno.TabIndex = 107;
+            this.lblUplaceno.Text = "Uplaćeno:";
+            // 
+            // textBox7
+            // 
+            this.textBox7.Location = new System.Drawing.Point(628, 345);
+            this.textBox7.Name = "textBox7";
+            this.textBox7.Size = new System.Drawing.Size(100, 22);
+            this.textBox7.TabIndex = 106;
+            // 
+            // lblIznosRate
+            // 
+            this.lblIznosRate.AutoSize = true;
+            this.lblIznosRate.Location = new System.Drawing.Point(513, 348);
+            this.lblIznosRate.Name = "lblIznosRate";
+            this.lblIznosRate.Size = new System.Drawing.Size(68, 16);
+            this.lblIznosRate.TabIndex = 105;
+            this.lblIznosRate.Text = "Iznos rate:";
+            // 
+            // lblRokPlacanja
+            // 
+            this.lblRokPlacanja.AutoSize = true;
+            this.lblRokPlacanja.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblRokPlacanja.Location = new System.Drawing.Point(750, 347);
+            this.lblRokPlacanja.Name = "lblRokPlacanja";
+            this.lblRokPlacanja.Size = new System.Drawing.Size(91, 16);
+            this.lblRokPlacanja.TabIndex = 110;
+            this.lblRokPlacanja.Text = "Rok plaćanja:";
+            // 
+            // dtpRokPlacanja
+            // 
+            this.dtpRokPlacanja.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dtpRokPlacanja.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtpRokPlacanja.Location = new System.Drawing.Point(847, 342);
+            this.dtpRokPlacanja.Name = "dtpRokPlacanja";
+            this.dtpRokPlacanja.Size = new System.Drawing.Size(115, 22);
+            this.dtpRokPlacanja.TabIndex = 109;
+            // 
+            // lblDatumUplate
+            // 
+            this.lblDatumUplate.AutoSize = true;
+            this.lblDatumUplate.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDatumUplate.Location = new System.Drawing.Point(751, 384);
+            this.lblDatumUplate.Name = "lblDatumUplate";
+            this.lblDatumUplate.Size = new System.Drawing.Size(90, 16);
+            this.lblDatumUplate.TabIndex = 112;
+            this.lblDatumUplate.Text = "Datum uplate:";
+            // 
+            // dtpDatumUplate
+            // 
+            this.dtpDatumUplate.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dtpDatumUplate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtpDatumUplate.Location = new System.Drawing.Point(847, 379);
+            this.dtpDatumUplate.Name = "dtpDatumUplate";
+            this.dtpDatumUplate.Size = new System.Drawing.Size(116, 22);
+            this.dtpDatumUplate.TabIndex = 111;
+            this.dtpDatumUplate.ValueChanged += new System.EventHandler(this.dtpDatumUplate_ValueChanged);
+            // 
+            // lblUgovorRataNapomena
+            // 
+            this.lblUgovorRataNapomena.AutoSize = true;
+            this.lblUgovorRataNapomena.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblUgovorRataNapomena.Location = new System.Drawing.Point(513, 425);
+            this.lblUgovorRataNapomena.Name = "lblUgovorRataNapomena";
+            this.lblUgovorRataNapomena.Size = new System.Drawing.Size(79, 16);
+            this.lblUgovorRataNapomena.TabIndex = 114;
+            this.lblUgovorRataNapomena.Text = "Napomena:";
+            // 
+            // tbUgovorRataNapomena
+            // 
+            this.tbUgovorRataNapomena.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbUgovorRataNapomena.Location = new System.Drawing.Point(628, 422);
+            this.tbUgovorRataNapomena.Multiline = true;
+            this.tbUgovorRataNapomena.Name = "tbUgovorRataNapomena";
+            this.tbUgovorRataNapomena.Size = new System.Drawing.Size(367, 48);
+            this.tbUgovorRataNapomena.TabIndex = 113;
+            // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(966, 379);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(29, 23);
+            this.button3.TabIndex = 115;
+            this.button3.Text = "x";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(124, 316);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(43, 18);
+            this.label2.TabIndex = 116;
+            this.label2.Text = "Rate:";
+            // 
+            // FormUgovor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -467,60 +748,87 @@
             this.Controls.Add(this.btnBrisanje);
             this.Controls.Add(this.btnStampa);
             this.Controls.Add(this.tabControl1);
-            this.Name = "FormMain";
+            this.Name = "FormUgovor";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Evidencija servisnih prijava";
+            this.Text = "Ugovori o odloženom plaćanju";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.Form1_Load);
-            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPrijave)).EndInit();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
 
-        }
+    }
 
-        #endregion
+    #endregion
 
-        private System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.TabPage tabPage2;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label3;
+    private System.Windows.Forms.TabControl tabControl1;
+    private System.Windows.Forms.TabPage tabPage1;
+    private System.Windows.Forms.TabPage tabPage2;
+    private System.Windows.Forms.Button button2;
+    private System.Windows.Forms.Button button1;
+    private System.Windows.Forms.Label lblRadnik;
+    private System.Windows.Forms.Label lblnapomena;
+    private System.Windows.Forms.Label label8;
+    private System.Windows.Forms.Label label4;
+    private System.Windows.Forms.Label label3;
+    private System.Windows.Forms.Label label1;
+    private System.Windows.Forms.TextBox tbRadnik;
+    private System.Windows.Forms.TextBox tbNapomena;
+    private System.Windows.Forms.TextBox tbKupacaTelefon;
+    private System.Windows.Forms.TextBox tbKupac;
+    private System.Windows.Forms.DateTimePicker dtpDatum;
+    private System.Windows.Forms.TextBox tbRedniBroj;
+    private System.Windows.Forms.DataGridView dgvPrijave;
+    private System.Windows.Forms.Button btnBrisanje;
+    private System.Windows.Forms.Button btnStampa;
+    private System.Windows.Forms.TextBox textBox2;
+    private System.Windows.Forms.TextBox textBox1;
+    private System.Windows.Forms.Label label13;
+    private System.Windows.Forms.Timer tmrDelay;
+    private System.Windows.Forms.Button btnReload;
+        private System.Windows.Forms.Button btnPartneri;
+        private System.Windows.Forms.Label lblAdresa;
+        private System.Windows.Forms.TextBox tbAdresa;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Label lblBrojRacuna;
+        private System.Windows.Forms.TextBox tbBrojRacuna;
+        private System.Windows.Forms.TextBox tbKupacSifra;
+        private System.Windows.Forms.Button btnKupacClear;
+        private System.Windows.Forms.Label lblKupacMaticniBroj;
+        private System.Windows.Forms.TextBox tbKupacMaticniBroj;
+        private System.Windows.Forms.Label lblKupacBrojLk;
+        private System.Windows.Forms.TextBox tbKupacBrojLk;
+        private System.Windows.Forms.TextBox tbPreostaloZaUplatu;
+        private System.Windows.Forms.Label lblPreostaloZaUplatu;
+        private System.Windows.Forms.TextBox tbBrojRata;
+        private System.Windows.Forms.Label lblBrojRata;
+        private System.Windows.Forms.TextBox tbInicijalnoUplaceno;
+        private System.Windows.Forms.Label lblInicijalnoUplaceno;
+        private System.Windows.Forms.TextBox tbSumaUplata;
+        private System.Windows.Forms.Label lblSumaUplata;
+        private System.Windows.Forms.TextBox tbIznosSaPDV;
+        private System.Windows.Forms.Label lbIIznosSaPdv;
+        private System.Windows.Forms.TextBox tbStatus;
+        private System.Windows.Forms.Label lblStatus;
+        private System.Windows.Forms.Label lblDatumUplate;
+        private System.Windows.Forms.DateTimePicker dtpDatumUplate;
+        private System.Windows.Forms.Label lblRokPlacanja;
+        private System.Windows.Forms.DateTimePicker dtpRokPlacanja;
+        private System.Windows.Forms.TextBox tbUplaceno;
+        private System.Windows.Forms.Label lblUplaceno;
+        private System.Windows.Forms.TextBox textBox7;
+        private System.Windows.Forms.Label lblIznosRate;
+        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.Label lblUgovorRataNapomena;
+        private System.Windows.Forms.TextBox tbUgovorRataNapomena;
+        private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.DateTimePicker dtpZavrseno;
-        private System.Windows.Forms.TextBox tbServiser;
-        private System.Windows.Forms.TextBox tbNapomenaServisera;
-        private System.Windows.Forms.TextBox tbOpisKvara;
-        private System.Windows.Forms.TextBox tbDodatnaOprema;
-        private System.Windows.Forms.TextBox tbSerijskiBroj;
-        private System.Windows.Forms.TextBox tbModel;
-        private System.Windows.Forms.TextBox tbKupacaTelefon;
-        private System.Windows.Forms.TextBox tbKupac;
-        private System.Windows.Forms.TextBox tbBrojGarantnogLista;
-        private System.Windows.Forms.DateTimePicker dtpDatum;
-        private System.Windows.Forms.TextBox tbRedniBroj;
-        private System.Windows.Forms.DataGridView dgvPrijave;
-        private System.Windows.Forms.Button btnBrisanje;
-        private System.Windows.Forms.Button btnStampa;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.Timer tmrDelay;
-        private System.Windows.Forms.Button btnReload;
     }
 }
 

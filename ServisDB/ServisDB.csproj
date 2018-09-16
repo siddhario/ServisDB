@@ -83,12 +83,6 @@
     <Compile Include="Forme\FormPartner.Designer.cs">
       <DependentUpon>FormPartner.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forme\FormServisniNalog.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forme\FormServisniNalog.Designer.cs">
-      <DependentUpon>FormServisniNalog.cs</DependentUpon>
-    </Compile>
     <Compile Include="Klase\PersistanceManager.cs" />
     <Compile Include="Klase\Enums.cs" />
     <Compile Include="Klase\Partner.cs" />
@@ -105,9 +99,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forme\FormPartner.resx">
       <DependentUpon>FormPartner.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forme\FormServisniNalog.resx">
-      <DependentUpon>FormServisniNalog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

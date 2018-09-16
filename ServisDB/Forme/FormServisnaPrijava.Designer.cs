@@ -31,7 +31,6 @@
             this.components = new System.ComponentModel.Container();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.btnReload = new System.Windows.Forms.Button();
             this.label13 = new System.Windows.Forms.Label();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
@@ -39,25 +38,12 @@
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.label9 = new System.Windows.Forms.Label();
             this.tbServiserPrimio = new System.Windows.Forms.TextBox();
-            this.btnDobavljacClear = new System.Windows.Forms.Button();
             this.btnKupacClear = new System.Windows.Forms.Button();
             this.tbKupacSifra = new System.Windows.Forms.TextBox();
-            this.tbDobavljacSifra = new System.Windows.Forms.TextBox();
-            this.lblBrojNaloga = new System.Windows.Forms.Label();
-            this.tbBrojNaloga = new System.Windows.Forms.TextBox();
-            this.lblGarantniRok = new System.Windows.Forms.Label();
-            this.tbGarantniRok = new System.Windows.Forms.TextBox();
-            this.lblPoslatMejlDobavljacu = new System.Windows.Forms.Label();
-            this.dtpPoslatMejlDobavljacu = new System.Windows.Forms.DateTimePicker();
             this.lblBrojRacuna = new System.Windows.Forms.Label();
             this.tbBrojRacuna = new System.Windows.Forms.TextBox();
-            this.btnDobavljaci = new System.Windows.Forms.Button();
-            this.lblDobavljac = new System.Windows.Forms.Label();
-            this.tbDobavljac = new System.Windows.Forms.TextBox();
             this.lblPredmet = new System.Windows.Forms.Label();
             this.tbPredmet = new System.Windows.Forms.TextBox();
-            this.lblDatumVracanja = new System.Windows.Forms.Label();
-            this.dtpDatumVracanja = new System.Windows.Forms.DateTimePicker();
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.lblEmail = new System.Windows.Forms.Label();
@@ -67,7 +53,6 @@
             this.btnPartneri = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
-            this.label12 = new System.Windows.Forms.Label();
             this.lblServiser = new System.Windows.Forms.Label();
             this.lblnapomenaServisera = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
@@ -76,9 +61,7 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.lblBrojGarantnogLista = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.dtpZavrseno = new System.Windows.Forms.DateTimePicker();
             this.tbServiser = new System.Windows.Forms.TextBox();
             this.tbNapomenaServisera = new System.Windows.Forms.TextBox();
             this.tbDodatnaOprema = new System.Windows.Forms.TextBox();
@@ -86,15 +69,32 @@
             this.tbModel = new System.Windows.Forms.TextBox();
             this.tbKupacaTelefon = new System.Windows.Forms.TextBox();
             this.tbKupac = new System.Windows.Forms.TextBox();
-            this.tbBrojGarantnogLista = new System.Windows.Forms.TextBox();
             this.dtpDatum = new System.Windows.Forms.DateTimePicker();
             this.tbRedniBroj = new System.Windows.Forms.TextBox();
             this.btnBrisanje = new System.Windows.Forms.Button();
             this.btnStampa = new System.Windows.Forms.Button();
             this.tmrDelay = new System.Windows.Forms.Timer(this.components);
+            this.btnReload = new System.Windows.Forms.Button();
+            this.dtpZavrseno = new System.Windows.Forms.DateTimePicker();
+            this.label12 = new System.Windows.Forms.Label();
+            this.button4 = new System.Windows.Forms.Button();
+            this.tbDobavljac = new System.Windows.Forms.TextBox();
+            this.lblDobavljac = new System.Windows.Forms.Label();
+            this.btnDobavljaci = new System.Windows.Forms.Button();
+            this.tbDobavljacSifra = new System.Windows.Forms.TextBox();
+            this.btnDobavljacClear = new System.Windows.Forms.Button();
+            this.dtpDatumVracanja = new System.Windows.Forms.DateTimePicker();
+            this.lblDatumVracanja = new System.Windows.Forms.Label();
+            this.dtpPoslatMejlDobavljacu = new System.Windows.Forms.DateTimePicker();
+            this.lblPoslatMejlDobavljacu = new System.Windows.Forms.Label();
             this.btnDpDatumVracanja = new System.Windows.Forms.Button();
             this.btnDpPoslatMejlDobavljacu = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
+            this.tbBrojNaloga = new System.Windows.Forms.TextBox();
+            this.lblBrojNaloga = new System.Windows.Forms.Label();
+            this.tbBrojGarantnogLista = new System.Windows.Forms.TextBox();
+            this.lblBrojGarantnogLista = new System.Windows.Forms.Label();
+            this.tbGarantniRok = new System.Windows.Forms.TextBox();
+            this.lblGarantniRok = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPrijave)).BeginInit();
@@ -131,16 +131,6 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Pregled";
             this.tabPage1.UseVisualStyleBackColor = true;
-            // 
-            // btnReload
-            // 
-            this.btnReload.Image = global::ServisDB.Properties.Resources.reload__1_;
-            this.btnReload.Location = new System.Drawing.Point(371, 3);
-            this.btnReload.Name = "btnReload";
-            this.btnReload.Size = new System.Drawing.Size(46, 22);
-            this.btnReload.TabIndex = 4;
-            this.btnReload.UseVisualStyleBackColor = true;
-            this.btnReload.Click += new System.EventHandler(this.btnReload_Click);
             // 
             // label13
             // 
@@ -272,16 +262,6 @@
             this.tbServiserPrimio.Size = new System.Drawing.Size(225, 22);
             this.tbServiserPrimio.TabIndex = 85;
             // 
-            // btnDobavljacClear
-            // 
-            this.btnDobavljacClear.Location = new System.Drawing.Point(967, 60);
-            this.btnDobavljacClear.Name = "btnDobavljacClear";
-            this.btnDobavljacClear.Size = new System.Drawing.Size(22, 23);
-            this.btnDobavljacClear.TabIndex = 84;
-            this.btnDobavljacClear.Text = "x";
-            this.btnDobavljacClear.UseVisualStyleBackColor = true;
-            this.btnDobavljacClear.Click += new System.EventHandler(this.btnDobavljacClear_Click);
-            // 
             // btnKupacClear
             // 
             this.btnKupacClear.Location = new System.Drawing.Point(435, 57);
@@ -301,74 +281,6 @@
             this.tbKupacSifra.Size = new System.Drawing.Size(52, 22);
             this.tbKupacSifra.TabIndex = 82;
             // 
-            // tbDobavljacSifra
-            // 
-            this.tbDobavljacSifra.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbDobavljacSifra.Location = new System.Drawing.Point(658, 60);
-            this.tbDobavljacSifra.Name = "tbDobavljacSifra";
-            this.tbDobavljacSifra.ReadOnly = true;
-            this.tbDobavljacSifra.Size = new System.Drawing.Size(52, 22);
-            this.tbDobavljacSifra.TabIndex = 81;
-            this.tbDobavljacSifra.TextChanged += new System.EventHandler(this.tbDobavljacSifra_TextChanged);
-            // 
-            // lblBrojNaloga
-            // 
-            this.lblBrojNaloga.AutoSize = true;
-            this.lblBrojNaloga.Location = new System.Drawing.Point(513, 241);
-            this.lblBrojNaloga.Name = "lblBrojNaloga";
-            this.lblBrojNaloga.Size = new System.Drawing.Size(72, 16);
-            this.lblBrojNaloga.TabIndex = 80;
-            this.lblBrojNaloga.Text = "Br. naloga:";
-            // 
-            // tbBrojNaloga
-            // 
-            this.tbBrojNaloga.Location = new System.Drawing.Point(658, 238);
-            this.tbBrojNaloga.Name = "tbBrojNaloga";
-            this.tbBrojNaloga.ReadOnly = true;
-            this.tbBrojNaloga.Size = new System.Drawing.Size(100, 22);
-            this.tbBrojNaloga.TabIndex = 16;
-            this.tbBrojNaloga.Text = "AUTO";
-            // 
-            // lblGarantniRok
-            // 
-            this.lblGarantniRok.AutoSize = true;
-            this.lblGarantniRok.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblGarantniRok.Location = new System.Drawing.Point(513, 441);
-            this.lblGarantniRok.Name = "lblGarantniRok";
-            this.lblGarantniRok.Size = new System.Drawing.Size(83, 16);
-            this.lblGarantniRok.TabIndex = 78;
-            this.lblGarantniRok.Text = "Garantni rok:";
-            // 
-            // tbGarantniRok
-            // 
-            this.tbGarantniRok.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbGarantniRok.Location = new System.Drawing.Point(658, 438);
-            this.tbGarantniRok.Name = "tbGarantniRok";
-            this.tbGarantniRok.Size = new System.Drawing.Size(97, 22);
-            this.tbGarantniRok.TabIndex = 15;
-            // 
-            // lblPoslatMejlDobavljacu
-            // 
-            this.lblPoslatMejlDobavljacu.AutoSize = true;
-            this.lblPoslatMejlDobavljacu.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPoslatMejlDobavljacu.Location = new System.Drawing.Point(513, 127);
-            this.lblPoslatMejlDobavljacu.Name = "lblPoslatMejlDobavljacu";
-            this.lblPoslatMejlDobavljacu.Size = new System.Drawing.Size(106, 16);
-            this.lblPoslatMejlDobavljacu.TabIndex = 76;
-            this.lblPoslatMejlDobavljacu.Text = "Mejl dobavljaču:";
-            this.lblPoslatMejlDobavljacu.Visible = false;
-            // 
-            // dtpPoslatMejlDobavljacu
-            // 
-            this.dtpPoslatMejlDobavljacu.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dtpPoslatMejlDobavljacu.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpPoslatMejlDobavljacu.Location = new System.Drawing.Point(659, 127);
-            this.dtpPoslatMejlDobavljacu.Name = "dtpPoslatMejlDobavljacu";
-            this.dtpPoslatMejlDobavljacu.Size = new System.Drawing.Size(117, 22);
-            this.dtpPoslatMejlDobavljacu.TabIndex = 11;
-            this.dtpPoslatMejlDobavljacu.Visible = false;
-            this.dtpPoslatMejlDobavljacu.ValueChanged += new System.EventHandler(this.dtpPoslatMejlDobavljacu_ValueChanged);
-            // 
             // lblBrojRacuna
             // 
             this.lblBrojRacuna.AutoSize = true;
@@ -386,35 +298,6 @@
             this.tbBrojRacuna.Name = "tbBrojRacuna";
             this.tbBrojRacuna.Size = new System.Drawing.Size(152, 22);
             this.tbBrojRacuna.TabIndex = 9;
-            // 
-            // btnDobavljaci
-            // 
-            this.btnDobavljaci.Location = new System.Drawing.Point(929, 60);
-            this.btnDobavljaci.Name = "btnDobavljaci";
-            this.btnDobavljaci.Size = new System.Drawing.Size(37, 23);
-            this.btnDobavljaci.TabIndex = 72;
-            this.btnDobavljaci.Text = "...";
-            this.btnDobavljaci.UseVisualStyleBackColor = true;
-            this.btnDobavljaci.Click += new System.EventHandler(this.btnDobavljaci_Click);
-            // 
-            // lblDobavljac
-            // 
-            this.lblDobavljac.AutoSize = true;
-            this.lblDobavljac.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDobavljac.Location = new System.Drawing.Point(513, 61);
-            this.lblDobavljac.Name = "lblDobavljac";
-            this.lblDobavljac.Size = new System.Drawing.Size(73, 16);
-            this.lblDobavljac.TabIndex = 71;
-            this.lblDobavljac.Text = "Dobavljač:";
-            // 
-            // tbDobavljac
-            // 
-            this.tbDobavljac.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbDobavljac.Location = new System.Drawing.Point(716, 60);
-            this.tbDobavljac.Name = "tbDobavljac";
-            this.tbDobavljac.ReadOnly = true;
-            this.tbDobavljac.Size = new System.Drawing.Size(207, 22);
-            this.tbDobavljac.TabIndex = 70;
             // 
             // lblPredmet
             // 
@@ -434,27 +317,6 @@
             this.tbPredmet.Name = "tbPredmet";
             this.tbPredmet.Size = new System.Drawing.Size(328, 77);
             this.tbPredmet.TabIndex = 5;
-            // 
-            // lblDatumVracanja
-            // 
-            this.lblDatumVracanja.AutoSize = true;
-            this.lblDatumVracanja.Location = new System.Drawing.Point(513, 159);
-            this.lblDatumVracanja.Name = "lblDatumVracanja";
-            this.lblDatumVracanja.Size = new System.Drawing.Size(105, 16);
-            this.lblDatumVracanja.TabIndex = 63;
-            this.lblDatumVracanja.Text = "Datum vraćanja:";
-            this.lblDatumVracanja.Visible = false;
-            // 
-            // dtpDatumVracanja
-            // 
-            this.dtpDatumVracanja.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dtpDatumVracanja.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpDatumVracanja.Location = new System.Drawing.Point(658, 157);
-            this.dtpDatumVracanja.Name = "dtpDatumVracanja";
-            this.dtpDatumVracanja.Size = new System.Drawing.Size(118, 22);
-            this.dtpDatumVracanja.TabIndex = 12;
-            this.dtpDatumVracanja.Visible = false;
-            this.dtpDatumVracanja.ValueChanged += new System.EventHandler(this.dtpDatumVracanja_ValueChanged);
             // 
             // panel2
             // 
@@ -541,16 +403,6 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label12.Location = new System.Drawing.Point(513, 11);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(68, 16);
-            this.label12.TabIndex = 49;
-            this.label12.Text = "Završeno:";
-            // 
             // lblServiser
             // 
             this.lblServiser.AutoSize = true;
@@ -631,16 +483,6 @@
             this.label3.TabIndex = 40;
             this.label3.Text = "Kupac:";
             // 
-            // lblBrojGarantnogLista
-            // 
-            this.lblBrojGarantnogLista.AutoSize = true;
-            this.lblBrojGarantnogLista.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblBrojGarantnogLista.Location = new System.Drawing.Point(513, 408);
-            this.lblBrojGarantnogLista.Name = "lblBrojGarantnogLista";
-            this.lblBrojGarantnogLista.Size = new System.Drawing.Size(118, 16);
-            this.lblBrojGarantnogLista.TabIndex = 39;
-            this.lblBrojGarantnogLista.Text = "Br. garantnog lista:";
-            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -650,16 +492,6 @@
             this.label1.Size = new System.Drawing.Size(73, 16);
             this.label1.TabIndex = 38;
             this.label1.Text = "Redni broj:";
-            // 
-            // dtpZavrseno
-            // 
-            this.dtpZavrseno.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dtpZavrseno.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpZavrseno.Location = new System.Drawing.Point(658, 8);
-            this.dtpZavrseno.Name = "dtpZavrseno";
-            this.dtpZavrseno.Size = new System.Drawing.Size(118, 22);
-            this.dtpZavrseno.TabIndex = 37;
-            this.dtpZavrseno.ValueChanged += new System.EventHandler(this.dtpZavrseno_ValueChanged);
             // 
             // tbServiser
             // 
@@ -719,14 +551,6 @@
             this.tbKupac.Size = new System.Drawing.Size(208, 22);
             this.tbKupac.TabIndex = 1;
             // 
-            // tbBrojGarantnogLista
-            // 
-            this.tbBrojGarantnogLista.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbBrojGarantnogLista.Location = new System.Drawing.Point(658, 402);
-            this.tbBrojGarantnogLista.Name = "tbBrojGarantnogLista";
-            this.tbBrojGarantnogLista.Size = new System.Drawing.Size(152, 22);
-            this.tbBrojGarantnogLista.TabIndex = 10;
-            // 
             // dtpDatum
             // 
             this.dtpDatum.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -770,6 +594,138 @@
             this.btnStampa.UseVisualStyleBackColor = true;
             this.btnStampa.Click += new System.EventHandler(this.btnStampa_Click);
             // 
+            // btnReload
+            // 
+            this.btnReload.Image = global::ServisDB.Properties.Resources.reload__1_;
+            this.btnReload.Location = new System.Drawing.Point(371, 3);
+            this.btnReload.Name = "btnReload";
+            this.btnReload.Size = new System.Drawing.Size(46, 22);
+            this.btnReload.TabIndex = 4;
+            this.btnReload.UseVisualStyleBackColor = true;
+            this.btnReload.Click += new System.EventHandler(this.btnReload_Click);
+            // 
+            // dtpZavrseno
+            // 
+            this.dtpZavrseno.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dtpZavrseno.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtpZavrseno.Location = new System.Drawing.Point(658, 8);
+            this.dtpZavrseno.Name = "dtpZavrseno";
+            this.dtpZavrseno.Size = new System.Drawing.Size(118, 22);
+            this.dtpZavrseno.TabIndex = 37;
+            this.dtpZavrseno.ValueChanged += new System.EventHandler(this.dtpZavrseno_ValueChanged);
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label12.Location = new System.Drawing.Point(513, 11);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(68, 16);
+            this.label12.TabIndex = 49;
+            this.label12.Text = "Završeno:";
+            // 
+            // button4
+            // 
+            this.button4.Location = new System.Drawing.Point(782, 8);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(27, 23);
+            this.button4.TabIndex = 89;
+            this.button4.Text = "x";
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
+            // 
+            // tbDobavljac
+            // 
+            this.tbDobavljac.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbDobavljac.Location = new System.Drawing.Point(716, 60);
+            this.tbDobavljac.Name = "tbDobavljac";
+            this.tbDobavljac.ReadOnly = true;
+            this.tbDobavljac.Size = new System.Drawing.Size(207, 22);
+            this.tbDobavljac.TabIndex = 70;
+            // 
+            // lblDobavljac
+            // 
+            this.lblDobavljac.AutoSize = true;
+            this.lblDobavljac.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDobavljac.Location = new System.Drawing.Point(513, 61);
+            this.lblDobavljac.Name = "lblDobavljac";
+            this.lblDobavljac.Size = new System.Drawing.Size(73, 16);
+            this.lblDobavljac.TabIndex = 71;
+            this.lblDobavljac.Text = "Dobavljač:";
+            // 
+            // btnDobavljaci
+            // 
+            this.btnDobavljaci.Location = new System.Drawing.Point(929, 60);
+            this.btnDobavljaci.Name = "btnDobavljaci";
+            this.btnDobavljaci.Size = new System.Drawing.Size(37, 23);
+            this.btnDobavljaci.TabIndex = 72;
+            this.btnDobavljaci.Text = "...";
+            this.btnDobavljaci.UseVisualStyleBackColor = true;
+            this.btnDobavljaci.Click += new System.EventHandler(this.btnDobavljaci_Click);
+            // 
+            // tbDobavljacSifra
+            // 
+            this.tbDobavljacSifra.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbDobavljacSifra.Location = new System.Drawing.Point(658, 60);
+            this.tbDobavljacSifra.Name = "tbDobavljacSifra";
+            this.tbDobavljacSifra.ReadOnly = true;
+            this.tbDobavljacSifra.Size = new System.Drawing.Size(52, 22);
+            this.tbDobavljacSifra.TabIndex = 81;
+            this.tbDobavljacSifra.TextChanged += new System.EventHandler(this.tbDobavljacSifra_TextChanged);
+            // 
+            // btnDobavljacClear
+            // 
+            this.btnDobavljacClear.Location = new System.Drawing.Point(967, 60);
+            this.btnDobavljacClear.Name = "btnDobavljacClear";
+            this.btnDobavljacClear.Size = new System.Drawing.Size(22, 23);
+            this.btnDobavljacClear.TabIndex = 84;
+            this.btnDobavljacClear.Text = "x";
+            this.btnDobavljacClear.UseVisualStyleBackColor = true;
+            this.btnDobavljacClear.Click += new System.EventHandler(this.btnDobavljacClear_Click);
+            // 
+            // dtpDatumVracanja
+            // 
+            this.dtpDatumVracanja.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dtpDatumVracanja.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtpDatumVracanja.Location = new System.Drawing.Point(658, 157);
+            this.dtpDatumVracanja.Name = "dtpDatumVracanja";
+            this.dtpDatumVracanja.Size = new System.Drawing.Size(118, 22);
+            this.dtpDatumVracanja.TabIndex = 12;
+            this.dtpDatumVracanja.Visible = false;
+            this.dtpDatumVracanja.ValueChanged += new System.EventHandler(this.dtpDatumVracanja_ValueChanged);
+            // 
+            // lblDatumVracanja
+            // 
+            this.lblDatumVracanja.AutoSize = true;
+            this.lblDatumVracanja.Location = new System.Drawing.Point(513, 159);
+            this.lblDatumVracanja.Name = "lblDatumVracanja";
+            this.lblDatumVracanja.Size = new System.Drawing.Size(105, 16);
+            this.lblDatumVracanja.TabIndex = 63;
+            this.lblDatumVracanja.Text = "Datum vraćanja:";
+            this.lblDatumVracanja.Visible = false;
+            // 
+            // dtpPoslatMejlDobavljacu
+            // 
+            this.dtpPoslatMejlDobavljacu.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dtpPoslatMejlDobavljacu.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtpPoslatMejlDobavljacu.Location = new System.Drawing.Point(659, 127);
+            this.dtpPoslatMejlDobavljacu.Name = "dtpPoslatMejlDobavljacu";
+            this.dtpPoslatMejlDobavljacu.Size = new System.Drawing.Size(117, 22);
+            this.dtpPoslatMejlDobavljacu.TabIndex = 11;
+            this.dtpPoslatMejlDobavljacu.Visible = false;
+            this.dtpPoslatMejlDobavljacu.ValueChanged += new System.EventHandler(this.dtpPoslatMejlDobavljacu_ValueChanged);
+            // 
+            // lblPoslatMejlDobavljacu
+            // 
+            this.lblPoslatMejlDobavljacu.AutoSize = true;
+            this.lblPoslatMejlDobavljacu.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPoslatMejlDobavljacu.Location = new System.Drawing.Point(513, 127);
+            this.lblPoslatMejlDobavljacu.Name = "lblPoslatMejlDobavljacu";
+            this.lblPoslatMejlDobavljacu.Size = new System.Drawing.Size(106, 16);
+            this.lblPoslatMejlDobavljacu.TabIndex = 76;
+            this.lblPoslatMejlDobavljacu.Text = "Mejl dobavljaču:";
+            this.lblPoslatMejlDobavljacu.Visible = false;
+            // 
             // btnDpDatumVracanja
             // 
             this.btnDpDatumVracanja.Location = new System.Drawing.Point(782, 156);
@@ -792,15 +748,59 @@
             this.btnDpPoslatMejlDobavljacu.Visible = false;
             this.btnDpPoslatMejlDobavljacu.Click += new System.EventHandler(this.button3_Click_1);
             // 
-            // button4
+            // tbBrojNaloga
             // 
-            this.button4.Location = new System.Drawing.Point(782, 8);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(27, 23);
-            this.button4.TabIndex = 89;
-            this.button4.Text = "x";
-            this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
+            this.tbBrojNaloga.Location = new System.Drawing.Point(658, 238);
+            this.tbBrojNaloga.Name = "tbBrojNaloga";
+            this.tbBrojNaloga.ReadOnly = true;
+            this.tbBrojNaloga.Size = new System.Drawing.Size(100, 22);
+            this.tbBrojNaloga.TabIndex = 16;
+            this.tbBrojNaloga.Text = "AUTO";
+            // 
+            // lblBrojNaloga
+            // 
+            this.lblBrojNaloga.AutoSize = true;
+            this.lblBrojNaloga.Location = new System.Drawing.Point(513, 241);
+            this.lblBrojNaloga.Name = "lblBrojNaloga";
+            this.lblBrojNaloga.Size = new System.Drawing.Size(72, 16);
+            this.lblBrojNaloga.TabIndex = 80;
+            this.lblBrojNaloga.Text = "Br. naloga:";
+            // 
+            // tbBrojGarantnogLista
+            // 
+            this.tbBrojGarantnogLista.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbBrojGarantnogLista.Location = new System.Drawing.Point(658, 402);
+            this.tbBrojGarantnogLista.Name = "tbBrojGarantnogLista";
+            this.tbBrojGarantnogLista.Size = new System.Drawing.Size(152, 22);
+            this.tbBrojGarantnogLista.TabIndex = 10;
+            // 
+            // lblBrojGarantnogLista
+            // 
+            this.lblBrojGarantnogLista.AutoSize = true;
+            this.lblBrojGarantnogLista.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblBrojGarantnogLista.Location = new System.Drawing.Point(513, 408);
+            this.lblBrojGarantnogLista.Name = "lblBrojGarantnogLista";
+            this.lblBrojGarantnogLista.Size = new System.Drawing.Size(118, 16);
+            this.lblBrojGarantnogLista.TabIndex = 39;
+            this.lblBrojGarantnogLista.Text = "Br. garantnog lista:";
+            // 
+            // tbGarantniRok
+            // 
+            this.tbGarantniRok.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbGarantniRok.Location = new System.Drawing.Point(658, 438);
+            this.tbGarantniRok.Name = "tbGarantniRok";
+            this.tbGarantniRok.Size = new System.Drawing.Size(97, 22);
+            this.tbGarantniRok.TabIndex = 15;
+            // 
+            // lblGarantniRok
+            // 
+            this.lblGarantniRok.AutoSize = true;
+            this.lblGarantniRok.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblGarantniRok.Location = new System.Drawing.Point(513, 441);
+            this.lblGarantniRok.Name = "lblGarantniRok";
+            this.lblGarantniRok.Size = new System.Drawing.Size(83, 16);
+            this.lblGarantniRok.TabIndex = 78;
+            this.lblGarantniRok.Text = "Garantni rok:";
             // 
             // frmServisnaPrijava
             // 
@@ -832,7 +832,6 @@
     private System.Windows.Forms.TabPage tabPage2;
     private System.Windows.Forms.Button button2;
     private System.Windows.Forms.Button button1;
-    private System.Windows.Forms.Label label12;
     private System.Windows.Forms.Label lblServiser;
     private System.Windows.Forms.Label lblnapomenaServisera;
     private System.Windows.Forms.Label label8;
@@ -841,9 +840,7 @@
     private System.Windows.Forms.Label label5;
     private System.Windows.Forms.Label label4;
     private System.Windows.Forms.Label label3;
-    private System.Windows.Forms.Label lblBrojGarantnogLista;
     private System.Windows.Forms.Label label1;
-    private System.Windows.Forms.DateTimePicker dtpZavrseno;
     private System.Windows.Forms.TextBox tbServiser;
     private System.Windows.Forms.TextBox tbNapomenaServisera;
     private System.Windows.Forms.TextBox tbDodatnaOprema;
@@ -851,7 +848,6 @@
     private System.Windows.Forms.TextBox tbModel;
     private System.Windows.Forms.TextBox tbKupacaTelefon;
     private System.Windows.Forms.TextBox tbKupac;
-    private System.Windows.Forms.TextBox tbBrojGarantnogLista;
     private System.Windows.Forms.DateTimePicker dtpDatum;
     private System.Windows.Forms.TextBox tbRedniBroj;
     private System.Windows.Forms.DataGridView dgvPrijave;
@@ -871,28 +867,32 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label lblPredmet;
         private System.Windows.Forms.TextBox tbPredmet;
-        private System.Windows.Forms.Label lblDatumVracanja;
-        private System.Windows.Forms.DateTimePicker dtpDatumVracanja;
-        private System.Windows.Forms.Button btnDobavljaci;
-        private System.Windows.Forms.Label lblDobavljac;
-        private System.Windows.Forms.TextBox tbDobavljac;
+        private System.Windows.Forms.Label lblBrojRacuna;
+        private System.Windows.Forms.TextBox tbBrojRacuna;
+        private System.Windows.Forms.TextBox tbKupacSifra;
+        private System.Windows.Forms.Button btnKupacClear;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.TextBox tbServiserPrimio;
+        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button btnDpPoslatMejlDobavljacu;
+        private System.Windows.Forms.Button btnDpDatumVracanja;
+        private System.Windows.Forms.Button btnDobavljacClear;
+        private System.Windows.Forms.TextBox tbDobavljacSifra;
+        private System.Windows.Forms.Label lblBrojNaloga;
+        private System.Windows.Forms.TextBox tbBrojNaloga;
         private System.Windows.Forms.Label lblGarantniRok;
         private System.Windows.Forms.TextBox tbGarantniRok;
         private System.Windows.Forms.Label lblPoslatMejlDobavljacu;
         private System.Windows.Forms.DateTimePicker dtpPoslatMejlDobavljacu;
-        private System.Windows.Forms.Label lblBrojRacuna;
-        private System.Windows.Forms.TextBox tbBrojRacuna;
-        private System.Windows.Forms.Label lblBrojNaloga;
-        private System.Windows.Forms.TextBox tbBrojNaloga;
-        private System.Windows.Forms.TextBox tbKupacSifra;
-        private System.Windows.Forms.TextBox tbDobavljacSifra;
-        private System.Windows.Forms.Button btnKupacClear;
-        private System.Windows.Forms.Button btnDobavljacClear;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.TextBox tbServiserPrimio;
-        private System.Windows.Forms.Button btnDpDatumVracanja;
-        private System.Windows.Forms.Button btnDpPoslatMejlDobavljacu;
-        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button btnDobavljaci;
+        private System.Windows.Forms.Label lblDobavljac;
+        private System.Windows.Forms.TextBox tbDobavljac;
+        private System.Windows.Forms.Label lblDatumVracanja;
+        private System.Windows.Forms.DateTimePicker dtpDatumVracanja;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label lblBrojGarantnogLista;
+        private System.Windows.Forms.DateTimePicker dtpZavrseno;
+        private System.Windows.Forms.TextBox tbBrojGarantnogLista;
     }
 }
 

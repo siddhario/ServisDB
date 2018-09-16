@@ -1,4 +1,5 @@
 ﻿using Npgsql;
+using NpgsqlTypes;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -109,9 +110,26 @@ where sifra=@sifra";
                     cmd.Parameters.AddWithValue("@adresa", adresa);
                     cmd.Parameters.AddWithValue("@telefon", telefon);
                     cmd.Parameters.AddWithValue("@email", email);
-
                     // Insert some data
                     cmd.CommandText = @"update partner set adresa= @adresa , telefon=@telefon, email= @email where sifra=@sifra";
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+        public static void UpdatePartner(int sifra, string adresa, string telefon)
+        {
+            using (var conn = new NpgsqlConnection(_connectionString))
+            {
+                conn.Open();
+                using (var cmd = new NpgsqlCommand())
+                {
+                    cmd.Connection = conn;
+                    cmd.Parameters.AddWithValue("@sifra", sifra);
+                    cmd.Parameters.AddWithValue("@adresa", adresa);
+                    cmd.Parameters.AddWithValue("@telefon", telefon);
+
+                    // Insert some data
+                    cmd.CommandText = @"update partner set adresa= @adresa , telefon=@telefon where sifra=@sifra";
                     cmd.ExecuteNonQuery();
                 }
             }
@@ -132,7 +150,22 @@ where sifra=@sifra";
                 }
             }
         }
+        public static void DeleteUgovor(string broj)
+        {
+            using (var conn = new NpgsqlConnection(_connectionString))
+            {
+                conn.Open();
+                using (var cmd = new NpgsqlCommand())
+                {
+                    cmd.Connection = conn;
 
+                    cmd.Parameters.AddWithValue("@broj", broj);
+                    // Insert some data
+                    cmd.CommandText = @"delete from ugovor where broj=@broj";
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
 
         public static void UpdatePrijava(string broj, DateTime datum, string broj_garantnog_lista, int? kupac_sifra, string kupac_ime, string kupac_adresa, string kupac_telefon, string kupac_email, string model, string serijski_broj,
       string dodatna_oprema, string predmet, string napomena_servisera, string serviser, string serviser_primio, DateTime? zavrseno, int? dobavljac_sifra, string dobavljac, DateTime? datumVracanja, DateTime? poslatMejlDobavljacu, int? garantni_rok, string broj_racuna, bool dobavljacPromjenjen)
@@ -233,6 +266,108 @@ where sifra=@sifra";
                                                             ,(select concat((coalesce(max(substring(broj,1,position('/' in broj)-1)::int),0)+1)::text,'/','" + datum.Year.ToString() + @"') from prijava where date_part('year', datum)=" + datum.Year.ToString() + @")
                                                             ," + (dobavljac_sifra.HasValue ? "null" : "(select concat((coalesce(max(substring(broj_naloga, 1, position('/' in broj_naloga) - 1)::int), 0) + 1)::text, '/', '" + datum.Year.ToString() + "') from prijava where date_part('year', datum) = " + datum.Year.ToString() + ")") +
                                                             ")";
+                    cmd.ExecuteNonQuery();
+
+
+                }
+            }
+        }
+
+        public static void InsertUgovor(DateTime datum, int? kupac_sifra, string kupac_naziv, string kupac_adresa, string kupac_telefon, string kupac_broj_lk, string kupac_maticni_broj,
+            decimal iznos_sa_pdv, decimal inicijalno_uplaceno, decimal suma_uplata, decimal preostalo_za_uplatu,
+            string napomena, string radnik, string status, int broj_rata, string broj_racuna)
+        {
+            using (var conn = new NpgsqlConnection(_connectionString))
+            {
+                conn.Open();
+                using (var cmd = new NpgsqlCommand())
+                {
+                    cmd.Connection = conn;
+
+                    cmd.Parameters.AddWithValue("@datum", datum);
+                    cmd.Parameters.AddWithValue("@kupac_sifra", kupac_sifra);
+                    cmd.Parameters.AddWithValue("@kupac_naziv", kupac_naziv);
+                    cmd.Parameters.AddWithValue("@kupac_adresa", kupac_adresa);
+                    cmd.Parameters.AddWithValue("@kupac_telefon", kupac_telefon);
+                    cmd.Parameters.AddWithValue("@kupac_broj_lk", kupac_broj_lk);
+                    cmd.Parameters.AddWithValue("@kupac_broj_lk", kupac_broj_lk);
+                    cmd.Parameters.AddWithValue("@kupac_maticni_broj", kupac_maticni_broj);
+                    cmd.Parameters.AddWithValue("@iznos_sa_pdv", iznos_sa_pdv);
+                    cmd.Parameters.AddWithValue("@iznos_bez_pdv", 0);
+                    cmd.Parameters.AddWithValue("@pdv", 0);
+                    cmd.Parameters.AddWithValue("@iznos_sa_pdv", iznos_sa_pdv);
+                    cmd.Parameters.AddWithValue("@inicijalno_placeno", inicijalno_uplaceno);
+                    cmd.Parameters.AddWithValue("@suma_uplata", suma_uplata);
+                    cmd.Parameters.AddWithValue("@preostalo_za_uplatu", preostalo_za_uplatu);
+                    cmd.Parameters.AddWithValue("@napomena", napomena);
+                    cmd.Parameters.AddWithValue("@status", status);
+                    cmd.Parameters.AddWithValue("@radnik", radnik);
+                    cmd.Parameters.AddWithValue("@broj_rata", broj_rata);
+                    cmd.Parameters.AddWithValue("@broj_racuna", broj_racuna);
+                    // Insert some data
+                    cmd.CommandText = @"INSERT INTO ugovor (datum, kupac_sifra, kupac_maticni_broj, kupac_broj_lk, kupac_naziv, kupac_adresa, kupac_telefon, broj_racuna, radnik, inicijalno_placeno, iznos_bez_pdv, pdv, iznos_sa_pdv, broj_rata, suma_uplata, preostalo_za_uplatu, status, napomena,broj)
+                                                            VALUES 
+                                                            (@datum, @kupac_sifra, @kupac_maticni_broj, @kupac_broj_lk, @kupac_naziv, @kupac_adresa, @kupac_telefon, @broj_racuna, @radnik, @inicijalno_placeno, @iznos_bez_pdv, @pdv, @iznos_sa_pdv, @broj_rata, @suma_uplata, @preostalo_za_uplatu, @status, @napomena
+                                                            ,(select concat((coalesce(max(substring(broj,1,position('/' in broj)-1)::int),0)+1)::text,'/','" + datum.Year.ToString() + @"') from ugovor where date_part('year', datum)=" + datum.Year.ToString() + @")"
+
+                                                            + ")";
+                    cmd.ExecuteNonQuery();
+
+
+                }
+            }
+        }
+
+        public static void UpdateUgovor(string broj, DateTime datum, int? kupac_sifra, string kupac_naziv, string kupac_adresa, string kupac_telefon, string kupac_broj_lk, string kupac_maticni_broj,
+       decimal iznos_sa_pdv, decimal inicijalno_uplaceno, decimal suma_uplata, decimal preostalo_za_uplatu,
+       string napomena, string radnik, string status, int broj_rata, string broj_racuna)
+        {
+            using (var conn = new NpgsqlConnection(_connectionString))
+            {
+                conn.Open();
+                using (var cmd = new NpgsqlCommand())
+                {
+                    cmd.Connection = conn;
+
+                    cmd.Parameters.AddWithValue("@broj", broj);
+                    cmd.Parameters.AddWithValue("@datum", datum);
+                    cmd.Parameters.AddWithValue("@kupac_sifra", kupac_sifra);
+                    cmd.Parameters.AddWithValue("@kupac_naziv", kupac_naziv);
+                    cmd.Parameters.AddWithValue("@kupac_adresa", kupac_adresa);
+                    cmd.Parameters.AddWithValue("@kupac_telefon", kupac_telefon);
+                    cmd.Parameters.AddWithValue("@kupac_broj_lk", kupac_broj_lk);
+                    cmd.Parameters.AddWithValue("@kupac_maticni_broj", kupac_maticni_broj);
+                    cmd.Parameters.AddWithValue("@iznos_bez_pdv", 0);
+                    cmd.Parameters.AddWithValue("@pdv", 0);
+                    cmd.Parameters.AddWithValue("@iznos_sa_pdv", iznos_sa_pdv);
+                    cmd.Parameters.AddWithValue("@inicijalno_placeno", (decimal)inicijalno_uplaceno);
+                    cmd.Parameters.AddWithValue("@suma_uplata", suma_uplata);
+                    cmd.Parameters.AddWithValue("@preostalo_za_uplatu", preostalo_za_uplatu);
+                    cmd.Parameters.AddWithValue("@napomena", napomena);
+                    cmd.Parameters.AddWithValue("@status", status);
+                    cmd.Parameters.AddWithValue("@radnik", radnik);
+                    cmd.Parameters.AddWithValue("@broj_rata", broj_rata);
+                    cmd.Parameters.AddWithValue("@broj_racuna", broj_racuna);
+                    // Insert some data
+                    cmd.CommandText = @"update ugovor set datum=@datum, 
+kupac_sifra=@kupac_sifra, 
+kupac_maticni_broj=@kupac_maticni_broj, 
+kupac_broj_lk=@kupac_broj_lk, 
+kupac_naziv=@kupac_naziv, 
+kupac_adresa=@kupac_adresa, 
+kupac_telefon=@kupac_telefon,
+broj_racuna=@broj_racuna, 
+radnik=@radnik, 
+inicijalno_placeno=@inicijalno_placeno, 
+iznos_bez_pdv=@iznos_bez_pdv, 
+pdv=@pdv, 
+iznos_sa_pdv=@iznos_sa_pdv, 
+broj_rata= @broj_rata, 
+suma_uplata=@suma_uplata, 
+preostalo_za_uplatu=@preostalo_za_uplatu, 
+status= @status, 
+napomena=@napomena
+                                                            where broj=@broj";
                     cmd.ExecuteNonQuery();
 
 
