@@ -68,6 +68,7 @@ namespace ServisDB.Forme
                     dgvMain.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Email", DataPropertyName = "email", Width = 160, DefaultCellStyle = new DataGridViewCellStyle() { Format = "dd.MM.yyyy." } });
                     dgvMain.Columns.Add(new DataGridViewCheckBoxColumn() { Name = "Kupac", DataPropertyName = "kupac", Width = 50 });
                     dgvMain.Columns.Add(new DataGridViewCheckBoxColumn() { Name = "Dobavljač", DataPropertyName = "dobavljac", Width = 75 });
+                    dgvMain.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Broj LK", DataPropertyName = "broj_lk", Width = 100, Visible = false });
                     // Retrieve all rows
                     cmd.Parameters.Clear();
                     Npgsql.NpgsqlParameter p1 = new NpgsqlParameter("@naziv", DbType.String);
@@ -86,7 +87,7 @@ namespace ServisDB.Forme
                     else
                         p2.Value = sifra;
                     cmd.CommandText = @"SELECT sifra, naziv, tip, maticni_broj, adresa, 
-       telefon, email,kupac,dobavljac FROM partner";
+       telefon, email,kupac,dobavljac,broj_lk FROM partner";
 
                     if (filters.Count > 0)
                     {
@@ -114,9 +115,9 @@ namespace ServisDB.Forme
         {
             int? kupacSifra = null;
             if (tbSifra.Text == "AUTO")
-                PersistanceManager.InsertPartner(tbNaziv.Text, rbFizickoLice.Checked ? "F" : "P", tbMaticniBroj.Text, tbAdresa.Text, tbTelefon.Text, tbEmail.Text, cbKupac.Checked, cbDobavljac.Checked,out kupacSifra);
+                PersistanceManager.InsertPartner(tbNaziv.Text, rbFizickoLice.Checked ? "F" : "P", tbMaticniBroj.Text, tbAdresa.Text, tbTelefon.Text, tbEmail.Text, cbKupac.Checked, cbDobavljac.Checked, tbBrojLK.Text, out kupacSifra);
             else
-                PersistanceManager.UpdatePartner(int.Parse(tbSifra.Text), tbNaziv.Text, rbFizickoLice.Checked ? "F" : "P", tbMaticniBroj.Text, tbAdresa.Text, tbTelefon.Text, tbEmail.Text, cbKupac.Checked, cbDobavljac.Checked);
+                PersistanceManager.UpdatePartner(int.Parse(tbSifra.Text), tbNaziv.Text, rbFizickoLice.Checked ? "F" : "P", tbMaticniBroj.Text, tbAdresa.Text, tbTelefon.Text, tbEmail.Text, cbKupac.Checked, cbDobavljac.Checked,tbBrojLK.Text );
             ReadAll(textBox1.Text, textBox2.Text);
             tabControl1.SelectedIndex = 0;
             Clear();
@@ -147,6 +148,7 @@ namespace ServisDB.Forme
             tbEmail.Text = ((DataRowView)o).Row.ItemArray[6].ToString();
             cbKupac.Checked = (bool)((DataRowView)o).Row.ItemArray[7];
             cbDobavljac.Checked = (bool)((DataRowView)o).Row.ItemArray[8];
+            tbBrojLK.Text = ((DataRowView)o).Row.ItemArray[9].ToString();
 
         }
 
@@ -168,6 +170,7 @@ namespace ServisDB.Forme
             tbMaticniBroj.Text = "";
             tbAdresa.Text = "";
             tbEmail.Text = "";
+            tbBrojLK.Text = "";
             cbDobavljac.Checked = false;
             cbKupac.Checked = false;
 
@@ -373,7 +376,7 @@ namespace ServisDB.Forme
             }
         }
 
-     
+
 
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -441,7 +444,7 @@ namespace ServisDB.Forme
                 Selected.Email = ((DataRowView)o).Row.ItemArray[6].ToString();
                 Selected.Kupac = (bool)((DataRowView)o).Row.ItemArray[7];
                 Selected.Dobavljac = (bool)((DataRowView)o).Row.ItemArray[8];
-
+                Selected.BrojLK = ((DataRowView)o).Row.ItemArray[9].ToString();
 
             }
         }

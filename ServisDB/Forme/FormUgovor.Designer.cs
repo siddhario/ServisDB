@@ -197,6 +197,7 @@
             this.dgvPrijave.TabIndex = 0;
             this.dgvPrijave.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellDoubleClick);
             this.dgvPrijave.RowPrePaint += new System.Windows.Forms.DataGridViewRowPrePaintEventHandler(this.dataGridView1_RowPrePaint);
+            this.dgvPrijave.SelectionChanged += new System.EventHandler(this.dgvPrijave_SelectionChanged);
             // 
             // tabPage2
             // 
@@ -542,6 +543,7 @@
             this.tbIznosSaPDV.Name = "tbIznosSaPDV";
             this.tbIznosSaPDV.Size = new System.Drawing.Size(100, 22);
             this.tbIznosSaPDV.TabIndex = 93;
+            this.tbIznosSaPDV.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.tbIznosSaPDV.TextChanged += new System.EventHandler(this.tbIznosSaPDV_TextChanged);
             // 
             // tbSumaUplata
@@ -552,6 +554,7 @@
             this.tbSumaUplata.Size = new System.Drawing.Size(100, 22);
             this.tbSumaUplata.TabIndex = 95;
             this.tbSumaUplata.Text = "0";
+            this.tbSumaUplata.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // lblSumaUplata
             // 
@@ -569,6 +572,7 @@
             this.tbInicijalnoUplaceno.Size = new System.Drawing.Size(100, 22);
             this.tbInicijalnoUplaceno.TabIndex = 97;
             this.tbInicijalnoUplaceno.Text = "0";
+            this.tbInicijalnoUplaceno.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // lblInicijalnoUplaceno
             // 
@@ -585,6 +589,7 @@
             this.tbBrojRata.Name = "tbBrojRata";
             this.tbBrojRata.Size = new System.Drawing.Size(100, 22);
             this.tbBrojRata.TabIndex = 99;
+            this.tbBrojRata.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.tbBrojRata.TextChanged += new System.EventHandler(this.tbBrojRata_TextChanged);
             // 
             // lblBrojRata
@@ -604,6 +609,7 @@
             this.tbPreostaloZaUplatu.Size = new System.Drawing.Size(100, 22);
             this.tbPreostaloZaUplatu.TabIndex = 101;
             this.tbPreostaloZaUplatu.Text = "0";
+            this.tbPreostaloZaUplatu.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // lblPreostaloZaUplatu
             // 
@@ -654,6 +660,7 @@
             this.tbUplaceno.ReadOnly = true;
             this.tbUplaceno.Size = new System.Drawing.Size(100, 22);
             this.tbUplaceno.TabIndex = 108;
+            this.tbUplaceno.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // lblUplaceno
             // 
@@ -671,6 +678,7 @@
             this.tbIznosRate.ReadOnly = true;
             this.tbIznosRate.Size = new System.Drawing.Size(100, 22);
             this.tbIznosRate.TabIndex = 106;
+            this.tbIznosRate.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // lblIznosRate
             // 
@@ -772,6 +780,7 @@
             this.tbBrojRate.ReadOnly = true;
             this.tbBrojRate.Size = new System.Drawing.Size(100, 22);
             this.tbBrojRate.TabIndex = 117;
+            this.tbBrojRate.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // lblBrojRate
             // 

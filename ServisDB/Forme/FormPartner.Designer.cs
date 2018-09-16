@@ -31,7 +31,6 @@
             this.components = new System.ComponentModel.Container();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.btnReload = new System.Windows.Forms.Button();
             this.label13 = new System.Windows.Forms.Label();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
@@ -58,6 +57,9 @@
             this.btnBrisanje = new System.Windows.Forms.Button();
             this.btnStampa = new System.Windows.Forms.Button();
             this.tmrDelay = new System.Windows.Forms.Timer(this.components);
+            this.btnReload = new System.Windows.Forms.Button();
+            this.lblBrojLK = new System.Windows.Forms.Label();
+            this.tbBrojLK = new System.Windows.Forms.TextBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMain)).BeginInit();
@@ -91,16 +93,6 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Pregled";
             this.tabPage1.UseVisualStyleBackColor = true;
-            // 
-            // btnReload
-            // 
-            this.btnReload.Image = global::ServisDB.Properties.Resources.reload__1_;
-            this.btnReload.Location = new System.Drawing.Point(371, 3);
-            this.btnReload.Name = "btnReload";
-            this.btnReload.Size = new System.Drawing.Size(46, 22);
-            this.btnReload.TabIndex = 4;
-            this.btnReload.UseVisualStyleBackColor = true;
-            this.btnReload.Click += new System.EventHandler(this.btnReload_Click);
             // 
             // label13
             // 
@@ -148,6 +140,8 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.lblBrojLK);
+            this.tabPage2.Controls.Add(this.tbBrojLK);
             this.tabPage2.Controls.Add(this.cbDobavljac);
             this.tabPage2.Controls.Add(this.cbKupac);
             this.tabPage2.Controls.Add(this.rbPravnoLice);
@@ -320,7 +314,7 @@
             this.tbMaticniBroj.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tbMaticniBroj.Location = new System.Drawing.Point(125, 117);
             this.tbMaticniBroj.Name = "tbMaticniBroj";
-            this.tbMaticniBroj.Size = new System.Drawing.Size(225, 22);
+            this.tbMaticniBroj.Size = new System.Drawing.Size(138, 22);
             this.tbMaticniBroj.TabIndex = 4;
             // 
             // tbTelefon
@@ -371,6 +365,34 @@
             this.btnStampa.Text = "Štampa [F4]";
             this.btnStampa.UseVisualStyleBackColor = true;
             this.btnStampa.Click += new System.EventHandler(this.btnStampa_Click);
+            // 
+            // btnReload
+            // 
+            this.btnReload.Image = global::ServisDB.Properties.Resources.reload__1_;
+            this.btnReload.Location = new System.Drawing.Point(371, 3);
+            this.btnReload.Name = "btnReload";
+            this.btnReload.Size = new System.Drawing.Size(46, 22);
+            this.btnReload.TabIndex = 4;
+            this.btnReload.UseVisualStyleBackColor = true;
+            this.btnReload.Click += new System.EventHandler(this.btnReload_Click);
+            // 
+            // lblBrojLK
+            // 
+            this.lblBrojLK.AutoSize = true;
+            this.lblBrojLK.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblBrojLK.Location = new System.Drawing.Point(277, 117);
+            this.lblBrojLK.Name = "lblBrojLK";
+            this.lblBrojLK.Size = new System.Drawing.Size(53, 16);
+            this.lblBrojLK.TabIndex = 50;
+            this.lblBrojLK.Text = "Broj LK:";
+            // 
+            // tbBrojLK
+            // 
+            this.tbBrojLK.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbBrojLK.Location = new System.Drawing.Point(362, 116);
+            this.tbBrojLK.Name = "tbBrojLK";
+            this.tbBrojLK.Size = new System.Drawing.Size(90, 22);
+            this.tbBrojLK.TabIndex = 49;
             // 
             // FormPartner
             // 
@@ -425,6 +447,8 @@
         private System.Windows.Forms.RadioButton rbFizickoLice;
         private System.Windows.Forms.CheckBox cbDobavljac;
         private System.Windows.Forms.CheckBox cbKupac;
+        private System.Windows.Forms.Label lblBrojLK;
+        private System.Windows.Forms.TextBox tbBrojLK;
     }
 }
 

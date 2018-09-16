@@ -113,6 +113,27 @@ namespace ServisDB.Forme
 
         private void button1_Click(object sender, EventArgs e)
         {
+            decimal IznosSaPDV, InicijalnoUplaceno;
+            int brojRata;            
+            bool s1=decimal.TryParse(tbIznosSaPDV.Text, out IznosSaPDV);
+            bool s2 = decimal.TryParse(tbInicijalnoUplaceno.Text, out InicijalnoUplaceno);
+            bool s3 = int.TryParse(tbBrojRata.Text, out brojRata);
+
+            if(s1==false||s2==false||s3==false)
+            {
+                MessageBox.Show("Validacija iznosa neuspješna!", "Poruka", MessageBoxButtons.OK, MessageBoxIcon.Hand);
+                return;
+            }
+
+            bool s4 = tbKupac.Text != "";
+            bool s5 = tbKupacBrojLk.Text != "";
+            bool s6 = tbKupacMaticniBroj.Text != "";
+
+            if (s4 == false || s5 == false || s6 == false)
+            {
+                MessageBox.Show("Validacija podataka o kupcu neuspješna! Obavezni podaci su ime kupca, Broj LK i JMBG.", "Poruka", MessageBoxButtons.OK, MessageBoxIcon.Hand);
+                return;
+            }
             //DateTime? zavrseno = null;
             //if (dtpZavrseno.Format == DateTimePickerFormat.Custom)
             //{
@@ -146,11 +167,11 @@ namespace ServisDB.Forme
             int? kupacSifra;
             if (tbKupacSifra.Text == "")
             {
-                PersistanceManager.InsertPartner(tbKupac.Text, "F", "", tbAdresa.Text, tbKupacaTelefon.Text, null, true, false, out kupacSifra);
+                PersistanceManager.InsertPartner(tbKupac.Text, "F", tbKupacMaticniBroj.Text, tbAdresa.Text, tbKupacaTelefon.Text, null, true, false, tbKupacBrojLk.Text, out kupacSifra);
                 tbKupacSifra.Text = kupacSifra.ToString();
             }
             else
-                PersistanceManager.UpdatePartner(int.Parse(tbKupacSifra.Text), tbAdresa.Text, tbKupacaTelefon.Text);
+                PersistanceManager.UpdatePartner(int.Parse(tbKupacSifra.Text), tbAdresa.Text, tbKupacaTelefon.Text, tbKupacMaticniBroj.Text, tbKupacBrojLk.Text);
 
             if (tbRedniBroj.Text == "AUTO")
             {
@@ -251,11 +272,11 @@ namespace ServisDB.Forme
             tbRadnik.Text = ((DataRowView)o).Row.ItemArray[9].ToString();
 
             //inicijalno_placeno, iznos_bez_pdv, pdv, iznos_sa_pdv, broj_rata, suma_uplata, preostalo_za_uplatu
-            tbInicijalnoUplaceno.Text = ((DataRowView)o).Row.ItemArray[10].ToString();
-            tbIznosSaPDV.Text = ((DataRowView)o).Row.ItemArray[13].ToString();
+            tbInicijalnoUplaceno.Text = ((decimal)((DataRowView)o).Row.ItemArray[10]).ToString("N2");
+            tbIznosSaPDV.Text = ((decimal)((DataRowView)o).Row.ItemArray[13]).ToString("N2");
             tbBrojRata.Text = ((DataRowView)o).Row.ItemArray[14].ToString();
-            tbSumaUplata.Text = ((DataRowView)o).Row.ItemArray[15].ToString();
-            tbPreostaloZaUplatu.Text = ((DataRowView)o).Row.ItemArray[16].ToString();
+            tbSumaUplata.Text = ((decimal)((DataRowView)o).Row.ItemArray[15]).ToString("N2");
+            tbPreostaloZaUplatu.Text = ((decimal)((DataRowView)o).Row.ItemArray[16]).ToString("N2");
             tbStatus.Text = ((DataRowView)o).Row.ItemArray[17].ToString();
 
             tbNapomena.Text = ((DataRowView)o).Row.ItemArray[18].ToString();
@@ -281,7 +302,7 @@ namespace ServisDB.Forme
             dgvRate.DataSource = rate;
             var r = rate.Where(rr => rr.Iznos != rr.Uplaceno).FirstOrDefault();
             int? prvaNeplacenaRata = r != null ? r.BrojRate : (int?)null;
-            if(prvaNeplacenaRata.HasValue)
+            if (prvaNeplacenaRata.HasValue)
             {
                 dgvRate.Rows[prvaNeplacenaRata.Value - 1].Selected = true;
             }
@@ -333,6 +354,7 @@ namespace ServisDB.Forme
             dtpRokPlacanja.CustomFormat = " ";
             tbKupac.ReadOnly = false;
             tbKupac.Focus();
+            dgvRate.DataSource = null;
             SetVisibility();
         }
 
@@ -531,7 +553,7 @@ namespace ServisDB.Forme
             {
                 PersistanceManager.DeleteUgovor(rb);
                 MessageBox.Show(string.Format("Ugovor {0} je uspješno obrisan!", rb), "Poruka", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1);
-           
+
                 tabControl1.SelectedIndex = 0;
                 Clear();
                 ReadUgovor(textBox1.Text, textBox2.Text);
@@ -591,6 +613,8 @@ namespace ServisDB.Forme
                 tbKupac.Text = frm.Selected.Naziv;
                 tbKupacaTelefon.Text = frm.Selected.Telefon;
                 tbAdresa.Text = frm.Selected.Adresa;
+                tbKupacMaticniBroj.Text = frm.Selected.MaticniBroj;
+                tbKupacBrojLk.Text = frm.Selected.BrojLK;
                 tbKupac.ReadOnly = true;
             }
         }
@@ -644,7 +668,7 @@ namespace ServisDB.Forme
             tbKupacMaticniBroj.ReadOnly = tbStatus.Text != "E";
             tbKupacBrojLk.ReadOnly = tbStatus.Text != "E";
             dtpDatum.Enabled = tbStatus.Text == "E";
-            tbBrojRacuna.ReadOnly = tbStatus.Text != "E";
+            //tbBrojRacuna.ReadOnly = tbStatus.Text != "E";
 
             tbUplaceno.ReadOnly = tbStatus.Text == "E";
             tbUgovorRataNapomena.ReadOnly = tbStatus.Text == "E";
@@ -668,6 +692,7 @@ namespace ServisDB.Forme
             {
                 List<UgovorRata> rate = KreirajRateUgovora(null);
                 BindUgovorRata(rate, true);
+                tbPreostaloZaUplatu.Text = tbIznosSaPDV.Text;
             }
         }
 
@@ -763,7 +788,7 @@ namespace ServisDB.Forme
         {
             DynamicFilters.Clear();
             DynamicFilters.Add("status='R'");
-            ReadUgovor("","");
+            ReadUgovor("", "");
         }
 
         private void rbNerealizovani_Click(object sender, EventArgs e)
@@ -777,6 +802,24 @@ namespace ServisDB.Forme
         {
             DynamicFilters.Clear();
             ReadUgovor("", "");
+        }
+
+        private void dgvPrijave_SelectionChanged(object sender, EventArgs e)
+        {
+            if (dgvPrijave.SelectedRows.Count == 0)
+                return;
+            string status = dgvPrijave.SelectedRows[0].Cells[10].Value.ToString();
+
+            if (status == "E")
+            {
+                btnZakljuciUgovor.Enabled = true;
+                btnBrisanje.Enabled = true;
+            }
+            else
+            {
+                btnZakljuciUgovor.Enabled = false;
+                btnBrisanje.Enabled = false;
+            }
         }
     }
 }

@@ -154,7 +154,7 @@ namespace ServisDB.Forme
             int? kupacSifra;
             if (tbKupacSifra.Text == "")
             {
-                PersistanceManager.InsertPartner(tbKupac.Text, "F", "", tbAdresa.Text, tbKupacaTelefon.Text, tbEmail.Text, true, false, out kupacSifra);
+                PersistanceManager.InsertPartner(tbKupac.Text, "F", "", tbAdresa.Text, tbKupacaTelefon.Text, tbEmail.Text, true, false,"", out kupacSifra);
                 tbKupacSifra.Text = kupacSifra.ToString();
             }
             else

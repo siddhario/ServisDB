@@ -42,7 +42,7 @@ namespace ServisDB.Klase
         private static string _connectionString;
         private static NpgsqlConnection _connection;
 
-        public static void InsertPartner(string naziv, string tip, string maticni_broj, string adresa, string telefon, string email, bool kupac, bool dobavljac, out int? kupacSifra)
+        public static void InsertPartner(string naziv, string tip, string maticni_broj, string adresa, string telefon, string email, bool kupac, bool dobavljac,string broj_lk, out int? kupacSifra)
         {
             using (var conn = new NpgsqlConnection(_connectionString))
             {
@@ -59,18 +59,19 @@ namespace ServisDB.Klase
                     cmd.Parameters.AddWithValue("@email", email!=null?email:(object)DBNull.Value);
                     cmd.Parameters.AddWithValue("@kupac", kupac);
                     cmd.Parameters.AddWithValue("@dobavljac", dobavljac);
+                    cmd.Parameters.AddWithValue("@broj_lk", broj_lk);
 
                     cmd.CommandText = "select coalesce(max(sifra),0)+1 from partner";
                     kupacSifra = (int)cmd.ExecuteScalar();
 
                     // Insert some data
-                    cmd.CommandText = @"INSERT INTO partner (sifra,naziv ,  tip,  maticni_broj ,  adresa,  telefon,  email,kupac,dobavljac) 
-                    VALUES ((select coalesce(max(sifra),0)+1 from partner), @naziv ,  @tip,  @maticni_broj ,  @adresa,  @telefon,  @email, @kupac, @dobavljac)";
+                    cmd.CommandText = @"INSERT INTO partner (sifra,naziv ,  tip,  maticni_broj ,  adresa,  telefon,  email,kupac,dobavljac,broj_lk) 
+                    VALUES ((select coalesce(max(sifra),0)+1 from partner), @naziv ,  @tip,  @maticni_broj ,  @adresa,  @telefon,  @email, @kupac, @dobavljac,@broj_lk)";
                     cmd.ExecuteNonQuery();
                 }
             }
         }
-        public static void UpdatePartner(int sifra, string naziv, string tip, string maticni_broj, string adresa, string telefon, string email, bool kupac, bool dobavljac)
+        public static void UpdatePartner(int sifra, string naziv, string tip, string maticni_broj, string adresa, string telefon, string email, bool kupac, bool dobavljac,string broj_lk)
         {
             using (var conn = new NpgsqlConnection(_connectionString))
             {
@@ -87,10 +88,10 @@ namespace ServisDB.Klase
                     cmd.Parameters.AddWithValue("@email", email);
                     cmd.Parameters.AddWithValue("@kupac", kupac);
                     cmd.Parameters.AddWithValue("@dobavljac", dobavljac);
-
+                    cmd.Parameters.AddWithValue("@broj_lk", broj_lk);
                     // Insert some data
                     cmd.CommandText = @"update partner set naziv=@naziv ,  tip=@tip,  maticni_broj=@maticni_broj, adresa= @adresa , 
-telefon=@telefon, email= @email,kupac=@kupac,dobavljac=@dobavljac
+telefon=@telefon, email= @email,kupac=@kupac,dobavljac=@dobavljac,broj_lk=@broj_lk
 where sifra=@sifra";
                     cmd.ExecuteNonQuery();
 
@@ -116,7 +117,7 @@ where sifra=@sifra";
                 }
             }
         }
-        public static void UpdatePartner(int sifra, string adresa, string telefon)
+        public static void UpdatePartner(int sifra, string adresa, string telefon,string maticni_broj,string broj_lk)
         {
             using (var conn = new NpgsqlConnection(_connectionString))
             {
@@ -127,9 +128,10 @@ where sifra=@sifra";
                     cmd.Parameters.AddWithValue("@sifra", sifra);
                     cmd.Parameters.AddWithValue("@adresa", adresa);
                     cmd.Parameters.AddWithValue("@telefon", telefon);
-
+                    cmd.Parameters.AddWithValue("@maticni_broj", maticni_broj);
+                    cmd.Parameters.AddWithValue("@broj_lk", broj_lk);
                     // Insert some data
-                    cmd.CommandText = @"update partner set adresa= @adresa , telefon=@telefon where sifra=@sifra";
+                    cmd.CommandText = @"update partner set adresa= @adresa , telefon=@telefon,maticni_broj=@maticni_broj,broj_lk=@broj_lk where sifra=@sifra";
                     cmd.ExecuteNonQuery();
                 }
             }

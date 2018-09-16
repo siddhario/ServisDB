@@ -17,6 +17,7 @@ namespace ServisDB.Klase
         public string Telefon { get; set; }
         public bool Kupac { get; set; }
         public bool Dobavljac { get; set; }
+        public string BrojLK { get; set; }
 
 
     }
