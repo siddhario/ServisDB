@@ -56,7 +56,7 @@ namespace ServisDB.Klase
                     cmd.Parameters.AddWithValue("@maticni_broj", maticni_broj);
                     cmd.Parameters.AddWithValue("@adresa", adresa);
                     cmd.Parameters.AddWithValue("@telefon", telefon);
-                    cmd.Parameters.AddWithValue("@email", email);
+                    cmd.Parameters.AddWithValue("@email", email!=null?email:(object)DBNull.Value);
                     cmd.Parameters.AddWithValue("@kupac", kupac);
                     cmd.Parameters.AddWithValue("@dobavljac", dobavljac);
 
@@ -275,7 +275,7 @@ where sifra=@sifra";
 
         public static void InsertUgovor(DateTime datum, int? kupac_sifra, string kupac_naziv, string kupac_adresa, string kupac_telefon, string kupac_broj_lk, string kupac_maticni_broj,
             decimal iznos_sa_pdv, decimal inicijalno_uplaceno, decimal suma_uplata, decimal preostalo_za_uplatu,
-            string napomena, string radnik, string status, int broj_rata, string broj_racuna)
+            string napomena, string radnik, string status, int broj_rata, string broj_racuna, out string broj_ugovora)
         {
             using (var conn = new NpgsqlConnection(_connectionString))
             {
@@ -304,6 +304,9 @@ where sifra=@sifra";
                     cmd.Parameters.AddWithValue("@radnik", radnik);
                     cmd.Parameters.AddWithValue("@broj_rata", broj_rata);
                     cmd.Parameters.AddWithValue("@broj_racuna", broj_racuna);
+
+                    cmd.CommandText = "select concat((coalesce(max(substring(broj, 1, position('/' in broj) - 1)::int), 0) + 1)::text, '/', '" + datum.Year.ToString() + @"') from ugovor where date_part('year', datum) = " + datum.Year.ToString();
+                    broj_ugovora = (string)cmd.ExecuteScalar();
                     // Insert some data
                     cmd.CommandText = @"INSERT INTO ugovor (datum, kupac_sifra, kupac_maticni_broj, kupac_broj_lk, kupac_naziv, kupac_adresa, kupac_telefon, broj_racuna, radnik, inicijalno_placeno, iznos_bez_pdv, pdv, iznos_sa_pdv, broj_rata, suma_uplata, preostalo_za_uplatu, status, napomena,broj)
                                                             VALUES 
@@ -387,6 +390,130 @@ napomena=@napomena
                     cmd.Parameters.AddWithValue("@broj", rb);
                     // Insert some data
                     cmd.CommandText = @"delete from prijava where broj=@broj";
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public static void InsertUgovorRata(string broj_ugovora, int broj_rate, DateTime rok_placanja, DateTime? datum_placanja, decimal iznos, decimal? uplaceno, string napomena)
+        {
+            using (var conn = new NpgsqlConnection(_connectionString))
+            {
+                conn.Open();
+                using (var cmd = new NpgsqlCommand())
+                {
+                    cmd.Connection = conn;
+
+                    cmd.Parameters.AddWithValue("@broj_ugovora", broj_ugovora);
+                    cmd.Parameters.AddWithValue("@broj_rate", broj_rate);
+                    cmd.Parameters.AddWithValue("@rok_placanja", rok_placanja);
+                    cmd.Parameters.AddWithValue("@datum_placanja", datum_placanja.HasValue?datum_placanja:(object)DBNull.Value);
+                    cmd.Parameters.AddWithValue("@iznos", iznos);
+                    cmd.Parameters.AddWithValue("@uplaceno", uplaceno);
+                    cmd.Parameters.AddWithValue("@napomena", napomena!=null?napomena:(object)DBNull.Value);
+                    // Insert some data
+                    cmd.CommandText = @"INSERT INTO public.ugovor_rata(
+	broj_ugovora, broj_rate, iznos, uplaceno, rok_placanja, datum_placanja, napomena)
+values
+(@broj_ugovora, @broj_rate, @iznos, @uplaceno, @rok_placanja, @datum_placanja, @napomena)";
+
+                    cmd.ExecuteNonQuery();
+
+
+                }
+            }
+        }
+
+        public static void UpdateUgovorRata(string broj_ugovora, int broj_rate, DateTime rok_placanja, DateTime? datum_placanja, decimal iznos, decimal? uplaceno, string napomena)
+        {
+            using (var conn = new NpgsqlConnection(_connectionString))
+            {
+                conn.Open();
+                using (var cmd = new NpgsqlCommand())
+                {
+                    cmd.Connection = conn;
+
+                    cmd.Parameters.AddWithValue("@broj_ugovora", broj_ugovora);
+                    cmd.Parameters.AddWithValue("@broj_rate", broj_rate);
+                    cmd.Parameters.AddWithValue("@rok_placanja", rok_placanja);
+                    cmd.Parameters.AddWithValue("@datum_placanja", datum_placanja);
+                    cmd.Parameters.AddWithValue("@iznos", iznos);
+                    cmd.Parameters.AddWithValue("@uplaceno", uplaceno);
+                    cmd.Parameters.AddWithValue("@napomena", napomena);
+                    // Insert some data
+                    cmd.CommandText = @"update ugovor_rata set
+	iznos=@iznos, uplaceno=@uplaceno, rok_placanja=@rok_placanja, datum_placanja=@datum_placanja, napomena=@napomena
+where broj_ugovora=@broj_ugovora and broj_rate=@broj_rate";
+
+                    cmd.ExecuteNonQuery();
+
+
+                }
+            }
+        }
+        public static void DeleteUgovorRata(string broj_ugovora,int? broj_rate=null)
+        {
+            using (var conn = new NpgsqlConnection(_connectionString))
+            {
+                conn.Open();
+                using (var cmd = new NpgsqlCommand())
+                {
+                    cmd.Connection = conn;
+
+                    cmd.Parameters.AddWithValue("@broj_ugovora", broj_ugovora);
+                    cmd.Parameters.AddWithValue("@broj_rate", broj_rate.HasValue?broj_rate:(object)DBNull.Value);
+                    // Insert some data
+                    cmd.CommandText = @"delete from ugovor_rata where broj_ugovora=@broj_ugovora and (broj_rate=@broj_rate or @broj_rate is null)";
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public static List<UgovorRata> ReadUgovorRata(string broj_ugovora)
+        {
+            List<UgovorRata> rate = new List<UgovorRata>();
+            using (var conn = new NpgsqlConnection(_connectionString))
+            {
+                conn.Open();
+                using (var cmd = new NpgsqlCommand())
+                {
+                    cmd.Connection = conn;
+                    cmd.Parameters.AddWithValue("@broj_ugovora", broj_ugovora);
+                    // Insert some data
+                    cmd.CommandText = @"SELECT broj_ugovora, broj_rate, iznos, uplaceno, rok_placanja, datum_placanja, napomena
+	FROM public.ugovor_rata where broj_ugovora=@broj_ugovora order by broj_rate asc";
+                    var dr = cmd.ExecuteReader();
+                    while(dr.Read())
+                    {
+                        UgovorRata r = new UgovorRata();
+                        r.BrojUgovora = dr.GetString(0);
+                        r.BrojRate = dr.GetInt32(1);
+                        r.Iznos = dr.GetDecimal(2);
+                        r.Uplaceno = dr.GetDecimal(3);
+                        r.RokPlacanja = dr.GetDateTime(4);
+                        r.DatumPlacanja = dr[5] != DBNull.Value ? dr.GetDateTime(5) : (DateTime?)null;
+                        r.Napomena = dr[6] != DBNull.Value ? dr.GetString(6) : (string)null;
+                        rate.Add(r);
+                    }
+                    dr.Close();
+                }
+            }
+            return rate;
+        }
+
+        public static void UpdateUgovor(string broj, string status)
+        {
+            using (var conn = new NpgsqlConnection(_connectionString))
+            {
+                conn.Open();
+                using (var cmd = new NpgsqlCommand())
+                {
+                    cmd.Connection = conn;
+
+                    cmd.Parameters.AddWithValue("@broj", broj);                 
+                    cmd.Parameters.AddWithValue("@status", status);
+                    // Insert some data
+                    cmd.CommandText = @"update ugovor set status= @status where broj=@broj";
                     cmd.ExecuteNonQuery();
                 }
             }

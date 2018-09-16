@@ -86,6 +86,7 @@
     <Compile Include="Klase\PersistanceManager.cs" />
     <Compile Include="Klase\Enums.cs" />
     <Compile Include="Klase\Partner.cs" />
+    <Compile Include="Klase\UgovorRata.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Forme\FormGlavna.resx">
