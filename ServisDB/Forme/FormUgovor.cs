@@ -453,7 +453,8 @@ namespace ServisDB.Forme
 
         private void btnStampa_Click(object sender, EventArgs e)
         {
-            //string dir = Environment.SpecialFolder.MyDocuments + "\\ServisDB\\";
+            
+            //  //string dir = Environment.SpecialFolder.MyDocuments + "\\ServisDB\\";
 
             string dir = System.IO.Path.Combine(Environment.GetFolderPath(
           Environment.SpecialFolder.MyDoc‌​uments), "ServisDB");
@@ -462,81 +463,105 @@ namespace ServisDB.Forme
             {
                 Directory.CreateDirectory(dir);
             }
-
-
-
-            XLWorkbook doc = new XLWorkbook("PRIJEMNICA NA SERVIS.xlsx");
-            //doc.Worksheets.Add("Ugovor");
-
-            var sheet = doc.Worksheet(1);
-
             object o = dgvPrijave.SelectedRows[0].DataBoundItem;
-
             string rednibroj = ((DataRowView)o).Row.ItemArray[0].ToString();
-            string datum = ((DateTime)((DataRowView)o).Row.ItemArray[2]).Date.ToString();
-            string garantnilist = ((DataRowView)o).Row.ItemArray[21].ToString();
-            string kupac = ((DataRowView)o).Row.ItemArray[4].ToString();
-            string kupac_telefon = ((DataRowView)o).Row.ItemArray[6].ToString();
-            string model = ((DataRowView)o).Row.ItemArray[8].ToString();
-            string serijski_broj = ((DataRowView)o).Row.ItemArray[9].ToString();
-            string dodatna_oprema = ((DataRowView)o).Row.ItemArray[10].ToString();
-            string opis_kvara = ((DataRowView)o).Row.ItemArray[11].ToString();
-            string napomena_servisera = ((DataRowView)o).Row.ItemArray[12].ToString();
-            string serviser = ((DataRowView)o).Row.ItemArray[13].ToString();
-            string zavrseno = "";
-            if (((DataRowView)o).Row.ItemArray[15] == DBNull.Value)
-            {
-                zavrseno = "";
-            }
-            else
-            {
-                zavrseno = ((DateTime)((DataRowView)o).Row.ItemArray[15]).ToString();
-            }
+            string kupac = ((DataRowView)o).Row.ItemArray[5].ToString();
+            string adresa = ((DataRowView)o).Row.ItemArray[6].ToString();
+            string lk = ((DataRowView)o).Row.ItemArray[4].ToString();
+            string jmbg = ((DataRowView)o).Row.ItemArray[3].ToString();
+            decimal uplaceno = (decimal)((DataRowView)o).Row.ItemArray[10];
+            string brojrata = ((DataRowView)o).Row.ItemArray[14].ToString();
+            DateTime datum = (DateTime)((DataRowView)o).Row.ItemArray[1];
+            decimal iznos = (decimal)((DataRowView)o).Row.ItemArray[13];
+            string napomena = ((DataRowView)o).Row.ItemArray[18].ToString();
 
-            string[] parts = rednibroj.Split('/');
-            string rb = parts[0];
-            string year = parts[1];
-            int rrb = int.Parse(rb);
-            rednibroj = rrb.ToString("D4") + "/" + year;
-            sheet.Cells("C17").Value = rednibroj;
-            sheet.Cells("C17").DataType = XLCellValues.Text;
-            sheet.Cells("C15").Value = rednibroj;
-            sheet.Cells("C15").Style.Font.FontName = "Free 3 of 9 Extended";
-            sheet.Cells("C15").Style.Font.FontSize = 28;
-            sheet.Cells("C18").Value = garantnilist;
-            sheet.Cells("C21").Value = datum;
-            sheet.Cells("C24").Value = kupac;
-            sheet.Cells("C25").Value = kupac_telefon;
-            sheet.Cells("C28").Value = model;
-            sheet.Cells("C29").Value = serijski_broj;
-            sheet.Cells("C31").Value = dodatna_oprema;
-            sheet.Cells("C32").Value = opis_kvara;
+            Dictionary<string, string> dict = new Dictionary<string, string>();
+            dict.Add("KUPAC", kupac);
+            dict.Add("ADRESA", adresa);
+            dict.Add("LK", lk);
+            dict.Add("JMBG", jmbg);
+            dict.Add("UPLACENO", uplaceno.ToString("N2"));
+            dict.Add("BROJRATA", brojrata.ToString());
+            dict.Add("DATUM", datum.ToString("dd.MM.yyyy"));
+            dict.Add("IZNOSRATE", (Math.Round(iznos/int.Parse(brojrata),2,MidpointRounding.AwayFromZero)).ToString("N2"));
+            dict.Add("UKUPANIZNOS", (uplaceno+iznos).ToString("N2"));
+            dict.Add("PREDMET", napomena);
+            string fileName = dir + "\\" + rednibroj.Replace("/", "-") + ".docx";
+         
+            WordDocumentBuilder.FillBookmarksUsingOpenXml("Ugovor.docx", fileName, dict);
+            Process.Start(fileName);
+
+            //  XLWorkbook doc = new XLWorkbook("PRIJEMNICA NA SERVIS.xlsx");
+            //  //doc.Worksheets.Add("Ugovor");
+
+            //  var sheet = doc.Worksheet(1);
+
+            //  object o = dgvPrijave.SelectedRows[0].DataBoundItem;
+
+            //  string datum = ((DateTime)((DataRowView)o).Row.ItemArray[2]).Date.ToString();
+            //  string garantnilist = ((DataRowView)o).Row.ItemArray[21].ToString();
+            //  string kupac = ((DataRowView)o).Row.ItemArray[4].ToString();
+            //  string kupac_telefon = ((DataRowView)o).Row.ItemArray[6].ToString();
+            //  string model = ((DataRowView)o).Row.ItemArray[8].ToString();
+            //  string serijski_broj = ((DataRowView)o).Row.ItemArray[9].ToString();
+            //  string dodatna_oprema = ((DataRowView)o).Row.ItemArray[10].ToString();
+            //  string opis_kvara = ((DataRowView)o).Row.ItemArray[11].ToString();
+            //  string napomena_servisera = ((DataRowView)o).Row.ItemArray[12].ToString();
+            //  string serviser = ((DataRowView)o).Row.ItemArray[13].ToString();
+            //  string zavrseno = "";
+            //  if (((DataRowView)o).Row.ItemArray[15] == DBNull.Value)
+            //  {
+            //      zavrseno = "";
+            //  }
+            //  else
+            //  {
+            //      zavrseno = ((DateTime)((DataRowView)o).Row.ItemArray[15]).ToString();
+            //  }
+
+            //  string[] parts = rednibroj.Split('/');
+            //  string rb = parts[0];
+            //  string year = parts[1];
+            //  int rrb = int.Parse(rb);
+            //  rednibroj = rrb.ToString("D4") + "/" + year;
+            //  sheet.Cells("C17").Value = rednibroj;
+            //  sheet.Cells("C17").DataType = XLCellValues.Text;
+            //  sheet.Cells("C15").Value = rednibroj;
+            //  sheet.Cells("C15").Style.Font.FontName = "Free 3 of 9 Extended";
+            //  sheet.Cells("C15").Style.Font.FontSize = 28;
+            //  sheet.Cells("C18").Value = garantnilist;
+            //  sheet.Cells("C21").Value = datum;
+            //  sheet.Cells("C24").Value = kupac;
+            //  sheet.Cells("C25").Value = kupac_telefon;
+            //  sheet.Cells("C28").Value = model;
+            //  sheet.Cells("C29").Value = serijski_broj;
+            //  sheet.Cells("C31").Value = dodatna_oprema;
+            //  sheet.Cells("C32").Value = opis_kvara;
 
 
-            string fileName = dir + "\\" + rednibroj.Replace("/", "-") + ".xlsx";
-            if (File.Exists(fileName) == true)
-            {
-                DialogResult dr = MessageBox.Show("Štampana verzija već postoji. Napraviti novu ?", "Upozorenje", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1);
-                if (dr == DialogResult.Yes)
-                {
-                    try
-                    {
-                        File.Delete(fileName);
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show("Zatvorite dokument pa pokušajte opet!");
-                        return;
-                    }
-                    doc.SaveAs(fileName);
-                    Process.Start(fileName);
-                }
-            }
-            else
-            {
-                doc.SaveAs(fileName);
-                Process.Start(fileName);
-            }
+            //  string fileName = dir + "\\" + rednibroj.Replace("/", "-") + ".xlsx";
+            //  if (File.Exists(fileName) == true)
+            //  {
+            //      DialogResult dr = MessageBox.Show("Štampana verzija već postoji. Napraviti novu ?", "Upozorenje", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1);
+            //      if (dr == DialogResult.Yes)
+            //      {
+            //          try
+            //          {
+            //              File.Delete(fileName);
+            //          }
+            //          catch (Exception ex)
+            //          {
+            //              MessageBox.Show("Zatvorite dokument pa pokušajte opet!");
+            //              return;
+            //          }
+            //          doc.SaveAs(fileName);
+            //          Process.Start(fileName);
+            //      }
+            //  }
+            //  else
+            //  {
+            //      doc.SaveAs(fileName);
+            //      Process.Start(fileName);
+            //  }
         }
 
         private void textBox2_TextChanged(object sender, EventArgs e)

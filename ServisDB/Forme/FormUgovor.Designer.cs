@@ -31,12 +31,47 @@
             this.components = new System.ComponentModel.Container();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.rbNerealizovani = new System.Windows.Forms.RadioButton();
+            this.rbRealizovani = new System.Windows.Forms.RadioButton();
+            this.rbSviUgovori = new System.Windows.Forms.RadioButton();
             this.btnReload = new System.Windows.Forms.Button();
             this.label13 = new System.Windows.Forms.Label();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.dgvPrijave = new System.Windows.Forms.DataGridView();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.gbRate = new System.Windows.Forms.GroupBox();
+            this.lblBrojRate = new System.Windows.Forms.Label();
+            this.btnPreuzmiIznos = new System.Windows.Forms.Button();
+            this.lblIznosRate = new System.Windows.Forms.Label();
+            this.tbIznosRate = new System.Windows.Forms.TextBox();
+            this.tbBrojRate = new System.Windows.Forms.TextBox();
+            this.lblUplaceno = new System.Windows.Forms.Label();
+            this.tbUplaceno = new System.Windows.Forms.TextBox();
+            this.lblUgovorRataNapomena = new System.Windows.Forms.Label();
+            this.dtpRokPlacanja = new System.Windows.Forms.DateTimePicker();
+            this.tbUgovorRataNapomena = new System.Windows.Forms.TextBox();
+            this.lblRokPlacanja = new System.Windows.Forms.Label();
+            this.lblDatumUplate = new System.Windows.Forms.Label();
+            this.dtpDatumUplate = new System.Windows.Forms.DateTimePicker();
+            this.label2 = new System.Windows.Forms.Label();
+            this.dgvRate = new System.Windows.Forms.DataGridView();
+            this.tbStatus = new System.Windows.Forms.TextBox();
+            this.lblStatus = new System.Windows.Forms.Label();
+            this.tbPreostaloZaUplatu = new System.Windows.Forms.TextBox();
+            this.lblPreostaloZaUplatu = new System.Windows.Forms.Label();
+            this.tbBrojRata = new System.Windows.Forms.TextBox();
+            this.lblBrojRata = new System.Windows.Forms.Label();
+            this.tbInicijalnoUplaceno = new System.Windows.Forms.TextBox();
+            this.lblInicijalnoUplaceno = new System.Windows.Forms.Label();
+            this.tbSumaUplata = new System.Windows.Forms.TextBox();
+            this.lblSumaUplata = new System.Windows.Forms.Label();
+            this.tbIznosSaPDV = new System.Windows.Forms.TextBox();
+            this.lbIIznosSaPdv = new System.Windows.Forms.Label();
+            this.lblKupacMaticniBroj = new System.Windows.Forms.Label();
+            this.tbKupacMaticniBroj = new System.Windows.Forms.TextBox();
+            this.lblKupacBrojLk = new System.Windows.Forms.Label();
+            this.tbKupacBrojLk = new System.Windows.Forms.TextBox();
             this.btnKupacClear = new System.Windows.Forms.Button();
             this.tbKupacSifra = new System.Windows.Forms.TextBox();
             this.lblBrojRacuna = new System.Windows.Forms.Label();
@@ -63,48 +98,13 @@
             this.btnBrisanje = new System.Windows.Forms.Button();
             this.btnStampa = new System.Windows.Forms.Button();
             this.tmrDelay = new System.Windows.Forms.Timer(this.components);
-            this.lblKupacBrojLk = new System.Windows.Forms.Label();
-            this.tbKupacBrojLk = new System.Windows.Forms.TextBox();
-            this.lblKupacMaticniBroj = new System.Windows.Forms.Label();
-            this.tbKupacMaticniBroj = new System.Windows.Forms.TextBox();
-            this.lbIIznosSaPdv = new System.Windows.Forms.Label();
-            this.tbIznosSaPDV = new System.Windows.Forms.TextBox();
-            this.tbSumaUplata = new System.Windows.Forms.TextBox();
-            this.lblSumaUplata = new System.Windows.Forms.Label();
-            this.tbInicijalnoUplaceno = new System.Windows.Forms.TextBox();
-            this.lblInicijalnoUplaceno = new System.Windows.Forms.Label();
-            this.tbBrojRata = new System.Windows.Forms.TextBox();
-            this.lblBrojRata = new System.Windows.Forms.Label();
-            this.tbPreostaloZaUplatu = new System.Windows.Forms.TextBox();
-            this.lblPreostaloZaUplatu = new System.Windows.Forms.Label();
-            this.lblStatus = new System.Windows.Forms.Label();
-            this.tbStatus = new System.Windows.Forms.TextBox();
-            this.dgvRate = new System.Windows.Forms.DataGridView();
-            this.tbUplaceno = new System.Windows.Forms.TextBox();
-            this.lblUplaceno = new System.Windows.Forms.Label();
-            this.tbIznosRate = new System.Windows.Forms.TextBox();
-            this.lblIznosRate = new System.Windows.Forms.Label();
-            this.lblRokPlacanja = new System.Windows.Forms.Label();
-            this.dtpRokPlacanja = new System.Windows.Forms.DateTimePicker();
-            this.lblDatumUplate = new System.Windows.Forms.Label();
-            this.dtpDatumUplate = new System.Windows.Forms.DateTimePicker();
-            this.lblUgovorRataNapomena = new System.Windows.Forms.Label();
-            this.tbUgovorRataNapomena = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
             this.btnZakljuciUgovor = new System.Windows.Forms.Button();
-            this.tbBrojRate = new System.Windows.Forms.TextBox();
-            this.lblBrojRate = new System.Windows.Forms.Label();
-            this.btnPreuzmiIznos = new System.Windows.Forms.Button();
-            this.gbRate = new System.Windows.Forms.GroupBox();
-            this.rbSviUgovori = new System.Windows.Forms.RadioButton();
-            this.rbRealizovani = new System.Windows.Forms.RadioButton();
-            this.rbNerealizovani = new System.Windows.Forms.RadioButton();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPrijave)).BeginInit();
             this.tabPage2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvRate)).BeginInit();
             this.gbRate.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvRate)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -141,6 +141,44 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Pregled";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // rbNerealizovani
+            // 
+            this.rbNerealizovani.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.rbNerealizovani.AutoSize = true;
+            this.rbNerealizovani.Location = new System.Drawing.Point(799, 5);
+            this.rbNerealizovani.Name = "rbNerealizovani";
+            this.rbNerealizovani.Size = new System.Drawing.Size(109, 20);
+            this.rbNerealizovani.TabIndex = 7;
+            this.rbNerealizovani.Text = "Nerealizovani";
+            this.rbNerealizovani.UseVisualStyleBackColor = true;
+            this.rbNerealizovani.Click += new System.EventHandler(this.rbNerealizovani_Click);
+            // 
+            // rbRealizovani
+            // 
+            this.rbRealizovani.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.rbRealizovani.AutoSize = true;
+            this.rbRealizovani.Location = new System.Drawing.Point(696, 4);
+            this.rbRealizovani.Name = "rbRealizovani";
+            this.rbRealizovani.Size = new System.Drawing.Size(97, 20);
+            this.rbRealizovani.TabIndex = 6;
+            this.rbRealizovani.Text = "Realizovani";
+            this.rbRealizovani.UseVisualStyleBackColor = true;
+            this.rbRealizovani.Click += new System.EventHandler(this.rbRealizovani_Click);
+            // 
+            // rbSviUgovori
+            // 
+            this.rbSviUgovori.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.rbSviUgovori.AutoSize = true;
+            this.rbSviUgovori.Checked = true;
+            this.rbSviUgovori.Location = new System.Drawing.Point(914, 6);
+            this.rbSviUgovori.Name = "rbSviUgovori";
+            this.rbSviUgovori.Size = new System.Drawing.Size(93, 20);
+            this.rbSviUgovori.TabIndex = 5;
+            this.rbSviUgovori.TabStop = true;
+            this.rbSviUgovori.Text = "Svi ugovori";
+            this.rbSviUgovori.UseVisualStyleBackColor = true;
+            this.rbSviUgovori.Click += new System.EventHandler(this.rbSviUgovori_Click);
             // 
             // btnReload
             // 
@@ -251,6 +289,325 @@
             this.tabPage2.Text = "Unos [F2]";
             this.tabPage2.UseVisualStyleBackColor = true;
             this.tabPage2.Click += new System.EventHandler(this.tabPage2_Click);
+            // 
+            // gbRate
+            // 
+            this.gbRate.Controls.Add(this.lblBrojRate);
+            this.gbRate.Controls.Add(this.btnPreuzmiIznos);
+            this.gbRate.Controls.Add(this.lblIznosRate);
+            this.gbRate.Controls.Add(this.tbIznosRate);
+            this.gbRate.Controls.Add(this.tbBrojRate);
+            this.gbRate.Controls.Add(this.lblUplaceno);
+            this.gbRate.Controls.Add(this.tbUplaceno);
+            this.gbRate.Controls.Add(this.lblUgovorRataNapomena);
+            this.gbRate.Controls.Add(this.dtpRokPlacanja);
+            this.gbRate.Controls.Add(this.tbUgovorRataNapomena);
+            this.gbRate.Controls.Add(this.lblRokPlacanja);
+            this.gbRate.Controls.Add(this.lblDatumUplate);
+            this.gbRate.Controls.Add(this.dtpDatumUplate);
+            this.gbRate.Location = new System.Drawing.Point(516, 305);
+            this.gbRate.Name = "gbRate";
+            this.gbRate.Size = new System.Drawing.Size(522, 250);
+            this.gbRate.TabIndex = 120;
+            this.gbRate.TabStop = false;
+            // 
+            // lblBrojRate
+            // 
+            this.lblBrojRate.AutoSize = true;
+            this.lblBrojRate.Location = new System.Drawing.Point(6, 22);
+            this.lblBrojRate.Name = "lblBrojRate";
+            this.lblBrojRate.Size = new System.Drawing.Size(61, 16);
+            this.lblBrojRate.TabIndex = 118;
+            this.lblBrojRate.Text = "Broj rate:";
+            // 
+            // btnPreuzmiIznos
+            // 
+            this.btnPreuzmiIznos.Location = new System.Drawing.Point(97, 81);
+            this.btnPreuzmiIznos.Name = "btnPreuzmiIznos";
+            this.btnPreuzmiIznos.Size = new System.Drawing.Size(34, 23);
+            this.btnPreuzmiIznos.TabIndex = 119;
+            this.btnPreuzmiIznos.Text = "=>";
+            this.btnPreuzmiIznos.UseVisualStyleBackColor = true;
+            this.btnPreuzmiIznos.Visible = false;
+            this.btnPreuzmiIznos.Click += new System.EventHandler(this.button3_Click_1);
+            // 
+            // lblIznosRate
+            // 
+            this.lblIznosRate.AutoSize = true;
+            this.lblIznosRate.Location = new System.Drawing.Point(6, 52);
+            this.lblIznosRate.Name = "lblIznosRate";
+            this.lblIznosRate.Size = new System.Drawing.Size(68, 16);
+            this.lblIznosRate.TabIndex = 105;
+            this.lblIznosRate.Text = "Iznos rate:";
+            // 
+            // tbIznosRate
+            // 
+            this.tbIznosRate.Location = new System.Drawing.Point(137, 50);
+            this.tbIznosRate.Name = "tbIznosRate";
+            this.tbIznosRate.ReadOnly = true;
+            this.tbIznosRate.Size = new System.Drawing.Size(100, 22);
+            this.tbIznosRate.TabIndex = 106;
+            this.tbIznosRate.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // tbBrojRate
+            // 
+            this.tbBrojRate.Location = new System.Drawing.Point(137, 19);
+            this.tbBrojRate.Name = "tbBrojRate";
+            this.tbBrojRate.ReadOnly = true;
+            this.tbBrojRate.Size = new System.Drawing.Size(100, 22);
+            this.tbBrojRate.TabIndex = 117;
+            this.tbBrojRate.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // lblUplaceno
+            // 
+            this.lblUplaceno.AutoSize = true;
+            this.lblUplaceno.Location = new System.Drawing.Point(6, 84);
+            this.lblUplaceno.Name = "lblUplaceno";
+            this.lblUplaceno.Size = new System.Drawing.Size(70, 16);
+            this.lblUplaceno.TabIndex = 107;
+            this.lblUplaceno.Text = "Uplaćeno:";
+            // 
+            // tbUplaceno
+            // 
+            this.tbUplaceno.Location = new System.Drawing.Point(137, 81);
+            this.tbUplaceno.Name = "tbUplaceno";
+            this.tbUplaceno.ReadOnly = true;
+            this.tbUplaceno.Size = new System.Drawing.Size(100, 22);
+            this.tbUplaceno.TabIndex = 108;
+            this.tbUplaceno.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // lblUgovorRataNapomena
+            // 
+            this.lblUgovorRataNapomena.AutoSize = true;
+            this.lblUgovorRataNapomena.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblUgovorRataNapomena.Location = new System.Drawing.Point(6, 127);
+            this.lblUgovorRataNapomena.Name = "lblUgovorRataNapomena";
+            this.lblUgovorRataNapomena.Size = new System.Drawing.Size(79, 16);
+            this.lblUgovorRataNapomena.TabIndex = 114;
+            this.lblUgovorRataNapomena.Text = "Napomena:";
+            // 
+            // dtpRokPlacanja
+            // 
+            this.dtpRokPlacanja.Enabled = false;
+            this.dtpRokPlacanja.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dtpRokPlacanja.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtpRokPlacanja.Location = new System.Drawing.Point(388, 48);
+            this.dtpRokPlacanja.Name = "dtpRokPlacanja";
+            this.dtpRokPlacanja.Size = new System.Drawing.Size(115, 22);
+            this.dtpRokPlacanja.TabIndex = 109;
+            // 
+            // tbUgovorRataNapomena
+            // 
+            this.tbUgovorRataNapomena.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbUgovorRataNapomena.Location = new System.Drawing.Point(137, 124);
+            this.tbUgovorRataNapomena.Multiline = true;
+            this.tbUgovorRataNapomena.Name = "tbUgovorRataNapomena";
+            this.tbUgovorRataNapomena.ReadOnly = true;
+            this.tbUgovorRataNapomena.Size = new System.Drawing.Size(367, 48);
+            this.tbUgovorRataNapomena.TabIndex = 113;
+            // 
+            // lblRokPlacanja
+            // 
+            this.lblRokPlacanja.AutoSize = true;
+            this.lblRokPlacanja.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblRokPlacanja.Location = new System.Drawing.Point(260, 52);
+            this.lblRokPlacanja.Name = "lblRokPlacanja";
+            this.lblRokPlacanja.Size = new System.Drawing.Size(91, 16);
+            this.lblRokPlacanja.TabIndex = 110;
+            this.lblRokPlacanja.Text = "Rok plaćanja:";
+            // 
+            // lblDatumUplate
+            // 
+            this.lblDatumUplate.AutoSize = true;
+            this.lblDatumUplate.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDatumUplate.Location = new System.Drawing.Point(260, 84);
+            this.lblDatumUplate.Name = "lblDatumUplate";
+            this.lblDatumUplate.Size = new System.Drawing.Size(90, 16);
+            this.lblDatumUplate.TabIndex = 112;
+            this.lblDatumUplate.Text = "Datum uplate:";
+            // 
+            // dtpDatumUplate
+            // 
+            this.dtpDatumUplate.Enabled = false;
+            this.dtpDatumUplate.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dtpDatumUplate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtpDatumUplate.Location = new System.Drawing.Point(386, 79);
+            this.dtpDatumUplate.Name = "dtpDatumUplate";
+            this.dtpDatumUplate.ShowCheckBox = true;
+            this.dtpDatumUplate.Size = new System.Drawing.Size(116, 22);
+            this.dtpDatumUplate.TabIndex = 111;
+            this.dtpDatumUplate.ValueChanged += new System.EventHandler(this.dtpDatumUplate_ValueChanged);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(10, 294);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(43, 18);
+            this.label2.TabIndex = 116;
+            this.label2.Text = "Rate:";
+            // 
+            // dgvRate
+            // 
+            this.dgvRate.AllowUserToAddRows = false;
+            this.dgvRate.AllowUserToDeleteRows = false;
+            this.dgvRate.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvRate.Location = new System.Drawing.Point(12, 315);
+            this.dgvRate.MultiSelect = false;
+            this.dgvRate.Name = "dgvRate";
+            this.dgvRate.ReadOnly = true;
+            this.dgvRate.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvRate.Size = new System.Drawing.Size(488, 240);
+            this.dgvRate.TabIndex = 104;
+            this.dgvRate.RowPrePaint += new System.Windows.Forms.DataGridViewRowPrePaintEventHandler(this.dgvRate_RowPrePaint);
+            this.dgvRate.SelectionChanged += new System.EventHandler(this.dgvRate_SelectionChanged);
+            // 
+            // tbStatus
+            // 
+            this.tbStatus.Location = new System.Drawing.Point(920, 8);
+            this.tbStatus.Name = "tbStatus";
+            this.tbStatus.ReadOnly = true;
+            this.tbStatus.Size = new System.Drawing.Size(22, 22);
+            this.tbStatus.TabIndex = 103;
+            this.tbStatus.Text = "E";
+            // 
+            // lblStatus
+            // 
+            this.lblStatus.AutoSize = true;
+            this.lblStatus.Location = new System.Drawing.Point(776, 14);
+            this.lblStatus.Name = "lblStatus";
+            this.lblStatus.Size = new System.Drawing.Size(48, 16);
+            this.lblStatus.TabIndex = 102;
+            this.lblStatus.Text = "Status:";
+            // 
+            // tbPreostaloZaUplatu
+            // 
+            this.tbPreostaloZaUplatu.Location = new System.Drawing.Point(653, 128);
+            this.tbPreostaloZaUplatu.Name = "tbPreostaloZaUplatu";
+            this.tbPreostaloZaUplatu.ReadOnly = true;
+            this.tbPreostaloZaUplatu.Size = new System.Drawing.Size(100, 22);
+            this.tbPreostaloZaUplatu.TabIndex = 101;
+            this.tbPreostaloZaUplatu.Text = "0";
+            this.tbPreostaloZaUplatu.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // lblPreostaloZaUplatu
+            // 
+            this.lblPreostaloZaUplatu.AutoSize = true;
+            this.lblPreostaloZaUplatu.Location = new System.Drawing.Point(521, 131);
+            this.lblPreostaloZaUplatu.Name = "lblPreostaloZaUplatu";
+            this.lblPreostaloZaUplatu.Size = new System.Drawing.Size(125, 16);
+            this.lblPreostaloZaUplatu.TabIndex = 100;
+            this.lblPreostaloZaUplatu.Text = "Preostalo za uplatu:";
+            // 
+            // tbBrojRata
+            // 
+            this.tbBrojRata.Location = new System.Drawing.Point(920, 54);
+            this.tbBrojRata.Name = "tbBrojRata";
+            this.tbBrojRata.Size = new System.Drawing.Size(100, 22);
+            this.tbBrojRata.TabIndex = 99;
+            this.tbBrojRata.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.tbBrojRata.TextChanged += new System.EventHandler(this.tbBrojRata_TextChanged);
+            // 
+            // lblBrojRata
+            // 
+            this.lblBrojRata.AutoSize = true;
+            this.lblBrojRata.Location = new System.Drawing.Point(776, 57);
+            this.lblBrojRata.Name = "lblBrojRata";
+            this.lblBrojRata.Size = new System.Drawing.Size(61, 16);
+            this.lblBrojRata.TabIndex = 98;
+            this.lblBrojRata.Text = "Broj rata:";
+            // 
+            // tbInicijalnoUplaceno
+            // 
+            this.tbInicijalnoUplaceno.Location = new System.Drawing.Point(920, 88);
+            this.tbInicijalnoUplaceno.Name = "tbInicijalnoUplaceno";
+            this.tbInicijalnoUplaceno.Size = new System.Drawing.Size(100, 22);
+            this.tbInicijalnoUplaceno.TabIndex = 97;
+            this.tbInicijalnoUplaceno.Text = "0";
+            this.tbInicijalnoUplaceno.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // lblInicijalnoUplaceno
+            // 
+            this.lblInicijalnoUplaceno.AutoSize = true;
+            this.lblInicijalnoUplaceno.Location = new System.Drawing.Point(776, 91);
+            this.lblInicijalnoUplaceno.Name = "lblInicijalnoUplaceno";
+            this.lblInicijalnoUplaceno.Size = new System.Drawing.Size(122, 16);
+            this.lblInicijalnoUplaceno.TabIndex = 96;
+            this.lblInicijalnoUplaceno.Text = "Inicijalno uplaćeno:";
+            // 
+            // tbSumaUplata
+            // 
+            this.tbSumaUplata.Location = new System.Drawing.Point(653, 93);
+            this.tbSumaUplata.Name = "tbSumaUplata";
+            this.tbSumaUplata.ReadOnly = true;
+            this.tbSumaUplata.Size = new System.Drawing.Size(100, 22);
+            this.tbSumaUplata.TabIndex = 95;
+            this.tbSumaUplata.Text = "0";
+            this.tbSumaUplata.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // lblSumaUplata
+            // 
+            this.lblSumaUplata.AutoSize = true;
+            this.lblSumaUplata.Location = new System.Drawing.Point(522, 96);
+            this.lblSumaUplata.Name = "lblSumaUplata";
+            this.lblSumaUplata.Size = new System.Drawing.Size(86, 16);
+            this.lblSumaUplata.TabIndex = 94;
+            this.lblSumaUplata.Text = "Suma uplata:";
+            // 
+            // tbIznosSaPDV
+            // 
+            this.tbIznosSaPDV.Location = new System.Drawing.Point(653, 58);
+            this.tbIznosSaPDV.Name = "tbIznosSaPDV";
+            this.tbIznosSaPDV.Size = new System.Drawing.Size(100, 22);
+            this.tbIznosSaPDV.TabIndex = 93;
+            this.tbIznosSaPDV.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.tbIznosSaPDV.TextChanged += new System.EventHandler(this.tbIznosSaPDV_TextChanged);
+            // 
+            // lbIIznosSaPdv
+            // 
+            this.lbIIznosSaPdv.AutoSize = true;
+            this.lbIIznosSaPdv.Location = new System.Drawing.Point(522, 60);
+            this.lbIIznosSaPdv.Name = "lbIIznosSaPdv";
+            this.lbIIznosSaPdv.Size = new System.Drawing.Size(95, 16);
+            this.lbIIznosSaPdv.TabIndex = 92;
+            this.lbIIznosSaPdv.Text = "Iznos ugovora:";
+            // 
+            // lblKupacMaticniBroj
+            // 
+            this.lblKupacMaticniBroj.AutoSize = true;
+            this.lblKupacMaticniBroj.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblKupacMaticniBroj.Location = new System.Drawing.Point(8, 231);
+            this.lblKupacMaticniBroj.Name = "lblKupacMaticniBroj";
+            this.lblKupacMaticniBroj.Size = new System.Drawing.Size(48, 16);
+            this.lblKupacMaticniBroj.TabIndex = 91;
+            this.lblKupacMaticniBroj.Text = "JMBG:";
+            // 
+            // tbKupacMaticniBroj
+            // 
+            this.tbKupacMaticniBroj.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbKupacMaticniBroj.Location = new System.Drawing.Point(127, 228);
+            this.tbKupacMaticniBroj.Name = "tbKupacMaticniBroj";
+            this.tbKupacMaticniBroj.Size = new System.Drawing.Size(166, 22);
+            this.tbKupacMaticniBroj.TabIndex = 90;
+            // 
+            // lblKupacBrojLk
+            // 
+            this.lblKupacBrojLk.AutoSize = true;
+            this.lblKupacBrojLk.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblKupacBrojLk.Location = new System.Drawing.Point(8, 196);
+            this.lblKupacBrojLk.Name = "lblKupacBrojLk";
+            this.lblKupacBrojLk.Size = new System.Drawing.Size(53, 16);
+            this.lblKupacBrojLk.TabIndex = 89;
+            this.lblKupacBrojLk.Text = "Broj LK:";
+            // 
+            // tbKupacBrojLk
+            // 
+            this.tbKupacBrojLk.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbKupacBrojLk.Location = new System.Drawing.Point(126, 193);
+            this.tbKupacBrojLk.Name = "tbKupacBrojLk";
+            this.tbKupacBrojLk.Size = new System.Drawing.Size(167, 22);
+            this.tbKupacBrojLk.TabIndex = 87;
             // 
             // btnKupacClear
             // 
@@ -492,275 +849,6 @@
             this.btnStampa.UseVisualStyleBackColor = true;
             this.btnStampa.Click += new System.EventHandler(this.btnStampa_Click);
             // 
-            // lblKupacBrojLk
-            // 
-            this.lblKupacBrojLk.AutoSize = true;
-            this.lblKupacBrojLk.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblKupacBrojLk.Location = new System.Drawing.Point(8, 196);
-            this.lblKupacBrojLk.Name = "lblKupacBrojLk";
-            this.lblKupacBrojLk.Size = new System.Drawing.Size(53, 16);
-            this.lblKupacBrojLk.TabIndex = 89;
-            this.lblKupacBrojLk.Text = "Broj LK:";
-            // 
-            // tbKupacBrojLk
-            // 
-            this.tbKupacBrojLk.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbKupacBrojLk.Location = new System.Drawing.Point(126, 193);
-            this.tbKupacBrojLk.Name = "tbKupacBrojLk";
-            this.tbKupacBrojLk.Size = new System.Drawing.Size(167, 22);
-            this.tbKupacBrojLk.TabIndex = 87;
-            // 
-            // lblKupacMaticniBroj
-            // 
-            this.lblKupacMaticniBroj.AutoSize = true;
-            this.lblKupacMaticniBroj.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblKupacMaticniBroj.Location = new System.Drawing.Point(8, 231);
-            this.lblKupacMaticniBroj.Name = "lblKupacMaticniBroj";
-            this.lblKupacMaticniBroj.Size = new System.Drawing.Size(48, 16);
-            this.lblKupacMaticniBroj.TabIndex = 91;
-            this.lblKupacMaticniBroj.Text = "JMBG:";
-            // 
-            // tbKupacMaticniBroj
-            // 
-            this.tbKupacMaticniBroj.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbKupacMaticniBroj.Location = new System.Drawing.Point(127, 228);
-            this.tbKupacMaticniBroj.Name = "tbKupacMaticniBroj";
-            this.tbKupacMaticniBroj.Size = new System.Drawing.Size(166, 22);
-            this.tbKupacMaticniBroj.TabIndex = 90;
-            // 
-            // lbIIznosSaPdv
-            // 
-            this.lbIIznosSaPdv.AutoSize = true;
-            this.lbIIznosSaPdv.Location = new System.Drawing.Point(522, 60);
-            this.lbIIznosSaPdv.Name = "lbIIznosSaPdv";
-            this.lbIIznosSaPdv.Size = new System.Drawing.Size(95, 16);
-            this.lbIIznosSaPdv.TabIndex = 92;
-            this.lbIIznosSaPdv.Text = "Iznos ugovora:";
-            // 
-            // tbIznosSaPDV
-            // 
-            this.tbIznosSaPDV.Location = new System.Drawing.Point(653, 58);
-            this.tbIznosSaPDV.Name = "tbIznosSaPDV";
-            this.tbIznosSaPDV.Size = new System.Drawing.Size(100, 22);
-            this.tbIznosSaPDV.TabIndex = 93;
-            this.tbIznosSaPDV.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.tbIznosSaPDV.TextChanged += new System.EventHandler(this.tbIznosSaPDV_TextChanged);
-            // 
-            // tbSumaUplata
-            // 
-            this.tbSumaUplata.Location = new System.Drawing.Point(653, 93);
-            this.tbSumaUplata.Name = "tbSumaUplata";
-            this.tbSumaUplata.ReadOnly = true;
-            this.tbSumaUplata.Size = new System.Drawing.Size(100, 22);
-            this.tbSumaUplata.TabIndex = 95;
-            this.tbSumaUplata.Text = "0";
-            this.tbSumaUplata.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // lblSumaUplata
-            // 
-            this.lblSumaUplata.AutoSize = true;
-            this.lblSumaUplata.Location = new System.Drawing.Point(522, 96);
-            this.lblSumaUplata.Name = "lblSumaUplata";
-            this.lblSumaUplata.Size = new System.Drawing.Size(86, 16);
-            this.lblSumaUplata.TabIndex = 94;
-            this.lblSumaUplata.Text = "Suma uplata:";
-            // 
-            // tbInicijalnoUplaceno
-            // 
-            this.tbInicijalnoUplaceno.Location = new System.Drawing.Point(920, 88);
-            this.tbInicijalnoUplaceno.Name = "tbInicijalnoUplaceno";
-            this.tbInicijalnoUplaceno.Size = new System.Drawing.Size(100, 22);
-            this.tbInicijalnoUplaceno.TabIndex = 97;
-            this.tbInicijalnoUplaceno.Text = "0";
-            this.tbInicijalnoUplaceno.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // lblInicijalnoUplaceno
-            // 
-            this.lblInicijalnoUplaceno.AutoSize = true;
-            this.lblInicijalnoUplaceno.Location = new System.Drawing.Point(776, 91);
-            this.lblInicijalnoUplaceno.Name = "lblInicijalnoUplaceno";
-            this.lblInicijalnoUplaceno.Size = new System.Drawing.Size(122, 16);
-            this.lblInicijalnoUplaceno.TabIndex = 96;
-            this.lblInicijalnoUplaceno.Text = "Inicijalno uplaćeno:";
-            // 
-            // tbBrojRata
-            // 
-            this.tbBrojRata.Location = new System.Drawing.Point(920, 54);
-            this.tbBrojRata.Name = "tbBrojRata";
-            this.tbBrojRata.Size = new System.Drawing.Size(100, 22);
-            this.tbBrojRata.TabIndex = 99;
-            this.tbBrojRata.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.tbBrojRata.TextChanged += new System.EventHandler(this.tbBrojRata_TextChanged);
-            // 
-            // lblBrojRata
-            // 
-            this.lblBrojRata.AutoSize = true;
-            this.lblBrojRata.Location = new System.Drawing.Point(776, 57);
-            this.lblBrojRata.Name = "lblBrojRata";
-            this.lblBrojRata.Size = new System.Drawing.Size(61, 16);
-            this.lblBrojRata.TabIndex = 98;
-            this.lblBrojRata.Text = "Broj rata:";
-            // 
-            // tbPreostaloZaUplatu
-            // 
-            this.tbPreostaloZaUplatu.Location = new System.Drawing.Point(653, 128);
-            this.tbPreostaloZaUplatu.Name = "tbPreostaloZaUplatu";
-            this.tbPreostaloZaUplatu.ReadOnly = true;
-            this.tbPreostaloZaUplatu.Size = new System.Drawing.Size(100, 22);
-            this.tbPreostaloZaUplatu.TabIndex = 101;
-            this.tbPreostaloZaUplatu.Text = "0";
-            this.tbPreostaloZaUplatu.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // lblPreostaloZaUplatu
-            // 
-            this.lblPreostaloZaUplatu.AutoSize = true;
-            this.lblPreostaloZaUplatu.Location = new System.Drawing.Point(521, 131);
-            this.lblPreostaloZaUplatu.Name = "lblPreostaloZaUplatu";
-            this.lblPreostaloZaUplatu.Size = new System.Drawing.Size(125, 16);
-            this.lblPreostaloZaUplatu.TabIndex = 100;
-            this.lblPreostaloZaUplatu.Text = "Preostalo za uplatu:";
-            // 
-            // lblStatus
-            // 
-            this.lblStatus.AutoSize = true;
-            this.lblStatus.Location = new System.Drawing.Point(776, 14);
-            this.lblStatus.Name = "lblStatus";
-            this.lblStatus.Size = new System.Drawing.Size(48, 16);
-            this.lblStatus.TabIndex = 102;
-            this.lblStatus.Text = "Status:";
-            // 
-            // tbStatus
-            // 
-            this.tbStatus.Location = new System.Drawing.Point(920, 8);
-            this.tbStatus.Name = "tbStatus";
-            this.tbStatus.ReadOnly = true;
-            this.tbStatus.Size = new System.Drawing.Size(22, 22);
-            this.tbStatus.TabIndex = 103;
-            this.tbStatus.Text = "E";
-            // 
-            // dgvRate
-            // 
-            this.dgvRate.AllowUserToAddRows = false;
-            this.dgvRate.AllowUserToDeleteRows = false;
-            this.dgvRate.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvRate.Location = new System.Drawing.Point(12, 315);
-            this.dgvRate.MultiSelect = false;
-            this.dgvRate.Name = "dgvRate";
-            this.dgvRate.ReadOnly = true;
-            this.dgvRate.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvRate.Size = new System.Drawing.Size(488, 240);
-            this.dgvRate.TabIndex = 104;
-            this.dgvRate.RowPrePaint += new System.Windows.Forms.DataGridViewRowPrePaintEventHandler(this.dgvRate_RowPrePaint);
-            this.dgvRate.SelectionChanged += new System.EventHandler(this.dgvRate_SelectionChanged);
-            // 
-            // tbUplaceno
-            // 
-            this.tbUplaceno.Location = new System.Drawing.Point(137, 81);
-            this.tbUplaceno.Name = "tbUplaceno";
-            this.tbUplaceno.ReadOnly = true;
-            this.tbUplaceno.Size = new System.Drawing.Size(100, 22);
-            this.tbUplaceno.TabIndex = 108;
-            this.tbUplaceno.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // lblUplaceno
-            // 
-            this.lblUplaceno.AutoSize = true;
-            this.lblUplaceno.Location = new System.Drawing.Point(6, 84);
-            this.lblUplaceno.Name = "lblUplaceno";
-            this.lblUplaceno.Size = new System.Drawing.Size(70, 16);
-            this.lblUplaceno.TabIndex = 107;
-            this.lblUplaceno.Text = "Uplaćeno:";
-            // 
-            // tbIznosRate
-            // 
-            this.tbIznosRate.Location = new System.Drawing.Point(137, 50);
-            this.tbIznosRate.Name = "tbIznosRate";
-            this.tbIznosRate.ReadOnly = true;
-            this.tbIznosRate.Size = new System.Drawing.Size(100, 22);
-            this.tbIznosRate.TabIndex = 106;
-            this.tbIznosRate.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // lblIznosRate
-            // 
-            this.lblIznosRate.AutoSize = true;
-            this.lblIznosRate.Location = new System.Drawing.Point(6, 52);
-            this.lblIznosRate.Name = "lblIznosRate";
-            this.lblIznosRate.Size = new System.Drawing.Size(68, 16);
-            this.lblIznosRate.TabIndex = 105;
-            this.lblIznosRate.Text = "Iznos rate:";
-            // 
-            // lblRokPlacanja
-            // 
-            this.lblRokPlacanja.AutoSize = true;
-            this.lblRokPlacanja.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblRokPlacanja.Location = new System.Drawing.Point(260, 52);
-            this.lblRokPlacanja.Name = "lblRokPlacanja";
-            this.lblRokPlacanja.Size = new System.Drawing.Size(91, 16);
-            this.lblRokPlacanja.TabIndex = 110;
-            this.lblRokPlacanja.Text = "Rok plaćanja:";
-            // 
-            // dtpRokPlacanja
-            // 
-            this.dtpRokPlacanja.Enabled = false;
-            this.dtpRokPlacanja.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dtpRokPlacanja.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpRokPlacanja.Location = new System.Drawing.Point(388, 48);
-            this.dtpRokPlacanja.Name = "dtpRokPlacanja";
-            this.dtpRokPlacanja.Size = new System.Drawing.Size(115, 22);
-            this.dtpRokPlacanja.TabIndex = 109;
-            // 
-            // lblDatumUplate
-            // 
-            this.lblDatumUplate.AutoSize = true;
-            this.lblDatumUplate.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDatumUplate.Location = new System.Drawing.Point(260, 84);
-            this.lblDatumUplate.Name = "lblDatumUplate";
-            this.lblDatumUplate.Size = new System.Drawing.Size(90, 16);
-            this.lblDatumUplate.TabIndex = 112;
-            this.lblDatumUplate.Text = "Datum uplate:";
-            // 
-            // dtpDatumUplate
-            // 
-            this.dtpDatumUplate.Enabled = false;
-            this.dtpDatumUplate.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dtpDatumUplate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpDatumUplate.Location = new System.Drawing.Point(386, 79);
-            this.dtpDatumUplate.Name = "dtpDatumUplate";
-            this.dtpDatumUplate.ShowCheckBox = true;
-            this.dtpDatumUplate.Size = new System.Drawing.Size(116, 22);
-            this.dtpDatumUplate.TabIndex = 111;
-            this.dtpDatumUplate.ValueChanged += new System.EventHandler(this.dtpDatumUplate_ValueChanged);
-            // 
-            // lblUgovorRataNapomena
-            // 
-            this.lblUgovorRataNapomena.AutoSize = true;
-            this.lblUgovorRataNapomena.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblUgovorRataNapomena.Location = new System.Drawing.Point(6, 127);
-            this.lblUgovorRataNapomena.Name = "lblUgovorRataNapomena";
-            this.lblUgovorRataNapomena.Size = new System.Drawing.Size(79, 16);
-            this.lblUgovorRataNapomena.TabIndex = 114;
-            this.lblUgovorRataNapomena.Text = "Napomena:";
-            // 
-            // tbUgovorRataNapomena
-            // 
-            this.tbUgovorRataNapomena.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbUgovorRataNapomena.Location = new System.Drawing.Point(137, 124);
-            this.tbUgovorRataNapomena.Multiline = true;
-            this.tbUgovorRataNapomena.Name = "tbUgovorRataNapomena";
-            this.tbUgovorRataNapomena.ReadOnly = true;
-            this.tbUgovorRataNapomena.Size = new System.Drawing.Size(367, 48);
-            this.tbUgovorRataNapomena.TabIndex = 113;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(10, 294);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(43, 18);
-            this.label2.TabIndex = 116;
-            this.label2.Text = "Rate:";
-            // 
             // btnZakljuciUgovor
             // 
             this.btnZakljuciUgovor.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -772,94 +860,6 @@
             this.btnZakljuciUgovor.Text = "Zaključenje [F6]";
             this.btnZakljuciUgovor.UseVisualStyleBackColor = true;
             this.btnZakljuciUgovor.Click += new System.EventHandler(this.btnZakljuciUgovor_Click);
-            // 
-            // tbBrojRate
-            // 
-            this.tbBrojRate.Location = new System.Drawing.Point(137, 19);
-            this.tbBrojRate.Name = "tbBrojRate";
-            this.tbBrojRate.ReadOnly = true;
-            this.tbBrojRate.Size = new System.Drawing.Size(100, 22);
-            this.tbBrojRate.TabIndex = 117;
-            this.tbBrojRate.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // lblBrojRate
-            // 
-            this.lblBrojRate.AutoSize = true;
-            this.lblBrojRate.Location = new System.Drawing.Point(6, 22);
-            this.lblBrojRate.Name = "lblBrojRate";
-            this.lblBrojRate.Size = new System.Drawing.Size(61, 16);
-            this.lblBrojRate.TabIndex = 118;
-            this.lblBrojRate.Text = "Broj rate:";
-            // 
-            // btnPreuzmiIznos
-            // 
-            this.btnPreuzmiIznos.Location = new System.Drawing.Point(97, 81);
-            this.btnPreuzmiIznos.Name = "btnPreuzmiIznos";
-            this.btnPreuzmiIznos.Size = new System.Drawing.Size(34, 23);
-            this.btnPreuzmiIznos.TabIndex = 119;
-            this.btnPreuzmiIznos.Text = "=>";
-            this.btnPreuzmiIznos.UseVisualStyleBackColor = true;
-            this.btnPreuzmiIznos.Visible = false;
-            this.btnPreuzmiIznos.Click += new System.EventHandler(this.button3_Click_1);
-            // 
-            // gbRate
-            // 
-            this.gbRate.Controls.Add(this.lblBrojRate);
-            this.gbRate.Controls.Add(this.btnPreuzmiIznos);
-            this.gbRate.Controls.Add(this.lblIznosRate);
-            this.gbRate.Controls.Add(this.tbIznosRate);
-            this.gbRate.Controls.Add(this.tbBrojRate);
-            this.gbRate.Controls.Add(this.lblUplaceno);
-            this.gbRate.Controls.Add(this.tbUplaceno);
-            this.gbRate.Controls.Add(this.lblUgovorRataNapomena);
-            this.gbRate.Controls.Add(this.dtpRokPlacanja);
-            this.gbRate.Controls.Add(this.tbUgovorRataNapomena);
-            this.gbRate.Controls.Add(this.lblRokPlacanja);
-            this.gbRate.Controls.Add(this.lblDatumUplate);
-            this.gbRate.Controls.Add(this.dtpDatumUplate);
-            this.gbRate.Location = new System.Drawing.Point(516, 305);
-            this.gbRate.Name = "gbRate";
-            this.gbRate.Size = new System.Drawing.Size(522, 250);
-            this.gbRate.TabIndex = 120;
-            this.gbRate.TabStop = false;
-            // 
-            // rbSviUgovori
-            // 
-            this.rbSviUgovori.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.rbSviUgovori.AutoSize = true;
-            this.rbSviUgovori.Checked = true;
-            this.rbSviUgovori.Location = new System.Drawing.Point(914, 6);
-            this.rbSviUgovori.Name = "rbSviUgovori";
-            this.rbSviUgovori.Size = new System.Drawing.Size(93, 20);
-            this.rbSviUgovori.TabIndex = 5;
-            this.rbSviUgovori.TabStop = true;
-            this.rbSviUgovori.Text = "Svi ugovori";
-            this.rbSviUgovori.UseVisualStyleBackColor = true;
-            this.rbSviUgovori.Click += new System.EventHandler(this.rbSviUgovori_Click);
-            // 
-            // rbRealizovani
-            // 
-            this.rbRealizovani.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.rbRealizovani.AutoSize = true;
-            this.rbRealizovani.Location = new System.Drawing.Point(696, 4);
-            this.rbRealizovani.Name = "rbRealizovani";
-            this.rbRealizovani.Size = new System.Drawing.Size(97, 20);
-            this.rbRealizovani.TabIndex = 6;
-            this.rbRealizovani.Text = "Realizovani";
-            this.rbRealizovani.UseVisualStyleBackColor = true;
-            this.rbRealizovani.Click += new System.EventHandler(this.rbRealizovani_Click);
-            // 
-            // rbNerealizovani
-            // 
-            this.rbNerealizovani.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.rbNerealizovani.AutoSize = true;
-            this.rbNerealizovani.Location = new System.Drawing.Point(799, 5);
-            this.rbNerealizovani.Name = "rbNerealizovani";
-            this.rbNerealizovani.Size = new System.Drawing.Size(109, 20);
-            this.rbNerealizovani.TabIndex = 7;
-            this.rbNerealizovani.Text = "Nerealizovani";
-            this.rbNerealizovani.UseVisualStyleBackColor = true;
-            this.rbNerealizovani.Click += new System.EventHandler(this.rbNerealizovani_Click);
             // 
             // FormUgovor
             // 
@@ -881,9 +881,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvPrijave)).EndInit();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvRate)).EndInit();
             this.gbRate.ResumeLayout(false);
             this.gbRate.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvRate)).EndInit();
             this.ResumeLayout(false);
 
     }

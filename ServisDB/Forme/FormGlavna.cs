@@ -34,7 +34,7 @@ namespace ServisDB.Forme
         }
 
         private void btnServisniNalozi_Click(object sender, EventArgs e)
-        {
+        {          
             frmServisnaPrijava frm = new frmServisnaPrijava();
             frm.DynamicFilters = new List<string>() { "dobavljac_sifra is null" };
             frm.ShowDialog();
