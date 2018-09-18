@@ -84,7 +84,7 @@
             this.btnServisniNalozi.Name = "btnServisniNalozi";
             this.btnServisniNalozi.Size = new System.Drawing.Size(360, 180);
             this.btnServisniNalozi.TabIndex = 1;
-            this.btnServisniNalozi.Text = "Servisni nalozi";
+            this.btnServisniNalozi.Text = "Izvještaji";
             this.btnServisniNalozi.UseVisualStyleBackColor = true;
             this.btnServisniNalozi.Click += new System.EventHandler(this.btnServisniNalozi_Click);
             // 

@@ -34,10 +34,13 @@ namespace ServisDB.Forme
         }
 
         private void btnServisniNalozi_Click(object sender, EventArgs e)
-        {          
-            frmServisnaPrijava frm = new frmServisnaPrijava();
-            frm.DynamicFilters = new List<string>() { "dobavljac_sifra is null" };
-            frm.ShowDialog();
+        {
+            //frmServisnaPrijava frm = new frmServisnaPrijava();
+            //frm.DynamicFilters = new List<string>() { "dobavljac_sifra is null" };
+            //frm.ShowDialog();
+
+            dlgReports dlg = new dlgReports();
+            dlg.ShowDialog();
         }
 
         private void btnUgovori_Click(object sender, EventArgs e)

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml;
 
@@ -54,8 +55,13 @@ namespace ServisDB.Klase
                                 var parent = bookmark.Parent;   // bookmark's parent element
 
                                 Text text = new Text(bookmarkDataVal.Value);
+                                string[] parts = Regex.Split(bookmarkDataVal.Value,Environment.NewLine);
                                 Run run = new Run(new RunProperties());
-                                run.Append(text);
+                                foreach (string s in parts)
+                                {
+                                    run.Append(new Text(s));
+                                    run.Append(new Break());
+                                }
                                 // insert after bookmark parent
                                 parent.Append(run);
                             }

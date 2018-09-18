@@ -60,6 +60,24 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Forme\dlgPregledDugovanja.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forme\dlgPregledDugovanja.Designer.cs">
+      <DependentUpon>dlgPregledDugovanja.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forme\dlgPregledUplata.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forme\dlgPregledUplata.Designer.cs">
+      <DependentUpon>dlgPregledUplata.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forme\dlgReports.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forme\dlgReports.Designer.cs">
+      <DependentUpon>dlgReports.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forme\FormGlavna.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -84,13 +102,26 @@
     <Compile Include="Forme\FormPartner.Designer.cs">
       <DependentUpon>FormPartner.cs</DependentUpon>
     </Compile>
+    <Compile Include="Klase\Helper.cs" />
+    <Compile Include="Klase\Logger.cs" />
     <Compile Include="Klase\PersistanceManager.cs" />
     <Compile Include="Klase\Enums.cs" />
     <Compile Include="Klase\Partner.cs" />
+    <Compile Include="Klase\ReportBuilder.cs" />
+    <Compile Include="Klase\ReportManager.cs" />
     <Compile Include="Klase\UgovorRata.cs" />
     <Compile Include="Klase\WordDocumentBuilder.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Forme\dlgPregledDugovanja.resx">
+      <DependentUpon>dlgPregledDugovanja.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forme\dlgPregledUplata.resx">
+      <DependentUpon>dlgPregledUplata.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forme\dlgReports.resx">
+      <DependentUpon>dlgReports.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forme\FormGlavna.resx">
       <DependentUpon>FormGlavna.cs</DependentUpon>
     </EmbeddedResource>

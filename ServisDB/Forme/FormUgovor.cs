@@ -114,14 +114,20 @@ namespace ServisDB.Forme
         private void button1_Click(object sender, EventArgs e)
         {
             decimal IznosSaPDV, InicijalnoUplaceno;
-            int brojRata;            
-            bool s1=decimal.TryParse(tbIznosSaPDV.Text, out IznosSaPDV);
+            int brojRata;
+            bool s1 = decimal.TryParse(tbIznosSaPDV.Text, out IznosSaPDV);
             bool s2 = decimal.TryParse(tbInicijalnoUplaceno.Text, out InicijalnoUplaceno);
             bool s3 = int.TryParse(tbBrojRata.Text, out brojRata);
 
-            if(s1==false||s2==false||s3==false)
+            if (s1 == false || s2 == false || s3 == false)
             {
                 MessageBox.Show("Validacija iznosa neuspješna!", "Poruka", MessageBoxButtons.OK, MessageBoxIcon.Hand);
+                return;
+            }
+
+            if (s3 == true && (brojRata < 0 || brojRata > 24))
+            {
+                MessageBox.Show("Broj rata može biti između 1 i 24!", "Poruka", MessageBoxButtons.OK, MessageBoxIcon.Hand);
                 return;
             }
 
@@ -132,6 +138,17 @@ namespace ServisDB.Forme
             if (s4 == false || s5 == false || s6 == false)
             {
                 MessageBox.Show("Validacija podataka o kupcu neuspješna! Obavezni podaci su ime kupca, Broj LK i JMBG.", "Poruka", MessageBoxButtons.OK, MessageBoxIcon.Hand);
+                return;
+            }
+            if (s6 == true && (tbKupacMaticniBroj.Text.Trim().Length > 13 || tbKupacMaticniBroj.Text.Trim().Length < 1))
+            {
+                MessageBox.Show("Broj cifara matičnog broja ne može biti veći od 13!", "Poruka", MessageBoxButtons.OK, MessageBoxIcon.Hand);
+                return;
+            }
+
+            if (s5 == true && (tbKupacBrojLk.Text.Trim().Length !=9))
+            {
+                MessageBox.Show("Broj karaktera broja LK mora biti 9!", "Poruka", MessageBoxButtons.OK, MessageBoxIcon.Hand);
                 return;
             }
             //DateTime? zavrseno = null;
@@ -200,7 +217,14 @@ namespace ServisDB.Forme
                         PersistanceManager.InsertUgovorRata(r.BrojUgovora, r.BrojRate, r.RokPlacanja, r.DatumPlacanja, r.Iznos, r.Uplaceno, r.Napomena);
                 }
                 else
+                {
                     PersistanceManager.UpdateUgovorRata(tbRedniBroj.Text, int.Parse(tbBrojRate.Text), dtpRokPlacanja.Value, dtpDatumUplate.Value, decimal.Parse(tbIznosRate.Text), decimal.Parse(tbUplaceno.Text), tbNapomena.Text);
+                 
+                    if(dtpDatumUplate.Value!=null)
+                    {
+                        StampaPotvrdaPlacanja();
+                    }
+                }
 
             }
             tabControl1.SelectedIndex = 0;
@@ -453,7 +477,11 @@ namespace ServisDB.Forme
 
         private void btnStampa_Click(object sender, EventArgs e)
         {
-            
+            Stampa();
+        }
+
+        private void Stampa()
+        {
             //  //string dir = Environment.SpecialFolder.MyDocuments + "\\ServisDB\\";
 
             string dir = System.IO.Path.Combine(Environment.GetFolderPath(
@@ -475,7 +503,14 @@ namespace ServisDB.Forme
             decimal iznos = (decimal)((DataRowView)o).Row.ItemArray[13];
             string napomena = ((DataRowView)o).Row.ItemArray[18].ToString();
 
+            List<UgovorRata> rate = PersistanceManager.ReadUgovorRata(rednibroj);
+            string plan = "";
+            for(int i=0;i<rate.Count;i++)
+                plan = plan + Environment.NewLine + (i + 1).ToString() + ". do " + rate[i].RokPlacanja.ToString("dd.MM.yyyy") + " - iznos: " + rate[i].Iznos.ToString("N2") + " KM";
+           
+
             Dictionary<string, string> dict = new Dictionary<string, string>();
+            dict.Add("OTPLATNIPLAN", plan);
             dict.Add("KUPAC", kupac);
             dict.Add("ADRESA", adresa);
             dict.Add("LK", lk);
@@ -483,85 +518,79 @@ namespace ServisDB.Forme
             dict.Add("UPLACENO", uplaceno.ToString("N2"));
             dict.Add("BROJRATA", brojrata.ToString());
             dict.Add("DATUM", datum.ToString("dd.MM.yyyy"));
-            dict.Add("IZNOSRATE", (Math.Round(iznos/int.Parse(brojrata),2,MidpointRounding.AwayFromZero)).ToString("N2"));
-            dict.Add("UKUPANIZNOS", (uplaceno+iznos).ToString("N2"));
+            dict.Add("IZNOSRATE", (Math.Round(iznos / int.Parse(brojrata), 2, MidpointRounding.AwayFromZero)).ToString("N2"));
+            dict.Add("UKUPANIZNOS", (uplaceno + iznos).ToString("N2"));
             dict.Add("PREDMET", napomena);
             string fileName = dir + "\\" + rednibroj.Replace("/", "-") + ".docx";
-         
+
             WordDocumentBuilder.FillBookmarksUsingOpenXml("Ugovor.docx", fileName, dict);
             Process.Start(fileName);
+        }
 
-            //  XLWorkbook doc = new XLWorkbook("PRIJEMNICA NA SERVIS.xlsx");
-            //  //doc.Worksheets.Add("Ugovor");
+        private void StampaPotvrdaPlacanja()
+        {
+            //  //string dir = Environment.SpecialFolder.MyDocuments + "\\ServisDB\\";
 
-            //  var sheet = doc.Worksheet(1);
+            string dir = System.IO.Path.Combine(Environment.GetFolderPath(
+          Environment.SpecialFolder.MyDoc‌​uments), "ServisDB");
 
-            //  object o = dgvPrijave.SelectedRows[0].DataBoundItem;
+            if (Directory.Exists(dir) == false)
+            {
+                Directory.CreateDirectory(dir);
+            }
+            object o = dgvPrijave.SelectedRows[0].DataBoundItem;
+            string rednibroj = ((DataRowView)o).Row.ItemArray[0].ToString();
+            string kupac = ((DataRowView)o).Row.ItemArray[5].ToString();
+            string adresa = ((DataRowView)o).Row.ItemArray[6].ToString();
+            string lk = ((DataRowView)o).Row.ItemArray[4].ToString();
+            string jmbg = ((DataRowView)o).Row.ItemArray[3].ToString();
+            decimal inicijalnoplaceno = (decimal)((DataRowView)o).Row.ItemArray[10];
+            string brojrata = ((DataRowView)o).Row.ItemArray[14].ToString();
+            DateTime datum = (DateTime)((DataRowView)o).Row.ItemArray[1];
+            decimal iznos = (decimal)((DataRowView)o).Row.ItemArray[13];
+            string napomena = ((DataRowView)o).Row.ItemArray[18].ToString();
+            string brojracuna = tbBrojRacuna.Text;
+            int brojrate = int.Parse(tbBrojRate.Text);
+            //decimal inicijalnoplaceno = decimal.Parse(tbInicijalnoUplaceno.Text);
+            List<UgovorRata> rate = PersistanceManager.ReadUgovorRata(tbRedniBroj.Text);
+       
+            decimal? sumauplata = rate.Sum(r => r.Uplaceno);
 
-            //  string datum = ((DateTime)((DataRowView)o).Row.ItemArray[2]).Date.ToString();
-            //  string garantnilist = ((DataRowView)o).Row.ItemArray[21].ToString();
-            //  string kupac = ((DataRowView)o).Row.ItemArray[4].ToString();
-            //  string kupac_telefon = ((DataRowView)o).Row.ItemArray[6].ToString();
-            //  string model = ((DataRowView)o).Row.ItemArray[8].ToString();
-            //  string serijski_broj = ((DataRowView)o).Row.ItemArray[9].ToString();
-            //  string dodatna_oprema = ((DataRowView)o).Row.ItemArray[10].ToString();
-            //  string opis_kvara = ((DataRowView)o).Row.ItemArray[11].ToString();
-            //  string napomena_servisera = ((DataRowView)o).Row.ItemArray[12].ToString();
-            //  string serviser = ((DataRowView)o).Row.ItemArray[13].ToString();
-            //  string zavrseno = "";
-            //  if (((DataRowView)o).Row.ItemArray[15] == DBNull.Value)
-            //  {
-            //      zavrseno = "";
-            //  }
-            //  else
-            //  {
-            //      zavrseno = ((DateTime)((DataRowView)o).Row.ItemArray[15]).ToString();
-            //  }
+            decimal uplacenoPoRati = decimal.Parse(tbUplaceno.Text);
+            DateTime datumPlacanja = dtpDatumUplate.Value;
 
-            //  string[] parts = rednibroj.Split('/');
-            //  string rb = parts[0];
-            //  string year = parts[1];
-            //  int rrb = int.Parse(rb);
-            //  rednibroj = rrb.ToString("D4") + "/" + year;
-            //  sheet.Cells("C17").Value = rednibroj;
-            //  sheet.Cells("C17").DataType = XLCellValues.Text;
-            //  sheet.Cells("C15").Value = rednibroj;
-            //  sheet.Cells("C15").Style.Font.FontName = "Free 3 of 9 Extended";
-            //  sheet.Cells("C15").Style.Font.FontSize = 28;
-            //  sheet.Cells("C18").Value = garantnilist;
-            //  sheet.Cells("C21").Value = datum;
-            //  sheet.Cells("C24").Value = kupac;
-            //  sheet.Cells("C25").Value = kupac_telefon;
-            //  sheet.Cells("C28").Value = model;
-            //  sheet.Cells("C29").Value = serijski_broj;
-            //  sheet.Cells("C31").Value = dodatna_oprema;
-            //  sheet.Cells("C32").Value = opis_kvara;
+            string plan = "";
+            //rate = rate.Where(ss => ss.Iznos - ss.Uplaceno > 0).ToList();
+            for (int i = 0; i < rate.Count; i++)
+            {
+                plan = plan + Environment.NewLine + (i + 1).ToString() + ". do " + rate[i].RokPlacanja.ToString("dd.MM.yyyy") + " - iznos: " + rate[i].Iznos.ToString("N2") + " KM"+((rate[i].Uplaceno.HasValue && rate[i].Uplaceno>0)?(" -uplaćeno: "+rate[i].Uplaceno.ToString()+" KM"):"");
+            }
 
 
-            //  string fileName = dir + "\\" + rednibroj.Replace("/", "-") + ".xlsx";
-            //  if (File.Exists(fileName) == true)
-            //  {
-            //      DialogResult dr = MessageBox.Show("Štampana verzija već postoji. Napraviti novu ?", "Upozorenje", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1);
-            //      if (dr == DialogResult.Yes)
-            //      {
-            //          try
-            //          {
-            //              File.Delete(fileName);
-            //          }
-            //          catch (Exception ex)
-            //          {
-            //              MessageBox.Show("Zatvorite dokument pa pokušajte opet!");
-            //              return;
-            //          }
-            //          doc.SaveAs(fileName);
-            //          Process.Start(fileName);
-            //      }
-            //  }
-            //  else
-            //  {
-            //      doc.SaveAs(fileName);
-            //      Process.Start(fileName);
-            //  }
+            Dictionary<string, string> dict = new Dictionary<string, string>();
+            dict.Add("DATUMPLACANJA", datumPlacanja.ToString("dd.MM.yyyy"));
+            dict.Add("IZNOS", uplacenoPoRati.ToString());
+            dict.Add("OTPLATNIPLAN", plan);
+            dict.Add("KUPAC", kupac);
+            dict.Add("ADRESA", adresa);
+            dict.Add("LK", lk);
+            dict.Add("JMBG", jmbg);
+            dict.Add("UPLACENO", inicijalnoplaceno.ToString("N2"));
+            dict.Add("BROJRATA", brojrata.ToString());
+            dict.Add("DATUM", datum.ToString("dd.MM.yyyy"));
+            dict.Add("IZNOSRATE", (Math.Round(iznos / int.Parse(brojrata), 2, MidpointRounding.AwayFromZero)).ToString("N2"));
+            dict.Add("UKUPANIZNOS", (inicijalnoplaceno + iznos).ToString("N2"));
+            dict.Add("PREDMET", napomena);
+            dict.Add("BROJRATE", brojrate.ToString());
+            dict.Add("BROJRACUNA", brojracuna);
+            dict.Add("BROJUGOVORA", rednibroj);
+            dict.Add("INICIJALNOPLACENO", inicijalnoplaceno.ToString("N2"));
+            dict.Add("UKUPNOPLACENO", (sumauplata.Value).ToString("N2"));
+            dict.Add("PREOSTALO", (iznos - sumauplata.Value).ToString("N2"));
+            string fileName = dir + "\\" + rednibroj.Replace("/", "-") + ".docx";
+
+            WordDocumentBuilder.FillBookmarksUsingOpenXml("PotvrdaPlacanjaRate.docx", fileName, dict);
+            Process.Start(fileName);
         }
 
         private void textBox2_TextChanged(object sender, EventArgs e)
@@ -776,11 +805,13 @@ namespace ServisDB.Forme
             {
                 PersistanceManager.UpdateUgovor(rb, "Z");
                 MessageBox.Show(string.Format("Ugovor {0} je uspješno zaključen!", rb), "Poruka", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1);
+                Stampa();
                 ReadUgovor(textBox1.Text, textBox2.Text);
                 tabControl1.SelectedIndex = 0;
                 Clear();
                 ReadUgovor("", "");
             }
+
         }
 
         private void button3_Click_1(object sender, EventArgs e)
