@@ -54,7 +54,7 @@
             this.lblRokPlacanja = new System.Windows.Forms.Label();
             this.lblDatumUplate = new System.Windows.Forms.Label();
             this.dtpDatumUplate = new System.Windows.Forms.DateTimePicker();
-            this.label2 = new System.Windows.Forms.Label();
+            this.lblRate = new System.Windows.Forms.Label();
             this.dgvRate = new System.Windows.Forms.DataGridView();
             this.tbStatus = new System.Windows.Forms.TextBox();
             this.lblStatus = new System.Windows.Forms.Label();
@@ -99,6 +99,8 @@
             this.btnStampa = new System.Windows.Forms.Button();
             this.tmrDelay = new System.Windows.Forms.Timer(this.components);
             this.btnZakljuciUgovor = new System.Windows.Forms.Button();
+            this.cbMK = new System.Windows.Forms.CheckBox();
+            this.btnRealizovan = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPrijave)).BeginInit();
@@ -239,8 +241,9 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.cbMK);
             this.tabPage2.Controls.Add(this.gbRate);
-            this.tabPage2.Controls.Add(this.label2);
+            this.tabPage2.Controls.Add(this.lblRate);
             this.tabPage2.Controls.Add(this.dgvRate);
             this.tabPage2.Controls.Add(this.tbStatus);
             this.tabPage2.Controls.Add(this.lblStatus);
@@ -438,15 +441,15 @@
             this.dtpDatumUplate.TabIndex = 111;
             this.dtpDatumUplate.ValueChanged += new System.EventHandler(this.dtpDatumUplate_ValueChanged);
             // 
-            // label2
+            // lblRate
             // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(10, 294);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(43, 18);
-            this.label2.TabIndex = 116;
-            this.label2.Text = "Rate:";
+            this.lblRate.AutoSize = true;
+            this.lblRate.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblRate.Location = new System.Drawing.Point(10, 294);
+            this.lblRate.Name = "lblRate";
+            this.lblRate.Size = new System.Drawing.Size(43, 18);
+            this.lblRate.TabIndex = 116;
+            this.lblRate.Text = "Rate:";
             // 
             // dgvRate
             // 
@@ -861,11 +864,35 @@
             this.btnZakljuciUgovor.UseVisualStyleBackColor = true;
             this.btnZakljuciUgovor.Click += new System.EventHandler(this.btnZakljuciUgovor_Click);
             // 
+            // cbMK
+            // 
+            this.cbMK.AutoSize = true;
+            this.cbMK.Location = new System.Drawing.Point(927, 231);
+            this.cbMK.Name = "cbMK";
+            this.cbMK.Size = new System.Drawing.Size(46, 20);
+            this.cbMK.TabIndex = 121;
+            this.cbMK.Text = "MK";
+            this.cbMK.UseVisualStyleBackColor = true;
+            this.cbMK.CheckedChanged += new System.EventHandler(this.cbMK_CheckedChanged);
+            // 
+            // btnRealizovan
+            // 
+            this.btnRealizovan.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnRealizovan.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnRealizovan.Location = new System.Drawing.Point(1079, 174);
+            this.btnRealizovan.Name = "btnRealizovan";
+            this.btnRealizovan.Size = new System.Drawing.Size(101, 66);
+            this.btnRealizovan.TabIndex = 30;
+            this.btnRealizovan.Text = "Ugovor realizovan [F7]";
+            this.btnRealizovan.UseVisualStyleBackColor = true;
+            this.btnRealizovan.Click += new System.EventHandler(this.btnRealizovan_Click);
+            // 
             // FormUgovor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1185, 659);
+            this.Controls.Add(this.btnRealizovan);
             this.Controls.Add(this.btnZakljuciUgovor);
             this.Controls.Add(this.btnBrisanje);
             this.Controls.Add(this.btnStampa);
@@ -951,7 +978,7 @@
         private System.Windows.Forms.DataGridView dgvRate;
         private System.Windows.Forms.Label lblUgovorRataNapomena;
         private System.Windows.Forms.TextBox tbUgovorRataNapomena;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label lblRate;
         private System.Windows.Forms.Button btnZakljuciUgovor;
         private System.Windows.Forms.TextBox tbBrojRate;
         private System.Windows.Forms.Label lblBrojRate;
@@ -960,6 +987,8 @@
         private System.Windows.Forms.RadioButton rbNerealizovani;
         private System.Windows.Forms.RadioButton rbRealizovani;
         private System.Windows.Forms.RadioButton rbSviUgovori;
+        private System.Windows.Forms.CheckBox cbMK;
+        private System.Windows.Forms.Button btnRealizovan;
     }
 }
 

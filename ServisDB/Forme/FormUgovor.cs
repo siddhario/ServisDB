@@ -83,7 +83,7 @@ namespace ServisDB.Forme
                         p2.Value = DBNull.Value;
                     else
                         p2.Value = brojPrijave;
-                    cmd.CommandText = @"SELECT broj, datum, kupac_sifra, kupac_maticni_broj, kupac_broj_lk, kupac_naziv, kupac_adresa, kupac_telefon, broj_racuna, radnik, inicijalno_placeno, iznos_bez_pdv, pdv, iznos_sa_pdv, broj_rata, suma_uplata, preostalo_za_uplatu, status, napomena
+                    cmd.CommandText = @"SELECT broj, datum, kupac_sifra, kupac_maticni_broj, kupac_broj_lk, kupac_naziv, kupac_adresa, kupac_telefon, broj_racuna, radnik, inicijalno_placeno, iznos_bez_pdv, pdv, iznos_sa_pdv, broj_rata, suma_uplata, preostalo_za_uplatu, status, napomena, mk
 	FROM public.ugovor";
                     if (filters.Count > 0)
                     {
@@ -146,7 +146,7 @@ namespace ServisDB.Forme
                 return;
             }
 
-            if (s5 == true && (tbKupacBrojLk.Text.Trim().Length !=9))
+            if (s5 == true && (tbKupacBrojLk.Text.Trim().Length != 9))
             {
                 MessageBox.Show("Broj karaktera broja LK mora biti 9!", "Poruka", MessageBoxButtons.OK, MessageBoxIcon.Hand);
                 return;
@@ -194,35 +194,42 @@ namespace ServisDB.Forme
             {
                 string broj_ugovora;
                 PersistanceManager.InsertUgovor(dtpDatum.Value, int.Parse(tbKupacSifra.Text), tbKupac.Text, tbAdresa.Text, tbKupacaTelefon.Text, tbKupacBrojLk.Text, tbKupacMaticniBroj.Text
-                   , decimal.Parse(tbIznosSaPDV.Text), decimal.Parse(tbInicijalnoUplaceno.Text), decimal.Parse(tbSumaUplata.Text), decimal.Parse(tbPreostaloZaUplatu.Text), tbNapomena.Text, tbRadnik.Text, tbStatus.Text, int.Parse(tbBrojRata.Text), tbBrojRacuna.Text, out broj_ugovora);
-                List<UgovorRata> rate = KreirajRateUgovora(broj_ugovora);
-                dgvRate.DataSource = rate;
-                //dgvugov
-                foreach (UgovorRata r in rate)
-                    PersistanceManager.InsertUgovorRata(r.BrojUgovora, r.BrojRate, r.RokPlacanja, r.DatumPlacanja, r.Iznos, r.Uplaceno, r.Napomena);
-            }
-            else
-            {
-                PersistanceManager.UpdateUgovor(tbRedniBroj.Text, dtpDatum.Value, int.Parse(tbKupacSifra.Text), tbKupac.Text, tbAdresa.Text, tbKupacaTelefon.Text, tbKupacBrojLk.Text, tbKupacMaticniBroj.Text
-                   , decimal.Parse(tbIznosSaPDV.Text), decimal.Parse(tbInicijalnoUplaceno.Text), decimal.Parse(tbSumaUplata.Text), decimal.Parse(tbPreostaloZaUplatu.Text), tbNapomena.Text, tbRadnik.Text, tbStatus.Text, int.Parse(tbBrojRata.Text), tbBrojRacuna.Text);
-
-                if (tbStatus.Text == "E")
+                   , decimal.Parse(tbIznosSaPDV.Text), decimal.Parse(tbInicijalnoUplaceno.Text), decimal.Parse(tbSumaUplata.Text), decimal.Parse(tbPreostaloZaUplatu.Text), tbNapomena.Text, tbRadnik.Text, tbStatus.Text, int.Parse(tbBrojRata.Text), tbBrojRacuna.Text, cbMK.Checked, out broj_ugovora);
+                if (cbMK.Checked == false)
                 {
-                    List<UgovorRata> rate = KreirajRateUgovora(tbRedniBroj.Text);
+                    List<UgovorRata> rate = KreirajRateUgovora(broj_ugovora);
                     dgvRate.DataSource = rate;
-
-                    PersistanceManager.DeleteUgovorRata(tbRedniBroj.Text);
                     //dgvugov
                     foreach (UgovorRata r in rate)
                         PersistanceManager.InsertUgovorRata(r.BrojUgovora, r.BrojRate, r.RokPlacanja, r.DatumPlacanja, r.Iznos, r.Uplaceno, r.Napomena);
                 }
-                else
+            }
+            else
+            {
+                PersistanceManager.UpdateUgovor(tbRedniBroj.Text, dtpDatum.Value, int.Parse(tbKupacSifra.Text), tbKupac.Text, tbAdresa.Text, tbKupacaTelefon.Text, tbKupacBrojLk.Text, tbKupacMaticniBroj.Text
+                   , decimal.Parse(tbIznosSaPDV.Text), decimal.Parse(tbInicijalnoUplaceno.Text), decimal.Parse(tbSumaUplata.Text), decimal.Parse(tbPreostaloZaUplatu.Text), tbNapomena.Text, tbRadnik.Text, tbStatus.Text, int.Parse(tbBrojRata.Text), tbBrojRacuna.Text, cbMK.Checked);
+                if (cbMK.Checked == false)
                 {
-                    PersistanceManager.UpdateUgovorRata(tbRedniBroj.Text, int.Parse(tbBrojRate.Text), dtpRokPlacanja.Value, dtpDatumUplate.Value, decimal.Parse(tbIznosRate.Text), decimal.Parse(tbUplaceno.Text), tbNapomena.Text);
-                 
-                    if(dtpDatumUplate.Value!=null)
+                    if (tbStatus.Text == "E")
                     {
-                        StampaPotvrdaPlacanja();
+
+                        List<UgovorRata> rate = KreirajRateUgovora(tbRedniBroj.Text);
+                        dgvRate.DataSource = rate;
+
+                        PersistanceManager.DeleteUgovorRata(tbRedniBroj.Text);
+                        //dgvugov
+                        foreach (UgovorRata r in rate)
+                            PersistanceManager.InsertUgovorRata(r.BrojUgovora, r.BrojRate, r.RokPlacanja, r.DatumPlacanja, r.Iznos, r.Uplaceno, r.Napomena);
+
+                    }
+                    else
+                    {
+                        PersistanceManager.UpdateUgovorRata(tbRedniBroj.Text, int.Parse(tbBrojRate.Text), dtpRokPlacanja.Value, dtpDatumUplate.Value, decimal.Parse(tbIznosRate.Text), decimal.Parse(tbUplaceno.Text), tbNapomena.Text);
+
+                        if (dtpDatumUplate.Value != null)
+                        {
+                            StampaPotvrdaPlacanja();
+                        }
                     }
                 }
 
@@ -304,6 +311,8 @@ namespace ServisDB.Forme
             tbStatus.Text = ((DataRowView)o).Row.ItemArray[17].ToString();
 
             tbNapomena.Text = ((DataRowView)o).Row.ItemArray[18].ToString();
+
+            cbMK.Checked = (bool)(((DataRowView)o).Row.ItemArray[19]);
 
             List<UgovorRata> rate = PersistanceManager.ReadUgovorRata(tbRedniBroj.Text);
             BindUgovorRata(rate);
@@ -505,9 +514,9 @@ namespace ServisDB.Forme
 
             List<UgovorRata> rate = PersistanceManager.ReadUgovorRata(rednibroj);
             string plan = "";
-            for(int i=0;i<rate.Count;i++)
+            for (int i = 0; i < rate.Count; i++)
                 plan = plan + Environment.NewLine + (i + 1).ToString() + ". do " + rate[i].RokPlacanja.ToString("dd.MM.yyyy") + " - iznos: " + rate[i].Iznos.ToString("N2") + " KM";
-           
+
 
             Dictionary<string, string> dict = new Dictionary<string, string>();
             dict.Add("OTPLATNIPLAN", plan);
@@ -553,7 +562,7 @@ namespace ServisDB.Forme
             int brojrate = int.Parse(tbBrojRate.Text);
             //decimal inicijalnoplaceno = decimal.Parse(tbInicijalnoUplaceno.Text);
             List<UgovorRata> rate = PersistanceManager.ReadUgovorRata(tbRedniBroj.Text);
-       
+
             decimal? sumauplata = rate.Sum(r => r.Uplaceno);
 
             decimal uplacenoPoRati = decimal.Parse(tbUplaceno.Text);
@@ -563,7 +572,7 @@ namespace ServisDB.Forme
             List<UgovorRata> uplate = rate.Where(ss => ss.Iznos <= ss.Uplaceno).ToList();
             for (int i = 0; i < uplate.Count; i++)
             {
-                uplacenerate = uplacenerate + Environment.NewLine + uplate[i].BrojRate.ToString()+ ". "+ "rata - uplaćeno: "+ uplate[i].Uplaceno.Value.ToString("N2")+""+" KM ";
+                uplacenerate = uplacenerate + Environment.NewLine + uplate[i].BrojRate.ToString() + ". " + "rata - uplaćeno: " + uplate[i].Uplaceno.Value.ToString("N2") + "" + " KM ";
             }
             string neplacenerate = "";
             List<UgovorRata> neplaceneRate = rate.Where(ss => ss.Iznos > ss.Uplaceno).ToList();
@@ -729,7 +738,7 @@ namespace ServisDB.Forme
             tbKupacBrojLk.ReadOnly = tbStatus.Text != "E";
             dtpDatum.Enabled = tbStatus.Text == "E";
             //tbBrojRacuna.ReadOnly = tbStatus.Text != "E";
-
+            cbMK.Enabled = tbStatus.Text == "E";
             tbUplaceno.ReadOnly = tbStatus.Text == "E";
             tbUgovorRataNapomena.ReadOnly = tbStatus.Text == "E";
             dtpDatumUplate.Enabled = tbStatus.Text != "E";
@@ -748,7 +757,7 @@ namespace ServisDB.Forme
 
         private void tbIznosSaPDV_TextChanged(object sender, EventArgs e)
         {
-            if (tbRedniBroj.Text == "AUTO" || tbStatus.Text == "E")
+            if (cbMK.Checked == false && (tbRedniBroj.Text == "AUTO" || tbStatus.Text == "E"))
             {
                 List<UgovorRata> rate = KreirajRateUgovora(null);
                 BindUgovorRata(rate, true);
@@ -758,7 +767,7 @@ namespace ServisDB.Forme
 
         private void tbBrojRata_TextChanged(object sender, EventArgs e)
         {
-            if (tbRedniBroj.Text == "AUTO" || tbStatus.Text == "E")
+            if (cbMK.Checked == false && (tbRedniBroj.Text == "AUTO" || tbStatus.Text == "E"))
             {
                 List<UgovorRata> rate = KreirajRateUgovora(null);
                 BindUgovorRata(rate, true);
@@ -870,17 +879,56 @@ namespace ServisDB.Forme
         {
             if (dgvPrijave.SelectedRows.Count == 0)
                 return;
-            string status = dgvPrijave.SelectedRows[0].Cells[10].Value.ToString();
+            object o = dgvPrijave.SelectedRows[0].DataBoundItem;
+            string status = (string)(((DataRowView)o).Row.ItemArray[17]);
+
+            bool mk = (bool)(((DataRowView)o).Row.ItemArray[19]);
 
             if (status == "E")
             {
                 btnZakljuciUgovor.Enabled = true;
                 btnBrisanje.Enabled = true;
+                btnRealizovan.Enabled = false;
+            }
+            else if(status=="Z")
+            {
+                btnZakljuciUgovor.Enabled = false;
+                btnBrisanje.Enabled = false;
+                btnRealizovan.Enabled = true && mk == true;
             }
             else
             {
                 btnZakljuciUgovor.Enabled = false;
                 btnBrisanje.Enabled = false;
+                btnRealizovan.Enabled = false;
+            }
+        }
+
+        private void cbMK_CheckedChanged(object sender, EventArgs e)
+        {
+            gbRate.Visible = cbMK.Checked == false;
+            dgvRate.Visible = cbMK.Checked == false;
+            tbBrojRata.ReadOnly = cbMK.Checked == true;
+            lblRate.Visible = cbMK.Checked == false;
+            if (cbMK.Checked == true)
+                tbBrojRata.Text = "1";
+            
+        }
+
+        private void btnRealizovan_Click(object sender, EventArgs e)
+        {
+            object o = dgvPrijave.SelectedRows[0].DataBoundItem;
+            string rb = ((DataRowView)o).Row.ItemArray[0].ToString();
+            if (MessageBox.Show(string.Format("Proglasiti ugovor {0} realizovanim ?", rb), "Potvrda", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.Yes)
+            {
+                PersistanceManager.UpdateUgovor(rb, "Z");
+                PersistanceManager.UpdateUgovor(rb, "R");
+                MessageBox.Show(string.Format("Ugovor {0} je realizovan.", rb), "Poruka", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1);
+                //Stampa();
+                ReadUgovor(textBox1.Text, textBox2.Text);
+                tabControl1.SelectedIndex = 0;
+                Clear();
+                ReadUgovor("", "");
             }
         }
     }

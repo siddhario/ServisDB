@@ -277,7 +277,7 @@ where sifra=@sifra";
 
         public static void InsertUgovor(DateTime datum, int? kupac_sifra, string kupac_naziv, string kupac_adresa, string kupac_telefon, string kupac_broj_lk, string kupac_maticni_broj,
             decimal iznos_sa_pdv, decimal inicijalno_uplaceno, decimal suma_uplata, decimal preostalo_za_uplatu,
-            string napomena, string radnik, string status, int broj_rata, string broj_racuna, out string broj_ugovora)
+            string napomena, string radnik, string status, int broj_rata, string broj_racuna, bool mk, out string broj_ugovora)
         {
             using (var conn = new NpgsqlConnection(_connectionString))
             {
@@ -306,13 +306,13 @@ where sifra=@sifra";
                     cmd.Parameters.AddWithValue("@radnik", radnik);
                     cmd.Parameters.AddWithValue("@broj_rata", broj_rata);
                     cmd.Parameters.AddWithValue("@broj_racuna", broj_racuna);
-
+                    cmd.Parameters.AddWithValue("@mk", mk);
                     cmd.CommandText = "select concat((coalesce(max(substring(broj, 1, position('/' in broj) - 1)::int), 0) + 1)::text, '/', '" + datum.Year.ToString() + @"') from ugovor where date_part('year', datum) = " + datum.Year.ToString();
                     broj_ugovora = (string)cmd.ExecuteScalar();
                     // Insert some data
-                    cmd.CommandText = @"INSERT INTO ugovor (datum, kupac_sifra, kupac_maticni_broj, kupac_broj_lk, kupac_naziv, kupac_adresa, kupac_telefon, broj_racuna, radnik, inicijalno_placeno, iznos_bez_pdv, pdv, iznos_sa_pdv, broj_rata, suma_uplata, preostalo_za_uplatu, status, napomena,broj)
+                    cmd.CommandText = @"INSERT INTO ugovor (datum, kupac_sifra, kupac_maticni_broj, kupac_broj_lk, kupac_naziv, kupac_adresa, kupac_telefon, broj_racuna, radnik, inicijalno_placeno, iznos_bez_pdv, pdv, iznos_sa_pdv, broj_rata, suma_uplata, preostalo_za_uplatu, status, napomena,mk,broj)
                                                             VALUES 
-                                                            (@datum, @kupac_sifra, @kupac_maticni_broj, @kupac_broj_lk, @kupac_naziv, @kupac_adresa, @kupac_telefon, @broj_racuna, @radnik, @inicijalno_placeno, @iznos_bez_pdv, @pdv, @iznos_sa_pdv, @broj_rata, @suma_uplata, @preostalo_za_uplatu, @status, @napomena
+                                                            (@datum, @kupac_sifra, @kupac_maticni_broj, @kupac_broj_lk, @kupac_naziv, @kupac_adresa, @kupac_telefon, @broj_racuna, @radnik, @inicijalno_placeno, @iznos_bez_pdv, @pdv, @iznos_sa_pdv, @broj_rata, @suma_uplata, @preostalo_za_uplatu, @status, @napomena,@mk
                                                             ,(select concat((coalesce(max(substring(broj,1,position('/' in broj)-1)::int),0)+1)::text,'/','" + datum.Year.ToString() + @"') from ugovor where date_part('year', datum)=" + datum.Year.ToString() + @")"
 
                                                             + ")";
@@ -325,7 +325,7 @@ where sifra=@sifra";
 
         public static void UpdateUgovor(string broj, DateTime datum, int? kupac_sifra, string kupac_naziv, string kupac_adresa, string kupac_telefon, string kupac_broj_lk, string kupac_maticni_broj,
        decimal iznos_sa_pdv, decimal inicijalno_uplaceno, decimal suma_uplata, decimal preostalo_za_uplatu,
-       string napomena, string radnik, string status, int broj_rata, string broj_racuna)
+       string napomena, string radnik, string status, int broj_rata, string broj_racuna,bool mk)
         {
             using (var conn = new NpgsqlConnection(_connectionString))
             {
@@ -353,6 +353,7 @@ where sifra=@sifra";
                     cmd.Parameters.AddWithValue("@radnik", radnik);
                     cmd.Parameters.AddWithValue("@broj_rata", broj_rata);
                     cmd.Parameters.AddWithValue("@broj_racuna", broj_racuna);
+                    cmd.Parameters.AddWithValue("@mk", mk);
                     // Insert some data
                     cmd.CommandText = @"update ugovor set datum=@datum, 
 kupac_sifra=@kupac_sifra, 
@@ -371,7 +372,8 @@ broj_rata= @broj_rata,
 suma_uplata=@suma_uplata, 
 preostalo_za_uplatu=@preostalo_za_uplatu, 
 status= @status, 
-napomena=@napomena
+napomena=@napomena,
+mk= @mk
                                                             where broj=@broj";
                     cmd.ExecuteNonQuery();
 
@@ -515,7 +517,7 @@ where broj_ugovora=@broj_ugovora and broj_rate=@broj_rate";
                     cmd.Parameters.AddWithValue("@broj", broj);                 
                     cmd.Parameters.AddWithValue("@status", status);
                     // Insert some data
-                    cmd.CommandText = @"update ugovor set status= @status where broj=@broj";
+                    cmd.CommandText = @"update ugovor set status= @status,suma_uplata = case when  @status='R' then iznos_sa_pdv else suma_uplata end,preostalo_za_uplatu = case when  @status='R' then 0 else preostalo_za_uplatu end  where broj=@broj";
                     cmd.ExecuteNonQuery();
                 }
             }
