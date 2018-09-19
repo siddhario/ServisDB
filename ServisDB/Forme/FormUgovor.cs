@@ -559,18 +559,24 @@ namespace ServisDB.Forme
             decimal uplacenoPoRati = decimal.Parse(tbUplaceno.Text);
             DateTime datumPlacanja = dtpDatumUplate.Value;
 
-            string plan = "";
-            //rate = rate.Where(ss => ss.Iznos - ss.Uplaceno > 0).ToList();
-            for (int i = 0; i < rate.Count; i++)
+            string uplacenerate = "";
+            List<UgovorRata> uplate = rate.Where(ss => ss.Iznos <= ss.Uplaceno).ToList();
+            for (int i = 0; i < uplate.Count; i++)
             {
-                plan = plan + Environment.NewLine + (i + 1).ToString() + ". do " + rate[i].RokPlacanja.ToString("dd.MM.yyyy") + " - iznos: " + rate[i].Iznos.ToString("N2") + " KM"+((rate[i].Uplaceno.HasValue && rate[i].Uplaceno>0)?(" -uplaćeno: "+rate[i].Uplaceno.ToString()+" KM"):"");
+                uplacenerate = uplacenerate + Environment.NewLine + uplate[i].BrojRate.ToString()+ ". "+ "rata - uplaćeno: "+ uplate[i].Uplaceno.Value.ToString("N2")+""+" KM ";
             }
-
+            string neplacenerate = "";
+            List<UgovorRata> neplaceneRate = rate.Where(ss => ss.Iznos > ss.Uplaceno).ToList();
+            for (int i = 0; i < neplaceneRate.Count; i++)
+            {
+                neplacenerate = neplacenerate + Environment.NewLine + neplaceneRate[i].BrojRate.ToString() + ". rata" + " do " + neplaceneRate[i].RokPlacanja.ToString("dd.MM.yyyy") + " - iznos od " + neplaceneRate[i].Iznos.ToString("N2") + " KM";
+            }
 
             Dictionary<string, string> dict = new Dictionary<string, string>();
             dict.Add("DATUMPLACANJA", datumPlacanja.ToString("dd.MM.yyyy"));
             dict.Add("IZNOS", uplacenoPoRati.ToString());
-            dict.Add("OTPLATNIPLAN", plan);
+            dict.Add("UPLACENERATE", uplacenerate);
+            dict.Add("NEPLACENERATE", neplacenerate);
             dict.Add("KUPAC", kupac);
             dict.Add("ADRESA", adresa);
             dict.Add("LK", lk);
