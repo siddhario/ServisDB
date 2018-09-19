@@ -50,29 +50,7 @@ namespace ServisDB.Klase
                             string[] parts = Regex.Split(bookmarkDataVal.Value, Environment.NewLine);
                             if (bookmarkText != null)  // if the bookmark has text replace it
                             {
-                                
-                                var parent = bookmark.Parent;
-                                //Paragraph p = new Paragraph();
-                                ParagraphProperties pp = new ParagraphProperties();
-                                pp.Justification = new Justification() { Val = JustificationValues.Left };
-                                // Add paragraph properties to your paragraph
-                                
-                                ((Paragraph)parent).ParagraphProperties.ClearAllAttributes();
-                                parent.Append(pp);
-                                // Run
-                                //Run r = new Run();
-                                bookmarkText.GetFirstChild<Text>().Text = parts[0];
-                                for(int i=1;i<parts.Length;i++)
-                                {
-                                    bookmarkText.Append(new Text(parts[i]) { Space = SpaceProcessingModeValues.Preserve });
-                                    bookmarkText.Append(new Break());
-                                }
-                                //Text t = new Text("dfdf dfd.") { Space = SpaceProcessingModeValues.Preserve };
-                                //r.Append(t);
-                                //p.Append(r);
-                                // Add your paragraph to docx body
-                                //parent.Append(p);
-
+                                bookmarkText.GetFirstChild<Text>().Text = bookmarkDataVal.Value;
                             }
                             else  // otherwise append new text immediately after it
                             {
