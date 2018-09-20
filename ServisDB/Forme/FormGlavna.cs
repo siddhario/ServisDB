@@ -54,5 +54,27 @@ namespace ServisDB.Forme
             FormPartner frm = new FormPartner();
             frm.ShowDialog();
         }
+
+        private void pregledToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmServisnaPrijava frm = new frmServisnaPrijava();
+            frm.ShowDialog();
+        }
+
+        private void ugovoriOOdloToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FormUgovor frm = new FormUgovor();
+            frm.ShowDialog();
+        }
+
+        private void pregledDugovanjaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            dlgReports.PrepareReport("Pregled dugovanja u periodu");
+        }
+
+        private void pregledUplataToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            dlgReports.PrepareReport("Pregled uplata u periodu");
+        }
     }
 }

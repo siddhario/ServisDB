@@ -52,20 +52,24 @@ namespace ServisDB.Forme
 
         private void btnOK_Click(object sender, EventArgs e)
         {
-            PrepareReport();
+            var selectedIndex = lbReports.SelectedIndex;
+            string report = _scripts[selectedIndex];
+            PrepareReport(report);
         }
 
 
 
         private void lbReports_DoubleClick(object sender, EventArgs e)
         {
-            PrepareReport();
-        }
-
-        private async void PrepareReport()
-        {
             var selectedIndex = lbReports.SelectedIndex;
             string report = _scripts[selectedIndex];
+            PrepareReport(report);
+        }
+
+        public static async void PrepareReport(string report)
+        {
+            //var selectedIndex = lbReports.SelectedIndex;
+            //string report = _scripts[selectedIndex];
             string rpt = "";
             string title = "";
             //List<SQLiteParameter> parameters = new List<SQLiteParameter>();

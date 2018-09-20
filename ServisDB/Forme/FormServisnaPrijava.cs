@@ -86,7 +86,7 @@ namespace ServisDB.Forme
                         p2.Value = DBNull.Value;
                     else
                         p2.Value = brojPrijave;
-                    cmd.CommandText = @"SELECT broj, broj_naloga, datum, kupac_sifra, kupac_ime, kupac_adresa, kupac_telefon, kupac_email, model, serijski_broj, dodatna_oprema, predmet, napomena_servisera, serviser, serviser_primio, zavrseno, dobavljac_sifra, dobavljac, datum_vracanja, poslat_mejl_dobavljacu, garantni_rok, broj_garantnog_lista, broj_racuna
+                    cmd.CommandText = @"SELECT broj, broj_naloga, datum, kupac_sifra, kupac_ime, kupac_adresa, kupac_telefon, kupac_email, model, serijski_broj, dodatna_oprema, predmet, napomena_servisera, serviser, serviser_primio, zavrseno, dobavljac_sifra, dobavljac, datum_vracanja, poslat_mejl_dobavljacu, garantni_rok, broj_garantnog_lista, broj_racuna,instalacija_os,instalacija_office, instalacija_ostalo,instalacija
 	 FROM prijava";
                     if (filters.Count > 0)
                     {
@@ -163,11 +163,11 @@ namespace ServisDB.Forme
             if (tbRedniBroj.Text == "AUTO")
                 PersistanceManager.InsertPrijava(dtpDatum.Value, tbBrojGarantnogLista.Text, (tbKupacSifra.Text != "" ? int.Parse(tbKupacSifra.Text) : (int?)null), tbKupac.Text, tbAdresa.Text, tbKupacaTelefon.Text, tbEmail.Text,
                     tbModel.Text, tbSerijskiBroj.Text, tbDodatnaOprema.Text, tbPredmet.Text, tbNapomenaServisera.Text, tbServiser.Text, tbServiserPrimio.Text, zavrseno, (tbDobavljacSifra.Text != "" ? int.Parse(tbDobavljacSifra.Text) : (int?)null)
-                    , tbDobavljac.Text, datumVracanja, poslatMejlDobavljacu, (tbGarantniRok.Text != "" ? int.Parse(tbGarantniRok.Text) : (int?)null), tbBrojRacuna.Text);
+                    , tbDobavljac.Text, datumVracanja, poslatMejlDobavljacu, (tbGarantniRok.Text != "" ? int.Parse(tbGarantniRok.Text) : (int?)null), tbBrojRacuna.Text,cbOS.Checked,cbOffice.Checked,cbOstalo.Checked,tbInstalacija.Text);
             else
                 PersistanceManager.UpdatePrijava(tbRedniBroj.Text, dtpDatum.Value, tbBrojGarantnogLista.Text, (tbKupacSifra.Text != "" ? int.Parse(tbKupacSifra.Text) : (int?)null), tbKupac.Text, tbAdresa.Text, tbKupacaTelefon.Text, tbEmail.Text,
                     tbModel.Text, tbSerijskiBroj.Text, tbDodatnaOprema.Text, tbPredmet.Text, tbNapomenaServisera.Text, tbServiser.Text, tbServiserPrimio.Text, zavrseno, (tbDobavljacSifra.Text != "" ? int.Parse(tbDobavljacSifra.Text) : (int?)null)
-                    , tbDobavljac.Text, datumVracanja, poslatMejlDobavljacu, (tbGarantniRok.Text != "" ? int.Parse(tbGarantniRok.Text) : (int?)null), tbBrojRacuna.Text, dobavljacPromjenjen);
+                    , tbDobavljac.Text, datumVracanja, poslatMejlDobavljacu, (tbGarantniRok.Text != "" ? int.Parse(tbGarantniRok.Text) : (int?)null), tbBrojRacuna.Text, cbOS.Checked, cbOffice.Checked, cbOstalo.Checked, tbInstalacija.Text, dobavljacPromjenjen);
             tabControl1.SelectedIndex = 0;
             Clear();
             ReadPrijava("", "");
@@ -242,6 +242,12 @@ namespace ServisDB.Forme
             tbGarantniRok.Text = ((DataRowView)o).Row.ItemArray[20].ToString();
             tbBrojGarantnogLista.Text = ((DataRowView)o).Row.ItemArray[21].ToString();
             tbBrojRacuna.Text = ((DataRowView)o).Row.ItemArray[22].ToString();
+
+            cbOS.Checked = (bool)((DataRowView)o).Row.ItemArray[23];
+            cbOffice.Checked = (bool)((DataRowView)o).Row.ItemArray[24];
+            cbOstalo.Checked = (bool)((DataRowView)o).Row.ItemArray[25];
+            tbInstalacija.Text = ((DataRowView)o).Row.ItemArray[26].ToString();
+
             SetVisibility();
         }
 
@@ -279,6 +285,11 @@ namespace ServisDB.Forme
             tbServiser.Text = "";
             dtpZavrseno.Format = DateTimePickerFormat.Custom;
             dtpZavrseno.CustomFormat = " ";
+
+            cbOS.Checked = false;
+            cbOffice.Checked = false;
+            cbOstalo.Checked = false;
+            tbInstalacija.Text = "";
 
             dtpPoslatMejlDobavljacu.Format = DateTimePickerFormat.Custom;
             dtpPoslatMejlDobavljacu.CustomFormat = " ";
@@ -625,6 +636,11 @@ namespace ServisDB.Forme
             lblBrojGarantnogLista.Visible = tbDobavljacSifra.Text == "";
             tbBrojGarantnogLista.Visible = tbDobavljacSifra.Text == "";
             tbKupac.ReadOnly = tbKupacSifra.Text != "";
+
+            cbOstalo.Visible = tbDobavljacSifra.Text == "";
+            cbOffice.Visible = tbDobavljacSifra.Text == "";
+            cbOS.Visible = tbDobavljacSifra.Text == "";
+            tbInstalacija.Visible = tbDobavljacSifra.Text == "";
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -643,6 +659,11 @@ namespace ServisDB.Forme
         {
             dtpZavrseno.Format = DateTimePickerFormat.Custom;
             dtpZavrseno.CustomFormat = " ";
+        }
+
+        private void dtpDatum_ValueChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

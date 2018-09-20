@@ -36,7 +36,6 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.servisnePrijaveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pregledToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.izvještajiToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.izvještajiToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.potvrdaOPrijemuRobeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -123,7 +122,6 @@
             // 
             this.servisnePrijaveToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.pregledToolStripMenuItem,
-            this.izvještajiToolStripMenuItem,
             this.toolStripSeparator1,
             this.izvještajiToolStripMenuItem1});
             this.servisnePrijaveToolStripMenuItem.Name = "servisnePrijaveToolStripMenuItem";
@@ -135,12 +133,7 @@
             this.pregledToolStripMenuItem.Name = "pregledToolStripMenuItem";
             this.pregledToolStripMenuItem.Size = new System.Drawing.Size(216, 30);
             this.pregledToolStripMenuItem.Text = "Servisne prijave";
-            // 
-            // izvještajiToolStripMenuItem
-            // 
-            this.izvještajiToolStripMenuItem.Name = "izvještajiToolStripMenuItem";
-            this.izvještajiToolStripMenuItem.Size = new System.Drawing.Size(216, 30);
-            this.izvještajiToolStripMenuItem.Text = "Radni nalozi";
+            this.pregledToolStripMenuItem.Click += new System.EventHandler(this.pregledToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
@@ -204,6 +197,7 @@
             this.ugovoriOOdloToolStripMenuItem.Name = "ugovoriOOdloToolStripMenuItem";
             this.ugovoriOOdloToolStripMenuItem.Size = new System.Drawing.Size(344, 30);
             this.ugovoriOOdloToolStripMenuItem.Text = "Ugovori o odloženom plaćanju";
+            this.ugovoriOOdloToolStripMenuItem.Click += new System.EventHandler(this.ugovoriOOdloToolStripMenuItem_Click);
             // 
             // toolStripSeparator2
             // 
@@ -232,12 +226,14 @@
             this.pregledDugovanjaToolStripMenuItem.Name = "pregledDugovanjaToolStripMenuItem";
             this.pregledDugovanjaToolStripMenuItem.Size = new System.Drawing.Size(275, 30);
             this.pregledDugovanjaToolStripMenuItem.Text = "Pregled dugovanja";
+            this.pregledDugovanjaToolStripMenuItem.Click += new System.EventHandler(this.pregledDugovanjaToolStripMenuItem_Click);
             // 
             // pregledUplataToolStripMenuItem
             // 
             this.pregledUplataToolStripMenuItem.Name = "pregledUplataToolStripMenuItem";
             this.pregledUplataToolStripMenuItem.Size = new System.Drawing.Size(275, 30);
             this.pregledUplataToolStripMenuItem.Text = "Pregled uplata";
+            this.pregledUplataToolStripMenuItem.Click += new System.EventHandler(this.pregledUplataToolStripMenuItem_Click);
             // 
             // rekapitulacijaUgovoraToolStripMenuItem
             // 
@@ -276,7 +272,6 @@
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem servisnePrijaveToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem pregledToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem izvještajiToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem sevisnToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem izvještajiToolStripMenuItem1;

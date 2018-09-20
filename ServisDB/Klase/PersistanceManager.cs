@@ -170,7 +170,7 @@ where sifra=@sifra";
         }
 
         public static void UpdatePrijava(string broj, DateTime datum, string broj_garantnog_lista, int? kupac_sifra, string kupac_ime, string kupac_adresa, string kupac_telefon, string kupac_email, string model, string serijski_broj,
-      string dodatna_oprema, string predmet, string napomena_servisera, string serviser, string serviser_primio, DateTime? zavrseno, int? dobavljac_sifra, string dobavljac, DateTime? datumVracanja, DateTime? poslatMejlDobavljacu, int? garantni_rok, string broj_racuna, bool dobavljacPromjenjen)
+      string dodatna_oprema, string predmet, string napomena_servisera, string serviser, string serviser_primio, DateTime? zavrseno, int? dobavljac_sifra, string dobavljac, DateTime? datumVracanja, DateTime? poslatMejlDobavljacu, int? garantni_rok, string broj_racuna, bool instalacija_os, bool instalacija_office, bool instalacija_ostalo, string instalacija, bool dobavljacPromjenjen)
         {
             using (var conn = new NpgsqlConnection(_connectionString))
             {
@@ -201,12 +201,15 @@ where sifra=@sifra";
                     cmd.Parameters.AddWithValue("@garantni_rok", garantni_rok.HasValue ? (object)garantni_rok : DBNull.Value);
                     cmd.Parameters.AddWithValue("@broj_garantnog_lista", broj_garantnog_lista);
                     cmd.Parameters.AddWithValue("@broj_racuna", broj_racuna);
-
+                    cmd.Parameters.AddWithValue("@instalacija_os", instalacija_os);
+                    cmd.Parameters.AddWithValue("@instalacija_office", instalacija_office);
+                    cmd.Parameters.AddWithValue("@instalacija_ostalo", instalacija_ostalo);
+                    cmd.Parameters.AddWithValue("@instalacija", instalacija);
                     // Insert some data
                     cmd.CommandText = @"update prijava set datum=@datum, kupac_sifra=@kupac_sifra, kupac_ime=@kupac_ime, kupac_adresa=@kupac_adresa, kupac_telefon=@kupac_telefon, kupac_email=@kupac_email,
                                                             model=@model, serijski_broj=@serijski_broj, dodatna_oprema=@dodatna_oprema, predmet=@predmet, napomena_servisera=@napomena_servisera,
                                                             serviser=@serviser, serviser_primio=@serviser_primio, zavrseno=@zavrseno, dobavljac_sifra=@dobavljac_sifra, dobavljac=@dobavljac,
-                                                            datum_vracanja=@datum_vracanja, poslat_mejl_dobavljacu=@poslat_mejl_dobavljacu, garantni_rok=@garantni_rok, broj_garantnog_lista=@broj_garantnog_lista,broj_racuna= @broj_racuna
+                                                            datum_vracanja=@datum_vracanja, poslat_mejl_dobavljacu=@poslat_mejl_dobavljacu, garantni_rok=@garantni_rok, broj_garantnog_lista=@broj_garantnog_lista,broj_racuna= @broj_racuna,instalacija_os=@instalacija_os,instalacija_office=@instalacija_office,instalacija_ostalo=@instalacija_ostalo,instalacija=@instalacija
                                                             where broj=@broj";
 
                     cmd.ExecuteNonQuery();
@@ -223,7 +226,7 @@ where sifra=@sifra";
         }
 
         public static void InsertPrijava(DateTime datum, string broj_garantnog_lista, int? kupac_sifra, string kupac_ime, string kupac_adresa, string kupac_telefon, string kupac_email, string model, string serijski_broj,
-      string dodatna_oprema, string predmet, string napomena_servisera, string serviser, string serviser_primio, DateTime? zavrseno, int? dobavljac_sifra, string dobavljac, DateTime? datumVracanja, DateTime? poslatMejlDobavljacu, int? garantni_rok, string broj_racuna)
+      string dodatna_oprema, string predmet, string napomena_servisera, string serviser, string serviser_primio, DateTime? zavrseno, int? dobavljac_sifra, string dobavljac, DateTime? datumVracanja, DateTime? poslatMejlDobavljacu, int? garantni_rok, string broj_racuna,bool instalacija_os,bool instalacija_office, bool instalacija_ostalo, string instalacija)
         {
             using (var conn = new NpgsqlConnection(_connectionString))
             {
@@ -253,11 +256,16 @@ where sifra=@sifra";
                     cmd.Parameters.AddWithValue("@garantni_rok", garantni_rok.HasValue ? (object)garantni_rok : DBNull.Value);
                     cmd.Parameters.AddWithValue("@broj_garantnog_lista", broj_garantnog_lista);
                     cmd.Parameters.AddWithValue("@broj_racuna", broj_racuna);
+                    cmd.Parameters.AddWithValue("@instalacija_os", instalacija_os);
+                    cmd.Parameters.AddWithValue("@instalacija_office", instalacija_office);
+                    cmd.Parameters.AddWithValue("@instalacija_ostalo", instalacija_ostalo);
+                    cmd.Parameters.AddWithValue("@instalacija", instalacija);
                     // Insert some data
                     cmd.CommandText = @"INSERT INTO prijava (datum, kupac_sifra, kupac_ime, kupac_adresa, kupac_telefon, kupac_email,
                                                             model, serijski_broj, dodatna_oprema, predmet, napomena_servisera,
                                                             serviser, serviser_primio, zavrseno, dobavljac_sifra, dobavljac,
                                                             datum_vracanja, poslat_mejl_dobavljacu, garantni_rok, broj_garantnog_lista, broj_racuna,
+                                                            instalacija_os,instalacija_office,instalacija_ostalo,instalacija,
                                                             broj,                                                           
                                                             broj_naloga
                                                             ) VALUES 
@@ -265,6 +273,7 @@ where sifra=@sifra";
                                                             @model, @serijski_broj, @dodatna_oprema, @predmet, @napomena_servisera,
                                                             @serviser, @serviser_primio, @zavrseno, @dobavljac_sifra, @dobavljac,
                                                             @datum_vracanja, @poslat_mejl_dobavljacu, @garantni_rok, @broj_garantnog_lista, @broj_racuna
+                                                            ,@instalacija_os,@instalacija_office,@instalacija_ostalo,@instalacija                                           
                                                             ,(select concat((coalesce(max(substring(broj,1,position('/' in broj)-1)::int),0)+1)::text,'/','" + datum.Year.ToString() + @"') from prijava where date_part('year', datum)=" + datum.Year.ToString() + @")
                                                             ," + (dobavljac_sifra.HasValue ? "null" : "(select concat((coalesce(max(substring(broj_naloga, 1, position('/' in broj_naloga) - 1)::int), 0) + 1)::text, '/', '" + datum.Year.ToString() + "') from prijava where date_part('year', datum) = " + datum.Year.ToString() + ")") +
                                                             ")";

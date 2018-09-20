@@ -40,6 +40,7 @@
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.dgvPrijave = new System.Windows.Forms.DataGridView();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.cbMK = new System.Windows.Forms.CheckBox();
             this.gbRate = new System.Windows.Forms.GroupBox();
             this.lblBrojRate = new System.Windows.Forms.Label();
             this.btnPreuzmiIznos = new System.Windows.Forms.Button();
@@ -99,7 +100,6 @@
             this.btnStampa = new System.Windows.Forms.Button();
             this.tmrDelay = new System.Windows.Forms.Timer(this.components);
             this.btnZakljuciUgovor = new System.Windows.Forms.Button();
-            this.cbMK = new System.Windows.Forms.CheckBox();
             this.btnRealizovan = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -184,7 +184,7 @@
             // 
             // btnReload
             // 
-            this.btnReload.Image = global::ServisDB.Properties.Resources.reload__1_;
+            this.btnReload.Image = global::Delos.Properties.Resources.reload__1_;
             this.btnReload.Location = new System.Drawing.Point(371, 3);
             this.btnReload.Name = "btnReload";
             this.btnReload.Size = new System.Drawing.Size(46, 22);
@@ -292,6 +292,17 @@
             this.tabPage2.Text = "Unos [F2]";
             this.tabPage2.UseVisualStyleBackColor = true;
             this.tabPage2.Click += new System.EventHandler(this.tabPage2_Click);
+            // 
+            // cbMK
+            // 
+            this.cbMK.AutoSize = true;
+            this.cbMK.Location = new System.Drawing.Point(927, 231);
+            this.cbMK.Name = "cbMK";
+            this.cbMK.Size = new System.Drawing.Size(46, 20);
+            this.cbMK.TabIndex = 121;
+            this.cbMK.Text = "MK";
+            this.cbMK.UseVisualStyleBackColor = true;
+            this.cbMK.CheckedChanged += new System.EventHandler(this.cbMK_CheckedChanged);
             // 
             // gbRate
             // 
@@ -798,7 +809,7 @@
             this.tbKupacaTelefon.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tbKupacaTelefon.Location = new System.Drawing.Point(125, 158);
             this.tbKupacaTelefon.Name = "tbKupacaTelefon";
-            this.tbKupacaTelefon.Size = new System.Drawing.Size(266, 22);
+            this.tbKupacaTelefon.Size = new System.Drawing.Size(375, 22);
             this.tbKupacaTelefon.TabIndex = 3;
             // 
             // tbKupac
@@ -863,17 +874,6 @@
             this.btnZakljuciUgovor.Text = "Zaključenje [F6]";
             this.btnZakljuciUgovor.UseVisualStyleBackColor = true;
             this.btnZakljuciUgovor.Click += new System.EventHandler(this.btnZakljuciUgovor_Click);
-            // 
-            // cbMK
-            // 
-            this.cbMK.AutoSize = true;
-            this.cbMK.Location = new System.Drawing.Point(927, 231);
-            this.cbMK.Name = "cbMK";
-            this.cbMK.Size = new System.Drawing.Size(46, 20);
-            this.cbMK.TabIndex = 121;
-            this.cbMK.Text = "MK";
-            this.cbMK.UseVisualStyleBackColor = true;
-            this.cbMK.CheckedChanged += new System.EventHandler(this.cbMK_CheckedChanged);
             // 
             // btnRealizovan
             // 

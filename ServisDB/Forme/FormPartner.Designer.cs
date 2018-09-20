@@ -31,11 +31,14 @@
             this.components = new System.ComponentModel.Container();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.btnReload = new System.Windows.Forms.Button();
             this.label13 = new System.Windows.Forms.Label();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.dgvMain = new System.Windows.Forms.DataGridView();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.lblBrojLK = new System.Windows.Forms.Label();
+            this.tbBrojLK = new System.Windows.Forms.TextBox();
             this.cbDobavljac = new System.Windows.Forms.CheckBox();
             this.cbKupac = new System.Windows.Forms.CheckBox();
             this.rbPravnoLice = new System.Windows.Forms.RadioButton();
@@ -57,9 +60,6 @@
             this.btnBrisanje = new System.Windows.Forms.Button();
             this.btnStampa = new System.Windows.Forms.Button();
             this.tmrDelay = new System.Windows.Forms.Timer(this.components);
-            this.btnReload = new System.Windows.Forms.Button();
-            this.lblBrojLK = new System.Windows.Forms.Label();
-            this.tbBrojLK = new System.Windows.Forms.TextBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMain)).BeginInit();
@@ -93,6 +93,16 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Pregled";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // btnReload
+            // 
+            this.btnReload.Image = global::Delos.Properties.Resources.reload__1_;
+            this.btnReload.Location = new System.Drawing.Point(371, 3);
+            this.btnReload.Name = "btnReload";
+            this.btnReload.Size = new System.Drawing.Size(46, 22);
+            this.btnReload.TabIndex = 4;
+            this.btnReload.UseVisualStyleBackColor = true;
+            this.btnReload.Click += new System.EventHandler(this.btnReload_Click);
             // 
             // label13
             // 
@@ -167,6 +177,24 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Unos [F2]";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // lblBrojLK
+            // 
+            this.lblBrojLK.AutoSize = true;
+            this.lblBrojLK.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblBrojLK.Location = new System.Drawing.Point(311, 117);
+            this.lblBrojLK.Name = "lblBrojLK";
+            this.lblBrojLK.Size = new System.Drawing.Size(53, 16);
+            this.lblBrojLK.TabIndex = 50;
+            this.lblBrojLK.Text = "Broj LK:";
+            // 
+            // tbBrojLK
+            // 
+            this.tbBrojLK.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbBrojLK.Location = new System.Drawing.Point(396, 116);
+            this.tbBrojLK.Name = "tbBrojLK";
+            this.tbBrojLK.Size = new System.Drawing.Size(90, 22);
+            this.tbBrojLK.TabIndex = 49;
             // 
             // cbDobavljac
             // 
@@ -306,7 +334,7 @@
             this.tbAdresa.Location = new System.Drawing.Point(125, 146);
             this.tbAdresa.Multiline = true;
             this.tbAdresa.Name = "tbAdresa";
-            this.tbAdresa.Size = new System.Drawing.Size(327, 43);
+            this.tbAdresa.Size = new System.Drawing.Size(361, 43);
             this.tbAdresa.TabIndex = 5;
             // 
             // tbMaticniBroj
@@ -322,8 +350,9 @@
             this.tbTelefon.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tbTelefon.Location = new System.Drawing.Point(125, 196);
             this.tbTelefon.Name = "tbTelefon";
-            this.tbTelefon.Size = new System.Drawing.Size(225, 22);
+            this.tbTelefon.Size = new System.Drawing.Size(361, 22);
             this.tbTelefon.TabIndex = 6;
+            this.tbTelefon.Text = "11111111111111111111111111111111111111111111111111";
             // 
             // tbNaziv
             // 
@@ -331,7 +360,7 @@
             this.tbNaziv.Location = new System.Drawing.Point(125, 64);
             this.tbNaziv.Multiline = true;
             this.tbNaziv.Name = "tbNaziv";
-            this.tbNaziv.Size = new System.Drawing.Size(327, 46);
+            this.tbNaziv.Size = new System.Drawing.Size(361, 46);
             this.tbNaziv.TabIndex = 3;
             // 
             // tbSifra
@@ -365,34 +394,6 @@
             this.btnStampa.Text = "Štampa [F4]";
             this.btnStampa.UseVisualStyleBackColor = true;
             this.btnStampa.Click += new System.EventHandler(this.btnStampa_Click);
-            // 
-            // btnReload
-            // 
-            this.btnReload.Image = global::ServisDB.Properties.Resources.reload__1_;
-            this.btnReload.Location = new System.Drawing.Point(371, 3);
-            this.btnReload.Name = "btnReload";
-            this.btnReload.Size = new System.Drawing.Size(46, 22);
-            this.btnReload.TabIndex = 4;
-            this.btnReload.UseVisualStyleBackColor = true;
-            this.btnReload.Click += new System.EventHandler(this.btnReload_Click);
-            // 
-            // lblBrojLK
-            // 
-            this.lblBrojLK.AutoSize = true;
-            this.lblBrojLK.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblBrojLK.Location = new System.Drawing.Point(277, 117);
-            this.lblBrojLK.Name = "lblBrojLK";
-            this.lblBrojLK.Size = new System.Drawing.Size(53, 16);
-            this.lblBrojLK.TabIndex = 50;
-            this.lblBrojLK.Text = "Broj LK:";
-            // 
-            // tbBrojLK
-            // 
-            this.tbBrojLK.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbBrojLK.Location = new System.Drawing.Point(362, 116);
-            this.tbBrojLK.Name = "tbBrojLK";
-            this.tbBrojLK.Size = new System.Drawing.Size(90, 22);
-            this.tbBrojLK.TabIndex = 49;
             // 
             // FormPartner
             // 
