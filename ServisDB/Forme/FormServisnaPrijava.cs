@@ -20,9 +20,9 @@ namespace ServisDB.Forme
     {
         public List<string> DynamicFilters { get; set; }
         public List<string> StaticFilters { get; set; }
-        NpgsqlConnection con = new NpgsqlConnection("Host=localhost;Username=postgres;Password=postgres;Database=servisdb");
+        //NpgsqlConnection con = new NpgsqlConnection("Host=localhost;Username=postgres;Password=postgres;Database=servisdb");
 
-        public string conn_string = "Host=localhost;Username=postgres;Password=postgres;Database=servisdb";
+        //public string conn_string = "Host=localhost;Username=postgres;Password=postgres;Database=servisdb";
         private int? dobavljacStari;
 
         public frmServisnaPrijava()
@@ -44,7 +44,7 @@ namespace ServisDB.Forme
             if (DynamicFilters != null)
                 filters = filters.Concat(DynamicFilters).ToList();
 
-            using (var conn = new NpgsqlConnection(conn_string))
+            using (var conn = new NpgsqlConnection(PersistanceManager.GetConnectionString()))
             {
                 conn.Open();
                 using (var cmd = new NpgsqlCommand())
@@ -68,7 +68,7 @@ namespace ServisDB.Forme
                     dgvPrijave.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Dobavljač", DataPropertyName = "dobavljac_sifra", Width = 80 });
                     dgvPrijave.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Email dobavljaču", DataPropertyName = "poslat_mejl_dobavljacu", Width = 100, DefaultCellStyle = new DataGridViewCellStyle() { Format = "dd.MM.yyyy." } });
                     dgvPrijave.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Datum vraćanja", DataPropertyName = "datum_vracanja", Width = 100, DefaultCellStyle = new DataGridViewCellStyle() { Format = "dd.MM.yyyy." } });
-                    dgvPrijave.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Br.naloga", DataPropertyName = "broj_naloga", Width = 80 });
+                    dgvPrijave.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Završeno", DataPropertyName = "zavrseno", Width = 100, DefaultCellStyle = new DataGridViewCellStyle() { Format = "dd.MM.yyyy." } });
                     // Retrieve all rows
                     cmd.Parameters.Clear();
                     Npgsql.NpgsqlParameter p1 = new NpgsqlParameter("@kupac_ime", DbType.String);
@@ -121,7 +121,7 @@ namespace ServisDB.Forme
             {
                 zavrseno = null;
             }
-            else
+            else if(dtpZavrseno.Checked==true)
             {
                 zavrseno = dtpZavrseno.Value;
             }
@@ -131,7 +131,7 @@ namespace ServisDB.Forme
             {
                 poslatMejlDobavljacu = null;
             }
-            else
+            else if (dtpPoslatMejlDobavljacu.Checked == true)
             {
                 poslatMejlDobavljacu = dtpPoslatMejlDobavljacu.Value;
             }
@@ -141,7 +141,7 @@ namespace ServisDB.Forme
             {
                 datumVracanja = null;
             }
-            else
+            else if (dtpDatumVracanja.Checked == true)
             {
                 datumVracanja = dtpDatumVracanja.Value;
             }
@@ -366,8 +366,10 @@ namespace ServisDB.Forme
 
         private void dataGridView1_RowPrePaint(object sender, DataGridViewRowPrePaintEventArgs e)
         {
-            string i = dgvPrijave.Rows[e.RowIndex].Cells[9].Value.ToString();
-            if (i != "")
+            object o = dgvPrijave.Rows[e.RowIndex].DataBoundItem;
+            string i = ((DataRowView)o).Row.ItemArray[15].ToString();
+            //string i = dgvPrijave.Rows[e.RowIndex].Cells[9].Value.ToString();
+            if (i!="")
             {
                 //dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.PaleGreen;
                 //dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.White;

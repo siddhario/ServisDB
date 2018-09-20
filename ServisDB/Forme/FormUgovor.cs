@@ -20,10 +20,10 @@ namespace ServisDB.Forme
     {
         public List<string> DynamicFilters { get; set; }
         public List<string> StaticFilters { get; set; }
-        NpgsqlConnection con = new NpgsqlConnection("Host=localhost;Username=postgres;Password=postgres;Database=servisdb");
+        //NpgsqlConnection con = new NpgsqlConnection("Host=localhost;Username=postgres;Password=postgres;Database=servisdb");
 
-        public string conn_string = "Host=localhost;Username=postgres;Password=postgres;Database=servisdb";
-        private int? dobavljacStari;
+        //public string conn_string = "Host=localhost;Username=postgres;Password=postgres;Database=servisdb";
+        //private int? dobavljacStari;
 
         public FormUgovor()
         {
@@ -45,7 +45,7 @@ namespace ServisDB.Forme
             if (DynamicFilters != null)
                 filters = filters.Concat(DynamicFilters).ToList();
 
-            using (var conn = new NpgsqlConnection(conn_string))
+            using (var conn = new NpgsqlConnection(PersistanceManager.GetConnectionString()))
             {
                 conn.Open();
                 using (var cmd = new NpgsqlCommand())
