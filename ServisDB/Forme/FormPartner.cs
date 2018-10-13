@@ -128,8 +128,9 @@ namespace ServisDB.Forme
         {
             if (AccessMode == AccessMode.LOOKUP)
             {
-                Close();
                 LookupConfirmed = true;
+                Close();
+                
                 return;
             }
 
@@ -446,6 +447,14 @@ namespace ServisDB.Forme
                 Selected.Dobavljac = (bool)((DataRowView)o).Row.ItemArray[8];
                 Selected.BrojLK = ((DataRowView)o).Row.ItemArray[9].ToString();
 
+            }
+        }
+
+        private void FormPartner_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if(AccessMode==AccessMode.LOOKUP && LookupConfirmed==false)
+            {
+                Selected = null;
             }
         }
     }

@@ -406,6 +406,7 @@
             this.Name = "FormPartner";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Katalog partnera";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormPartner_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);

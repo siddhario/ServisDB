@@ -816,7 +816,7 @@ namespace ServisDB.Forme
         {
             object o = dgvPrijave.SelectedRows[0].DataBoundItem;
             string rb = ((DataRowView)o).Row.ItemArray[0].ToString();
-            if (MessageBox.Show(string.Format("Zaključiti ugovor {0} ?", rb), "Potvrda", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.Yes)
+            if (MessageBox.Show(string.Format("Zaključiti ugovor {0} ?", rb), "Potvrda", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.Yes)
             {
                 PersistanceManager.UpdateUgovor(rb, "Z");
                 MessageBox.Show(string.Format("Ugovor {0} je uspješno zaključen!", rb), "Poruka", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1);
@@ -881,7 +881,7 @@ namespace ServisDB.Forme
                 return;
             object o = dgvPrijave.SelectedRows[0].DataBoundItem;
             string status = (string)(((DataRowView)o).Row.ItemArray[17]);
-
+            decimal sumaUplata = (decimal)(((DataRowView)o).Row.ItemArray[15]);
             bool mk = (bool)(((DataRowView)o).Row.ItemArray[19]);
 
             if (status == "E")
@@ -889,18 +889,21 @@ namespace ServisDB.Forme
                 btnZakljuciUgovor.Enabled = true;
                 btnBrisanje.Enabled = true;
                 btnRealizovan.Enabled = false;
+                btnOtkljucaj.Enabled = false;
             }
             else if(status=="Z")
             {
                 btnZakljuciUgovor.Enabled = false;
                 btnBrisanje.Enabled = false;
                 btnRealizovan.Enabled = true && mk == true;
+                btnOtkljucaj.Enabled = true && sumaUplata==0;
             }
             else
             {
                 btnZakljuciUgovor.Enabled = false;
                 btnBrisanje.Enabled = false;
                 btnRealizovan.Enabled = false;
+                btnOtkljucaj.Enabled = false;
             }
         }
 
@@ -919,11 +922,27 @@ namespace ServisDB.Forme
         {
             object o = dgvPrijave.SelectedRows[0].DataBoundItem;
             string rb = ((DataRowView)o).Row.ItemArray[0].ToString();
-            if (MessageBox.Show(string.Format("Proglasiti ugovor {0} realizovanim ?", rb), "Potvrda", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.Yes)
+            if (MessageBox.Show(string.Format("Proglasiti ugovor {0} realizovanim ?", rb), "Potvrda", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.Yes)
             {
-                PersistanceManager.UpdateUgovor(rb, "Z");
+               // PersistanceManager.UpdateUgovor(rb, "Z");
                 PersistanceManager.UpdateUgovor(rb, "R");
                 MessageBox.Show(string.Format("Ugovor {0} je realizovan.", rb), "Poruka", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1);
+                //Stampa();
+                ReadUgovor(textBox1.Text, textBox2.Text);
+                tabControl1.SelectedIndex = 0;
+                Clear();
+                ReadUgovor("", "");
+            }
+        }
+
+        private void btnOtkljucaj_Click(object sender, EventArgs e)
+        {
+            object o = dgvPrijave.SelectedRows[0].DataBoundItem;
+            string rb = ((DataRowView)o).Row.ItemArray[0].ToString();
+            if (MessageBox.Show(string.Format("Otključati ugovor {0} ?", rb), "Potvrda", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.Yes)
+            {
+                PersistanceManager.UpdateUgovor(rb, "E");
+                MessageBox.Show(string.Format("Ugovor {0} je uspješno otključan!", rb), "Poruka", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1);
                 //Stampa();
                 ReadUgovor(textBox1.Text, textBox2.Text);
                 tabControl1.SelectedIndex = 0;

@@ -62,7 +62,7 @@ namespace ServisDB.Forme
                     dgvPrijave.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Telefon", DataPropertyName = "kupac_telefon", Width = 130 });
                     dgvPrijave.Columns.Add(new DataGridViewTextBoxColumn() { Name = "E-mail", DataPropertyName = "kupac_email", Visible = false });
                     dgvPrijave.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Predmet", DataPropertyName = "predmet", Width = 250 });
-                    dgvPrijave.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Model", DataPropertyName = "model", Visible = false });
+                    dgvPrijave.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Model", DataPropertyName = "model", Visible = true });
                     dgvPrijave.Columns.Add(new DataGridViewTextBoxColumn() { Name = "SB", DataPropertyName = "serijski_broj", Visible = false });
                     dgvPrijave.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Dodatna oprema", DataPropertyName = "dodatna_oprema", Visible = false });
                     dgvPrijave.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Dobavljač", DataPropertyName = "dobavljac_sifra", Width = 80 });
@@ -364,6 +364,10 @@ namespace ServisDB.Forme
                 if (tabControl1.SelectedIndex == 1)
                     button1_Click(this, null);
             }
+            else if (e.KeyData == Keys.F7)
+            {
+                btnStampaRadnogNaloga_Click(this, null);
+            }
             else if (e.KeyData == Keys.Down)
             {
                 if (tabControl1.SelectedIndex == 0)
@@ -664,6 +668,45 @@ namespace ServisDB.Forme
         private void dtpDatum_ValueChanged(object sender, EventArgs e)
         {
 
+        }
+        private void StampaRadnogNaloga()
+        {
+            //  //string dir = Environment.SpecialFolder.MyDocuments + "\\ServisDB\\";
+
+            string dir = System.IO.Path.Combine(Environment.GetFolderPath(
+          Environment.SpecialFolder.MyDoc‌​uments), "ServisDB");
+
+            if (Directory.Exists(dir) == false)
+            {
+                Directory.CreateDirectory(dir);
+            }
+            object o = dgvPrijave.SelectedRows[0].DataBoundItem;
+            string brojnaloga = ((DataRowView)o).Row.ItemArray[1].ToString();
+            string kupac = ((DataRowView)o).Row.ItemArray[4].ToString();
+            string adresa = ((DataRowView)o).Row.ItemArray[5].ToString();
+            string telefon = ((DataRowView)o).Row.ItemArray[6].ToString();
+            string predmet = ((DataRowView)o).Row.ItemArray[11].ToString();
+            DateTime datum = (DateTime)((DataRowView)o).Row.ItemArray[2];
+
+            string serviser = ((DataRowView)o).Row.ItemArray[13].ToString();
+
+            Dictionary<string, string> dict = new Dictionary<string, string>();
+            dict.Add("BROJNALOGA", brojnaloga);
+            dict.Add("PREDMET", predmet);
+            dict.Add("KUPAC", kupac+", "+telefon+", "+adresa);
+            dict.Add("SERVISER", serviser);
+            dict.Add("DATUM", datum.ToString("dd.MM.yyyy"));
+            dict.Add("DATUMNALOGA", datum.ToString("dd.MM.yyyy"));
+
+            string fileName = dir + "\\" + brojnaloga.Replace("/", "-") + ".docx";
+
+            WordDocumentBuilder.FillBookmarksUsingOpenXml("RadniNalog.docx", fileName, dict);
+            Process.Start(fileName);
+        }
+
+        private void btnStampaRadnogNaloga_Click(object sender, EventArgs e)
+        {
+            StampaRadnogNaloga();
         }
     }
 }

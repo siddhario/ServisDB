@@ -101,6 +101,7 @@
             this.tmrDelay = new System.Windows.Forms.Timer(this.components);
             this.btnZakljuciUgovor = new System.Windows.Forms.Button();
             this.btnRealizovan = new System.Windows.Forms.Button();
+            this.btnOtkljucaj = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPrijave)).BeginInit();
@@ -299,7 +300,7 @@
             this.cbMK.Location = new System.Drawing.Point(927, 231);
             this.cbMK.Name = "cbMK";
             this.cbMK.Size = new System.Drawing.Size(46, 20);
-            this.cbMK.TabIndex = 121;
+            this.cbMK.TabIndex = 12;
             this.cbMK.Text = "MK";
             this.cbMK.UseVisualStyleBackColor = true;
             this.cbMK.CheckedChanged += new System.EventHandler(this.cbMK_CheckedChanged);
@@ -519,7 +520,7 @@
             this.tbBrojRata.Location = new System.Drawing.Point(920, 54);
             this.tbBrojRata.Name = "tbBrojRata";
             this.tbBrojRata.Size = new System.Drawing.Size(100, 22);
-            this.tbBrojRata.TabIndex = 99;
+            this.tbBrojRata.TabIndex = 8;
             this.tbBrojRata.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.tbBrojRata.TextChanged += new System.EventHandler(this.tbBrojRata_TextChanged);
             // 
@@ -537,7 +538,7 @@
             this.tbInicijalnoUplaceno.Location = new System.Drawing.Point(920, 88);
             this.tbInicijalnoUplaceno.Name = "tbInicijalnoUplaceno";
             this.tbInicijalnoUplaceno.Size = new System.Drawing.Size(100, 22);
-            this.tbInicijalnoUplaceno.TabIndex = 97;
+            this.tbInicijalnoUplaceno.TabIndex = 9;
             this.tbInicijalnoUplaceno.Text = "0";
             this.tbInicijalnoUplaceno.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
@@ -574,7 +575,7 @@
             this.tbIznosSaPDV.Location = new System.Drawing.Point(653, 58);
             this.tbIznosSaPDV.Name = "tbIznosSaPDV";
             this.tbIznosSaPDV.Size = new System.Drawing.Size(100, 22);
-            this.tbIznosSaPDV.TabIndex = 93;
+            this.tbIznosSaPDV.TabIndex = 7;
             this.tbIznosSaPDV.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.tbIznosSaPDV.TextChanged += new System.EventHandler(this.tbIznosSaPDV_TextChanged);
             // 
@@ -603,7 +604,7 @@
             this.tbKupacMaticniBroj.Location = new System.Drawing.Point(127, 228);
             this.tbKupacMaticniBroj.Name = "tbKupacMaticniBroj";
             this.tbKupacMaticniBroj.Size = new System.Drawing.Size(166, 22);
-            this.tbKupacMaticniBroj.TabIndex = 90;
+            this.tbKupacMaticniBroj.TabIndex = 5;
             // 
             // lblKupacBrojLk
             // 
@@ -621,7 +622,7 @@
             this.tbKupacBrojLk.Location = new System.Drawing.Point(126, 193);
             this.tbKupacBrojLk.Name = "tbKupacBrojLk";
             this.tbKupacBrojLk.Size = new System.Drawing.Size(167, 22);
-            this.tbKupacBrojLk.TabIndex = 87;
+            this.tbKupacBrojLk.TabIndex = 4;
             // 
             // btnKupacClear
             // 
@@ -658,7 +659,7 @@
             this.tbBrojRacuna.Location = new System.Drawing.Point(653, 8);
             this.tbBrojRacuna.Name = "tbBrojRacuna";
             this.tbBrojRacuna.Size = new System.Drawing.Size(100, 22);
-            this.tbBrojRacuna.TabIndex = 9;
+            this.tbBrojRacuna.TabIndex = 6;
             // 
             // panel2
             // 
@@ -700,7 +701,8 @@
             this.btnPartneri.Location = new System.Drawing.Point(435, 57);
             this.btnPartneri.Name = "btnPartneri";
             this.btnPartneri.Size = new System.Drawing.Size(37, 23);
-            this.btnPartneri.TabIndex = 53;
+            this.btnPartneri.TabIndex = 13;
+            this.btnPartneri.TabStop = false;
             this.btnPartneri.Text = "...";
             this.btnPartneri.UseVisualStyleBackColor = true;
             this.btnPartneri.Click += new System.EventHandler(this.btnPartneri_Click);
@@ -711,7 +713,7 @@
             this.button2.Location = new System.Drawing.Point(516, 584);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(135, 36);
-            this.button2.TabIndex = 51;
+            this.button2.TabIndex = 14;
             this.button2.Text = "Odustani [ESC]";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
@@ -722,7 +724,7 @@
             this.button1.Location = new System.Drawing.Point(366, 584);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(135, 36);
-            this.button1.TabIndex = 50;
+            this.button1.TabIndex = 13;
             this.button1.Text = "Sačuvaj [F1]";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
@@ -793,7 +795,7 @@
             this.tbRadnik.Location = new System.Drawing.Point(653, 228);
             this.tbRadnik.Name = "tbRadnik";
             this.tbRadnik.Size = new System.Drawing.Size(225, 22);
-            this.tbRadnik.TabIndex = 14;
+            this.tbRadnik.TabIndex = 11;
             // 
             // tbNapomena
             // 
@@ -802,7 +804,7 @@
             this.tbNapomena.Multiline = true;
             this.tbNapomena.Name = "tbNapomena";
             this.tbNapomena.Size = new System.Drawing.Size(367, 52);
-            this.tbNapomena.TabIndex = 13;
+            this.tbNapomena.TabIndex = 10;
             // 
             // tbKupacaTelefon
             // 
@@ -887,11 +889,24 @@
             this.btnRealizovan.UseVisualStyleBackColor = true;
             this.btnRealizovan.Click += new System.EventHandler(this.btnRealizovan_Click);
             // 
+            // btnOtkljucaj
+            // 
+            this.btnOtkljucaj.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnOtkljucaj.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnOtkljucaj.Location = new System.Drawing.Point(1079, 249);
+            this.btnOtkljucaj.Name = "btnOtkljucaj";
+            this.btnOtkljucaj.Size = new System.Drawing.Size(101, 52);
+            this.btnOtkljucaj.TabIndex = 31;
+            this.btnOtkljucaj.Text = "Otključavanje [F8]";
+            this.btnOtkljucaj.UseVisualStyleBackColor = true;
+            this.btnOtkljucaj.Click += new System.EventHandler(this.btnOtkljucaj_Click);
+            // 
             // FormUgovor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1185, 659);
+            this.Controls.Add(this.btnOtkljucaj);
             this.Controls.Add(this.btnRealizovan);
             this.Controls.Add(this.btnZakljuciUgovor);
             this.Controls.Add(this.btnBrisanje);
@@ -989,6 +1004,7 @@
         private System.Windows.Forms.RadioButton rbSviUgovori;
         private System.Windows.Forms.CheckBox cbMK;
         private System.Windows.Forms.Button btnRealizovan;
+        private System.Windows.Forms.Button btnOtkljucaj;
     }
 }
 
