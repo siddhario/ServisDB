@@ -62,9 +62,11 @@ namespace ServisDB.Forme
                     dgvPrijave.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Adresa", DataPropertyName = "kupac_adresa", Width = 180 });
                     dgvPrijave.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Telefon", DataPropertyName = "kupac_telefon", Width = 130 });
                     dgvPrijave.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Br.računa", DataPropertyName = "broj_racuna", Width = 130 });
-                    dgvPrijave.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Iznos ugovora (sa PDV)", DataPropertyName = "iznos_sa_pdv", DefaultCellStyle = new DataGridViewCellStyle() { Format = "N2" }, Width = 130 });
-                    dgvPrijave.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Suma uplata", DataPropertyName = "suma_uplata", Width = 130, DefaultCellStyle = new DataGridViewCellStyle() { Format = "N2" } });
-                    dgvPrijave.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Preostalo za uplatu", DataPropertyName = "preostalo_za_uplatu", DefaultCellStyle = new DataGridViewCellStyle() { Format = "N2" }, Width = 130 });
+                    dgvPrijave.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Iznos ugovora (sa PDV)", DataPropertyName = "iznos_sa_pdv", DefaultCellStyle = new DataGridViewCellStyle() { Format = "N2" }, Width = 120 });
+                    dgvPrijave.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Inicijalno uplaćeno", DataPropertyName = "inicijalno_placeno", DefaultCellStyle = new DataGridViewCellStyle() { Format = "N2" }, Width = 120 });
+                    dgvPrijave.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Uplaćeno po ratama", DataPropertyName = "uplaceno_po_ratama", DefaultCellStyle = new DataGridViewCellStyle() { Format = "N2" }, Width = 120 });
+                    dgvPrijave.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Suma uplata", DataPropertyName = "suma_uplata", Width = 120, DefaultCellStyle = new DataGridViewCellStyle() { Format = "N2" } });
+                    dgvPrijave.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Preostalo za uplatu", DataPropertyName = "preostalo_za_uplatu", DefaultCellStyle = new DataGridViewCellStyle() { Format = "N2" }, Width = 120 });
                     dgvPrijave.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Status", DataPropertyName = "status", Width = 80 });
                     // Retrieve all rows
                     cmd.Parameters.Clear();
@@ -83,7 +85,7 @@ namespace ServisDB.Forme
                         p2.Value = DBNull.Value;
                     else
                         p2.Value = brojPrijave;
-                    cmd.CommandText = @"SELECT broj, datum, kupac_sifra, kupac_maticni_broj, kupac_broj_lk, kupac_naziv, kupac_adresa, kupac_telefon, broj_racuna, radnik, inicijalno_placeno, iznos_bez_pdv, pdv, iznos_sa_pdv, broj_rata, suma_uplata, preostalo_za_uplatu, status, napomena, mk
+                    cmd.CommandText = @"SELECT broj, datum, kupac_sifra, kupac_maticni_broj, kupac_broj_lk, kupac_naziv, kupac_adresa, kupac_telefon, broj_racuna, radnik, inicijalno_placeno, iznos_bez_pdv, pdv, iznos_sa_pdv, broj_rata, suma_uplata, preostalo_za_uplatu, status, napomena, mk,uplaceno_po_ratama
 	FROM public.ugovor";
                     if (filters.Count > 0)
                     {
@@ -194,7 +196,7 @@ namespace ServisDB.Forme
             {
                 string broj_ugovora;
                 PersistanceManager.InsertUgovor(dtpDatum.Value, int.Parse(tbKupacSifra.Text), tbKupac.Text, tbAdresa.Text, tbKupacaTelefon.Text, tbKupacBrojLk.Text, tbKupacMaticniBroj.Text
-                   , decimal.Parse(tbIznosSaPDV.Text), decimal.Parse(tbInicijalnoUplaceno.Text), decimal.Parse(tbSumaUplata.Text), decimal.Parse(tbPreostaloZaUplatu.Text), tbNapomena.Text, tbRadnik.Text, tbStatus.Text, int.Parse(tbBrojRata.Text), tbBrojRacuna.Text, cbMK.Checked, out broj_ugovora);
+                   , decimal.Parse(tbIznosSaPDV.Text), decimal.Parse(tbInicijalnoUplaceno.Text), decimal.Parse(tbSumaUplata.Text), decimal.Parse(tbPreostaloZaUplatu.Text), tbNapomena.Text, tbRadnik.Text, tbStatus.Text, int.Parse(tbBrojRata.Text), tbBrojRacuna.Text, cbMK.Checked, decimal.Parse(tbUplacenoPoRatama.Text), out broj_ugovora);
                 if (cbMK.Checked == false)
                 {
                     List<UgovorRata> rate = KreirajRateUgovora(broj_ugovora);
@@ -246,12 +248,13 @@ namespace ServisDB.Forme
             try
             {
                 int brojRata;
-                decimal iznos;
+                decimal iznos, inicijalnoUplaceno;
                 bool s1 = int.TryParse(tbBrojRata.Text, out brojRata);
                 bool s2 = decimal.TryParse(tbIznosSaPDV.Text, out iznos);
-                if (s1 == true && s2 == true && brojRata > 0)
+                bool s3 = decimal.TryParse(tbInicijalnoUplaceno.Text, out inicijalnoUplaceno);
+                if (s1 == true && s2 == true && s3 == true && brojRata > 0)
                 {
-                    decimal iznosRate = decimal.Round(iznos / brojRata, 2, MidpointRounding.AwayFromZero);
+                    decimal iznosRate = decimal.Round((iznos - inicijalnoUplaceno) / brojRata, 2, MidpointRounding.AwayFromZero);
                     decimal sumaIznosaRata = 0;
                     UgovorRata r;
                     for (int i = 0; i < brojRata - 1; i++)
@@ -271,7 +274,7 @@ namespace ServisDB.Forme
                     r.BrojRate = brojRata;
                     r.DatumPlacanja = null;
                     r.Uplaceno = 0;
-                    r.Iznos = iznos - sumaIznosaRata;
+                    r.Iznos = (iznos - inicijalnoUplaceno) - sumaIznosaRata;
                     r.RokPlacanja = DateTime.Now.AddMonths(brojRata);
                     rate.Add(r);
                 }
@@ -313,7 +316,7 @@ namespace ServisDB.Forme
             tbNapomena.Text = ((DataRowView)o).Row.ItemArray[18].ToString();
 
             cbMK.Checked = (bool)(((DataRowView)o).Row.ItemArray[19]);
-
+            tbUplacenoPoRatama.Text = ((decimal)((DataRowView)o).Row.ItemArray[20]).ToString("N2");
             List<UgovorRata> rate = PersistanceManager.ReadUgovorRata(tbRedniBroj.Text);
             BindUgovorRata(rate);
 
@@ -373,6 +376,7 @@ namespace ServisDB.Forme
             tbInicijalnoUplaceno.Text = "0";
             tbSumaUplata.Text = "0";
             tbPreostaloZaUplatu.Text = "0";
+            tbUplacenoPoRatama.Text = "0";
             tbIznosSaPDV.Text = "";
             tbBrojRata.Text = "";
             tbNapomena.Text = "";
@@ -380,6 +384,7 @@ namespace ServisDB.Forme
 
             tbIznosRate.Text = "";
             tbUplaceno.Text = "";
+            tbUplacenoPoRatama.Text = "";
             dtpDatumUplate.Format = DateTimePickerFormat.Custom;
             dtpDatumUplate.CustomFormat = " ";
 
@@ -468,7 +473,9 @@ namespace ServisDB.Forme
 
         private void dataGridView1_RowPrePaint(object sender, DataGridViewRowPrePaintEventArgs e)
         {
-            string i = dgvPrijave.Rows[e.RowIndex].Cells[10].Value.ToString();
+            //= dgvPrijave.Rows[e.RowIndex].Cells[10].Value.ToString();
+            object o = dgvPrijave.Rows[e.RowIndex].DataBoundItem;
+            string i = ((DataRowView)o).Row.ItemArray[17].ToString();
             if (i == "R")
             {
                 //dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.PaleGreen;
@@ -527,8 +534,8 @@ namespace ServisDB.Forme
             dict.Add("UPLACENO", uplaceno.ToString("N2"));
             dict.Add("BROJRATA", brojrata.ToString());
             dict.Add("DATUM", datum.ToString("dd.MM.yyyy"));
-            dict.Add("IZNOSRATE", (Math.Round(iznos / int.Parse(brojrata), 2, MidpointRounding.AwayFromZero)).ToString("N2"));
-            dict.Add("UKUPANIZNOS", (uplaceno + iznos).ToString("N2"));
+            dict.Add("IZNOSRATE", (Math.Round((iznos - uplaceno) / int.Parse(brojrata), 2, MidpointRounding.AwayFromZero)).ToString("N2"));
+            dict.Add("UKUPANIZNOS", (iznos).ToString("N2"));
             dict.Add("PREDMET", napomena);
             string fileName = dir + "\\" + rednibroj.Replace("/", "-") + ".docx";
 
@@ -593,15 +600,15 @@ namespace ServisDB.Forme
             dict.Add("UPLACENO", inicijalnoplaceno.ToString("N2"));
             dict.Add("BROJRATA", brojrata.ToString());
             dict.Add("DATUM", datum.ToString("dd.MM.yyyy"));
-            dict.Add("IZNOSRATE", (Math.Round(iznos / int.Parse(brojrata), 2, MidpointRounding.AwayFromZero)).ToString("N2"));
-            dict.Add("UKUPANIZNOS", (inicijalnoplaceno + iznos).ToString("N2"));
+            dict.Add("IZNOSRATE", (Math.Round((iznos - inicijalnoplaceno) / int.Parse(brojrata), 2, MidpointRounding.AwayFromZero)).ToString("N2"));
+            dict.Add("UKUPANIZNOS", (iznos).ToString("N2"));
             dict.Add("PREDMET", napomena);
             dict.Add("BROJRATE", brojrate.ToString());
             dict.Add("BROJRACUNA", brojracuna);
             dict.Add("BROJUGOVORA", rednibroj);
             dict.Add("INICIJALNOPLACENO", inicijalnoplaceno.ToString("N2"));
-            dict.Add("UKUPNOPLACENO", (sumauplata.Value).ToString("N2"));
-            dict.Add("PREOSTALO", (iznos - sumauplata.Value).ToString("N2"));
+            dict.Add("UKUPNOPLACENO", (inicijalnoplaceno + sumauplata.Value).ToString("N2"));
+            dict.Add("PREOSTALO", (iznos - inicijalnoplaceno - sumauplata.Value).ToString("N2"));
             string fileName = dir + "\\" + rednibroj.Replace("/", "-") + ".docx";
 
             WordDocumentBuilder.FillBookmarksUsingOpenXml("PotvrdaPlacanjaRate.docx", fileName, dict);
@@ -761,7 +768,11 @@ namespace ServisDB.Forme
             {
                 List<UgovorRata> rate = KreirajRateUgovora(null);
                 BindUgovorRata(rate, true);
-                tbPreostaloZaUplatu.Text = tbIznosSaPDV.Text;
+                decimal iznos, inicijalnoUplaceno;
+                bool s1 = decimal.TryParse(tbIznosSaPDV.Text, out iznos);
+                bool s2 = decimal.TryParse(tbInicijalnoUplaceno.Text, out inicijalnoUplaceno);
+                if (s1 == true && s2 == true)
+                    tbPreostaloZaUplatu.Text = (iznos - inicijalnoUplaceno).ToString("N2");
             }
         }
 
@@ -891,12 +902,12 @@ namespace ServisDB.Forme
                 btnRealizovan.Enabled = false;
                 btnOtkljucaj.Enabled = false;
             }
-            else if(status=="Z")
+            else if (status == "Z")
             {
                 btnZakljuciUgovor.Enabled = false;
                 btnBrisanje.Enabled = false;
                 btnRealizovan.Enabled = true && mk == true;
-                btnOtkljucaj.Enabled = true && sumaUplata==0;
+                btnOtkljucaj.Enabled = true && sumaUplata == 0;
             }
             else
             {
@@ -915,7 +926,7 @@ namespace ServisDB.Forme
             lblRate.Visible = cbMK.Checked == false;
             if (cbMK.Checked == true)
                 tbBrojRata.Text = "1";
-            
+
         }
 
         private void btnRealizovan_Click(object sender, EventArgs e)
@@ -924,7 +935,7 @@ namespace ServisDB.Forme
             string rb = ((DataRowView)o).Row.ItemArray[0].ToString();
             if (MessageBox.Show(string.Format("Proglasiti ugovor {0} realizovanim ?", rb), "Potvrda", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.Yes)
             {
-               // PersistanceManager.UpdateUgovor(rb, "Z");
+                // PersistanceManager.UpdateUgovor(rb, "Z");
                 PersistanceManager.UpdateUgovor(rb, "R");
                 MessageBox.Show(string.Format("Ugovor {0} je realizovan.", rb), "Poruka", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1);
                 //Stampa();
@@ -948,6 +959,21 @@ namespace ServisDB.Forme
                 tabControl1.SelectedIndex = 0;
                 Clear();
                 ReadUgovor("", "");
+            }
+        }
+
+        private void tbInicijalnoUplaceno_TextChanged(object sender, EventArgs e)
+        {
+            if (cbMK.Checked == false && (tbRedniBroj.Text == "AUTO" || tbStatus.Text == "E"))
+            {
+                List<UgovorRata> rate = KreirajRateUgovora(null);
+                BindUgovorRata(rate, true);
+                tbSumaUplata.Text = tbInicijalnoUplaceno.Text;
+                decimal iznos, inicijalnoUplaceno;
+                bool s1 = decimal.TryParse(tbIznosSaPDV.Text, out iznos);
+                bool s2 = decimal.TryParse(tbInicijalnoUplaceno.Text, out inicijalnoUplaceno);
+                if (s1 == true && s2 == true)
+                    tbPreostaloZaUplatu.Text = (iznos - inicijalnoUplaceno).ToString("N2");
             }
         }
     }

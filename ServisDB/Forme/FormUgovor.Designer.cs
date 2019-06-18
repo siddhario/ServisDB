@@ -102,6 +102,8 @@
             this.btnZakljuciUgovor = new System.Windows.Forms.Button();
             this.btnRealizovan = new System.Windows.Forms.Button();
             this.btnOtkljucaj = new System.Windows.Forms.Button();
+            this.tbUplacenoPoRatama = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPrijave)).BeginInit();
@@ -242,6 +244,8 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.tbUplacenoPoRatama);
+            this.tabPage2.Controls.Add(this.label2);
             this.tabPage2.Controls.Add(this.cbMK);
             this.tabPage2.Controls.Add(this.gbRate);
             this.tabPage2.Controls.Add(this.lblRate);
@@ -517,7 +521,7 @@
             // 
             // tbBrojRata
             // 
-            this.tbBrojRata.Location = new System.Drawing.Point(920, 54);
+            this.tbBrojRata.Location = new System.Drawing.Point(920, 57);
             this.tbBrojRata.Name = "tbBrojRata";
             this.tbBrojRata.Size = new System.Drawing.Size(100, 22);
             this.tbBrojRata.TabIndex = 8;
@@ -527,7 +531,7 @@
             // lblBrojRata
             // 
             this.lblBrojRata.AutoSize = true;
-            this.lblBrojRata.Location = new System.Drawing.Point(776, 57);
+            this.lblBrojRata.Location = new System.Drawing.Point(776, 61);
             this.lblBrojRata.Name = "lblBrojRata";
             this.lblBrojRata.Size = new System.Drawing.Size(61, 16);
             this.lblBrojRata.TabIndex = 98;
@@ -535,17 +539,18 @@
             // 
             // tbInicijalnoUplaceno
             // 
-            this.tbInicijalnoUplaceno.Location = new System.Drawing.Point(920, 88);
+            this.tbInicijalnoUplaceno.Location = new System.Drawing.Point(920, 93);
             this.tbInicijalnoUplaceno.Name = "tbInicijalnoUplaceno";
             this.tbInicijalnoUplaceno.Size = new System.Drawing.Size(100, 22);
             this.tbInicijalnoUplaceno.TabIndex = 9;
             this.tbInicijalnoUplaceno.Text = "0";
             this.tbInicijalnoUplaceno.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.tbInicijalnoUplaceno.TextChanged += new System.EventHandler(this.tbInicijalnoUplaceno_TextChanged);
             // 
             // lblInicijalnoUplaceno
             // 
             this.lblInicijalnoUplaceno.AutoSize = true;
-            this.lblInicijalnoUplaceno.Location = new System.Drawing.Point(776, 91);
+            this.lblInicijalnoUplaceno.Location = new System.Drawing.Point(776, 96);
             this.lblInicijalnoUplaceno.Name = "lblInicijalnoUplaceno";
             this.lblInicijalnoUplaceno.Size = new System.Drawing.Size(122, 16);
             this.lblInicijalnoUplaceno.TabIndex = 96;
@@ -566,9 +571,9 @@
             this.lblSumaUplata.AutoSize = true;
             this.lblSumaUplata.Location = new System.Drawing.Point(522, 96);
             this.lblSumaUplata.Name = "lblSumaUplata";
-            this.lblSumaUplata.Size = new System.Drawing.Size(86, 16);
+            this.lblSumaUplata.Size = new System.Drawing.Size(117, 16);
             this.lblSumaUplata.TabIndex = 94;
-            this.lblSumaUplata.Text = "Suma uplata:";
+            this.lblSumaUplata.Text = "Ukupno uplaćeno:";
             // 
             // tbIznosSaPDV
             // 
@@ -901,6 +906,25 @@
             this.btnOtkljucaj.UseVisualStyleBackColor = true;
             this.btnOtkljucaj.Click += new System.EventHandler(this.btnOtkljucaj_Click);
             // 
+            // tbUplacenoPoRatama
+            // 
+            this.tbUplacenoPoRatama.Location = new System.Drawing.Point(920, 125);
+            this.tbUplacenoPoRatama.Name = "tbUplacenoPoRatama";
+            this.tbUplacenoPoRatama.ReadOnly = true;
+            this.tbUplacenoPoRatama.Size = new System.Drawing.Size(100, 22);
+            this.tbUplacenoPoRatama.TabIndex = 122;
+            this.tbUplacenoPoRatama.Text = "0";
+            this.tbUplacenoPoRatama.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(776, 131);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(134, 16);
+            this.label2.TabIndex = 121;
+            this.label2.Text = "Uplaćeno po ratama:";
+            // 
             // FormUgovor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1005,6 +1029,8 @@
         private System.Windows.Forms.CheckBox cbMK;
         private System.Windows.Forms.Button btnRealizovan;
         private System.Windows.Forms.Button btnOtkljucaj;
+        private System.Windows.Forms.TextBox tbUplacenoPoRatama;
+        private System.Windows.Forms.Label label2;
     }
 }
 

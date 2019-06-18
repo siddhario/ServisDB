@@ -286,7 +286,7 @@ where sifra=@sifra";
 
         public static void InsertUgovor(DateTime datum, int? kupac_sifra, string kupac_naziv, string kupac_adresa, string kupac_telefon, string kupac_broj_lk, string kupac_maticni_broj,
             decimal iznos_sa_pdv, decimal inicijalno_uplaceno, decimal suma_uplata, decimal preostalo_za_uplatu,
-            string napomena, string radnik, string status, int broj_rata, string broj_racuna, bool mk, out string broj_ugovora)
+            string napomena, string radnik, string status, int broj_rata, string broj_racuna, bool mk, decimal uplaceno_po_ratama, out string broj_ugovora)
         {
             using (var conn = new NpgsqlConnection(_connectionString))
             {
@@ -316,12 +316,13 @@ where sifra=@sifra";
                     cmd.Parameters.AddWithValue("@broj_rata", broj_rata);
                     cmd.Parameters.AddWithValue("@broj_racuna", broj_racuna);
                     cmd.Parameters.AddWithValue("@mk", mk);
+                    cmd.Parameters.AddWithValue("@uplaceno_po_ratama", uplaceno_po_ratama);
                     cmd.CommandText = "select concat((coalesce(max(substring(broj, 1, position('/' in broj) - 1)::int), 0) + 1)::text, '/', '" + datum.Year.ToString() + @"') from ugovor where date_part('year', datum) = " + datum.Year.ToString();
                     broj_ugovora = (string)cmd.ExecuteScalar();
                     // Insert some data
-                    cmd.CommandText = @"INSERT INTO ugovor (datum, kupac_sifra, kupac_maticni_broj, kupac_broj_lk, kupac_naziv, kupac_adresa, kupac_telefon, broj_racuna, radnik, inicijalno_placeno, iznos_bez_pdv, pdv, iznos_sa_pdv, broj_rata, suma_uplata, preostalo_za_uplatu, status, napomena,mk,broj)
+                    cmd.CommandText = @"INSERT INTO ugovor (datum, kupac_sifra, kupac_maticni_broj, kupac_broj_lk, kupac_naziv, kupac_adresa, kupac_telefon, broj_racuna, radnik, inicijalno_placeno, iznos_bez_pdv, pdv, iznos_sa_pdv, broj_rata, suma_uplata, preostalo_za_uplatu, status, napomena,mk,uplaceno_po_ratama, broj)
                                                             VALUES 
-                                                            (@datum, @kupac_sifra, @kupac_maticni_broj, @kupac_broj_lk, @kupac_naziv, @kupac_adresa, @kupac_telefon, @broj_racuna, @radnik, @inicijalno_placeno, @iznos_bez_pdv, @pdv, @iznos_sa_pdv, @broj_rata, @suma_uplata, @preostalo_za_uplatu, @status, @napomena,@mk
+                                                            (@datum, @kupac_sifra, @kupac_maticni_broj, @kupac_broj_lk, @kupac_naziv, @kupac_adresa, @kupac_telefon, @broj_racuna, @radnik, @inicijalno_placeno, @iznos_bez_pdv, @pdv, @iznos_sa_pdv, @broj_rata, @suma_uplata, @preostalo_za_uplatu, @status, @napomena,@mk,@uplaceno_po_ratama
                                                             ,(select concat((coalesce(max(substring(broj,1,position('/' in broj)-1)::int),0)+1)::text,'/','" + datum.Year.ToString() + @"') from ugovor where date_part('year', datum)=" + datum.Year.ToString() + @")"
 
                                                             + ")";
