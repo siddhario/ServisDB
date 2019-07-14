@@ -13,6 +13,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using TMS.Core.Helpers;
 
 namespace ServisDB.Forme
 {
@@ -115,130 +116,138 @@ namespace ServisDB.Forme
 
         private void button1_Click(object sender, EventArgs e)
         {
-            decimal IznosSaPDV, InicijalnoUplaceno;
-            int brojRata;
-            bool s1 = decimal.TryParse(tbIznosSaPDV.Text, out IznosSaPDV);
-            bool s2 = decimal.TryParse(tbInicijalnoUplaceno.Text, out InicijalnoUplaceno);
-            bool s3 = int.TryParse(tbBrojRata.Text, out brojRata);
-
-            if (s1 == false || s2 == false || s3 == false)
+            try
             {
-                MessageBox.Show("Validacija iznosa neuspješna!", "Poruka", MessageBoxButtons.OK, MessageBoxIcon.Hand);
-                return;
-            }
+                decimal IznosSaPDV, InicijalnoUplaceno;
+                int brojRata;
+                bool s1 = decimal.TryParse(tbIznosSaPDV.Text, out IznosSaPDV);
+                bool s2 = decimal.TryParse(tbInicijalnoUplaceno.Text, out InicijalnoUplaceno);
+                bool s3 = int.TryParse(tbBrojRata.Text, out brojRata);
 
-            if (s3 == true && (brojRata < 0 || brojRata > 24))
-            {
-                MessageBox.Show("Broj rata može biti između 1 i 24!", "Poruka", MessageBoxButtons.OK, MessageBoxIcon.Hand);
-                return;
-            }
-
-            bool s4 = tbKupac.Text != "";
-            bool s5 = tbKupacBrojLk.Text != "";
-            bool s6 = tbKupacMaticniBroj.Text != "";
-
-            if (s4 == false || s5 == false || s6 == false)
-            {
-                MessageBox.Show("Validacija podataka o kupcu neuspješna! Obavezni podaci su ime kupca, Broj LK i JMBG.", "Poruka", MessageBoxButtons.OK, MessageBoxIcon.Hand);
-                return;
-            }
-            if (s6 == true && (tbKupacMaticniBroj.Text.Trim().Length > 13 || tbKupacMaticniBroj.Text.Trim().Length < 1))
-            {
-                MessageBox.Show("Broj cifara matičnog broja ne može biti veći od 13!", "Poruka", MessageBoxButtons.OK, MessageBoxIcon.Hand);
-                return;
-            }
-
-            if (s5 == true && (tbKupacBrojLk.Text.Trim().Length != 9))
-            {
-                MessageBox.Show("Broj karaktera broja LK mora biti 9!", "Poruka", MessageBoxButtons.OK, MessageBoxIcon.Hand);
-                return;
-            }
-            //DateTime? zavrseno = null;
-            //if (dtpZavrseno.Format == DateTimePickerFormat.Custom)
-            //{
-            //    zavrseno = null;
-            //}
-            //else
-            //{
-            //    zavrseno = dtpZavrseno.Value;
-            //}
-
-            //DateTime? poslatMejlDobavljacu = null;
-            //if (dtpPoslatMejlDobavljacu.Format == DateTimePickerFormat.Custom)
-            //{
-            //    poslatMejlDobavljacu = null;
-            //}
-            //else
-            //{
-            //    poslatMejlDobavljacu = dtpPoslatMejlDobavljacu.Value;
-            //}
-
-            //DateTime? datumVracanja = null;
-            //if (dtpDatumVracanja.Format == DateTimePickerFormat.Custom)
-            //{
-            //    datumVracanja = null;
-            //}
-            //else
-            //{
-            //    datumVracanja = dtpDatumVracanja.Value;
-            //}
-
-            int? kupacSifra;
-            if (tbKupacSifra.Text == "")
-            {
-                PersistanceManager.InsertPartner(tbKupac.Text, "F", tbKupacMaticniBroj.Text, tbAdresa.Text, tbKupacaTelefon.Text, null, true, false, tbKupacBrojLk.Text, out kupacSifra);
-                tbKupacSifra.Text = kupacSifra.ToString();
-            }
-            else
-                PersistanceManager.UpdatePartner(int.Parse(tbKupacSifra.Text), tbAdresa.Text, tbKupacaTelefon.Text, tbKupacMaticniBroj.Text, tbKupacBrojLk.Text);
-
-            if (tbRedniBroj.Text == "AUTO")
-            {
-                string broj_ugovora;
-                PersistanceManager.InsertUgovor(dtpDatum.Value, int.Parse(tbKupacSifra.Text), tbKupac.Text, tbAdresa.Text, tbKupacaTelefon.Text, tbKupacBrojLk.Text, tbKupacMaticniBroj.Text
-                   , decimal.Parse(tbIznosSaPDV.Text), decimal.Parse(tbInicijalnoUplaceno.Text), decimal.Parse(tbSumaUplata.Text), decimal.Parse(tbPreostaloZaUplatu.Text), tbNapomena.Text, tbRadnik.Text, tbStatus.Text, int.Parse(tbBrojRata.Text), tbBrojRacuna.Text, cbMK.Checked, decimal.Parse(tbUplacenoPoRatama.Text), out broj_ugovora);
-                if (cbMK.Checked == false)
+                if (s1 == false || s2 == false || s3 == false)
                 {
-                    List<UgovorRata> rate = KreirajRateUgovora(broj_ugovora);
-                    dgvRate.DataSource = rate;
-                    //dgvugov
-                    foreach (UgovorRata r in rate)
-                        PersistanceManager.InsertUgovorRata(r.BrojUgovora, r.BrojRate, r.RokPlacanja, r.DatumPlacanja, r.Iznos, r.Uplaceno, r.Napomena);
+                    MessageBox.Show("Validacija iznosa neuspješna!", "Poruka", MessageBoxButtons.OK, MessageBoxIcon.Hand);
+                    return;
                 }
-            }
-            else
-            {
-                PersistanceManager.UpdateUgovor(tbRedniBroj.Text, dtpDatum.Value, int.Parse(tbKupacSifra.Text), tbKupac.Text, tbAdresa.Text, tbKupacaTelefon.Text, tbKupacBrojLk.Text, tbKupacMaticniBroj.Text
-                   , decimal.Parse(tbIznosSaPDV.Text), decimal.Parse(tbInicijalnoUplaceno.Text), decimal.Parse(tbSumaUplata.Text), decimal.Parse(tbPreostaloZaUplatu.Text), tbNapomena.Text, tbRadnik.Text, tbStatus.Text, int.Parse(tbBrojRata.Text), tbBrojRacuna.Text, cbMK.Checked);
-                if (cbMK.Checked == false)
+
+                if (s3 == true && (brojRata < 0 || brojRata > 24))
                 {
-                    if (tbStatus.Text == "E")
+                    MessageBox.Show("Broj rata može biti između 1 i 24!", "Poruka", MessageBoxButtons.OK, MessageBoxIcon.Hand);
+                    return;
+                }
+
+                bool s4 = tbKupac.Text != "";
+                bool s5 = tbKupacBrojLk.Text != "";
+                bool s6 = tbKupacMaticniBroj.Text != "";
+
+                if (s4 == false || s5 == false || s6 == false)
+                {
+                    MessageBox.Show("Validacija podataka o kupcu neuspješna! Obavezni podaci su ime kupca, Broj LK i JMBG.", "Poruka", MessageBoxButtons.OK, MessageBoxIcon.Hand);
+                    return;
+                }
+                if (s6 == true && (tbKupacMaticniBroj.Text.Trim().Length > 13 || tbKupacMaticniBroj.Text.Trim().Length < 1))
+                {
+                    MessageBox.Show("Broj cifara matičnog broja ne može biti veći od 13!", "Poruka", MessageBoxButtons.OK, MessageBoxIcon.Hand);
+                    return;
+                }
+
+                if (s5 == true && (tbKupacBrojLk.Text.Trim().Length != 9))
+                {
+                    MessageBox.Show("Broj karaktera broja LK mora biti 9!", "Poruka", MessageBoxButtons.OK, MessageBoxIcon.Hand);
+                    return;
+                }
+                //DateTime? zavrseno = null;
+                //if (dtpZavrseno.Format == DateTimePickerFormat.Custom)
+                //{
+                //    zavrseno = null;
+                //}
+                //else
+                //{
+                //    zavrseno = dtpZavrseno.Value;
+                //}
+
+                //DateTime? poslatMejlDobavljacu = null;
+                //if (dtpPoslatMejlDobavljacu.Format == DateTimePickerFormat.Custom)
+                //{
+                //    poslatMejlDobavljacu = null;
+                //}
+                //else
+                //{
+                //    poslatMejlDobavljacu = dtpPoslatMejlDobavljacu.Value;
+                //}
+
+                //DateTime? datumVracanja = null;
+                //if (dtpDatumVracanja.Format == DateTimePickerFormat.Custom)
+                //{
+                //    datumVracanja = null;
+                //}
+                //else
+                //{
+                //    datumVracanja = dtpDatumVracanja.Value;
+                //}
+
+                int? kupacSifra;
+                if (tbKupacSifra.Text == "")
+                {
+                    PersistanceManager.InsertPartner(tbKupac.Text, "F", tbKupacMaticniBroj.Text, tbAdresa.Text, tbKupacaTelefon.Text, null, true, false, tbKupacBrojLk.Text, out kupacSifra);
+                    tbKupacSifra.Text = kupacSifra.ToString();
+                }
+                else
+                    PersistanceManager.UpdatePartner(int.Parse(tbKupacSifra.Text), tbAdresa.Text, tbKupacaTelefon.Text, tbKupacMaticniBroj.Text, tbKupacBrojLk.Text);
+
+                if (tbRedniBroj.Text == "AUTO")
+                {
+                    string broj_ugovora;
+                    PersistanceManager.InsertUgovor(dtpDatum.Value, int.Parse(tbKupacSifra.Text), tbKupac.Text, tbAdresa.Text, tbKupacaTelefon.Text, tbKupacBrojLk.Text, tbKupacMaticniBroj.Text
+                       , decimal.Parse(tbIznosSaPDV.Text), decimal.Parse(tbInicijalnoUplaceno.Text), decimal.Parse(tbSumaUplata.Text), decimal.Parse(tbPreostaloZaUplatu.Text), tbNapomena.Text, tbRadnik.Text, tbStatus.Text, int.Parse(tbBrojRata.Text), tbBrojRacuna.Text, cbMK.Checked, decimal.Parse(tbUplacenoPoRatama.Text), out broj_ugovora);
+                    if (cbMK.Checked == false)
                     {
-
-                        List<UgovorRata> rate = KreirajRateUgovora(tbRedniBroj.Text);
+                        List<UgovorRata> rate = KreirajRateUgovora(broj_ugovora);
                         dgvRate.DataSource = rate;
-
-                        PersistanceManager.DeleteUgovorRata(tbRedniBroj.Text);
                         //dgvugov
                         foreach (UgovorRata r in rate)
                             PersistanceManager.InsertUgovorRata(r.BrojUgovora, r.BrojRate, r.RokPlacanja, r.DatumPlacanja, r.Iznos, r.Uplaceno, r.Napomena);
-
-                    }
-                    else
-                    {
-                        PersistanceManager.UpdateUgovorRata(tbRedniBroj.Text, int.Parse(tbBrojRate.Text), dtpRokPlacanja.Value, dtpDatumUplate.Value, decimal.Parse(tbIznosRate.Text), decimal.Parse(tbUplaceno.Text), tbNapomena.Text);
-
-                        if (dtpDatumUplate.Value != null)
-                        {
-                            StampaPotvrdaPlacanja();
-                        }
                     }
                 }
+                else
+                {
+                    PersistanceManager.UpdateUgovor(tbRedniBroj.Text, dtpDatum.Value, int.Parse(tbKupacSifra.Text), tbKupac.Text, tbAdresa.Text, tbKupacaTelefon.Text, tbKupacBrojLk.Text, tbKupacMaticniBroj.Text
+                       , decimal.Parse(tbIznosSaPDV.Text), decimal.Parse(tbInicijalnoUplaceno.Text), decimal.Parse(tbSumaUplata.Text), decimal.Parse(tbPreostaloZaUplatu.Text), tbNapomena.Text, tbRadnik.Text, tbStatus.Text, int.Parse(tbBrojRata.Text), tbBrojRacuna.Text, cbMK.Checked);
+                    if (cbMK.Checked == false)
+                    {
+                        if (tbStatus.Text == "E")
+                        {
 
+                            List<UgovorRata> rate = KreirajRateUgovora(tbRedniBroj.Text);
+                            dgvRate.DataSource = rate;
+
+                            PersistanceManager.DeleteUgovorRata(tbRedniBroj.Text);
+                            //dgvugov
+                            foreach (UgovorRata r in rate)
+                                PersistanceManager.InsertUgovorRata(r.BrojUgovora, r.BrojRate, r.RokPlacanja, r.DatumPlacanja, r.Iznos, r.Uplaceno, r.Napomena);
+
+                        }
+                        else
+                        {
+                            PersistanceManager.UpdateUgovorRata(tbRedniBroj.Text, int.Parse(tbBrojRate.Text), dtpRokPlacanja.Value, dtpDatumUplate.Value, decimal.Parse(tbIznosRate.Text), decimal.Parse(tbUplaceno.Text), tbNapomena.Text);
+
+                            if (dtpDatumUplate.Value != null)
+                            {
+                                StampaPotvrdaPlacanja();
+                            }
+                        }
+                    }
+
+                }
+                tabControl1.SelectedIndex = 0;
+                Clear();
+                ReadUgovor("", "");
             }
-            tabControl1.SelectedIndex = 0;
-            Clear();
-            ReadUgovor("", "");
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message + Environment.NewLine + ex.StackTrace);
+                Logger.Exception(ex);
+            }
         }
 
         private List<UgovorRata> KreirajRateUgovora(string broj_ugovora)
@@ -454,6 +463,14 @@ namespace ServisDB.Forme
             else if (e.KeyData == Keys.F6)
             {
                 btnZakljuciUgovor_Click(this, null);
+            }
+            else if (e.KeyData == Keys.F7)
+            {
+                btnRealizovan_Click(this, null);
+            }
+            else if (e.KeyData == Keys.F8)
+            {
+                btnOtkljucaj_Click(this, null);
             }
             else if (e.KeyData == Keys.F1)
             {

@@ -51,6 +51,12 @@
             this.pregledDugovanjaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pregledUplataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.rekapitulacijaUgovoraToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnPonude = new System.Windows.Forms.Button();
+            this.btnArtikli = new System.Windows.Forms.Button();
+            this.ponudeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ponudeToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.izvještajiToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -79,7 +85,7 @@
             // btnServisniNalozi
             // 
             this.btnServisniNalozi.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnServisniNalozi.Location = new System.Drawing.Point(378, 55);
+            this.btnServisniNalozi.Location = new System.Drawing.Point(744, 241);
             this.btnServisniNalozi.Name = "btnServisniNalozi";
             this.btnServisniNalozi.Size = new System.Drawing.Size(360, 180);
             this.btnServisniNalozi.TabIndex = 1;
@@ -102,7 +108,7 @@
             // 
             this.statusStrip1.Location = new System.Drawing.Point(0, 430);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(750, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(1109, 22);
             this.statusStrip1.TabIndex = 3;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -111,10 +117,11 @@
             this.menuStrip1.Font = new System.Drawing.Font("Segoe UI", 14F);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.servisnePrijaveToolStripMenuItem,
-            this.sevisnToolStripMenuItem});
+            this.sevisnToolStripMenuItem,
+            this.ponudeToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(750, 33);
+            this.menuStrip1.Size = new System.Drawing.Size(1109, 33);
             this.menuStrip1.TabIndex = 4;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -241,11 +248,61 @@
             this.rekapitulacijaUgovoraToolStripMenuItem.Size = new System.Drawing.Size(275, 30);
             this.rekapitulacijaUgovoraToolStripMenuItem.Text = "Rekapitulacija ugovora";
             // 
+            // btnPonude
+            // 
+            this.btnPonude.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnPonude.Location = new System.Drawing.Point(378, 55);
+            this.btnPonude.Name = "btnPonude";
+            this.btnPonude.Size = new System.Drawing.Size(360, 180);
+            this.btnPonude.TabIndex = 5;
+            this.btnPonude.Text = "Ponude";
+            this.btnPonude.UseVisualStyleBackColor = true;
+            this.btnPonude.Click += new System.EventHandler(this.btnPonude_Click);
+            // 
+            // btnArtikli
+            // 
+            this.btnArtikli.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnArtikli.Location = new System.Drawing.Point(744, 55);
+            this.btnArtikli.Name = "btnArtikli";
+            this.btnArtikli.Size = new System.Drawing.Size(360, 180);
+            this.btnArtikli.TabIndex = 6;
+            this.btnArtikli.Text = "Katalog artikala";
+            this.btnArtikli.UseVisualStyleBackColor = true;
+            // 
+            // ponudeToolStripMenuItem
+            // 
+            this.ponudeToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ponudeToolStripMenuItem1,
+            this.toolStripSeparator3,
+            this.izvještajiToolStripMenuItem});
+            this.ponudeToolStripMenuItem.Name = "ponudeToolStripMenuItem";
+            this.ponudeToolStripMenuItem.Size = new System.Drawing.Size(88, 29);
+            this.ponudeToolStripMenuItem.Text = "Ponude";
+            // 
+            // ponudeToolStripMenuItem1
+            // 
+            this.ponudeToolStripMenuItem1.Name = "ponudeToolStripMenuItem1";
+            this.ponudeToolStripMenuItem1.Size = new System.Drawing.Size(180, 30);
+            this.ponudeToolStripMenuItem1.Text = "Ponude";
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(177, 6);
+            // 
+            // izvještajiToolStripMenuItem
+            // 
+            this.izvještajiToolStripMenuItem.Name = "izvještajiToolStripMenuItem";
+            this.izvještajiToolStripMenuItem.Size = new System.Drawing.Size(180, 30);
+            this.izvještajiToolStripMenuItem.Text = "Izvještaji";
+            // 
             // FormGlavna
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(750, 452);
+            this.ClientSize = new System.Drawing.Size(1109, 452);
+            this.Controls.Add(this.btnArtikli);
+            this.Controls.Add(this.btnPonude);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.btnPartneri);
@@ -287,5 +344,11 @@
         private System.Windows.Forms.ToolStripMenuItem pregledDugovanjaToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem pregledUplataToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem rekapitulacijaUgovoraToolStripMenuItem;
+        private System.Windows.Forms.Button btnPonude;
+        private System.Windows.Forms.Button btnArtikli;
+        private System.Windows.Forms.ToolStripMenuItem ponudeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem ponudeToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+        private System.Windows.Forms.ToolStripMenuItem izvještajiToolStripMenuItem;
     }
 }

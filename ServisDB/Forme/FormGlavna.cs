@@ -1,4 +1,5 @@
-﻿using ServisDB.Klase;
+﻿using Delos.Forme;
+using ServisDB.Klase;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -75,6 +76,12 @@ namespace ServisDB.Forme
         private void pregledUplataToolStripMenuItem_Click(object sender, EventArgs e)
         {
             dlgReports.PrepareReport("Pregled uplata u periodu");
+        }
+
+        private void btnPonude_Click(object sender, EventArgs e)
+        {
+            FormPonuda frm = new FormPonuda();
+            frm.ShowDialog();
         }
     }
 }
