@@ -447,7 +447,7 @@ namespace ServisDB.Forme
             int rrb = int.Parse(rb);
             rednibroj = rrb.ToString("D4") + "/" + year;
             sheet.Cells("C17").Value = rednibroj;
-            sheet.Cells("C17").DataType = XLCellValues.Text;
+            sheet.Cells("C17").DataType = XLDataType.Text;
             sheet.Cells("C15").Value = rednibroj;
             sheet.Cells("C15").Style.Font.FontName = "Free 3 of 9 Extended";
             sheet.Cells("C15").Style.Font.FontSize = 28;

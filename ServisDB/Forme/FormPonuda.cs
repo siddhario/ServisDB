@@ -458,31 +458,31 @@ namespace Delos.Forme
             int rrb = int.Parse(rb);
             rednibroj = rrb.ToString("D4") + "/" + year;
             sheet.Cells("A3").Value = "PONUDA BROJ: " + rednibroj;
-            sheet.Cells("A3").DataType = XLCellValues.Text;
+            sheet.Cells("A3").DataType = XLDataType.Text;
 
             sheet.Cells("G2").Value = datum;
-            sheet.Cells("G2").DataType = XLCellValues.Text;
+            sheet.Cells("G2").DataType = XLDataType.Text;
 
             sheet.Cells("B7").Value = partner_naziv;
-            sheet.Cells("B7").DataType = XLCellValues.Text;
+            sheet.Cells("B7").DataType = XLDataType.Text;
 
             sheet.Cells("B8").Value = partner_jib;
-            sheet.Cells("B8").DataType = XLCellValues.Text;
+            sheet.Cells("B8").DataType = XLDataType.Text;
 
             sheet.Cells("B9").Value = partner_adresa;
-            sheet.Cells("B9").DataType = XLCellValues.Text;
+            sheet.Cells("B9").DataType = XLDataType.Text;
 
             sheet.Cells("F7").Value = valuta;
-            sheet.Cells("F7").DataType = XLCellValues.Text;
+            sheet.Cells("F7").DataType = XLDataType.Text;
 
             sheet.Cells("F8").Value = opcija_ponude;
-            sheet.Cells("F8").DataType = XLCellValues.Text;
+            sheet.Cells("F8").DataType = XLDataType.Text;
 
             sheet.Cells("F9").Value = rok_isporuke;
-            sheet.Cells("F9").DataType = XLCellValues.Text;
+            sheet.Cells("F9").DataType = XLDataType.Text;
 
             sheet.Cells("F10").Value = paritet_kod + " " + paritet;
-            sheet.Cells("F10").DataType = XLCellValues.Text;
+            sheet.Cells("F10").DataType = XLDataType.Text;
 
             List<PonudaStavka> stavke = PersistanceManager.ReadPonudaStavka(broj);
             int index = 0;
@@ -491,25 +491,25 @@ namespace Delos.Forme
             {                
                 rowIndex = (14 + index).ToString();
                 sheet.Cells("A"+ rowIndex).Value = stavka.StavkaBroj.ToString();
-                sheet.Cells("A"+ rowIndex).DataType = XLCellValues.Text;
+                sheet.Cells("A"+ rowIndex).DataType = XLDataType.Text;
 
                 sheet.Cells("B" + rowIndex).Value = stavka.ArtikalNaziv.ToString();
-                sheet.Cells("B" + rowIndex).DataType = XLCellValues.Text;
+                sheet.Cells("B" + rowIndex).DataType = XLDataType.Text;
 
                 sheet.Cells("C" + rowIndex).Value = stavka.JedinicaMjere.ToString();
-                sheet.Cells("C" + rowIndex).DataType = XLCellValues.Text;
+                sheet.Cells("C" + rowIndex).DataType = XLDataType.Text;
 
                 sheet.Cells("D" + rowIndex).Value = stavka.Kolicina.ToString();
-                sheet.Cells("D" + rowIndex).DataType = XLCellValues.Text;
+                sheet.Cells("D" + rowIndex).DataType = XLDataType.Text;
 
                 sheet.Cells("E" + rowIndex).Value = stavka.CijenaBezPdv.ToString();
-                sheet.Cells("E" + rowIndex).DataType = XLCellValues.Text;
+                sheet.Cells("E" + rowIndex).DataType = XLDataType.Text;
 
                 sheet.Cells("F" + rowIndex).Value = stavka.RabatProcenat.ToString();
-                sheet.Cells("F" + rowIndex).DataType = XLCellValues.Text;
+                sheet.Cells("F" + rowIndex).DataType = XLDataType.Text;
 
                 sheet.Cells("G" + rowIndex).Value = stavka.IznosBezPdv.ToString();
-                sheet.Cells("G" + rowIndex).DataType = XLCellValues.Text;
+                sheet.Cells("G" + rowIndex).DataType = XLDataType.Text;
 
                 index++;
             }
@@ -538,19 +538,19 @@ namespace Delos.Forme
 
 
             sheet.Cells("G" + (14+stavke.Count+2).ToString()).Value = iznos_bez_pdv;
-            sheet.Cells("G" + rowIndex).DataType = XLCellValues.Text;
+            sheet.Cells("G" + rowIndex).DataType = XLDataType.Text;
 
             sheet.Cells("G" + (14 + stavke.Count + 3).ToString()).Value = rabat;
-            sheet.Cells("G" + rowIndex).DataType = XLCellValues.Text;
+            sheet.Cells("G" + rowIndex).DataType = XLDataType.Text;
 
             sheet.Cells("G" + (14 + stavke.Count + 4).ToString()).Value = iznos_sa_rabatom;
-            sheet.Cells("G" + rowIndex).DataType = XLCellValues.Text;
+            sheet.Cells("G" + rowIndex).DataType = XLDataType.Text;
 
             sheet.Cells("G" + (14 + stavke.Count + 5).ToString()).Value = pdv;
-            sheet.Cells("G" + rowIndex).DataType = XLCellValues.Text;
+            sheet.Cells("G" + rowIndex).DataType = XLDataType.Text;
 
             sheet.Cells("G" + (14 + stavke.Count + 6).ToString()).Value = iznos_sa_pdv;
-            sheet.Cells("G" + rowIndex).DataType = XLCellValues.Text;
+            sheet.Cells("G" + rowIndex).DataType = XLDataType.Text;
 
             sheet.Cells("E" + (14 + stavke.Count + 8).ToString()).Value = "Dokument sastavio:";
             sheet.Cells("F" + (14 + stavke.Count + 8).ToString()).Value = radnik;
@@ -559,6 +559,11 @@ namespace Delos.Forme
             sheet.Cells("A" + (14 + stavke.Count + 16).ToString()).Value = "Hvala na povjerenju!";
             sheet.Range("A" + (14 + stavke.Count + 16).ToString() + ":" + "G" + (14 + stavke.Count + 16).ToString()).Row(1).Merge();
             sheet.Cells("A" + (14 + stavke.Count + 16).ToString()).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+
+            var imagePath = "footer.jpg";
+
+            var image = sheet.AddPicture(imagePath)
+                .MoveTo(sheet.Cell("A"+( 14 + stavke.Count + 16).ToString())).Scale(0.1);
 
             string fileName = dir + "\\Ponuda_" + rednibroj.Replace("/", "-") + ".xlsx";
             if (File.Exists(fileName) == true)
