@@ -55,7 +55,7 @@
             this.btnReload = new System.Windows.Forms.Button();
             this.tbTelefon = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.dgvStavkePonude = new System.Windows.Forms.DataGridView();
             this.cbParitetKod = new System.Windows.Forms.ComboBox();
             this.lblParitet = new System.Windows.Forms.Label();
             this.tbParitet = new System.Windows.Forms.TextBox();
@@ -104,7 +104,7 @@
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPrijave)).BeginInit();
             this.tabPage2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvStavkePonude)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -442,21 +442,21 @@
             this.label4.TabIndex = 41;
             this.label4.Text = "Telefon:";
             // 
-            // dataGridView1
+            // dgvStavkePonude
             // 
-            this.dataGridView1.AllowUserToAddRows = false;
-            this.dataGridView1.AllowUserToDeleteRows = false;
-            this.dataGridView1.AllowUserToOrderColumns = true;
-            this.dataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            this.dgvStavkePonude.AllowUserToAddRows = false;
+            this.dgvStavkePonude.AllowUserToDeleteRows = false;
+            this.dgvStavkePonude.AllowUserToOrderColumns = true;
+            this.dgvStavkePonude.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(4, 465);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.ReadOnly = true;
-            this.dataGridView1.RowHeadersVisible = false;
-            this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(1062, 173);
-            this.dataGridView1.TabIndex = 28;
+            this.dgvStavkePonude.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvStavkePonude.Location = new System.Drawing.Point(4, 465);
+            this.dgvStavkePonude.Name = "dgvStavkePonude";
+            this.dgvStavkePonude.ReadOnly = true;
+            this.dgvStavkePonude.RowHeadersVisible = false;
+            this.dgvStavkePonude.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvStavkePonude.Size = new System.Drawing.Size(1062, 173);
+            this.dgvStavkePonude.TabIndex = 28;
             // 
             // cbParitetKod
             // 
@@ -892,7 +892,7 @@
             this.Controls.Add(this.btnZakljuciUgovor);
             this.Controls.Add(this.btnBrisanje);
             this.Controls.Add(this.btnStampa);
-            this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.dgvStavkePonude);
             this.Controls.Add(this.tabControl1);
             this.Name = "FormPonuda";
             this.Text = "Ponude";
@@ -904,7 +904,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvPrijave)).EndInit();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvStavkePonude)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -938,7 +938,7 @@
         private System.Windows.Forms.TextBox tbRedniBroj;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox tbTelefon;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView dgvStavkePonude;
         private System.Windows.Forms.Label lblParitet;
         private System.Windows.Forms.ComboBox cbParitetKod;
         private System.Windows.Forms.TextBox tbValutaPlacanja;

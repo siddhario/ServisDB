@@ -287,6 +287,41 @@ where sifra=@sifra";
                 }
             }
         }
+
+
+        public static List<PonudaStavka> ReadPonudaStavka(string  broj)
+        {
+            List<PonudaStavka> stavke = new List<PonudaStavka>();
+            using (var conn = new NpgsqlConnection(_connectionString))
+            {
+                conn.Open();
+                using (var cmd = new NpgsqlCommand())
+                {
+                    cmd.Connection = conn;
+                    cmd.Parameters.AddWithValue("@broj", broj);
+                    // Insert some data
+                    cmd.CommandText = @"SELECT ponuda_broj,stavka_broj,artikal_naziv,kolicina,jedinica_mjere,cijena_bez_pdv,rabat_procenat,iznos_bez_pdv
+	FROM public.ponuda_stavka where ponuda_broj=@broj order by stavka_broj asc";
+                    var dr = cmd.ExecuteReader();
+                    while (dr.Read())
+                    {
+                        PonudaStavka r = new PonudaStavka();
+                        r.PonudaBroj = dr.GetString(0);
+                        r.StavkaBroj = dr.GetInt32(1);
+                        r.ArtikalNaziv = dr.GetString(2);
+                        r.Kolicina = dr.GetDecimal(3);
+                        r.JedinicaMjere = dr.GetString(4);
+                        r.CijenaBezPdv = dr.GetDecimal(5);
+                        r.RabatProcenat = dr.GetDecimal(6);
+                        r.IznosBezPdv = dr.GetDecimal(7);
+                        stavke.Add(r);
+                    }
+                    dr.Close();
+                }
+            }
+            return stavke;
+        }
+
         public static void UpdatePonuda(string broj, string status)
         {
             using (var conn = new NpgsqlConnection(_connectionString))

@@ -1,11 +1,14 @@
-﻿using Npgsql;
+﻿using ClosedXML.Excel;
+using Npgsql;
 using ServisDB.Forme;
 using ServisDB.Klase;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -336,7 +339,28 @@ namespace Delos.Forme
             tbPdv.Text = ((DataRowView)o).Row["pdv"].ToString();
             tbIznosSaPdv.Text = ((DataRowView)o).Row["iznos_sa_pdv"].ToString();
 
+        
+
             SetVisibility();
+        }
+
+        private void BindPonudaStavka(List<PonudaStavka> stavke, bool unos = false)
+        {
+            dgvStavkePonude.DataSource = null;
+            dgvStavkePonude.AutoGenerateColumns = false;
+            dgvStavkePonude.Columns.Clear();
+            dgvStavkePonude.Columns.Add(new DataGridViewTextBoxColumn() { Name = "RB", DataPropertyName = "StavkaBroj", Width = 50 });
+            dgvStavkePonude.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Opis", DataPropertyName = "ArtikalNaziv", Width = 100 });
+            dgvStavkePonude.Columns.Add(new DataGridViewTextBoxColumn() { Name = "JM", DataPropertyName = "JedinicaMjere", Width = 97});
+            dgvStavkePonude.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Količina", DataPropertyName = "kolicina", Width = 100, DefaultCellStyle = new DataGridViewCellStyle() { Format = "N2" } });
+            dgvStavkePonude.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Cijena bez PDV-a", DataPropertyName = "CijenaBezPdv", Width = 97, DefaultCellStyle = new DataGridViewCellStyle() { Format = "N2" } });
+            dgvStavkePonude.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Rabat %", DataPropertyName = "RabatProcenat", Width = 97, DefaultCellStyle = new DataGridViewCellStyle() { Format = "N2" } });
+            dgvStavkePonude.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Iznos bez PDV-a", DataPropertyName = "IznosBezPdv", Width = 97, DefaultCellStyle = new DataGridViewCellStyle() { Format = "N2" } });
+
+
+            dgvStavkePonude.DataSource = stavke;
+          
+          
         }
 
         private void SetVisibility()
@@ -368,10 +392,198 @@ namespace Delos.Forme
 
         private void btnStampa_Click(object sender, EventArgs e)
         {
-
+            Stampa();
         }
         private void Stampa()
         {
+            //string dir = Environment.SpecialFolder.MyDocuments + "\\ServisDB\\";
+
+            string dir = System.IO.Path.Combine(Environment.GetFolderPath(
+          Environment.SpecialFolder.MyDoc‌​uments), "ServisDB");
+
+            if (Directory.Exists(dir) == false)
+            {
+                Directory.CreateDirectory(dir);
+            }
+
+
+
+            XLWorkbook doc = new XLWorkbook("PONUDA.xlsx");
+            //doc.Worksheets.Add("PRIJAVA");
+
+            var sheet = doc.Worksheet(1);
+
+            object o = dgvPrijave.SelectedRows[0].DataBoundItem;
+
+            string rednibroj = ((DataRowView)o).Row["broj"].ToString();
+            string datum = ((DateTime)((DataRowView)o).Row["datum"]).Date.ToString("dd.MM.yyyy");
+            string partner_naziv = ((DataRowView)o).Row["partner_naziv"].ToString();
+            string partner_jib = ((DataRowView)o).Row["partner_jib"].ToString();
+            string partner_adresa = ((DataRowView)o).Row["partner_adresa"].ToString();
+
+            string valuta = ((DataRowView)o).Row["valuta_placanja"].ToString();
+            string opcija_ponude = ((DataRowView)o).Row["rok_vazenja"].ToString();
+            string rok_isporuke = ((DataRowView)o).Row["rok_isporuke"].ToString();
+            string paritet = ((DataRowView)o).Row["paritet"].ToString();
+            string paritet_kod = ((DataRowView)o).Row["paritet_kod"].ToString();
+            string radnik = ((DataRowView)o).Row["radnik"].ToString();
+
+            string iznos_bez_pdv = ((DataRowView)o).Row["iznos_bez_rabata"].ToString();
+            string rabat = ((DataRowView)o).Row["rabat"].ToString();
+            string iznos_sa_rabatom = ((DataRowView)o).Row["iznos_sa_rabatom"].ToString();
+            string pdv = ((DataRowView)o).Row["pdv"].ToString();
+            string iznos_sa_pdv = ((DataRowView)o).Row["iznos_sa_pdv"].ToString();
+            //string garantnilist = ((DataRowView)o).Row.ItemArray[21].ToString();
+            //string kupac = ((DataRowView)o).Row.ItemArray[4].ToString();
+            //string kupac_telefon = ((DataRowView)o).Row.ItemArray[6].ToString();
+            //string model = ((DataRowView)o).Row.ItemArray[8].ToString();
+            //string serijski_broj = ((DataRowView)o).Row.ItemArray[9].ToString();
+            //string dodatna_oprema = ((DataRowView)o).Row.ItemArray[10].ToString();
+            //string opis_kvara = ((DataRowView)o).Row.ItemArray[11].ToString();
+            //string napomena_servisera = ((DataRowView)o).Row.ItemArray[12].ToString();
+            //string serviser = ((DataRowView)o).Row.ItemArray[13].ToString();
+            //string zavrseno = "";
+            //if (((DataRowView)o).Row.ItemArray[15] == DBNull.Value)
+            //{
+            //    zavrseno = "";
+            //}
+            //else
+            //{
+            //    zavrseno = ((DateTime)((DataRowView)o).Row.ItemArray[15]).ToString();
+            //}
+            string broj = rednibroj;
+            string[] parts = rednibroj.Split('/');
+            string rb = parts[0];
+            string year = parts[1];
+            int rrb = int.Parse(rb);
+            rednibroj = rrb.ToString("D4") + "/" + year;
+            sheet.Cells("A3").Value = "PONUDA BROJ: " + rednibroj;
+            sheet.Cells("A3").DataType = XLCellValues.Text;
+
+            sheet.Cells("G2").Value = datum;
+            sheet.Cells("G2").DataType = XLCellValues.Text;
+
+            sheet.Cells("B7").Value = partner_naziv;
+            sheet.Cells("B7").DataType = XLCellValues.Text;
+
+            sheet.Cells("B8").Value = partner_jib;
+            sheet.Cells("B8").DataType = XLCellValues.Text;
+
+            sheet.Cells("B9").Value = partner_adresa;
+            sheet.Cells("B9").DataType = XLCellValues.Text;
+
+            sheet.Cells("F7").Value = valuta;
+            sheet.Cells("F7").DataType = XLCellValues.Text;
+
+            sheet.Cells("F8").Value = opcija_ponude;
+            sheet.Cells("F8").DataType = XLCellValues.Text;
+
+            sheet.Cells("F9").Value = rok_isporuke;
+            sheet.Cells("F9").DataType = XLCellValues.Text;
+
+            sheet.Cells("F10").Value = paritet_kod + " " + paritet;
+            sheet.Cells("F10").DataType = XLCellValues.Text;
+
+            List<PonudaStavka> stavke = PersistanceManager.ReadPonudaStavka(broj);
+            int index = 0;
+            string rowIndex = (14 + index).ToString();
+            foreach (var stavka in stavke)
+            {                
+                rowIndex = (14 + index).ToString();
+                sheet.Cells("A"+ rowIndex).Value = stavka.StavkaBroj.ToString();
+                sheet.Cells("A"+ rowIndex).DataType = XLCellValues.Text;
+
+                sheet.Cells("B" + rowIndex).Value = stavka.ArtikalNaziv.ToString();
+                sheet.Cells("B" + rowIndex).DataType = XLCellValues.Text;
+
+                sheet.Cells("C" + rowIndex).Value = stavka.JedinicaMjere.ToString();
+                sheet.Cells("C" + rowIndex).DataType = XLCellValues.Text;
+
+                sheet.Cells("D" + rowIndex).Value = stavka.Kolicina.ToString();
+                sheet.Cells("D" + rowIndex).DataType = XLCellValues.Text;
+
+                sheet.Cells("E" + rowIndex).Value = stavka.CijenaBezPdv.ToString();
+                sheet.Cells("E" + rowIndex).DataType = XLCellValues.Text;
+
+                sheet.Cells("F" + rowIndex).Value = stavka.RabatProcenat.ToString();
+                sheet.Cells("F" + rowIndex).DataType = XLCellValues.Text;
+
+                sheet.Cells("G" + rowIndex).Value = stavka.IznosBezPdv.ToString();
+                sheet.Cells("G" + rowIndex).DataType = XLCellValues.Text;
+
+                index++;
+            }
+
+
+            sheet.Cells("A" + (14 + stavke.Count + 2).ToString()).Value = "UKUPAN IZNOS BEZ RABATA";
+            sheet.Cells("A" + (14 + stavke.Count + 2).ToString()).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Right;
+
+            sheet.Cells("A" + (14 + stavke.Count + 3).ToString()).Value = "IZNOS RABATA";
+            sheet.Cells("A" + (14 + stavke.Count + 3).ToString()).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Right;
+
+            sheet.Cells("A" + (14 + stavke.Count + 4).ToString()).Value = "UKUPAN IZNOS BEZ PDV";
+            sheet.Cells("A" + (14 + stavke.Count + 4).ToString()).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Right;
+
+            sheet.Cells("A" + (14 + stavke.Count + 5).ToString()).Value = "PDV";
+            sheet.Cells("A" + (14 + stavke.Count + 5).ToString()).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Right;
+
+            sheet.Cells("A" + (14 + stavke.Count + 6).ToString()).Value = "UKUPAN IZNOS SA PDV";
+            sheet.Cells("A" + (14 + stavke.Count + 6).ToString()).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Right;
+
+            sheet.Range("A" + (14 + stavke.Count + 2).ToString()+":"+ "F" + (14 + stavke.Count + 2).ToString()).Row(1).Merge();
+            sheet.Range("A" + (14 + stavke.Count + 3).ToString() + ":" + "F" + (14 + stavke.Count + 3).ToString()).Row(1).Merge();
+            sheet.Range("A" + (14 + stavke.Count + 4).ToString() + ":" + "F" + (14 + stavke.Count + 4).ToString()).Row(1).Merge();
+            sheet.Range("A" + (14 + stavke.Count + 5).ToString() + ":" + "F" + (14 + stavke.Count + 5).ToString()).Row(1).Merge();
+            sheet.Range("A" + (14 + stavke.Count + 6).ToString() + ":" + "F" + (14 + stavke.Count + 6).ToString()).Row(1).Merge();
+
+
+            sheet.Cells("G" + (14+stavke.Count+2).ToString()).Value = iznos_bez_pdv;
+            sheet.Cells("G" + rowIndex).DataType = XLCellValues.Text;
+
+            sheet.Cells("G" + (14 + stavke.Count + 3).ToString()).Value = rabat;
+            sheet.Cells("G" + rowIndex).DataType = XLCellValues.Text;
+
+            sheet.Cells("G" + (14 + stavke.Count + 4).ToString()).Value = iznos_sa_rabatom;
+            sheet.Cells("G" + rowIndex).DataType = XLCellValues.Text;
+
+            sheet.Cells("G" + (14 + stavke.Count + 5).ToString()).Value = pdv;
+            sheet.Cells("G" + rowIndex).DataType = XLCellValues.Text;
+
+            sheet.Cells("G" + (14 + stavke.Count + 6).ToString()).Value = iznos_sa_pdv;
+            sheet.Cells("G" + rowIndex).DataType = XLCellValues.Text;
+
+            sheet.Cells("E" + (14 + stavke.Count + 8).ToString()).Value = "Dokument sastavio:";
+            sheet.Cells("F" + (14 + stavke.Count + 8).ToString()).Value = radnik;
+
+            sheet.Cells("F" + (14 + stavke.Count + 12).ToString()).Value = "M.P.";
+            sheet.Cells("A" + (14 + stavke.Count + 16).ToString()).Value = "Hvala na povjerenju!";
+            sheet.Range("A" + (14 + stavke.Count + 16).ToString() + ":" + "G" + (14 + stavke.Count + 16).ToString()).Row(1).Merge();
+            sheet.Cells("A" + (14 + stavke.Count + 16).ToString()).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+
+            string fileName = dir + "\\Ponuda_" + rednibroj.Replace("/", "-") + ".xlsx";
+            if (File.Exists(fileName) == true)
+            {
+                DialogResult dr = MessageBox.Show("Štampana verzija već postoji. Napraviti novu ?", "Upozorenje", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1);
+                if (dr == DialogResult.Yes)
+                {
+                    try
+                    {
+                        File.Delete(fileName);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Zatvorite dokument pa pokušajte opet!");
+                        return;
+                    }
+                    doc.SaveAs(fileName);
+                    Process.Start(fileName);
+                }
+            }
+            else
+            {
+                doc.SaveAs(fileName);
+                Process.Start(fileName);
+            }
         }
 
         private void btnBrisanje_Click(object sender, EventArgs e)
@@ -552,7 +764,7 @@ namespace Delos.Forme
                 return;
             object o = dgvPrijave.SelectedRows[0].DataBoundItem;
             string status = (string)(((DataRowView)o).Row["status"].ToString());
-        
+
             if (status == "E")
             {
                 btnZakljuciUgovor.Enabled = true;
@@ -585,6 +797,9 @@ namespace Delos.Forme
                 btnPonudaNerealizovana.Enabled = true;
                 btnOtkljucaj.Enabled = true;
             }
+            string redni_broj = ((DataRowView)dgvPrijave.SelectedRows[0].DataBoundItem).Row["broj"].ToString();
+            List<PonudaStavka> stavke = PersistanceManager.ReadPonudaStavka(redni_broj);
+            BindPonudaStavka(stavke);
         }
     }
 }
