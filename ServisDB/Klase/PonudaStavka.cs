@@ -14,7 +14,11 @@ namespace ServisDB.Klase
         public string JedinicaMjere { get; set; }
         public decimal Kolicina { get; set; }
         public decimal CijenaBezPdv { get; set; }
+        public decimal CijenaBezPdvSaRabatom { get; set; }
         public decimal RabatProcenat { get; set; }
         public decimal IznosBezPdv { get; set; }
+        public decimal CijenaNabavna { get; set; }
+        public decimal MarzaProcenat { get; set; }
+        public decimal Ruc { get; set; }
     }
 }

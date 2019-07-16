@@ -349,16 +349,22 @@ namespace Delos.Forme
             dgvStavkePonude.DataSource = null;
             dgvStavkePonude.AutoGenerateColumns = false;
             dgvStavkePonude.Columns.Clear();
-            dgvStavkePonude.Columns.Add(new DataGridViewTextBoxColumn() { Name = "RB", DataPropertyName = "StavkaBroj", Width = 50 });
+            dgvStavkePonude.Columns.Add(new DataGridViewTextBoxColumn() { Name = "RB", DataPropertyName = "StavkaBroj", Width = 50 ,ReadOnly=true});
             dgvStavkePonude.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Opis", DataPropertyName = "ArtikalNaziv", Width = 100 });
             dgvStavkePonude.Columns.Add(new DataGridViewTextBoxColumn() { Name = "JM", DataPropertyName = "JedinicaMjere", Width = 97});
             dgvStavkePonude.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Količina", DataPropertyName = "kolicina", Width = 100, DefaultCellStyle = new DataGridViewCellStyle() { Format = "N2" } });
             dgvStavkePonude.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Cijena bez PDV-a", DataPropertyName = "CijenaBezPdv", Width = 97, DefaultCellStyle = new DataGridViewCellStyle() { Format = "N2" } });
             dgvStavkePonude.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Rabat %", DataPropertyName = "RabatProcenat", Width = 97, DefaultCellStyle = new DataGridViewCellStyle() { Format = "N2" } });
+            dgvStavkePonude.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Cijena bez PDV-a sa rabatom", DataPropertyName = "CijenaBezPdvSaRabatom", Width = 97, DefaultCellStyle = new DataGridViewCellStyle() { Format = "N2" } });
+
             dgvStavkePonude.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Iznos bez PDV-a", DataPropertyName = "IznosBezPdv", Width = 97, DefaultCellStyle = new DataGridViewCellStyle() { Format = "N2" } });
 
+            dgvStavkePonude.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Nabavna cijena", DataPropertyName = "CijenaNabavna", Width = 97, DefaultCellStyle = new DataGridViewCellStyle() { Format = "N2" } });
+            dgvStavkePonude.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Margina", DataPropertyName = "MarzaProcenat", Width = 97, DefaultCellStyle = new DataGridViewCellStyle() { Format = "N2" } });
+            dgvStavkePonude.Columns.Add(new DataGridViewTextBoxColumn() { Name = "RUC", DataPropertyName = "Ruc", Width = 97, DefaultCellStyle = new DataGridViewCellStyle() { Format = "N2" } });
 
-            dgvStavkePonude.DataSource = stavke;
+
+            dgvStavkePonude.DataSource = new BindingList<PonudaStavka>(stavke);
           
           
         }
@@ -805,6 +811,132 @@ namespace Delos.Forme
             string redni_broj = ((DataRowView)dgvPrijave.SelectedRows[0].DataBoundItem).Row["broj"].ToString();
             List<PonudaStavka> stavke = PersistanceManager.ReadPonudaStavka(redni_broj);
             BindPonudaStavka(stavke);
+        }
+
+        private void dgvStavkePonude_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            PonudaStavka stavka = (PonudaStavka)dgvStavkePonude.Rows[e.RowIndex].DataBoundItem;
+            object newValue = dgvStavkePonude.Rows[e.RowIndex].Cells[e.ColumnIndex].Value;
+            if (newValue == null)
+                return;
+            string newValueString = newValue.ToString();
+            switch (dgvStavkePonude.Columns[e.ColumnIndex].DataPropertyName.ToLower())
+            {
+                case "kolicina":
+                    {
+                        decimal kolicina;
+                        bool s1 = decimal.TryParse(newValueString, out kolicina);
+                        if(s1==true)
+                        {                         
+                            decimal rabat = Math.Round(kolicina * stavka.CijenaBezPdv * stavka.RabatProcenat / 100,2,MidpointRounding.AwayFromZero);
+                            decimal iznosBezPdvSaRabatom = Math.Round(kolicina * stavka.CijenaBezPdv - rabat, 2, MidpointRounding.AwayFromZero);
+                            stavka.IznosBezPdv = iznosBezPdvSaRabatom;
+                        }
+                        break;
+                    }
+
+                case "cijenabezpdv":
+                    {
+                        decimal cijena_bez_pdv;
+                        bool s1 = decimal.TryParse(newValueString, out cijena_bez_pdv);
+                        if (s1 == true)
+                        {
+                            decimal rabat = Math.Round(stavka.Kolicina * cijena_bez_pdv * stavka.RabatProcenat / 100, 2, MidpointRounding.AwayFromZero);
+                            decimal iznosBezPdvSaRabatom = Math.Round(stavka.Kolicina * cijena_bez_pdv - rabat, 2, MidpointRounding.AwayFromZero);
+                            stavka.IznosBezPdv = iznosBezPdvSaRabatom;
+                        }
+                        break;
+                    }
+                case "rabatprocenat":
+                    {
+                        decimal rabatprocenat;
+                        bool s1 = decimal.TryParse(newValueString, out rabatprocenat);
+                        if (s1 == true)
+                        {
+                            decimal rabat = Math.Round(stavka.Kolicina * stavka.CijenaBezPdv * rabatprocenat / 100, 2, MidpointRounding.AwayFromZero);
+                            decimal iznosBezPdvSaRabatom = Math.Round(stavka.Kolicina * stavka.CijenaBezPdv - rabat, 2, MidpointRounding.AwayFromZero);
+                            stavka.IznosBezPdv = iznosBezPdvSaRabatom;
+                        }
+                        break;
+                    }
+                case "cijenanabavna":
+                    {
+                        decimal cijenanabavna;
+                        bool s1 = decimal.TryParse(newValueString, out cijenanabavna);
+                        if (s1 == true)
+                        {
+                            decimal ruc = Math.Round(stavka.Kolicina * stavka.CijenaNabavna * stavka.MarzaProcenat / 100, 2, MidpointRounding.AwayFromZero) ;
+                            stavka.Ruc = ruc;
+                            decimal iznosBezPdv = Math.Round(stavka.Kolicina * stavka.CijenaNabavna, 2, MidpointRounding.AwayFromZero)+stavka.Ruc;
+                            stavka.IznosBezPdv = iznosBezPdv;
+
+                        }
+                        break;
+                    }
+
+                case "marzaprocenat":
+                    {
+                        decimal marzaprocenat;
+                        bool s1 = decimal.TryParse(newValueString, out marzaprocenat);
+                        if (s1 == true)
+                        {
+                            decimal ruc = Math.Round(stavka.Kolicina * stavka.CijenaNabavna * stavka.MarzaProcenat / 100, 2, MidpointRounding.AwayFromZero);
+                            stavka.Ruc = ruc;
+                            decimal iznosBezPdv = Math.Round(stavka.Kolicina * stavka.CijenaNabavna, 2, MidpointRounding.AwayFromZero) + stavka.Ruc;
+                            stavka.IznosBezPdv = iznosBezPdv;
+                        }
+                        break;
+                    }
+            }
+            PersistanceManager.UpdatePonudaStavka(stavka);
+
+        }
+
+        private void dgvStavkePonude_RowValidated(object sender, DataGridViewCellEventArgs e)
+        {
+            MessageBox.Show("f");
+        }
+
+        private void dgvStavkePonude_UserAddedRow(object sender, DataGridViewRowEventArgs e)
+        {
+           
+        }
+
+        private void dgvStavkePonude_RowValidated_1(object sender, DataGridViewCellEventArgs e)
+        {            
+         
+        }
+
+        private void dgvStavkePonude_RowValidating(object sender, DataGridViewCellCancelEventArgs e)
+        {
+
+            try
+            {
+                object o = dgvPrijave.SelectedRows[0].DataBoundItem;
+                string broj = ((DataRowView)o).Row["broj"].ToString();
+
+                PonudaStavka stavka = (PonudaStavka)dgvStavkePonude.Rows[e.RowIndex]?.DataBoundItem;
+                if (stavka == null)
+                    return;
+                if (stavka.PonudaBroj == null)
+                {
+                    if (stavka.ArtikalNaziv == null)
+                    {
+                        e.Cancel = true;
+                        return;
+                    }
+                    stavka.PonudaBroj = broj;
+                    stavka.StavkaBroj = ((BindingList<PonudaStavka>)dgvStavkePonude.DataSource).Where(ps => ps.PonudaBroj != null).Max(ps => ps.StavkaBroj) + 1;
+                    PersistanceManager.InsertPonudaStavka(stavka);
+                }
+            }
+            catch (Exception ex) { }
+        }
+
+        private void dgvStavkePonude_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e)
+        {
+            PonudaStavka stavka = (PonudaStavka)e.Row.DataBoundItem;
+            PersistanceManager.DeletePonudaStavka(stavka);
         }
     }
 }

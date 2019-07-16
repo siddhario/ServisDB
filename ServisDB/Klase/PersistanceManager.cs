@@ -382,6 +382,35 @@ where sifra=@sifra";
             }
         }
 
+        public static void UpdatePonudaStavka(PonudaStavka stavka)
+        {
+            using (var conn = new NpgsqlConnection(_connectionString))
+            {
+                conn.Open();
+                using (var cmd = new NpgsqlCommand())
+                {
+                    cmd.Connection = conn;
+                    cmd.Parameters.AddWithValue("@ponuda_broj", stavka.PonudaBroj);
+                    cmd.Parameters.AddWithValue("@stavka_broj", stavka.StavkaBroj);
+                    cmd.Parameters.AddWithValue("@cijena_bez_pdv", stavka.CijenaBezPdv);
+                    cmd.Parameters.AddWithValue("@cijena_bez_pdv_sa_rabatom", stavka.CijenaBezPdvSaRabatom);
+                    cmd.Parameters.AddWithValue("@kolicina", stavka.Kolicina);
+                    cmd.Parameters.AddWithValue("@rabat_procenat", stavka.RabatProcenat);
+                    cmd.Parameters.AddWithValue("@iznos_bez_pdv", stavka.IznosBezPdv);
+                    cmd.Parameters.AddWithValue("@cijena_nabavna", stavka.CijenaNabavna);
+                    cmd.Parameters.AddWithValue("@marza_procenat", stavka.MarzaProcenat);
+                    cmd.Parameters.AddWithValue("@ruc", stavka.Ruc);
+                    // Insert some data
+                    cmd.CommandText = @"update ponuda_stavka set cijena_bez_pdv=@cijena_bez_pdv, cijena_bez_pdv_sa_rabatom=@cijena_bez_pdv_sa_rabatom, kolicina=@kolicina, 
+rabat_procenat=@rabat_procenat,iznos_bez_pdv=@iznos_bez_pdv,
+cijena_nabavna=@cijena_nabavna,marza_procenat=@marza_procenat,ruc=@ruc
+                    where ponuda_broj=@ponuda_broj and stavka_broj=@stavka_broj";
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
 
         public static void InsertPrijava(DateTime datum, string broj_garantnog_lista, int? kupac_sifra, string kupac_ime, string kupac_adresa, string kupac_telefon, string kupac_email, string model, string serijski_broj,
       string dodatna_oprema, string predmet, string napomena_servisera, string serviser, string serviser_primio, DateTime? zavrseno, int? dobavljac_sifra, string dobavljac, DateTime? datumVracanja, DateTime? poslatMejlDobavljacu, int? garantni_rok, string broj_racuna, bool instalacija_os, bool instalacija_office, bool instalacija_ostalo, string instalacija)
@@ -686,6 +715,68 @@ where broj_ugovora=@broj_ugovora and broj_rate=@broj_rate";
                     cmd.Parameters.AddWithValue("@status", status);
                     // Insert some data
                     cmd.CommandText = @"update ugovor set status= @status,suma_uplata = case when  @status='R' then iznos_sa_pdv else suma_uplata end,preostalo_za_uplatu = case when  @status='R' then 0 else preostalo_za_uplatu end  where broj=@broj";
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        internal static void InsertPonudaStavka(PonudaStavka stavka)
+        {
+            using (var conn = new NpgsqlConnection(_connectionString))
+            {
+                conn.Open();
+                using (var cmd = new NpgsqlCommand())
+                {
+                    cmd.Connection = conn;
+
+                    cmd.Parameters.AddWithValue("@ponuda_broj", stavka.PonudaBroj);
+                    cmd.Parameters.AddWithValue("@stavka_broj", stavka.StavkaBroj);
+                    cmd.Parameters.AddWithValue("@artikal_naziv", stavka.ArtikalNaziv);
+                    cmd.Parameters.AddWithValue("@jedinica_mjere", stavka.JedinicaMjere);
+                    cmd.Parameters.AddWithValue("@cijena_bez_pdv", stavka.CijenaBezPdv);
+                    cmd.Parameters.AddWithValue("@cijena_bez_pdv_sa_rabatom", stavka.CijenaBezPdvSaRabatom);
+                    cmd.Parameters.AddWithValue("@kolicina", stavka.Kolicina);
+                    cmd.Parameters.AddWithValue("@rabat_procenat", stavka.RabatProcenat);
+                    cmd.Parameters.AddWithValue("@iznos_bez_pdv", stavka.IznosBezPdv);
+                    cmd.Parameters.AddWithValue("@cijena_nabavna", stavka.CijenaNabavna);
+                    cmd.Parameters.AddWithValue("@marza_procenat", stavka.MarzaProcenat);
+                    cmd.Parameters.AddWithValue("@ruc", stavka.Ruc);
+                    //cmd.Parameters.AddWithValue("@partner_telefon", partner_telefon);
+                    //cmd.Parameters.AddWithValue("@partner_email", partner_email);
+                    //cmd.Parameters.AddWithValue("@valuta_placanja", valuta_placanja);
+                    //cmd.Parameters.AddWithValue("@rok_vazenja", rok_vazenja);
+                    //cmd.Parameters.AddWithValue("@rok_isporuke", rok_isporuke);
+                    //cmd.Parameters.AddWithValue("@paritet_kod", paritet_kod);
+                    //cmd.Parameters.AddWithValue("@paritet", paritet);
+                    //cmd.Parameters.AddWithValue("@predmet", predmet);
+                    //cmd.Parameters.AddWithValue("@napomena", napomena);
+                    // Insert some data
+                    cmd.CommandText = @"INSERT INTO ponuda_stavka (ponuda_broj, stavka_broj,
+                  artikal_naziv,jedinica_mjere, cijena_bez_pdv,cijena_bez_pdv_sa_rabatom, kolicina, rabat_procenat, iznos_bez_pdv,cijena_nabavna,marza_procenat,ruc )
+                VALUES (    
+             @ponuda_broj, @stavka_broj,
+                  @artikal_naziv,@jedinica_mjere, @cijena_bez_pdv,@cijena_bez_pdv_sa_rabatom, @kolicina, @rabat_procenat, @iznos_bez_pdv,@cijena_nabavna,@marza_procenat,@ruc )";
+
+                    cmd.ExecuteNonQuery();
+
+
+                }
+            }
+        }
+
+        internal static void DeletePonudaStavka(PonudaStavka stavka)
+        {
+            using (var conn = new NpgsqlConnection(_connectionString))
+            {
+                conn.Open();
+                using (var cmd = new NpgsqlCommand())
+                {
+                    cmd.Connection = conn;
+
+                    cmd.Parameters.AddWithValue("@ponuda_broj", stavka.PonudaBroj);
+                    cmd.Parameters.AddWithValue("@stavka_broj", stavka.StavkaBroj);
+                    // Insert some data
+                    cmd.CommandText = @"delete from ponuda_stavka where ponuda_broj=@ponuda_broj and stavka_broj=@stavka_broj";
                     cmd.ExecuteNonQuery();
                 }
             }

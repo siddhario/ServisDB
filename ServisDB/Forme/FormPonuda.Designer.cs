@@ -28,13 +28,53 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.radioButton1 = new System.Windows.Forms.RadioButton();
+            this.rbNerealizovani = new System.Windows.Forms.RadioButton();
+            this.rbUtoku = new System.Windows.Forms.RadioButton();
+            this.rbSviUgovori = new System.Windows.Forms.RadioButton();
+            this.btnReload = new System.Windows.Forms.Button();
             this.label13 = new System.Windows.Forms.Label();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.dgvPrijave = new System.Windows.Forms.DataGridView();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.lblPartnerJIB = new System.Windows.Forms.Label();
+            this.tbJIB = new System.Windows.Forms.TextBox();
+            this.lblIznosSaPdv = new System.Windows.Forms.Label();
+            this.tbIznosSaPdv = new System.Windows.Forms.TextBox();
+            this.lblPdv = new System.Windows.Forms.Label();
+            this.tbPdv = new System.Windows.Forms.TextBox();
+            this.lblRuc = new System.Windows.Forms.Label();
+            this.tbRUC = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.tbIznosSaRabatom = new System.Windows.Forms.TextBox();
+            this.lblRabat = new System.Windows.Forms.Label();
+            this.tbRabat = new System.Windows.Forms.TextBox();
+            this.lblIznosBezRabata = new System.Windows.Forms.Label();
+            this.tbIznosBezRabata = new System.Windows.Forms.TextBox();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.lblNabavnaVrijednost = new System.Windows.Forms.Label();
+            this.tbNabavnaVrijednost = new System.Windows.Forms.TextBox();
+            this.tbStatus = new System.Windows.Forms.TextBox();
+            this.lblStatus = new System.Windows.Forms.Label();
+            this.lblPredmet = new System.Windows.Forms.Label();
+            this.tbPredmet = new System.Windows.Forms.TextBox();
+            this.lblnapomena = new System.Windows.Forms.Label();
+            this.tbNapomena = new System.Windows.Forms.TextBox();
+            this.lblRadnik = new System.Windows.Forms.Label();
+            this.tbRadnik = new System.Windows.Forms.TextBox();
+            this.tbRokIsporuke = new System.Windows.Forms.TextBox();
+            this.lbRokIsporuke = new System.Windows.Forms.Label();
+            this.tbRokVazenja = new System.Windows.Forms.TextBox();
+            this.lblRokVazenja = new System.Windows.Forms.Label();
+            this.tbValutaPlacanja = new System.Windows.Forms.TextBox();
+            this.lblValuta = new System.Windows.Forms.Label();
+            this.tbParitet = new System.Windows.Forms.TextBox();
+            this.lblParitet = new System.Windows.Forms.Label();
+            this.cbParitetKod = new System.Windows.Forms.ComboBox();
             this.btnKupacClear = new System.Windows.Forms.Button();
             this.tbPartnerSifra = new System.Windows.Forms.TextBox();
             this.panel2 = new System.Windows.Forms.Panel();
@@ -47,59 +87,20 @@
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.label8 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.tbTelefon = new System.Windows.Forms.TextBox();
             this.tbPartner = new System.Windows.Forms.TextBox();
             this.dtpDatum = new System.Windows.Forms.DateTimePicker();
             this.tbRedniBroj = new System.Windows.Forms.TextBox();
-            this.btnReload = new System.Windows.Forms.Button();
-            this.tbTelefon = new System.Windows.Forms.TextBox();
-            this.label4 = new System.Windows.Forms.Label();
             this.dgvStavkePonude = new System.Windows.Forms.DataGridView();
-            this.cbParitetKod = new System.Windows.Forms.ComboBox();
-            this.lblParitet = new System.Windows.Forms.Label();
-            this.tbParitet = new System.Windows.Forms.TextBox();
-            this.lblValuta = new System.Windows.Forms.Label();
-            this.tbValutaPlacanja = new System.Windows.Forms.TextBox();
-            this.tbRokVazenja = new System.Windows.Forms.TextBox();
-            this.lblRokVazenja = new System.Windows.Forms.Label();
-            this.tbRokIsporuke = new System.Windows.Forms.TextBox();
-            this.lbRokIsporuke = new System.Windows.Forms.Label();
-            this.tbRadnik = new System.Windows.Forms.TextBox();
-            this.lblRadnik = new System.Windows.Forms.Label();
-            this.lblnapomena = new System.Windows.Forms.Label();
-            this.tbNapomena = new System.Windows.Forms.TextBox();
-            this.lblPredmet = new System.Windows.Forms.Label();
-            this.tbPredmet = new System.Windows.Forms.TextBox();
-            this.tbStatus = new System.Windows.Forms.TextBox();
-            this.lblStatus = new System.Windows.Forms.Label();
-            this.lblNabavnaVrijednost = new System.Windows.Forms.Label();
-            this.tbNabavnaVrijednost = new System.Windows.Forms.TextBox();
-            this.panel3 = new System.Windows.Forms.Panel();
-            this.lblIznosBezRabata = new System.Windows.Forms.Label();
-            this.tbIznosBezRabata = new System.Windows.Forms.TextBox();
-            this.lblRabat = new System.Windows.Forms.Label();
-            this.tbRabat = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.tbIznosSaRabatom = new System.Windows.Forms.TextBox();
-            this.lblRuc = new System.Windows.Forms.Label();
-            this.tbRUC = new System.Windows.Forms.TextBox();
-            this.lblPdv = new System.Windows.Forms.Label();
-            this.tbPdv = new System.Windows.Forms.TextBox();
-            this.lblIznosSaPdv = new System.Windows.Forms.Label();
-            this.tbIznosSaPdv = new System.Windows.Forms.TextBox();
-            this.lblPartnerJIB = new System.Windows.Forms.Label();
-            this.tbJIB = new System.Windows.Forms.TextBox();
             this.btnOtkljucaj = new System.Windows.Forms.Button();
             this.btnRealizovan = new System.Windows.Forms.Button();
             this.btnZakljuciUgovor = new System.Windows.Forms.Button();
             this.btnBrisanje = new System.Windows.Forms.Button();
             this.btnStampa = new System.Windows.Forms.Button();
-            this.rbNerealizovani = new System.Windows.Forms.RadioButton();
-            this.rbUtoku = new System.Windows.Forms.RadioButton();
-            this.rbSviUgovori = new System.Windows.Forms.RadioButton();
             this.btnPonudaNerealizovana = new System.Windows.Forms.Button();
-            this.radioButton1 = new System.Windows.Forms.RadioButton();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPrijave)).BeginInit();
@@ -118,7 +119,7 @@
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1070, 459);
+            this.tabControl1.Size = new System.Drawing.Size(1070, 376);
             this.tabControl1.TabIndex = 27;
             this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
             this.tabControl1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tabControl1_KeyDown);
@@ -137,10 +138,70 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 25);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(1062, 430);
+            this.tabPage1.Size = new System.Drawing.Size(1062, 347);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Pregled";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // radioButton1
+            // 
+            this.radioButton1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.radioButton1.AutoSize = true;
+            this.radioButton1.Location = new System.Drawing.Point(652, 0);
+            this.radioButton1.Name = "radioButton1";
+            this.radioButton1.Size = new System.Drawing.Size(64, 20);
+            this.radioButton1.TabIndex = 11;
+            this.radioButton1.Text = "U toku";
+            this.radioButton1.UseVisualStyleBackColor = true;
+            this.radioButton1.Click += new System.EventHandler(this.rbUtoku_Click);
+            // 
+            // rbNerealizovani
+            // 
+            this.rbNerealizovani.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.rbNerealizovani.AutoSize = true;
+            this.rbNerealizovani.Location = new System.Drawing.Point(836, 0);
+            this.rbNerealizovani.Name = "rbNerealizovani";
+            this.rbNerealizovani.Size = new System.Drawing.Size(114, 20);
+            this.rbNerealizovani.TabIndex = 10;
+            this.rbNerealizovani.Text = "Nerealizovane";
+            this.rbNerealizovani.UseVisualStyleBackColor = true;
+            this.rbNerealizovani.Click += new System.EventHandler(this.rbNerealizovani_Click);
+            // 
+            // rbUtoku
+            // 
+            this.rbUtoku.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.rbUtoku.AutoSize = true;
+            this.rbUtoku.Location = new System.Drawing.Point(722, 0);
+            this.rbUtoku.Name = "rbUtoku";
+            this.rbUtoku.Size = new System.Drawing.Size(102, 20);
+            this.rbUtoku.TabIndex = 9;
+            this.rbUtoku.Text = "Realizovane";
+            this.rbUtoku.UseVisualStyleBackColor = true;
+            this.rbUtoku.Click += new System.EventHandler(this.rbRealizovani_Click);
+            // 
+            // rbSviUgovori
+            // 
+            this.rbSviUgovori.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.rbSviUgovori.AutoSize = true;
+            this.rbSviUgovori.Checked = true;
+            this.rbSviUgovori.Location = new System.Drawing.Point(950, 1);
+            this.rbSviUgovori.Name = "rbSviUgovori";
+            this.rbSviUgovori.Size = new System.Drawing.Size(99, 20);
+            this.rbSviUgovori.TabIndex = 8;
+            this.rbSviUgovori.TabStop = true;
+            this.rbSviUgovori.Text = "Sve ponude";
+            this.rbSviUgovori.UseVisualStyleBackColor = true;
+            this.rbSviUgovori.Click += new System.EventHandler(this.rbSviUgovori_Click);
+            // 
+            // btnReload
+            // 
+            this.btnReload.Image = global::Delos.Properties.Resources.reload__1_;
+            this.btnReload.Location = new System.Drawing.Point(371, 3);
+            this.btnReload.Name = "btnReload";
+            this.btnReload.Size = new System.Drawing.Size(46, 22);
+            this.btnReload.TabIndex = 4;
+            this.btnReload.UseVisualStyleBackColor = true;
+            this.btnReload.Click += new System.EventHandler(this.btnReload_Click);
             // 
             // label13
             // 
@@ -183,7 +244,7 @@
             this.dgvPrijave.ReadOnly = true;
             this.dgvPrijave.RowHeadersVisible = false;
             this.dgvPrijave.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvPrijave.Size = new System.Drawing.Size(1053, 398);
+            this.dgvPrijave.Size = new System.Drawing.Size(1053, 318);
             this.dgvPrijave.TabIndex = 0;
             this.dgvPrijave.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvPrijave_CellDoubleClick);
             this.dgvPrijave.RowPrePaint += new System.Windows.Forms.DataGridViewRowPrePaintEventHandler(this.dgvPrijave_RowPrePaint);
@@ -247,11 +308,312 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 25);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(1062, 430);
+            this.tabPage2.Size = new System.Drawing.Size(1062, 347);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Unos [F2]";
             this.tabPage2.UseVisualStyleBackColor = true;
             this.tabPage2.Click += new System.EventHandler(this.tabPage2_Click);
+            // 
+            // lblPartnerJIB
+            // 
+            this.lblPartnerJIB.AutoSize = true;
+            this.lblPartnerJIB.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPartnerJIB.Location = new System.Drawing.Point(17, 193);
+            this.lblPartnerJIB.Name = "lblPartnerJIB";
+            this.lblPartnerJIB.Size = new System.Drawing.Size(30, 16);
+            this.lblPartnerJIB.TabIndex = 124;
+            this.lblPartnerJIB.Text = "JIB:";
+            // 
+            // tbJIB
+            // 
+            this.tbJIB.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbJIB.Location = new System.Drawing.Point(137, 190);
+            this.tbJIB.Name = "tbJIB";
+            this.tbJIB.Size = new System.Drawing.Size(166, 22);
+            this.tbJIB.TabIndex = 123;
+            // 
+            // lblIznosSaPdv
+            // 
+            this.lblIznosSaPdv.AutoSize = true;
+            this.lblIznosSaPdv.Location = new System.Drawing.Point(538, 260);
+            this.lblIznosSaPdv.Name = "lblIznosSaPdv";
+            this.lblIznosSaPdv.Size = new System.Drawing.Size(114, 16);
+            this.lblIznosSaPdv.TabIndex = 122;
+            this.lblIznosSaPdv.Text = "Iznos sa PDV-om:";
+            // 
+            // tbIznosSaPdv
+            // 
+            this.tbIznosSaPdv.Location = new System.Drawing.Point(673, 257);
+            this.tbIznosSaPdv.Name = "tbIznosSaPdv";
+            this.tbIznosSaPdv.ReadOnly = true;
+            this.tbIznosSaPdv.Size = new System.Drawing.Size(100, 22);
+            this.tbIznosSaPdv.TabIndex = 121;
+            // 
+            // lblPdv
+            // 
+            this.lblPdv.AutoSize = true;
+            this.lblPdv.Location = new System.Drawing.Point(267, 260);
+            this.lblPdv.Name = "lblPdv";
+            this.lblPdv.Size = new System.Drawing.Size(39, 16);
+            this.lblPdv.TabIndex = 120;
+            this.lblPdv.Text = "PDV:";
+            // 
+            // tbPdv
+            // 
+            this.tbPdv.Location = new System.Drawing.Point(401, 257);
+            this.tbPdv.Name = "tbPdv";
+            this.tbPdv.ReadOnly = true;
+            this.tbPdv.Size = new System.Drawing.Size(100, 22);
+            this.tbPdv.TabIndex = 119;
+            // 
+            // lblRuc
+            // 
+            this.lblRuc.AutoSize = true;
+            this.lblRuc.Location = new System.Drawing.Point(13, 260);
+            this.lblRuc.Name = "lblRuc";
+            this.lblRuc.Size = new System.Drawing.Size(40, 16);
+            this.lblRuc.TabIndex = 116;
+            this.lblRuc.Text = "RUC:";
+            // 
+            // tbRUC
+            // 
+            this.tbRUC.Location = new System.Drawing.Point(147, 257);
+            this.tbRUC.Name = "tbRUC";
+            this.tbRUC.ReadOnly = true;
+            this.tbRUC.Size = new System.Drawing.Size(100, 22);
+            this.tbRUC.TabIndex = 115;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(802, 233);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(113, 16);
+            this.label2.TabIndex = 114;
+            this.label2.Text = "Iznos sa rabatom:";
+            // 
+            // tbIznosSaRabatom
+            // 
+            this.tbIznosSaRabatom.Location = new System.Drawing.Point(936, 230);
+            this.tbIznosSaRabatom.Name = "tbIznosSaRabatom";
+            this.tbIznosSaRabatom.ReadOnly = true;
+            this.tbIznosSaRabatom.Size = new System.Drawing.Size(100, 22);
+            this.tbIznosSaRabatom.TabIndex = 113;
+            // 
+            // lblRabat
+            // 
+            this.lblRabat.AutoSize = true;
+            this.lblRabat.Location = new System.Drawing.Point(539, 230);
+            this.lblRabat.Name = "lblRabat";
+            this.lblRabat.Size = new System.Drawing.Size(48, 16);
+            this.lblRabat.TabIndex = 112;
+            this.lblRabat.Text = "Rabat:";
+            // 
+            // tbRabat
+            // 
+            this.tbRabat.Location = new System.Drawing.Point(673, 227);
+            this.tbRabat.Name = "tbRabat";
+            this.tbRabat.ReadOnly = true;
+            this.tbRabat.Size = new System.Drawing.Size(100, 22);
+            this.tbRabat.TabIndex = 111;
+            // 
+            // lblIznosBezRabata
+            // 
+            this.lblIznosBezRabata.AutoSize = true;
+            this.lblIznosBezRabata.Location = new System.Drawing.Point(267, 230);
+            this.lblIznosBezRabata.Name = "lblIznosBezRabata";
+            this.lblIznosBezRabata.Size = new System.Drawing.Size(109, 16);
+            this.lblIznosBezRabata.TabIndex = 110;
+            this.lblIznosBezRabata.Text = "Iznos bez rabata:";
+            // 
+            // tbIznosBezRabata
+            // 
+            this.tbIznosBezRabata.Location = new System.Drawing.Point(401, 227);
+            this.tbIznosBezRabata.Name = "tbIznosBezRabata";
+            this.tbIznosBezRabata.ReadOnly = true;
+            this.tbIznosBezRabata.Size = new System.Drawing.Size(100, 22);
+            this.tbIznosBezRabata.TabIndex = 109;
+            // 
+            // panel3
+            // 
+            this.panel3.BackColor = System.Drawing.Color.LightSteelBlue;
+            this.panel3.Location = new System.Drawing.Point(19, 285);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(982, 1);
+            this.panel3.TabIndex = 108;
+            // 
+            // lblNabavnaVrijednost
+            // 
+            this.lblNabavnaVrijednost.AutoSize = true;
+            this.lblNabavnaVrijednost.Location = new System.Drawing.Point(13, 230);
+            this.lblNabavnaVrijednost.Name = "lblNabavnaVrijednost";
+            this.lblNabavnaVrijednost.Size = new System.Drawing.Size(128, 16);
+            this.lblNabavnaVrijednost.TabIndex = 107;
+            this.lblNabavnaVrijednost.Text = "Nabavna vrijednost:";
+            // 
+            // tbNabavnaVrijednost
+            // 
+            this.tbNabavnaVrijednost.Location = new System.Drawing.Point(147, 227);
+            this.tbNabavnaVrijednost.Name = "tbNabavnaVrijednost";
+            this.tbNabavnaVrijednost.ReadOnly = true;
+            this.tbNabavnaVrijednost.Size = new System.Drawing.Size(100, 22);
+            this.tbNabavnaVrijednost.TabIndex = 106;
+            // 
+            // tbStatus
+            // 
+            this.tbStatus.Location = new System.Drawing.Point(598, 6);
+            this.tbStatus.Name = "tbStatus";
+            this.tbStatus.ReadOnly = true;
+            this.tbStatus.Size = new System.Drawing.Size(22, 22);
+            this.tbStatus.TabIndex = 105;
+            this.tbStatus.Text = "E";
+            // 
+            // lblStatus
+            // 
+            this.lblStatus.AutoSize = true;
+            this.lblStatus.Location = new System.Drawing.Point(504, 10);
+            this.lblStatus.Name = "lblStatus";
+            this.lblStatus.Size = new System.Drawing.Size(48, 16);
+            this.lblStatus.TabIndex = 104;
+            this.lblStatus.Text = "Status:";
+            // 
+            // lblPredmet
+            // 
+            this.lblPredmet.AutoSize = true;
+            this.lblPredmet.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPredmet.Location = new System.Drawing.Point(502, 107);
+            this.lblPredmet.Name = "lblPredmet";
+            this.lblPredmet.Size = new System.Drawing.Size(62, 16);
+            this.lblPredmet.TabIndex = 98;
+            this.lblPredmet.Text = "Predmet:";
+            // 
+            // tbPredmet
+            // 
+            this.tbPredmet.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbPredmet.Location = new System.Drawing.Point(598, 103);
+            this.tbPredmet.Multiline = true;
+            this.tbPredmet.Name = "tbPredmet";
+            this.tbPredmet.Size = new System.Drawing.Size(438, 36);
+            this.tbPredmet.TabIndex = 97;
+            // 
+            // lblnapomena
+            // 
+            this.lblnapomena.AutoSize = true;
+            this.lblnapomena.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblnapomena.Location = new System.Drawing.Point(502, 150);
+            this.lblnapomena.Name = "lblnapomena";
+            this.lblnapomena.Size = new System.Drawing.Size(79, 16);
+            this.lblnapomena.TabIndex = 96;
+            this.lblnapomena.Text = "Napomena:";
+            // 
+            // tbNapomena
+            // 
+            this.tbNapomena.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbNapomena.Location = new System.Drawing.Point(598, 147);
+            this.tbNapomena.Multiline = true;
+            this.tbNapomena.Name = "tbNapomena";
+            this.tbNapomena.Size = new System.Drawing.Size(438, 44);
+            this.tbNapomena.TabIndex = 95;
+            // 
+            // lblRadnik
+            // 
+            this.lblRadnik.AutoSize = true;
+            this.lblRadnik.Location = new System.Drawing.Point(734, 10);
+            this.lblRadnik.Name = "lblRadnik";
+            this.lblRadnik.Size = new System.Drawing.Size(126, 16);
+            this.lblRadnik.TabIndex = 94;
+            this.lblRadnik.Text = "Dokument sastavio:";
+            // 
+            // tbRadnik
+            // 
+            this.tbRadnik.Location = new System.Drawing.Point(905, 8);
+            this.tbRadnik.Name = "tbRadnik";
+            this.tbRadnik.Size = new System.Drawing.Size(100, 22);
+            this.tbRadnik.TabIndex = 93;
+            // 
+            // tbRokIsporuke
+            // 
+            this.tbRokIsporuke.Location = new System.Drawing.Point(598, 74);
+            this.tbRokIsporuke.Name = "tbRokIsporuke";
+            this.tbRokIsporuke.Size = new System.Drawing.Size(112, 22);
+            this.tbRokIsporuke.TabIndex = 92;
+            // 
+            // lbRokIsporuke
+            // 
+            this.lbRokIsporuke.AutoSize = true;
+            this.lbRokIsporuke.Location = new System.Drawing.Point(502, 79);
+            this.lbRokIsporuke.Name = "lbRokIsporuke";
+            this.lbRokIsporuke.Size = new System.Drawing.Size(91, 16);
+            this.lbRokIsporuke.TabIndex = 91;
+            this.lbRokIsporuke.Text = "Rok isporuke:";
+            // 
+            // tbRokVazenja
+            // 
+            this.tbRokVazenja.Location = new System.Drawing.Point(837, 46);
+            this.tbRokVazenja.Name = "tbRokVazenja";
+            this.tbRokVazenja.Size = new System.Drawing.Size(199, 22);
+            this.tbRokVazenja.TabIndex = 90;
+            // 
+            // lblRokVazenja
+            // 
+            this.lblRokVazenja.AutoSize = true;
+            this.lblRokVazenja.Location = new System.Drawing.Point(732, 49);
+            this.lblRokVazenja.Name = "lblRokVazenja";
+            this.lblRokVazenja.Size = new System.Drawing.Size(99, 16);
+            this.lblRokVazenja.TabIndex = 89;
+            this.lblRokVazenja.Text = "Opcija ponude:";
+            // 
+            // tbValutaPlacanja
+            // 
+            this.tbValutaPlacanja.Location = new System.Drawing.Point(598, 46);
+            this.tbValutaPlacanja.Name = "tbValutaPlacanja";
+            this.tbValutaPlacanja.Size = new System.Drawing.Size(112, 22);
+            this.tbValutaPlacanja.TabIndex = 88;
+            // 
+            // lblValuta
+            // 
+            this.lblValuta.AutoSize = true;
+            this.lblValuta.Location = new System.Drawing.Point(502, 52);
+            this.lblValuta.Name = "lblValuta";
+            this.lblValuta.Size = new System.Drawing.Size(49, 16);
+            this.lblValuta.TabIndex = 87;
+            this.lblValuta.Text = "Valuta:";
+            this.lblValuta.Click += new System.EventHandler(this.lblValuta_Click);
+            // 
+            // tbParitet
+            // 
+            this.tbParitet.Location = new System.Drawing.Point(908, 71);
+            this.tbParitet.Name = "tbParitet";
+            this.tbParitet.Size = new System.Drawing.Size(128, 22);
+            this.tbParitet.TabIndex = 86;
+            // 
+            // lblParitet
+            // 
+            this.lblParitet.AutoSize = true;
+            this.lblParitet.Location = new System.Drawing.Point(732, 79);
+            this.lblParitet.Name = "lblParitet";
+            this.lblParitet.Size = new System.Drawing.Size(49, 16);
+            this.lblParitet.TabIndex = 85;
+            this.lblParitet.Text = "Paritet:";
+            // 
+            // cbParitetKod
+            // 
+            this.cbParitetKod.FormattingEnabled = true;
+            this.cbParitetKod.Items.AddRange(new object[] {
+            "EXW",
+            "FCA",
+            "FAS",
+            "FOB",
+            "CFR",
+            "CIF",
+            "CPT",
+            "DAT",
+            "DAP",
+            "DDP"});
+            this.cbParitetKod.Location = new System.Drawing.Point(837, 71);
+            this.cbParitetKod.Name = "cbParitetKod";
+            this.cbParitetKod.Size = new System.Drawing.Size(65, 24);
+            this.cbParitetKod.TabIndex = 84;
             // 
             // btnKupacClear
             // 
@@ -338,7 +700,7 @@
             // button2
             // 
             this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button2.Location = new System.Drawing.Point(474, 373);
+            this.button2.Location = new System.Drawing.Point(529, 300);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(135, 36);
             this.button2.TabIndex = 51;
@@ -349,7 +711,7 @@
             // button1
             // 
             this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Location = new System.Drawing.Point(333, 373);
+            this.button1.Location = new System.Drawing.Point(388, 300);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(135, 36);
             this.button1.TabIndex = 50;
@@ -366,6 +728,16 @@
             this.label8.Size = new System.Drawing.Size(50, 16);
             this.label8.TabIndex = 45;
             this.label8.Text = "Datum:";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Location = new System.Drawing.Point(15, 137);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(57, 16);
+            this.label4.TabIndex = 41;
+            this.label4.Text = "Telefon:";
             // 
             // label3
             // 
@@ -386,6 +758,14 @@
             this.label1.Size = new System.Drawing.Size(73, 16);
             this.label1.TabIndex = 38;
             this.label1.Text = "Redni broj:";
+            // 
+            // tbTelefon
+            // 
+            this.tbTelefon.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbTelefon.Location = new System.Drawing.Point(137, 134);
+            this.tbTelefon.Name = "tbTelefon";
+            this.tbTelefon.Size = new System.Drawing.Size(331, 22);
+            this.tbTelefon.TabIndex = 3;
             // 
             // tbPartner
             // 
@@ -414,350 +794,30 @@
             this.tbRedniBroj.TabIndex = 26;
             this.tbRedniBroj.Text = "AUTO";
             // 
-            // btnReload
-            // 
-            this.btnReload.Image = global::Delos.Properties.Resources.reload__1_;
-            this.btnReload.Location = new System.Drawing.Point(371, 3);
-            this.btnReload.Name = "btnReload";
-            this.btnReload.Size = new System.Drawing.Size(46, 22);
-            this.btnReload.TabIndex = 4;
-            this.btnReload.UseVisualStyleBackColor = true;
-            this.btnReload.Click += new System.EventHandler(this.btnReload_Click);
-            // 
-            // tbTelefon
-            // 
-            this.tbTelefon.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbTelefon.Location = new System.Drawing.Point(137, 134);
-            this.tbTelefon.Name = "tbTelefon";
-            this.tbTelefon.Size = new System.Drawing.Size(331, 22);
-            this.tbTelefon.TabIndex = 3;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(15, 137);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(57, 16);
-            this.label4.TabIndex = 41;
-            this.label4.Text = "Telefon:";
-            // 
             // dgvStavkePonude
             // 
-            this.dgvStavkePonude.AllowUserToAddRows = false;
-            this.dgvStavkePonude.AllowUserToDeleteRows = false;
             this.dgvStavkePonude.AllowUserToOrderColumns = true;
             this.dgvStavkePonude.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvStavkePonude.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvStavkePonude.Location = new System.Drawing.Point(4, 465);
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvStavkePonude.DefaultCellStyle = dataGridViewCellStyle2;
+            this.dgvStavkePonude.Location = new System.Drawing.Point(4, 382);
             this.dgvStavkePonude.Name = "dgvStavkePonude";
-            this.dgvStavkePonude.ReadOnly = true;
-            this.dgvStavkePonude.RowHeadersVisible = false;
             this.dgvStavkePonude.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvStavkePonude.Size = new System.Drawing.Size(1062, 173);
+            this.dgvStavkePonude.Size = new System.Drawing.Size(1169, 256);
             this.dgvStavkePonude.TabIndex = 28;
-            // 
-            // cbParitetKod
-            // 
-            this.cbParitetKod.FormattingEnabled = true;
-            this.cbParitetKod.Items.AddRange(new object[] {
-            "EXW",
-            "FCA",
-            "FAS",
-            "FOB",
-            "CFR",
-            "CIF",
-            "CPT",
-            "DAT",
-            "DAP",
-            "DDP"});
-            this.cbParitetKod.Location = new System.Drawing.Point(837, 71);
-            this.cbParitetKod.Name = "cbParitetKod";
-            this.cbParitetKod.Size = new System.Drawing.Size(65, 24);
-            this.cbParitetKod.TabIndex = 84;
-            // 
-            // lblParitet
-            // 
-            this.lblParitet.AutoSize = true;
-            this.lblParitet.Location = new System.Drawing.Point(732, 79);
-            this.lblParitet.Name = "lblParitet";
-            this.lblParitet.Size = new System.Drawing.Size(49, 16);
-            this.lblParitet.TabIndex = 85;
-            this.lblParitet.Text = "Paritet:";
-            // 
-            // tbParitet
-            // 
-            this.tbParitet.Location = new System.Drawing.Point(908, 71);
-            this.tbParitet.Name = "tbParitet";
-            this.tbParitet.Size = new System.Drawing.Size(128, 22);
-            this.tbParitet.TabIndex = 86;
-            // 
-            // lblValuta
-            // 
-            this.lblValuta.AutoSize = true;
-            this.lblValuta.Location = new System.Drawing.Point(502, 52);
-            this.lblValuta.Name = "lblValuta";
-            this.lblValuta.Size = new System.Drawing.Size(49, 16);
-            this.lblValuta.TabIndex = 87;
-            this.lblValuta.Text = "Valuta:";
-            this.lblValuta.Click += new System.EventHandler(this.lblValuta_Click);
-            // 
-            // tbValutaPlacanja
-            // 
-            this.tbValutaPlacanja.Location = new System.Drawing.Point(598, 46);
-            this.tbValutaPlacanja.Name = "tbValutaPlacanja";
-            this.tbValutaPlacanja.Size = new System.Drawing.Size(112, 22);
-            this.tbValutaPlacanja.TabIndex = 88;
-            // 
-            // tbRokVazenja
-            // 
-            this.tbRokVazenja.Location = new System.Drawing.Point(837, 46);
-            this.tbRokVazenja.Name = "tbRokVazenja";
-            this.tbRokVazenja.Size = new System.Drawing.Size(199, 22);
-            this.tbRokVazenja.TabIndex = 90;
-            // 
-            // lblRokVazenja
-            // 
-            this.lblRokVazenja.AutoSize = true;
-            this.lblRokVazenja.Location = new System.Drawing.Point(732, 49);
-            this.lblRokVazenja.Name = "lblRokVazenja";
-            this.lblRokVazenja.Size = new System.Drawing.Size(99, 16);
-            this.lblRokVazenja.TabIndex = 89;
-            this.lblRokVazenja.Text = "Opcija ponude:";
-            // 
-            // tbRokIsporuke
-            // 
-            this.tbRokIsporuke.Location = new System.Drawing.Point(598, 74);
-            this.tbRokIsporuke.Name = "tbRokIsporuke";
-            this.tbRokIsporuke.Size = new System.Drawing.Size(112, 22);
-            this.tbRokIsporuke.TabIndex = 92;
-            // 
-            // lbRokIsporuke
-            // 
-            this.lbRokIsporuke.AutoSize = true;
-            this.lbRokIsporuke.Location = new System.Drawing.Point(502, 79);
-            this.lbRokIsporuke.Name = "lbRokIsporuke";
-            this.lbRokIsporuke.Size = new System.Drawing.Size(91, 16);
-            this.lbRokIsporuke.TabIndex = 91;
-            this.lbRokIsporuke.Text = "Rok isporuke:";
-            // 
-            // tbRadnik
-            // 
-            this.tbRadnik.Location = new System.Drawing.Point(905, 8);
-            this.tbRadnik.Name = "tbRadnik";
-            this.tbRadnik.Size = new System.Drawing.Size(100, 22);
-            this.tbRadnik.TabIndex = 93;
-            // 
-            // lblRadnik
-            // 
-            this.lblRadnik.AutoSize = true;
-            this.lblRadnik.Location = new System.Drawing.Point(734, 10);
-            this.lblRadnik.Name = "lblRadnik";
-            this.lblRadnik.Size = new System.Drawing.Size(126, 16);
-            this.lblRadnik.TabIndex = 94;
-            this.lblRadnik.Text = "Dokument sastavio:";
-            // 
-            // lblnapomena
-            // 
-            this.lblnapomena.AutoSize = true;
-            this.lblnapomena.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblnapomena.Location = new System.Drawing.Point(502, 150);
-            this.lblnapomena.Name = "lblnapomena";
-            this.lblnapomena.Size = new System.Drawing.Size(79, 16);
-            this.lblnapomena.TabIndex = 96;
-            this.lblnapomena.Text = "Napomena:";
-            // 
-            // tbNapomena
-            // 
-            this.tbNapomena.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbNapomena.Location = new System.Drawing.Point(598, 147);
-            this.tbNapomena.Multiline = true;
-            this.tbNapomena.Name = "tbNapomena";
-            this.tbNapomena.Size = new System.Drawing.Size(438, 44);
-            this.tbNapomena.TabIndex = 95;
-            // 
-            // lblPredmet
-            // 
-            this.lblPredmet.AutoSize = true;
-            this.lblPredmet.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPredmet.Location = new System.Drawing.Point(502, 107);
-            this.lblPredmet.Name = "lblPredmet";
-            this.lblPredmet.Size = new System.Drawing.Size(62, 16);
-            this.lblPredmet.TabIndex = 98;
-            this.lblPredmet.Text = "Predmet:";
-            // 
-            // tbPredmet
-            // 
-            this.tbPredmet.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbPredmet.Location = new System.Drawing.Point(598, 103);
-            this.tbPredmet.Multiline = true;
-            this.tbPredmet.Name = "tbPredmet";
-            this.tbPredmet.Size = new System.Drawing.Size(438, 36);
-            this.tbPredmet.TabIndex = 97;
-            // 
-            // tbStatus
-            // 
-            this.tbStatus.Location = new System.Drawing.Point(598, 6);
-            this.tbStatus.Name = "tbStatus";
-            this.tbStatus.ReadOnly = true;
-            this.tbStatus.Size = new System.Drawing.Size(22, 22);
-            this.tbStatus.TabIndex = 105;
-            this.tbStatus.Text = "E";
-            // 
-            // lblStatus
-            // 
-            this.lblStatus.AutoSize = true;
-            this.lblStatus.Location = new System.Drawing.Point(504, 10);
-            this.lblStatus.Name = "lblStatus";
-            this.lblStatus.Size = new System.Drawing.Size(48, 16);
-            this.lblStatus.TabIndex = 104;
-            this.lblStatus.Text = "Status:";
-            // 
-            // lblNabavnaVrijednost
-            // 
-            this.lblNabavnaVrijednost.AutoSize = true;
-            this.lblNabavnaVrijednost.Location = new System.Drawing.Point(13, 230);
-            this.lblNabavnaVrijednost.Name = "lblNabavnaVrijednost";
-            this.lblNabavnaVrijednost.Size = new System.Drawing.Size(128, 16);
-            this.lblNabavnaVrijednost.TabIndex = 107;
-            this.lblNabavnaVrijednost.Text = "Nabavna vrijednost:";
-            // 
-            // tbNabavnaVrijednost
-            // 
-            this.tbNabavnaVrijednost.Location = new System.Drawing.Point(147, 227);
-            this.tbNabavnaVrijednost.Name = "tbNabavnaVrijednost";
-            this.tbNabavnaVrijednost.ReadOnly = true;
-            this.tbNabavnaVrijednost.Size = new System.Drawing.Size(100, 22);
-            this.tbNabavnaVrijednost.TabIndex = 106;
-            // 
-            // panel3
-            // 
-            this.panel3.BackColor = System.Drawing.Color.LightSteelBlue;
-            this.panel3.Location = new System.Drawing.Point(19, 285);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(982, 1);
-            this.panel3.TabIndex = 108;
-            // 
-            // lblIznosBezRabata
-            // 
-            this.lblIznosBezRabata.AutoSize = true;
-            this.lblIznosBezRabata.Location = new System.Drawing.Point(267, 230);
-            this.lblIznosBezRabata.Name = "lblIznosBezRabata";
-            this.lblIznosBezRabata.Size = new System.Drawing.Size(109, 16);
-            this.lblIznosBezRabata.TabIndex = 110;
-            this.lblIznosBezRabata.Text = "Iznos bez rabata:";
-            // 
-            // tbIznosBezRabata
-            // 
-            this.tbIznosBezRabata.Location = new System.Drawing.Point(401, 227);
-            this.tbIznosBezRabata.Name = "tbIznosBezRabata";
-            this.tbIznosBezRabata.ReadOnly = true;
-            this.tbIznosBezRabata.Size = new System.Drawing.Size(100, 22);
-            this.tbIznosBezRabata.TabIndex = 109;
-            // 
-            // lblRabat
-            // 
-            this.lblRabat.AutoSize = true;
-            this.lblRabat.Location = new System.Drawing.Point(539, 230);
-            this.lblRabat.Name = "lblRabat";
-            this.lblRabat.Size = new System.Drawing.Size(48, 16);
-            this.lblRabat.TabIndex = 112;
-            this.lblRabat.Text = "Rabat:";
-            // 
-            // tbRabat
-            // 
-            this.tbRabat.Location = new System.Drawing.Point(673, 227);
-            this.tbRabat.Name = "tbRabat";
-            this.tbRabat.ReadOnly = true;
-            this.tbRabat.Size = new System.Drawing.Size(100, 22);
-            this.tbRabat.TabIndex = 111;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(802, 233);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(113, 16);
-            this.label2.TabIndex = 114;
-            this.label2.Text = "Iznos sa rabatom:";
-            // 
-            // tbIznosSaRabatom
-            // 
-            this.tbIznosSaRabatom.Location = new System.Drawing.Point(936, 230);
-            this.tbIznosSaRabatom.Name = "tbIznosSaRabatom";
-            this.tbIznosSaRabatom.ReadOnly = true;
-            this.tbIznosSaRabatom.Size = new System.Drawing.Size(100, 22);
-            this.tbIznosSaRabatom.TabIndex = 113;
-            // 
-            // lblRuc
-            // 
-            this.lblRuc.AutoSize = true;
-            this.lblRuc.Location = new System.Drawing.Point(13, 260);
-            this.lblRuc.Name = "lblRuc";
-            this.lblRuc.Size = new System.Drawing.Size(40, 16);
-            this.lblRuc.TabIndex = 116;
-            this.lblRuc.Text = "RUC:";
-            // 
-            // tbRUC
-            // 
-            this.tbRUC.Location = new System.Drawing.Point(147, 257);
-            this.tbRUC.Name = "tbRUC";
-            this.tbRUC.ReadOnly = true;
-            this.tbRUC.Size = new System.Drawing.Size(100, 22);
-            this.tbRUC.TabIndex = 115;
-            // 
-            // lblPdv
-            // 
-            this.lblPdv.AutoSize = true;
-            this.lblPdv.Location = new System.Drawing.Point(267, 260);
-            this.lblPdv.Name = "lblPdv";
-            this.lblPdv.Size = new System.Drawing.Size(39, 16);
-            this.lblPdv.TabIndex = 120;
-            this.lblPdv.Text = "PDV:";
-            // 
-            // tbPdv
-            // 
-            this.tbPdv.Location = new System.Drawing.Point(401, 264);
-            this.tbPdv.Name = "tbPdv";
-            this.tbPdv.ReadOnly = true;
-            this.tbPdv.Size = new System.Drawing.Size(100, 22);
-            this.tbPdv.TabIndex = 119;
-            // 
-            // lblIznosSaPdv
-            // 
-            this.lblIznosSaPdv.AutoSize = true;
-            this.lblIznosSaPdv.Location = new System.Drawing.Point(538, 260);
-            this.lblIznosSaPdv.Name = "lblIznosSaPdv";
-            this.lblIznosSaPdv.Size = new System.Drawing.Size(114, 16);
-            this.lblIznosSaPdv.TabIndex = 122;
-            this.lblIznosSaPdv.Text = "Iznos sa PDV-om:";
-            // 
-            // tbIznosSaPdv
-            // 
-            this.tbIznosSaPdv.Location = new System.Drawing.Point(673, 257);
-            this.tbIznosSaPdv.Name = "tbIznosSaPdv";
-            this.tbIznosSaPdv.ReadOnly = true;
-            this.tbIznosSaPdv.Size = new System.Drawing.Size(100, 22);
-            this.tbIznosSaPdv.TabIndex = 121;
-            // 
-            // lblPartnerJIB
-            // 
-            this.lblPartnerJIB.AutoSize = true;
-            this.lblPartnerJIB.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPartnerJIB.Location = new System.Drawing.Point(17, 193);
-            this.lblPartnerJIB.Name = "lblPartnerJIB";
-            this.lblPartnerJIB.Size = new System.Drawing.Size(30, 16);
-            this.lblPartnerJIB.TabIndex = 124;
-            this.lblPartnerJIB.Text = "JIB:";
-            // 
-            // tbJIB
-            // 
-            this.tbJIB.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbJIB.Location = new System.Drawing.Point(137, 190);
-            this.tbJIB.Name = "tbJIB";
-            this.tbJIB.Size = new System.Drawing.Size(166, 22);
-            this.tbJIB.TabIndex = 123;
+            this.dgvStavkePonude.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvStavkePonude_CellEndEdit);
+            this.dgvStavkePonude.RowValidated += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvStavkePonude_RowValidated_1);
+            this.dgvStavkePonude.RowValidating += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.dgvStavkePonude_RowValidating);
+            this.dgvStavkePonude.UserAddedRow += new System.Windows.Forms.DataGridViewRowEventHandler(this.dgvStavkePonude_UserAddedRow);
+            this.dgvStavkePonude.UserDeletingRow += new System.Windows.Forms.DataGridViewRowCancelEventHandler(this.dgvStavkePonude_UserDeletingRow);
             // 
             // btnOtkljucaj
             // 
@@ -819,44 +879,6 @@
             this.btnStampa.UseVisualStyleBackColor = true;
             this.btnStampa.Click += new System.EventHandler(this.btnStampa_Click);
             // 
-            // rbNerealizovani
-            // 
-            this.rbNerealizovani.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.rbNerealizovani.AutoSize = true;
-            this.rbNerealizovani.Location = new System.Drawing.Point(836, 0);
-            this.rbNerealizovani.Name = "rbNerealizovani";
-            this.rbNerealizovani.Size = new System.Drawing.Size(114, 20);
-            this.rbNerealizovani.TabIndex = 10;
-            this.rbNerealizovani.Text = "Nerealizovane";
-            this.rbNerealizovani.UseVisualStyleBackColor = true;
-            this.rbNerealizovani.Click += new System.EventHandler(this.rbNerealizovani_Click);
-            // 
-            // rbUtoku
-            // 
-            this.rbUtoku.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.rbUtoku.AutoSize = true;
-            this.rbUtoku.Location = new System.Drawing.Point(722, 0);
-            this.rbUtoku.Name = "rbUtoku";
-            this.rbUtoku.Size = new System.Drawing.Size(102, 20);
-            this.rbUtoku.TabIndex = 9;
-            this.rbUtoku.Text = "Realizovane";
-            this.rbUtoku.UseVisualStyleBackColor = true;
-            this.rbUtoku.Click += new System.EventHandler(this.rbRealizovani_Click);
-            // 
-            // rbSviUgovori
-            // 
-            this.rbSviUgovori.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.rbSviUgovori.AutoSize = true;
-            this.rbSviUgovori.Checked = true;
-            this.rbSviUgovori.Location = new System.Drawing.Point(950, 1);
-            this.rbSviUgovori.Name = "rbSviUgovori";
-            this.rbSviUgovori.Size = new System.Drawing.Size(99, 20);
-            this.rbSviUgovori.TabIndex = 8;
-            this.rbSviUgovori.TabStop = true;
-            this.rbSviUgovori.Text = "Sve ponude";
-            this.rbSviUgovori.UseVisualStyleBackColor = true;
-            this.rbSviUgovori.Click += new System.EventHandler(this.rbSviUgovori_Click);
-            // 
             // btnPonudaNerealizovana
             // 
             this.btnPonudaNerealizovana.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -868,18 +890,6 @@
             this.btnPonudaNerealizovana.Text = "Ponuda nerealizovana [F8]";
             this.btnPonudaNerealizovana.UseVisualStyleBackColor = true;
             this.btnPonudaNerealizovana.Click += new System.EventHandler(this.btnPonudaNerealizovana_Click);
-            // 
-            // radioButton1
-            // 
-            this.radioButton1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.radioButton1.AutoSize = true;
-            this.radioButton1.Location = new System.Drawing.Point(652, 0);
-            this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(64, 20);
-            this.radioButton1.TabIndex = 11;
-            this.radioButton1.Text = "U toku";
-            this.radioButton1.UseVisualStyleBackColor = true;
-            this.radioButton1.Click += new System.EventHandler(this.rbUtoku_Click);
             // 
             // FormPonuda
             // 
