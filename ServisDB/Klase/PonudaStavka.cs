@@ -20,7 +20,9 @@ namespace ServisDB.Klase
         public decimal CijenaBezPdv { get; set; }
         public decimal CijenaBezPdvSaRabatom { get; set; }
         public decimal RabatProcenat { get; set; }
+        public decimal RabatIznos { get; set; }
         public decimal IznosBezPdv { get; set; }
+        public decimal IznosBezPdvSaRabatom { get; set; }
         public decimal CijenaNabavna { get; set; }
         public decimal VrijednostNabavna { get; set; }
         public decimal MarzaProcenat { get; set; }

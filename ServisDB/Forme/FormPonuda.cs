@@ -349,23 +349,31 @@ namespace Delos.Forme
             dgvStavkePonude.DataSource = null;
             dgvStavkePonude.AutoGenerateColumns = false;
             dgvStavkePonude.Columns.Clear();
-            dgvStavkePonude.Columns.Add(new DataGridViewTextBoxColumn() { Name = "RB", DataPropertyName = "StavkaBroj", Width = 50 ,ReadOnly=true});
-            dgvStavkePonude.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Opis", DataPropertyName = "ArtikalNaziv", Width = 100 });
-            dgvStavkePonude.Columns.Add(new DataGridViewTextBoxColumn() { Name = "JM", DataPropertyName = "JedinicaMjere", Width = 97});
-            dgvStavkePonude.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Količina", DataPropertyName = "kolicina", Width = 100, DefaultCellStyle = new DataGridViewCellStyle() { Format = "N2" } });
-            dgvStavkePonude.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Cijena bez PDV-a", DataPropertyName = "CijenaBezPdv", Width = 97, DefaultCellStyle = new DataGridViewCellStyle() { Format = "N2" } });
-            dgvStavkePonude.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Rabat %", DataPropertyName = "RabatProcenat", Width = 97, DefaultCellStyle = new DataGridViewCellStyle() { Format = "N2" } });
-            dgvStavkePonude.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Cijena bez PDV-a sa rabatom", DataPropertyName = "CijenaBezPdvSaRabatom", Width = 97, DefaultCellStyle = new DataGridViewCellStyle() { Format = "N2" } });
+            dgvStavkePonude.Columns.Add(new DataGridViewTextBoxColumn() {ReadOnly = true, Name = "RB", DataPropertyName = "StavkaBroj", Width = 50 });
+            dgvStavkePonude.Columns.Add(new DataGridViewTextBoxColumn() { ReadOnly = false, Name = "Opis", DataPropertyName = "ArtikalNaziv", Width = 100 });
+            dgvStavkePonude.Columns.Add(new DataGridViewTextBoxColumn() { ReadOnly = false, Name = "JM", DataPropertyName = "JedinicaMjere", Width = 90});
 
-            dgvStavkePonude.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Iznos bez PDV-a", DataPropertyName = "IznosBezPdv", Width = 97, DefaultCellStyle = new DataGridViewCellStyle() { Format = "N2" } });
+            dgvStavkePonude.Columns.Add(new DataGridViewTextBoxColumn() { ReadOnly = false, Name = "Količina", DataPropertyName = "kolicina", Width = 100, DefaultCellStyle = new DataGridViewCellStyle() { Format = "N2" } });
 
-            dgvStavkePonude.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Nabavna cijena", DataPropertyName = "CijenaNabavna", Width = 97, DefaultCellStyle = new DataGridViewCellStyle() { Format = "N2" } });
-            dgvStavkePonude.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Nabavna vrijednost", DataPropertyName = "VrijednostNabavna", Width = 97, DefaultCellStyle = new DataGridViewCellStyle() { Format = "N2" } });
-            dgvStavkePonude.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Margina %", DataPropertyName = "MarzaProcenat", Width = 97, DefaultCellStyle = new DataGridViewCellStyle() { Format = "N2" } });
-            dgvStavkePonude.Columns.Add(new DataGridViewTextBoxColumn() { Name = "RUC", DataPropertyName = "Ruc", Width = 97, DefaultCellStyle = new DataGridViewCellStyle() { Format = "N2" } });
-            dgvStavkePonude.Columns.Add(new DataGridViewTextBoxColumn() { Name = "PDV %", DataPropertyName = "PdvStopa", Width = 97, DefaultCellStyle = new DataGridViewCellStyle() { Format = "N2" } });
-            dgvStavkePonude.Columns.Add(new DataGridViewTextBoxColumn() { Name = "PDV iznos", DataPropertyName = "Pdv", Width = 97, DefaultCellStyle = new DataGridViewCellStyle() { Format = "N2" } });
-            dgvStavkePonude.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Iznos sa PDV", DataPropertyName = "IznosSaPdv", Width = 97, DefaultCellStyle = new DataGridViewCellStyle() { Format = "N2" } });
+            dgvStavkePonude.Columns.Add(new DataGridViewTextBoxColumn() { ReadOnly = false, Name = "Nabavna cijena", DataPropertyName = "CijenaNabavna", Width = 90, DefaultCellStyle = new DataGridViewCellStyle() { Format = "N2" } });
+            dgvStavkePonude.Columns.Add(new DataGridViewTextBoxColumn() { ReadOnly = true, Name = "Nabavna vrijednost", DataPropertyName = "VrijednostNabavna", Width = 90, DefaultCellStyle = new DataGridViewCellStyle() { Format = "N2" } });
+
+            dgvStavkePonude.Columns.Add(new DataGridViewTextBoxColumn() { ReadOnly = false, Name = "Margina %", DataPropertyName = "MarzaProcenat", Width = 90, DefaultCellStyle = new DataGridViewCellStyle() { Format = "N2" } });
+            dgvStavkePonude.Columns.Add(new DataGridViewTextBoxColumn() { ReadOnly = true, Name = "RUC", DataPropertyName = "Ruc", Width = 90, DefaultCellStyle = new DataGridViewCellStyle() { Format = "N2" } });
+
+            dgvStavkePonude.Columns.Add(new DataGridViewTextBoxColumn() { ReadOnly = false, Name = "Cijena bez PDV-a", DataPropertyName = "CijenaBezPdv", Width = 90, DefaultCellStyle = new DataGridViewCellStyle() { Format = "N2" } });
+            dgvStavkePonude.Columns.Add(new DataGridViewTextBoxColumn() { ReadOnly = true, Name = "Iznos bez PDV-a", DataPropertyName = "IznosBezPdv", Width = 90, DefaultCellStyle = new DataGridViewCellStyle() { Format = "N2" } });
+
+            dgvStavkePonude.Columns.Add(new DataGridViewTextBoxColumn() { ReadOnly = false, Name = "Rabat %", DataPropertyName = "RabatProcenat", Width = 90, DefaultCellStyle = new DataGridViewCellStyle() { Format = "N2" } });
+            dgvStavkePonude.Columns.Add(new DataGridViewTextBoxColumn() { ReadOnly = true, Name = "Rabat iznos", DataPropertyName = "RabatIznos", Width = 90, DefaultCellStyle = new DataGridViewCellStyle() { Format = "N2" } });
+
+            dgvStavkePonude.Columns.Add(new DataGridViewTextBoxColumn() { ReadOnly = true, Name = "Cijena bez PDV-a sa rabatom", DataPropertyName = "CijenaBezPdvSaRabatom", Width = 90, DefaultCellStyle = new DataGridViewCellStyle() { Format = "N2" } });
+            dgvStavkePonude.Columns.Add(new DataGridViewTextBoxColumn() { ReadOnly = true, Name = "Iznos bez PDV-a sa rabatom", DataPropertyName = "IznosBezPdvSaRabatom", Width = 90, DefaultCellStyle = new DataGridViewCellStyle() { Format = "N2" } });
+
+            
+           dgvStavkePonude.Columns.Add(new DataGridViewTextBoxColumn() { ReadOnly = true, Name = "PDV %", DataPropertyName = "PdvStopa", Width = 90, DefaultCellStyle = new DataGridViewCellStyle() { Format = "N2" } });
+            dgvStavkePonude.Columns.Add(new DataGridViewTextBoxColumn() { ReadOnly = true, Name = "PDV iznos", DataPropertyName = "Pdv", Width = 90, DefaultCellStyle = new DataGridViewCellStyle() { Format = "N2" } });
+            dgvStavkePonude.Columns.Add(new DataGridViewTextBoxColumn() { ReadOnly = true, Name = "Iznos sa PDV", DataPropertyName = "IznosSaPdv", Width = 90, DefaultCellStyle = new DataGridViewCellStyle() { Format = "N2" } });
 
 
             dgvStavkePonude.DataSource = new BindingList<PonudaStavka>(stavke);
@@ -832,14 +840,15 @@ namespace Delos.Forme
                         bool s1 = decimal.TryParse(newValueString, out kolicina);
                         if(s1==true)
                         {
-                            decimal vrijednost_nabavna = Math.Round(stavka.Kolicina * stavka.CijenaNabavna, 2, MidpointRounding.AwayFromZero);
-                            stavka.VrijednostNabavna = vrijednost_nabavna;
-                            decimal rabat = Math.Round(kolicina * stavka.CijenaBezPdv * stavka.RabatProcenat / 100,2,MidpointRounding.AwayFromZero);
-                            decimal iznosBezPdvSaRabatom = Math.Round(kolicina * stavka.CijenaBezPdv - rabat, 2, MidpointRounding.AwayFromZero);
-                            stavka.IznosBezPdv = iznosBezPdvSaRabatom;
-
-                            stavka.Pdv = Math.Round(stavka.IznosBezPdv * stavka.PdvStopa/100,2,MidpointRounding.AwayFromZero);
-                            stavka.IznosSaPdv = stavka.IznosBezPdv+stavka.Pdv;
+                            stavka.VrijednostNabavna = Math.Round(stavka.Kolicina * stavka.CijenaNabavna, 2, MidpointRounding.AwayFromZero);
+                            stavka.Ruc = Math.Round(stavka.VrijednostNabavna * stavka.MarzaProcenat / 100, 2, MidpointRounding.AwayFromZero);
+                            stavka.IznosBezPdv = stavka.VrijednostNabavna + stavka.Ruc;
+                            stavka.CijenaBezPdv = Math.Round(stavka.IznosBezPdv / stavka.Kolicina, 2, MidpointRounding.AwayFromZero);
+                            stavka.RabatIznos = Math.Round(stavka.IznosBezPdv * stavka.RabatProcenat / 100, 2, MidpointRounding.AwayFromZero);
+                            stavka.IznosBezPdvSaRabatom = stavka.IznosBezPdv - stavka.RabatIznos;
+                            stavka.CijenaBezPdvSaRabatom = Math.Round(stavka.IznosBezPdvSaRabatom / stavka.Kolicina, 2, MidpointRounding.AwayFromZero);
+                            stavka.Pdv = Math.Round(stavka.IznosBezPdvSaRabatom * stavka.PdvStopa / 100, 2, MidpointRounding.AwayFromZero);
+                            stavka.IznosSaPdv = stavka.IznosBezPdvSaRabatom + stavka.Pdv;
                         }
                         break;
                     }
@@ -850,12 +859,14 @@ namespace Delos.Forme
                         bool s1 = decimal.TryParse(newValueString, out cijena_bez_pdv);
                         if (s1 == true)
                         {
-                            decimal rabat = Math.Round(stavka.Kolicina * cijena_bez_pdv * stavka.RabatProcenat / 100, 2, MidpointRounding.AwayFromZero);
-                            decimal iznosBezPdvSaRabatom = Math.Round(stavka.Kolicina * cijena_bez_pdv - rabat, 2, MidpointRounding.AwayFromZero);
-                            stavka.IznosBezPdv = iznosBezPdvSaRabatom;
-
-                            stavka.Pdv = Math.Round(stavka.IznosBezPdv * stavka.PdvStopa / 100, 2, MidpointRounding.AwayFromZero);
-                            stavka.IznosSaPdv = stavka.IznosBezPdv + stavka.Pdv;
+                            stavka.IznosBezPdv = Math.Round(stavka.Kolicina * stavka.CijenaBezPdv, 2, MidpointRounding.AwayFromZero);
+                            stavka.Ruc = stavka.IznosBezPdv - stavka.VrijednostNabavna;
+                            stavka.MarzaProcenat = Math.Round(stavka.Ruc / stavka.VrijednostNabavna*100,2,MidpointRounding.AwayFromZero);
+                            stavka.RabatIznos = Math.Round(stavka.IznosBezPdv * stavka.RabatProcenat / 100, 2, MidpointRounding.AwayFromZero);
+                            stavka.IznosBezPdvSaRabatom = stavka.IznosBezPdv - stavka.RabatIznos;
+                            stavka.CijenaBezPdvSaRabatom = Math.Round(stavka.IznosBezPdvSaRabatom / stavka.Kolicina, 2, MidpointRounding.AwayFromZero);
+                            stavka.Pdv = Math.Round(stavka.IznosBezPdvSaRabatom * stavka.PdvStopa / 100, 2, MidpointRounding.AwayFromZero);
+                            stavka.IznosSaPdv = stavka.IznosBezPdvSaRabatom + stavka.Pdv;
                         }
                         break;
                     }
@@ -865,12 +876,11 @@ namespace Delos.Forme
                         bool s1 = decimal.TryParse(newValueString, out rabatprocenat);
                         if (s1 == true)
                         {
-                            decimal rabat = Math.Round(stavka.Kolicina * stavka.CijenaBezPdv * rabatprocenat / 100, 2, MidpointRounding.AwayFromZero);
-                            decimal iznosBezPdvSaRabatom = Math.Round(stavka.Kolicina * stavka.CijenaBezPdv - rabat, 2, MidpointRounding.AwayFromZero);
-                            stavka.IznosBezPdv = iznosBezPdvSaRabatom;
-
-                            stavka.Pdv = Math.Round(stavka.IznosBezPdv * stavka.PdvStopa / 100, 2, MidpointRounding.AwayFromZero);
-                            stavka.IznosSaPdv = stavka.IznosBezPdv + stavka.Pdv;
+                            stavka.RabatIznos = Math.Round(stavka.IznosBezPdv * stavka.RabatProcenat / 100, 2, MidpointRounding.AwayFromZero);
+                            stavka.IznosBezPdvSaRabatom = stavka.IznosBezPdv - stavka.RabatIznos;
+                            stavka.CijenaBezPdvSaRabatom = Math.Round(stavka.IznosBezPdvSaRabatom / stavka.Kolicina, 2, MidpointRounding.AwayFromZero);
+                            stavka.Pdv = Math.Round(stavka.IznosBezPdvSaRabatom * stavka.PdvStopa / 100, 2, MidpointRounding.AwayFromZero);
+                            stavka.IznosSaPdv = stavka.IznosBezPdvSaRabatom + stavka.Pdv;
                         }
                         break;
                     }
@@ -880,15 +890,15 @@ namespace Delos.Forme
                         bool s1 = decimal.TryParse(newValueString, out cijenanabavna);
                         if (s1 == true)
                         {
-                            decimal ruc = Math.Round(stavka.Kolicina * stavka.CijenaNabavna * stavka.MarzaProcenat / 100, 2, MidpointRounding.AwayFromZero) ;
-                            stavka.Ruc = ruc;
-                            decimal vrijednost_nabavna = Math.Round(stavka.Kolicina * stavka.CijenaNabavna, 2, MidpointRounding.AwayFromZero);
-                            stavka.VrijednostNabavna = vrijednost_nabavna;
-                            decimal iznosBezPdv = Math.Round(stavka.Kolicina * stavka.CijenaNabavna, 2, MidpointRounding.AwayFromZero)+stavka.Ruc;
-                            stavka.IznosBezPdv = iznosBezPdv;
-
-                            stavka.Pdv = Math.Round(stavka.IznosBezPdv * stavka.PdvStopa / 100, 2, MidpointRounding.AwayFromZero);
-                            stavka.IznosSaPdv = stavka.IznosBezPdv + stavka.Pdv;
+                            stavka.VrijednostNabavna = Math.Round(stavka.Kolicina * stavka.CijenaNabavna, 2, MidpointRounding.AwayFromZero);
+                            stavka.Ruc = Math.Round(stavka.VrijednostNabavna * stavka.MarzaProcenat / 100, 2, MidpointRounding.AwayFromZero);
+                            stavka.IznosBezPdv = stavka.VrijednostNabavna + stavka.Ruc;
+                            stavka.CijenaBezPdv = Math.Round(stavka.IznosBezPdv / stavka.Kolicina, 2, MidpointRounding.AwayFromZero);
+                            stavka.RabatIznos = Math.Round(stavka.IznosBezPdv * stavka.RabatProcenat / 100, 2, MidpointRounding.AwayFromZero);
+                            stavka.IznosBezPdvSaRabatom = stavka.IznosBezPdv - stavka.RabatIznos;
+                            stavka.CijenaBezPdvSaRabatom = Math.Round(stavka.IznosBezPdvSaRabatom / stavka.Kolicina, 2, MidpointRounding.AwayFromZero);
+                            stavka.Pdv = Math.Round(stavka.IznosBezPdvSaRabatom * stavka.PdvStopa / 100, 2, MidpointRounding.AwayFromZero);
+                            stavka.IznosSaPdv = stavka.IznosBezPdvSaRabatom + stavka.Pdv;
                         }
                         break;
                     }
@@ -899,17 +909,19 @@ namespace Delos.Forme
                         bool s1 = decimal.TryParse(newValueString, out marzaprocenat);
                         if (s1 == true)
                         {
-                            decimal ruc = Math.Round(stavka.Kolicina * stavka.CijenaNabavna * stavka.MarzaProcenat / 100, 2, MidpointRounding.AwayFromZero);
-                            stavka.Ruc = ruc;
-                            decimal iznosBezPdv = Math.Round(stavka.Kolicina * stavka.CijenaNabavna, 2, MidpointRounding.AwayFromZero) + stavka.Ruc;
-                            stavka.IznosBezPdv = iznosBezPdv;
-
-                            stavka.Pdv = Math.Round(stavka.IznosBezPdv * stavka.PdvStopa / 100, 2, MidpointRounding.AwayFromZero);
-                            stavka.IznosSaPdv = stavka.IznosBezPdv + stavka.Pdv;
+                            stavka.Ruc = Math.Round(stavka.VrijednostNabavna * stavka.MarzaProcenat / 100, 2, MidpointRounding.AwayFromZero);
+                            stavka.IznosBezPdv = stavka.VrijednostNabavna + stavka.Ruc;
+                            stavka.CijenaBezPdv = Math.Round(stavka.IznosBezPdv / stavka.Kolicina,2,MidpointRounding.AwayFromZero);
+                            stavka.RabatIznos = Math.Round(stavka.IznosBezPdv * stavka.RabatProcenat / 100, 2, MidpointRounding.AwayFromZero);
+                            stavka.IznosBezPdvSaRabatom = stavka.IznosBezPdv - stavka.RabatIznos;
+                            stavka.CijenaBezPdvSaRabatom = Math.Round(stavka.IznosBezPdvSaRabatom / stavka.Kolicina, 2, MidpointRounding.AwayFromZero);
+                            stavka.Pdv = Math.Round(stavka.IznosBezPdvSaRabatom * stavka.PdvStopa / 100, 2, MidpointRounding.AwayFromZero);
+                            stavka.IznosSaPdv = stavka.IznosBezPdvSaRabatom + stavka.Pdv;
                         }
                         break;
                     }
             }
+            if(stavka.PonudaBroj!=null)
             PersistanceManager.UpdatePonudaStavka(stavka);
 
         }
@@ -931,13 +943,13 @@ namespace Delos.Forme
 
         private void dgvStavkePonude_RowValidating(object sender, DataGridViewCellCancelEventArgs e)
         {
-
+            PonudaStavka stavka=null;
             try
             {
                 object o = dgvPrijave.SelectedRows[0].DataBoundItem;
                 string broj = ((DataRowView)o).Row["broj"].ToString();
 
-                PonudaStavka stavka = (PonudaStavka)dgvStavkePonude.Rows[e.RowIndex]?.DataBoundItem;
+                stavka = (PonudaStavka)dgvStavkePonude.Rows[e.RowIndex]?.DataBoundItem;
                 if (stavka == null)
                     return;
                 if (stavka.PonudaBroj == null)
@@ -952,13 +964,22 @@ namespace Delos.Forme
                     PersistanceManager.InsertPonudaStavka(stavka);
                 }
             }
-            catch (Exception ex) { }
+            catch (Exception ex) {
+                e.Cancel = true;
+                stavka.PonudaBroj = null;
+                MessageBox.Show(ex.Message + ":" + ex.StackTrace);
+            }
         }
 
         private void dgvStavkePonude_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e)
         {
             PonudaStavka stavka = (PonudaStavka)e.Row.DataBoundItem;
             PersistanceManager.DeletePonudaStavka(stavka);
+        }
+
+        private void dgvStavkePonude_ColumnAdded(object sender, DataGridViewColumnEventArgs e)
+        {
+            e.Column.DefaultCellStyle.BackColor = e.Column.ReadOnly == true ? Color.Gainsboro : Color.White;
         }
     }
 }

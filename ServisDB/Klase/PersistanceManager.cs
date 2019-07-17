@@ -300,8 +300,8 @@ where sifra=@sifra";
                     cmd.Connection = conn;
                     cmd.Parameters.AddWithValue("@broj", broj);
                     // Insert some data
-                    cmd.CommandText = @"SELECT ponuda_broj,stavka_broj,artikal_naziv,kolicina,jedinica_mjere,cijena_bez_pdv,rabat_procenat,iznos_bez_pdv
-,cijena_nabavna,vrijednost_nabavna,marza_procenat,ruc,pdv_stopa,pdv,iznos_sa_pdv
+                    cmd.CommandText = @"SELECT ponuda_broj,stavka_broj,artikal_naziv,kolicina,jedinica_mjere,cijena_bez_pdv,rabat_procenat,iznos_bez_pdv,iznos_bez_pdv_sa_rabatom
+,cijena_nabavna,vrijednost_nabavna,marza_procenat,ruc,pdv_stopa,pdv,iznos_sa_pdv,rabat_iznos,cijena_bez_pdv_sa_rabatom
 	FROM public.ponuda_stavka where ponuda_broj=@broj order by stavka_broj asc";
                     var dr = cmd.ExecuteReader();
                     while (dr.Read())
@@ -315,13 +315,16 @@ where sifra=@sifra";
                         r.CijenaBezPdv = dr.GetDecimal(5);
                         r.RabatProcenat = dr.GetDecimal(6);
                         r.IznosBezPdv = dr.GetDecimal(7);
-                        r.CijenaNabavna = dr.GetDecimal(8);
-                        r.VrijednostNabavna = dr.GetDecimal(9);
-                        r.MarzaProcenat = dr.GetDecimal(10);
-                        r.Ruc = dr.GetDecimal(11);
-                        r.PdvStopa = dr.GetDecimal(12);
-                        r.Pdv = dr.GetDecimal(13);
-                        r.IznosSaPdv = dr.GetDecimal(14);
+                        r.IznosBezPdvSaRabatom = dr.GetDecimal(8);
+                        r.CijenaNabavna = dr.GetDecimal(9);
+                        r.VrijednostNabavna = dr.GetDecimal(10);
+                        r.MarzaProcenat = dr.GetDecimal(11);
+                        r.Ruc = dr.GetDecimal(12);
+                        r.PdvStopa = dr.GetDecimal(13);
+                        r.Pdv = dr.GetDecimal(14);
+                        r.IznosSaPdv = dr.GetDecimal(15);
+                        r.RabatIznos = dr.GetDecimal(16);
+                        r.CijenaBezPdvSaRabatom = dr.GetDecimal(17);
 
                         stavke.Add(r);
                     }
@@ -405,7 +408,9 @@ where sifra=@sifra";
                     cmd.Parameters.AddWithValue("@cijena_bez_pdv_sa_rabatom", stavka.CijenaBezPdvSaRabatom);
                     cmd.Parameters.AddWithValue("@kolicina", stavka.Kolicina);
                     cmd.Parameters.AddWithValue("@rabat_procenat", stavka.RabatProcenat);
+                    cmd.Parameters.AddWithValue("@rabat_iznos", stavka.RabatIznos);
                     cmd.Parameters.AddWithValue("@iznos_bez_pdv", stavka.IznosBezPdv);
+                    cmd.Parameters.AddWithValue("@iznos_bez_pdv_sa_rabatom", stavka.IznosBezPdvSaRabatom);
                     cmd.Parameters.AddWithValue("@cijena_nabavna", stavka.CijenaNabavna);
                     cmd.Parameters.AddWithValue("@vrijednost_nabavna", stavka.VrijednostNabavna);
                     cmd.Parameters.AddWithValue("@marza_procenat", stavka.MarzaProcenat);
@@ -415,9 +420,9 @@ where sifra=@sifra";
                     cmd.Parameters.AddWithValue("@iznos_sa_pdv", stavka.IznosSaPdv);
                     // Insert some data
                     cmd.CommandText = @"update ponuda_stavka set cijena_bez_pdv=@cijena_bez_pdv, cijena_bez_pdv_sa_rabatom=@cijena_bez_pdv_sa_rabatom, kolicina=@kolicina, 
-rabat_procenat=@rabat_procenat,iznos_bez_pdv=@iznos_bez_pdv,
+rabat_procenat=@rabat_procenat,iznos_bez_pdv=@iznos_bez_pdv,iznos_bez_pdv_sa_rabatom=@iznos_bez_pdv_sa_rabatom,
 cijena_nabavna=@cijena_nabavna,vrijednost_nabavna=@vrijednost_nabavna,marza_procenat=@marza_procenat,ruc=@ruc
-,pdv_stopa=@pdv_stopa,pdv=@pdv,iznos_sa_pdv=@iznos_sa_pdv
+,pdv_stopa=@pdv_stopa,pdv=@pdv,iznos_sa_pdv=@iznos_sa_pdv,rabat_iznos=@rabat_iznos
                     where ponuda_broj=@ponuda_broj and stavka_broj=@stavka_broj";
 
                     cmd.ExecuteNonQuery();
@@ -751,7 +756,9 @@ where broj_ugovora=@broj_ugovora and broj_rate=@broj_rate";
                     cmd.Parameters.AddWithValue("@cijena_bez_pdv_sa_rabatom", stavka.CijenaBezPdvSaRabatom);
                     cmd.Parameters.AddWithValue("@kolicina", stavka.Kolicina);
                     cmd.Parameters.AddWithValue("@rabat_procenat", stavka.RabatProcenat);
+                    cmd.Parameters.AddWithValue("@rabat_iznos", stavka.RabatIznos);
                     cmd.Parameters.AddWithValue("@iznos_bez_pdv", stavka.IznosBezPdv);
+                    cmd.Parameters.AddWithValue("@iznos_bez_pdv_sa_rabatom", stavka.IznosBezPdvSaRabatom);
                     cmd.Parameters.AddWithValue("@cijena_nabavna", stavka.CijenaNabavna);
                     cmd.Parameters.AddWithValue("@vrijednost_nabavna", stavka.VrijednostNabavna);
                     cmd.Parameters.AddWithValue("@marza_procenat", stavka.MarzaProcenat);
@@ -770,14 +777,14 @@ where broj_ugovora=@broj_ugovora and broj_rate=@broj_rate";
                     //cmd.Parameters.AddWithValue("@napomena", napomena);
                     // Insert some data
                     cmd.CommandText = @"INSERT INTO ponuda_stavka (ponuda_broj, stavka_broj,
-                  artikal_naziv,jedinica_mjere, cijena_bez_pdv,cijena_bez_pdv_sa_rabatom, kolicina, rabat_procenat, iznos_bez_pdv,
-cijena_nabavna,vrijednost_nabavna,marza_procenat,ruc 
-,pdv_stopa,pdv,iznos_sa_pdv)
+                  artikal_naziv,jedinica_mjere, cijena_bez_pdv,cijena_bez_pdv_sa_rabatom, kolicina, rabat_procenat, iznos_bez_pdv,iznos_bez_pdv_sa_rabatom
+,cijena_nabavna,vrijednost_nabavna,marza_procenat,ruc 
+,pdv_stopa,pdv,iznos_sa_pdv,rabat_iznos)
                 VALUES (    
              @ponuda_broj, @stavka_broj,
-                  @artikal_naziv,@jedinica_mjere, @cijena_bez_pdv,@cijena_bez_pdv_sa_rabatom, @kolicina, @rabat_procenat, @iznos_bez_pdv,@cijena_nabavna,
+                  @artikal_naziv,@jedinica_mjere, @cijena_bez_pdv,@cijena_bez_pdv_sa_rabatom, @kolicina, @rabat_procenat, @iznos_bez_pdv,@iznos_bez_pdv_sa_rabatom,@cijena_nabavna,
 @vrijednost_nabavna,@marza_procenat,@ruc 
-,@pdv_stopa,@pdv,@iznos_sa_pdv)";
+,@pdv_stopa,@pdv,@iznos_sa_pdv,@rabat_iznos)";
 
                     cmd.ExecuteNonQuery();
 
