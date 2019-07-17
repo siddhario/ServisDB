@@ -360,8 +360,12 @@ namespace Delos.Forme
             dgvStavkePonude.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Iznos bez PDV-a", DataPropertyName = "IznosBezPdv", Width = 97, DefaultCellStyle = new DataGridViewCellStyle() { Format = "N2" } });
 
             dgvStavkePonude.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Nabavna cijena", DataPropertyName = "CijenaNabavna", Width = 97, DefaultCellStyle = new DataGridViewCellStyle() { Format = "N2" } });
-            dgvStavkePonude.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Margina", DataPropertyName = "MarzaProcenat", Width = 97, DefaultCellStyle = new DataGridViewCellStyle() { Format = "N2" } });
+            dgvStavkePonude.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Nabavna vrijednost", DataPropertyName = "VrijednostNabavna", Width = 97, DefaultCellStyle = new DataGridViewCellStyle() { Format = "N2" } });
+            dgvStavkePonude.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Margina %", DataPropertyName = "MarzaProcenat", Width = 97, DefaultCellStyle = new DataGridViewCellStyle() { Format = "N2" } });
             dgvStavkePonude.Columns.Add(new DataGridViewTextBoxColumn() { Name = "RUC", DataPropertyName = "Ruc", Width = 97, DefaultCellStyle = new DataGridViewCellStyle() { Format = "N2" } });
+            dgvStavkePonude.Columns.Add(new DataGridViewTextBoxColumn() { Name = "PDV %", DataPropertyName = "PdvStopa", Width = 97, DefaultCellStyle = new DataGridViewCellStyle() { Format = "N2" } });
+            dgvStavkePonude.Columns.Add(new DataGridViewTextBoxColumn() { Name = "PDV iznos", DataPropertyName = "Pdv", Width = 97, DefaultCellStyle = new DataGridViewCellStyle() { Format = "N2" } });
+            dgvStavkePonude.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Iznos sa PDV", DataPropertyName = "IznosSaPdv", Width = 97, DefaultCellStyle = new DataGridViewCellStyle() { Format = "N2" } });
 
 
             dgvStavkePonude.DataSource = new BindingList<PonudaStavka>(stavke);
@@ -827,10 +831,15 @@ namespace Delos.Forme
                         decimal kolicina;
                         bool s1 = decimal.TryParse(newValueString, out kolicina);
                         if(s1==true)
-                        {                         
+                        {
+                            decimal vrijednost_nabavna = Math.Round(stavka.Kolicina * stavka.CijenaNabavna, 2, MidpointRounding.AwayFromZero);
+                            stavka.VrijednostNabavna = vrijednost_nabavna;
                             decimal rabat = Math.Round(kolicina * stavka.CijenaBezPdv * stavka.RabatProcenat / 100,2,MidpointRounding.AwayFromZero);
                             decimal iznosBezPdvSaRabatom = Math.Round(kolicina * stavka.CijenaBezPdv - rabat, 2, MidpointRounding.AwayFromZero);
                             stavka.IznosBezPdv = iznosBezPdvSaRabatom;
+
+                            stavka.Pdv = Math.Round(stavka.IznosBezPdv * stavka.PdvStopa/100,2,MidpointRounding.AwayFromZero);
+                            stavka.IznosSaPdv = stavka.IznosBezPdv+stavka.Pdv;
                         }
                         break;
                     }
@@ -844,6 +853,9 @@ namespace Delos.Forme
                             decimal rabat = Math.Round(stavka.Kolicina * cijena_bez_pdv * stavka.RabatProcenat / 100, 2, MidpointRounding.AwayFromZero);
                             decimal iznosBezPdvSaRabatom = Math.Round(stavka.Kolicina * cijena_bez_pdv - rabat, 2, MidpointRounding.AwayFromZero);
                             stavka.IznosBezPdv = iznosBezPdvSaRabatom;
+
+                            stavka.Pdv = Math.Round(stavka.IznosBezPdv * stavka.PdvStopa / 100, 2, MidpointRounding.AwayFromZero);
+                            stavka.IznosSaPdv = stavka.IznosBezPdv + stavka.Pdv;
                         }
                         break;
                     }
@@ -856,6 +868,9 @@ namespace Delos.Forme
                             decimal rabat = Math.Round(stavka.Kolicina * stavka.CijenaBezPdv * rabatprocenat / 100, 2, MidpointRounding.AwayFromZero);
                             decimal iznosBezPdvSaRabatom = Math.Round(stavka.Kolicina * stavka.CijenaBezPdv - rabat, 2, MidpointRounding.AwayFromZero);
                             stavka.IznosBezPdv = iznosBezPdvSaRabatom;
+
+                            stavka.Pdv = Math.Round(stavka.IznosBezPdv * stavka.PdvStopa / 100, 2, MidpointRounding.AwayFromZero);
+                            stavka.IznosSaPdv = stavka.IznosBezPdv + stavka.Pdv;
                         }
                         break;
                     }
@@ -867,9 +882,13 @@ namespace Delos.Forme
                         {
                             decimal ruc = Math.Round(stavka.Kolicina * stavka.CijenaNabavna * stavka.MarzaProcenat / 100, 2, MidpointRounding.AwayFromZero) ;
                             stavka.Ruc = ruc;
+                            decimal vrijednost_nabavna = Math.Round(stavka.Kolicina * stavka.CijenaNabavna, 2, MidpointRounding.AwayFromZero);
+                            stavka.VrijednostNabavna = vrijednost_nabavna;
                             decimal iznosBezPdv = Math.Round(stavka.Kolicina * stavka.CijenaNabavna, 2, MidpointRounding.AwayFromZero)+stavka.Ruc;
                             stavka.IznosBezPdv = iznosBezPdv;
 
+                            stavka.Pdv = Math.Round(stavka.IznosBezPdv * stavka.PdvStopa / 100, 2, MidpointRounding.AwayFromZero);
+                            stavka.IznosSaPdv = stavka.IznosBezPdv + stavka.Pdv;
                         }
                         break;
                     }
@@ -884,6 +903,9 @@ namespace Delos.Forme
                             stavka.Ruc = ruc;
                             decimal iznosBezPdv = Math.Round(stavka.Kolicina * stavka.CijenaNabavna, 2, MidpointRounding.AwayFromZero) + stavka.Ruc;
                             stavka.IznosBezPdv = iznosBezPdv;
+
+                            stavka.Pdv = Math.Round(stavka.IznosBezPdv * stavka.PdvStopa / 100, 2, MidpointRounding.AwayFromZero);
+                            stavka.IznosSaPdv = stavka.IznosBezPdv + stavka.Pdv;
                         }
                         break;
                     }

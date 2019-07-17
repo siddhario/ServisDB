@@ -8,6 +8,10 @@ namespace ServisDB.Klase
 {
     public class PonudaStavka
     {
+        public PonudaStavka()
+        {
+            PdvStopa = 17;
+        }
         public string PonudaBroj { get; set; }
         public int StavkaBroj { get; set; }
         public string ArtikalNaziv { get; set; }
@@ -18,7 +22,11 @@ namespace ServisDB.Klase
         public decimal RabatProcenat { get; set; }
         public decimal IznosBezPdv { get; set; }
         public decimal CijenaNabavna { get; set; }
+        public decimal VrijednostNabavna { get; set; }
         public decimal MarzaProcenat { get; set; }
         public decimal Ruc { get; set; }
+        public decimal PdvStopa { get; set; }
+        public decimal Pdv { get; set; }
+        public decimal IznosSaPdv { get; set; }
     }
 }
