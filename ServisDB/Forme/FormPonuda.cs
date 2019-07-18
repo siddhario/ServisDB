@@ -302,8 +302,11 @@ namespace Delos.Forme
         private void dgvPrijave_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             //broj, datum, kupac_sifra, kupac_maticni_broj, kupac_broj_lk, kupac_naziv, kupac_adresa, kupac_telefon, broj_racuna, radnik, inicijalno_placeno, iznos_bez_pdv, pdv, iznos_sa_pdv, broj_rata, suma_uplata, preostalo_za_uplatu, status, napomena
+            FillDetailView();
+        }
 
-
+        private void FillDetailView()
+        {
             if (dgvPrijave.SelectedRows.Count == 0)
                 return;
             object o = dgvPrijave.SelectedRows[0].DataBoundItem;
@@ -339,7 +342,7 @@ namespace Delos.Forme
             tbPdv.Text = ((DataRowView)o).Row["pdv"].ToString();
             tbIznosSaPdv.Text = ((DataRowView)o).Row["iznos_sa_pdv"].ToString();
 
-        
+
 
             SetVisibility();
         }
@@ -921,8 +924,13 @@ namespace Delos.Forme
                         break;
                     }
             }
-            if(stavka.PonudaBroj!=null)
-            PersistanceManager.UpdatePonudaStavka(stavka);
+            if (stavka.PonudaBroj != null)
+            {
+                PersistanceManager.UpdatePonudaStavka(stavka);
+                CalculateTotals();
+                //ReadPonuda("", "");
+                //dgvPrijave_CellDoubleClick(this, null);
+            }
 
         }
 
@@ -962,6 +970,10 @@ namespace Delos.Forme
                     stavka.PonudaBroj = broj;
                     stavka.StavkaBroj = ((BindingList<PonudaStavka>)dgvStavkePonude.DataSource).Where(ps => ps.PonudaBroj != null).Max(ps => ps.StavkaBroj) + 1;
                     PersistanceManager.InsertPonudaStavka(stavka);
+
+                    CalculateTotals();
+                    //ReadPonuda("", "");
+                    //FillDetailView();
                 }
             }
             catch (Exception ex) {
@@ -971,10 +983,23 @@ namespace Delos.Forme
             }
         }
 
+        private void CalculateTotals()
+        {
+            IList<PonudaStavka> stavke = (BindingList<PonudaStavka>)dgvStavkePonude.DataSource;
+            tbIznosBezRabata.Text = stavke.Sum(s => s.IznosBezPdv).ToString();
+            tbIznosSaRabatom.Text = stavke.Sum(s => s.IznosBezPdvSaRabatom).ToString();
+            tbRabat.Text = stavke.Sum(s => s.RabatIznos).ToString();
+            tbNabavnaVrijednost.Text = stavke.Sum(s => s.VrijednostNabavna).ToString();
+            tbRUC.Text = stavke.Sum(s => s.Ruc).ToString();
+            tbPdv.Text = stavke.Sum(s => s.Pdv).ToString();
+            tbIznosSaPdv.Text = stavke.Sum(s => s.IznosSaPdv).ToString();
+        }
+
         private void dgvStavkePonude_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e)
         {
             PonudaStavka stavka = (PonudaStavka)e.Row.DataBoundItem;
             PersistanceManager.DeletePonudaStavka(stavka);
+            CalculateTotals();
         }
 
         private void dgvStavkePonude_ColumnAdded(object sender, DataGridViewColumnEventArgs e)
