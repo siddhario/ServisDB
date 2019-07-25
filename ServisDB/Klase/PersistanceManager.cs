@@ -271,6 +271,34 @@ where sifra=@sifra";
                 }
             }
         }
+
+        public static void InsertPonudaDokument(PonudaDokument dokument)
+        {
+            using (var conn = new NpgsqlConnection(_connectionString))
+            {
+                conn.Open();
+                using (var cmd = new NpgsqlCommand())
+                {
+                    cmd.Connection = conn;
+
+                    cmd.Parameters.AddWithValue("@ponuda_broj", dokument.PonudaBroj);
+                    cmd.Parameters.AddWithValue("@dokument_broj", dokument.DokumentBroj);
+                    cmd.Parameters.AddWithValue("@dokument", dokument.Dokument);
+                    cmd.Parameters.AddWithValue("@naziv", dokument.Naziv);
+                    cmd.Parameters.AddWithValue("@opis", dokument.Opis!=null?dokument.Opis:(object)DBNull.Value);
+
+                    cmd.CommandText = @"INSERT INTO ponuda_dokument (ponuda_broj, dokument_broj,
+                  dokument,naziv, opis)
+                VALUES (@ponuda_broj, @dokument_broj,
+                  @dokument,@naziv, @opis)";
+
+                    cmd.ExecuteNonQuery();
+
+
+                }
+            }
+        }
+
         public static void DeletePonuda(string broj)
         {
             using (var conn = new NpgsqlConnection(_connectionString))
@@ -333,6 +361,57 @@ where sifra=@sifra";
             }
             return stavke;
         }
+
+        public static byte[] ReadPonudaDokumentSadrzaj(string ponuda_broj, int dokument_broj)
+        {
+            byte[] sadrzaj  = null;
+            using (var conn = new NpgsqlConnection(_connectionString))
+            {
+                conn.Open();
+                using (var cmd = new NpgsqlCommand())
+                {
+                    cmd.Connection = conn;
+                    cmd.Parameters.AddWithValue("@ponuda_broj", ponuda_broj);
+                    cmd.Parameters.AddWithValue("@dokument_broj", dokument_broj);
+
+                    cmd.CommandText = @"SELECT dokument
+	FROM public.ponuda_dokument where ponuda_broj=@ponuda_broj and dokument_broj=@dokument_broj order by dokument_broj asc";
+                    sadrzaj = (byte[])cmd.ExecuteScalar();
+                }
+            }
+            return sadrzaj;
+        }
+
+        public static List<PonudaDokument> ReadPonudaDokument(string broj)
+        {
+            List<PonudaDokument> dokumenti = new List<PonudaDokument>();
+            using (var conn = new NpgsqlConnection(_connectionString))
+            {
+                conn.Open();
+                using (var cmd = new NpgsqlCommand())
+                {
+                    cmd.Connection = conn;
+                    cmd.Parameters.AddWithValue("@broj", broj);
+                    // Insert some data
+                    cmd.CommandText = @"SELECT ponuda_broj,dokument_broj,naziv,opis
+	FROM public.ponuda_dokument where ponuda_broj=@broj order by dokument_broj asc";
+                    var dr = cmd.ExecuteReader();
+                    while (dr.Read())
+                    {
+                        PonudaDokument r = new PonudaDokument();
+                        r.PonudaBroj = dr.GetString(0);
+                        r.DokumentBroj = dr.GetInt32(1);
+                        r.Naziv = dr.GetString(2);
+                        r.Opis = dr[3]!=DBNull.Value? dr.GetString(3):null;
+
+                        dokumenti.Add(r);
+                    }
+                    dr.Close();
+                }
+            }
+            return dokumenti;
+        }
+
 
         public static void UpdatePonuda(string broj, string status)
         {
@@ -810,5 +889,24 @@ where broj_ugovora=@broj_ugovora and broj_rate=@broj_rate";
                 }
             }
         }
+
+        internal static void DeletePonudaDokument(PonudaDokument dokument)
+        {
+            using (var conn = new NpgsqlConnection(_connectionString))
+            {
+                conn.Open();
+                using (var cmd = new NpgsqlCommand())
+                {
+                    cmd.Connection = conn;
+
+                    cmd.Parameters.AddWithValue("@ponuda_broj", dokument.PonudaBroj);
+                    cmd.Parameters.AddWithValue("@dokument_broj", dokument.DokumentBroj);
+                    // Insert some data
+                    cmd.CommandText = @"delete from ponuda_dokument where ponuda_broj=@ponuda_broj and dokument_broj=@dokument_broj";
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
     }
 }

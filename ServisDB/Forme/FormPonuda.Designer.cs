@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.radioButton1 = new System.Windows.Forms.RadioButton();
@@ -41,6 +41,9 @@
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.dgvPrijave = new System.Windows.Forms.DataGridView();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.label5 = new System.Windows.Forms.Label();
+            this.rbCijena = new System.Windows.Forms.RadioButton();
+            this.rbMarza = new System.Windows.Forms.RadioButton();
             this.lblPartnerJIB = new System.Windows.Forms.Label();
             this.tbJIB = new System.Windows.Forms.TextBox();
             this.lblIznosSaPdv = new System.Windows.Forms.Label();
@@ -94,21 +97,26 @@
             this.tbPartner = new System.Windows.Forms.TextBox();
             this.dtpDatum = new System.Windows.Forms.DateTimePicker();
             this.tbRedniBroj = new System.Windows.Forms.TextBox();
-            this.dgvStavkePonude = new System.Windows.Forms.DataGridView();
             this.btnOtkljucaj = new System.Windows.Forms.Button();
             this.btnRealizovan = new System.Windows.Forms.Button();
             this.btnZakljuciUgovor = new System.Windows.Forms.Button();
             this.btnBrisanje = new System.Windows.Forms.Button();
             this.btnStampa = new System.Windows.Forms.Button();
             this.btnPonudaNerealizovana = new System.Windows.Forms.Button();
-            this.rbMarza = new System.Windows.Forms.RadioButton();
-            this.rbCijena = new System.Windows.Forms.RadioButton();
-            this.label5 = new System.Windows.Forms.Label();
+            this.tabControl2 = new System.Windows.Forms.TabControl();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.dgvStavkePonude = new System.Windows.Forms.DataGridView();
+            this.dgvDokumenti = new System.Windows.Forms.DataGridView();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPrijave)).BeginInit();
             this.tabPage2.SuspendLayout();
+            this.tabControl2.SuspendLayout();
+            this.tabPage3.SuspendLayout();
+            this.tabPage4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvStavkePonude)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvDokumenti)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -319,6 +327,37 @@
             this.tabPage2.Text = "Unos [F2]";
             this.tabPage2.UseVisualStyleBackColor = true;
             this.tabPage2.Click += new System.EventHandler(this.tabPage2_Click);
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(16, 310);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(51, 16);
+            this.label5.TabIndex = 127;
+            this.label5.Text = "Fiksna:";
+            // 
+            // rbCijena
+            // 
+            this.rbCijena.AutoSize = true;
+            this.rbCijena.Location = new System.Drawing.Point(165, 310);
+            this.rbCijena.Name = "rbCijena";
+            this.rbCijena.Size = new System.Drawing.Size(64, 20);
+            this.rbCijena.TabIndex = 126;
+            this.rbCijena.Text = "Cijena";
+            this.rbCijena.UseVisualStyleBackColor = true;
+            // 
+            // rbMarza
+            // 
+            this.rbMarza.AutoSize = true;
+            this.rbMarza.Checked = true;
+            this.rbMarza.Location = new System.Drawing.Point(96, 310);
+            this.rbMarza.Name = "rbMarza";
+            this.rbMarza.Size = new System.Drawing.Size(63, 20);
+            this.rbMarza.TabIndex = 125;
+            this.rbMarza.TabStop = true;
+            this.rbMarza.Text = "Marža";
+            this.rbMarza.UseVisualStyleBackColor = true;
             // 
             // lblPartnerJIB
             // 
@@ -800,32 +839,6 @@
             this.tbRedniBroj.TabIndex = 26;
             this.tbRedniBroj.Text = "AUTO";
             // 
-            // dgvStavkePonude
-            // 
-            this.dgvStavkePonude.AllowUserToOrderColumns = true;
-            this.dgvStavkePonude.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.dgvStavkePonude.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvStavkePonude.DefaultCellStyle = dataGridViewCellStyle2;
-            this.dgvStavkePonude.Location = new System.Drawing.Point(4, 382);
-            this.dgvStavkePonude.Name = "dgvStavkePonude";
-            this.dgvStavkePonude.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvStavkePonude.Size = new System.Drawing.Size(1169, 256);
-            this.dgvStavkePonude.TabIndex = 28;
-            this.dgvStavkePonude.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvStavkePonude_CellEndEdit);
-            this.dgvStavkePonude.ColumnAdded += new System.Windows.Forms.DataGridViewColumnEventHandler(this.dgvStavkePonude_ColumnAdded);
-            this.dgvStavkePonude.RowValidated += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvStavkePonude_RowValidated_1);
-            this.dgvStavkePonude.RowValidating += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.dgvStavkePonude_RowValidating);
-            this.dgvStavkePonude.UserAddedRow += new System.Windows.Forms.DataGridViewRowEventHandler(this.dgvStavkePonude_UserAddedRow);
-            this.dgvStavkePonude.UserDeletingRow += new System.Windows.Forms.DataGridViewRowCancelEventHandler(this.dgvStavkePonude_UserDeletingRow);
-            // 
             // btnOtkljucaj
             // 
             this.btnOtkljucaj.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -898,61 +911,111 @@
             this.btnPonudaNerealizovana.UseVisualStyleBackColor = true;
             this.btnPonudaNerealizovana.Click += new System.EventHandler(this.btnPonudaNerealizovana_Click);
             // 
-            // rbMarza
+            // tabControl2
             // 
-            this.rbMarza.AutoSize = true;
-            this.rbMarza.Checked = true;
-            this.rbMarza.Location = new System.Drawing.Point(96, 310);
-            this.rbMarza.Name = "rbMarza";
-            this.rbMarza.Size = new System.Drawing.Size(63, 20);
-            this.rbMarza.TabIndex = 125;
-            this.rbMarza.TabStop = true;
-            this.rbMarza.Text = "Marža";
-            this.rbMarza.UseVisualStyleBackColor = true;
+            this.tabControl2.AllowDrop = true;
+            this.tabControl2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tabControl2.Controls.Add(this.tabPage3);
+            this.tabControl2.Controls.Add(this.tabPage4);
+            this.tabControl2.Location = new System.Drawing.Point(4, 378);
+            this.tabControl2.Name = "tabControl2";
+            this.tabControl2.SelectedIndex = 0;
+            this.tabControl2.Size = new System.Drawing.Size(1173, 279);
+            this.tabControl2.TabIndex = 38;
+            this.tabControl2.DragDrop += new System.Windows.Forms.DragEventHandler(this.tabControl2_DragDrop);
+            this.tabControl2.DragEnter += new System.Windows.Forms.DragEventHandler(this.tabControl2_DragEnter);
             // 
-            // rbCijena
+            // tabPage3
             // 
-            this.rbCijena.AutoSize = true;
-            this.rbCijena.Location = new System.Drawing.Point(165, 310);
-            this.rbCijena.Name = "rbCijena";
-            this.rbCijena.Size = new System.Drawing.Size(64, 20);
-            this.rbCijena.TabIndex = 126;
-            this.rbCijena.Text = "Cijena";
-            this.rbCijena.UseVisualStyleBackColor = true;
+            this.tabPage3.Controls.Add(this.dgvStavkePonude);
+            this.tabPage3.Location = new System.Drawing.Point(4, 22);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage3.Size = new System.Drawing.Size(1165, 253);
+            this.tabPage3.TabIndex = 0;
+            this.tabPage3.Text = "Stavke ponude";
+            this.tabPage3.UseVisualStyleBackColor = true;
             // 
-            // label5
+            // tabPage4
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(16, 310);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(51, 16);
-            this.label5.TabIndex = 127;
-            this.label5.Text = "Fiksna:";
+            this.tabPage4.Controls.Add(this.dgvDokumenti);
+            this.tabPage4.Location = new System.Drawing.Point(4, 22);
+            this.tabPage4.Name = "tabPage4";
+            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage4.Size = new System.Drawing.Size(1165, 253);
+            this.tabPage4.TabIndex = 1;
+            this.tabPage4.Text = "Dokumenti";
+            this.tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // dgvStavkePonude
+            // 
+            this.dgvStavkePonude.AllowUserToOrderColumns = true;
+            this.dgvStavkePonude.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle16.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle16.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle16.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle16.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle16.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle16.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvStavkePonude.DefaultCellStyle = dataGridViewCellStyle16;
+            this.dgvStavkePonude.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvStavkePonude.Location = new System.Drawing.Point(3, 3);
+            this.dgvStavkePonude.Name = "dgvStavkePonude";
+            this.dgvStavkePonude.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvStavkePonude.Size = new System.Drawing.Size(1159, 247);
+            this.dgvStavkePonude.TabIndex = 29;
+            // 
+            // dgvDokumenti
+            // 
+            this.dgvDokumenti.AllowDrop = true;
+            this.dgvDokumenti.AllowUserToAddRows = false;
+            this.dgvDokumenti.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvDokumenti.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvDokumenti.Location = new System.Drawing.Point(3, 3);
+            this.dgvDokumenti.Name = "dgvDokumenti";
+            this.dgvDokumenti.ReadOnly = true;
+            this.dgvDokumenti.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvDokumenti.Size = new System.Drawing.Size(1159, 247);
+            this.dgvDokumenti.TabIndex = 0;
+            this.dgvDokumenti.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvDokumenti_CellDoubleClick);
+            this.dgvDokumenti.UserDeletedRow += new System.Windows.Forms.DataGridViewRowEventHandler(this.dgvDokumenti_UserDeletedRow);
+            this.dgvDokumenti.UserDeletingRow += new System.Windows.Forms.DataGridViewRowCancelEventHandler(this.dgvDokumenti_UserDeletingRow);
+            this.dgvDokumenti.DragDrop += new System.Windows.Forms.DragEventHandler(this.dataGridView1_DragDrop);
+            this.dgvDokumenti.DragEnter += new System.Windows.Forms.DragEventHandler(this.dgvDokumenti_DragEnter);
             // 
             // FormPonuda
             // 
+            this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1185, 659);
+            this.Controls.Add(this.tabControl2);
             this.Controls.Add(this.btnPonudaNerealizovana);
             this.Controls.Add(this.btnOtkljucaj);
             this.Controls.Add(this.btnRealizovan);
             this.Controls.Add(this.btnZakljuciUgovor);
             this.Controls.Add(this.btnBrisanje);
             this.Controls.Add(this.btnStampa);
-            this.Controls.Add(this.dgvStavkePonude);
             this.Controls.Add(this.tabControl1);
             this.Name = "FormPonuda";
             this.Text = "Ponude";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.FormPonuda_Load);
+            this.DragDrop += new System.Windows.Forms.DragEventHandler(this.FormPonuda_DragDrop);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPrijave)).EndInit();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
+            this.tabControl2.ResumeLayout(false);
+            this.tabPage3.ResumeLayout(false);
+            this.tabPage4.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvStavkePonude)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvDokumenti)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -986,7 +1049,6 @@
         private System.Windows.Forms.TextBox tbRedniBroj;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox tbTelefon;
-        private System.Windows.Forms.DataGridView dgvStavkePonude;
         private System.Windows.Forms.Label lblParitet;
         private System.Windows.Forms.ComboBox cbParitetKod;
         private System.Windows.Forms.TextBox tbValutaPlacanja;
@@ -1034,5 +1096,10 @@
         private System.Windows.Forms.RadioButton rbCijena;
         private System.Windows.Forms.RadioButton rbMarza;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.TabControl tabControl2;
+        private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.DataGridView dgvStavkePonude;
+        private System.Windows.Forms.TabPage tabPage4;
+        private System.Windows.Forms.DataGridView dgvDokumenti;
     }
 }
