@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.radioButton1 = new System.Windows.Forms.RadioButton();
@@ -108,6 +108,7 @@
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.dgvStavkePonude = new System.Windows.Forms.DataGridView();
             this.dgvDokumenti = new System.Windows.Forms.DataGridView();
+            this.btnDeleteCache = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPrijave)).BeginInit();
@@ -260,6 +261,7 @@
             this.dgvPrijave.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvPrijave_CellDoubleClick);
             this.dgvPrijave.RowPrePaint += new System.Windows.Forms.DataGridViewRowPrePaintEventHandler(this.dgvPrijave_RowPrePaint);
             this.dgvPrijave.SelectionChanged += new System.EventHandler(this.dgvPrijave_SelectionChanged);
+            this.dgvPrijave.DragDrop += new System.Windows.Forms.DragEventHandler(this.dgvPrijave_DragDrop);
             // 
             // tabPage2
             // 
@@ -953,20 +955,21 @@
             // 
             this.dgvStavkePonude.AllowUserToOrderColumns = true;
             this.dgvStavkePonude.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle16.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle16.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle16.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle16.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle16.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle16.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvStavkePonude.DefaultCellStyle = dataGridViewCellStyle16;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvStavkePonude.DefaultCellStyle = dataGridViewCellStyle2;
             this.dgvStavkePonude.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvStavkePonude.Location = new System.Drawing.Point(3, 3);
             this.dgvStavkePonude.Name = "dgvStavkePonude";
             this.dgvStavkePonude.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvStavkePonude.Size = new System.Drawing.Size(1159, 247);
             this.dgvStavkePonude.TabIndex = 29;
+            this.dgvStavkePonude.DragDrop += new System.Windows.Forms.DragEventHandler(this.dgvStavkePonude_DragDrop);
             // 
             // dgvDokumenti
             // 
@@ -986,12 +989,24 @@
             this.dgvDokumenti.DragDrop += new System.Windows.Forms.DragEventHandler(this.dataGridView1_DragDrop);
             this.dgvDokumenti.DragEnter += new System.Windows.Forms.DragEventHandler(this.dgvDokumenti_DragEnter);
             // 
+            // btnDeleteCache
+            // 
+            this.btnDeleteCache.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnDeleteCache.Location = new System.Drawing.Point(1076, 375);
+            this.btnDeleteCache.Name = "btnDeleteCache";
+            this.btnDeleteCache.Size = new System.Drawing.Size(101, 25);
+            this.btnDeleteCache.TabIndex = 39;
+            this.btnDeleteCache.Text = "Očisti keš";
+            this.btnDeleteCache.UseVisualStyleBackColor = true;
+            this.btnDeleteCache.Click += new System.EventHandler(this.btnDeleteCache_Click);
+            // 
             // FormPonuda
             // 
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1185, 659);
+            this.Controls.Add(this.btnDeleteCache);
             this.Controls.Add(this.tabControl2);
             this.Controls.Add(this.btnPonudaNerealizovana);
             this.Controls.Add(this.btnOtkljucaj);
@@ -1101,5 +1116,6 @@
         private System.Windows.Forms.DataGridView dgvStavkePonude;
         private System.Windows.Forms.TabPage tabPage4;
         private System.Windows.Forms.DataGridView dgvDokumenti;
+        private System.Windows.Forms.Button btnDeleteCache;
     }
 }

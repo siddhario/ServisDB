@@ -1050,30 +1050,7 @@ namespace Delos.Forme
 
         private void dataGridView1_DragDrop(object sender, DragEventArgs e)
         {
-            //    string statusPonude = ((DataRowView)dgvPrijave.SelectedRows[0].DataBoundItem).Row["status"].ToString();
-            //    if (statusPonude != "E")
-            //    {
-            //        return;
-            //    }
-            //    string brojPonude = ((DataRowView)dgvPrijave.SelectedRows[0].DataBoundItem).Row["broj"].ToString();
-
-            //    int maxBrojDokumenta = ((BindingList<PonudaDokument>)dgvDokumenti.DataSource).Where(ps => ps.PonudaBroj != null).Max(ps => ps.DokumentBroj);
-            //    //int maxBrojDokumenta = 0;
-
-            //    string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
-            //    for (int i = 0; i < files.Length; i++)
-            //    {
-            //        PonudaDokument dokument = new PonudaDokument();
-            //        dokument.PonudaBroj = brojPonude;
-            //        dokument.DokumentBroj = maxBrojDokumenta + i + 1;
-            //        dokument.Naziv = files[i].Substring(files[i].LastIndexOf("\\")+1);
-            //        dokument.Dokument = File.ReadAllBytes(files[i]);
-            //        PersistanceManager.InsertPonudaDokument(dokument);
-
-            //    }
-            //    MessageBox.Show("Dokumenti su uspješno dodani!");
-
-            //    BindPonudaDokument(PersistanceManager.ReadPonudaDokument(brojPonude));
+            UploadFiles(e);
         }
 
         private void dgvDokumenti_DragEnter(object sender, DragEventArgs e)
@@ -1090,7 +1067,12 @@ namespace Delos.Forme
             PonudaDokument dokument = (PonudaDokument)dgvDokumenti.Rows[e.RowIndex].DataBoundItem;
             byte[] sadrzaj = PersistanceManager.ReadPonudaDokumentSadrzaj(dokument.PonudaBroj, dokument.DokumentBroj);
             string dir = System.IO.Path.Combine(Environment.GetFolderPath(
-        Environment.SpecialFolder.MyDoc‌​uments), "ServisDB");
+        Environment.SpecialFolder.MyDoc‌​uments), "ServisDB\\temp");
+
+            if (Directory.Exists(dir) == false)
+            {
+                Directory.CreateDirectory(dir);
+            }
             string path = dir + "\\" + Guid.NewGuid().ToString() + "_" + dokument.Naziv;
             File.WriteAllBytes(path, sadrzaj);
             Process.Start(path);
@@ -1110,6 +1092,11 @@ namespace Delos.Forme
         }
 
         private void tabControl2_DragDrop(object sender, DragEventArgs e)
+        {
+            UploadFiles(e);
+        }
+
+        private void UploadFiles(DragEventArgs e)
         {
             string statusPonude = ((DataRowView)dgvPrijave.SelectedRows[0].DataBoundItem).Row["status"].ToString();
             if (statusPonude != "E")
@@ -1154,6 +1141,46 @@ namespace Delos.Forme
         private void dgvDokumenti_UserDeletedRow(object sender, DataGridViewRowEventArgs e)
         {
 
+        }
+
+        private void dgvStavkePonude_DragDrop(object sender, DragEventArgs e)
+        {
+            UploadFiles(e);
+        }
+
+        private void dgvPrijave_DragDrop(object sender, DragEventArgs e)
+        {
+            UploadFiles(e);
+        }
+
+        private void btnDeleteCache_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string path = System.IO.Path.Combine(Environment.GetFolderPath(
+   Environment.SpecialFolder.MyDoc‌​uments), "ServisDB\\temp");
+
+
+                System.IO.DirectoryInfo di = new DirectoryInfo(path);
+
+                if (di.Exists == true)
+
+                    foreach (FileInfo file in di.GetFiles())
+                    {
+                        file.Delete();
+                    }
+                foreach (DirectoryInfo dir in di.GetDirectories())
+                {
+                    dir.Delete(true);
+                }
+
+                MessageBox.Show("Uspješno!");
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Dokumenti ne mogu obrisani! Pokušajte zatvori");
+            }
         }
     }
 }
