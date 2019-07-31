@@ -120,7 +120,7 @@ namespace Delos.Forme
 
         private void tabPage2_Click(object sender, EventArgs e)
         {
-
+            
         }
 
         private void Clear()
@@ -151,6 +151,7 @@ namespace Delos.Forme
             tbPartner.ReadOnly = false;
             tbPartner.Focus();
             SetVisibility();
+          
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -221,6 +222,7 @@ namespace Delos.Forme
             tabControl1.SelectedIndex = 0;
             tbRedniBroj.Text = "AUTO";
             Clear();
+         
         }
 
         private void tabControl1_KeyDown(object sender, KeyEventArgs e)
@@ -310,7 +312,7 @@ namespace Delos.Forme
             if (dgvPrijave.SelectedRows.Count == 0)
                 return;
             object o = dgvPrijave.SelectedRows[0].DataBoundItem;
-            tabControl1.SelectedIndex = 1;
+          
             tbRedniBroj.Text = ((DataRowView)o).Row.ItemArray[0].ToString();
 
             dtpDatum.Value = (DateTime)((DataRowView)o).Row["datum"];
@@ -324,7 +326,7 @@ namespace Delos.Forme
             tbParitet.Text = ((DataRowView)o).Row["paritet"].ToString();
             tbRokVazenja.Text = ((DataRowView)o).Row["rok_vazenja"].ToString();
             cbParitetKod.SelectedItem = ((DataRowView)o).Row["paritet_kod"].ToString();
-
+            tabControl1.SelectedIndex = 1;
 
 
             tbPartnerSifra.Text = ((DataRowView)o).Row["partner_sifra"].ToString();
@@ -895,11 +897,19 @@ namespace Delos.Forme
         private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (tabControl1.SelectedIndex == 1)
-                tbPartner.Focus();
+            {
+                tbPartner.Focus();  
+                if(tbRedniBroj.Text=="AUTO")
+                {
+                    dgvStavkePonude.DataSource = null;
+                    dgvDokumenti.DataSource = null;
+                }
+            }
             else
             {
                 textBox1.Focus();
                 textBox1.Select();
+
             }
         }
 
