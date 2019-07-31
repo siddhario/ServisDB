@@ -33,7 +33,7 @@ namespace Delos.Forme
         {
             StaticFilters = new List<string>();
             StaticFilters.Add("(broj like concat(@broj,'%') or @broj is null)");
-            StaticFilters.Add("(lower(partner_naziv) like concat(lower(@kupac_ime),'%') or @kupac_ime is null)");
+            StaticFilters.Add("(broj in (select Ponuda_broj from ponuda_stavka where lower(artikal_naziv) like concat(lower(@kupac_ime),'%')) or (lower(partner_naziv) like concat(lower(@kupac_ime),'%') or @kupac_ime is null))");
 
             List<string> filters = new List<string>();
             filters = filters.Concat(StaticFilters).ToList();
@@ -522,48 +522,107 @@ namespace Delos.Forme
             List<PonudaStavka> stavke = PersistanceManager.ReadPonudaStavka(broj);
             int index = 0;
             string rowIndex = (14 + index).ToString();
+
             foreach (var stavka in stavke)
             {
                 rowIndex = (14 + index).ToString();
+                sheet.Row(14 + index).Height = 20;
+                sheet.Row(14 + index).Style.Font.FontName = "Arial";
+                sheet.Row(14 + index).Style.Font.FontSize = 10;
+                sheet.Row(14 + index).Style.Font.FontColor = XLColor.Black;
+                sheet.Row(14 + index).Style.Font.Bold = false;
+                sheet.Row(14 + index).Style.Alignment.Vertical = XLAlignmentVerticalValues.Bottom;
+
                 sheet.Cells("A" + rowIndex).Value = stavka.StavkaBroj.ToString();
                 sheet.Cells("A" + rowIndex).DataType = XLDataType.Text;
+                sheet.Cells("A" + rowIndex).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+                sheet.Cells("A" + rowIndex).Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
+                sheet.Cells("A" + rowIndex).Style.Border.OutsideBorderColor = XLColor.FromArgb(216, 228, 188);
+
 
                 sheet.Cells("B" + rowIndex).Value = stavka.ArtikalNaziv.ToString();
                 sheet.Cells("B" + rowIndex).DataType = XLDataType.Text;
+                sheet.Cells("B" + rowIndex).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Left;
+                sheet.Cells("B" + rowIndex).Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
+                sheet.Cells("B" + rowIndex).Style.Border.OutsideBorderColor = XLColor.FromArgb(216, 228, 188);
 
                 sheet.Cells("C" + rowIndex).Value = stavka.JedinicaMjere.ToString();
                 sheet.Cells("C" + rowIndex).DataType = XLDataType.Text;
+                sheet.Cells("C" + rowIndex).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+                sheet.Cells("C" + rowIndex).Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
+                sheet.Cells("C" + rowIndex).Style.Border.OutsideBorderColor = XLColor.FromArgb(216, 228, 188);
 
                 sheet.Cells("D" + rowIndex).Value = stavka.Kolicina.ToString();
-                sheet.Cells("D" + rowIndex).DataType = XLDataType.Text;
+                sheet.Cells("D" + rowIndex).DataType = XLDataType.Number;
+                sheet.Cells("D" + rowIndex).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+                sheet.Cells("D" + rowIndex).Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
+                sheet.Cells("D" + rowIndex).Style.Border.OutsideBorderColor = XLColor.FromArgb(216, 228, 188);
 
                 sheet.Cells("E" + rowIndex).Value = stavka.CijenaBezPdv.ToString();
-                sheet.Cells("E" + rowIndex).DataType = XLDataType.Text;
+                sheet.Cells("E" + rowIndex).DataType = XLDataType.Number;
+                sheet.Cells("E" + rowIndex).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Right;
+                sheet.Cells("E" + rowIndex).Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
+                sheet.Cells("E" + rowIndex).Style.Border.OutsideBorderColor = XLColor.FromArgb(216, 228, 188);
+                sheet.Cells("E" + rowIndex).Style.NumberFormat.Format = "#,##0.00 \"KM\"";
 
                 sheet.Cells("F" + rowIndex).Value = stavka.RabatProcenat.ToString();
-                sheet.Cells("F" + rowIndex).DataType = XLDataType.Text;
+                sheet.Cells("F" + rowIndex).DataType = XLDataType.Number;
+                sheet.Cells("F" + rowIndex).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Right;
+                sheet.Cells("F" + rowIndex).Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
+                sheet.Cells("F" + rowIndex).Style.Border.OutsideBorderColor = XLColor.FromArgb(216, 228, 188);
+                sheet.Cells("F" + rowIndex).Style.NumberFormat.Format = "0.00%";
 
-                sheet.Cells("G" + rowIndex).Value = stavka.IznosBezPdv.ToString();
-                sheet.Cells("G" + rowIndex).DataType = XLDataType.Text;
+                sheet.Cells("G" + rowIndex).Value = stavka.IznosBezPdvSaRabatom.ToString();
+                sheet.Cells("G" + rowIndex).DataType = XLDataType.Number;
+                sheet.Cells("G" + rowIndex).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Right;
+                sheet.Cells("G" + rowIndex).Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
+                sheet.Cells("G" + rowIndex).Style.Border.OutsideBorderColor = XLColor.FromArgb(216, 228, 188);
+                sheet.Cells("G" + rowIndex).Style.NumberFormat.Format = "#,##0.00 \"KM\"";
+                sheet.Cells("G" + rowIndex).Style.Font.Bold = false;
 
                 index++;
             }
 
+            sheet.Row(14 + stavke.Count + 2).Height = 20;
+            sheet.Row(14 + stavke.Count + 3).Height = 20;
+            sheet.Row(14 + stavke.Count + 4).Height = 20;
+            sheet.Row(14 + stavke.Count + 5).Height = 20;
+            sheet.Row(14 + stavke.Count + 6).Height = 20;
 
             sheet.Cells("A" + (14 + stavke.Count + 2).ToString()).Value = "UKUPAN IZNOS BEZ RABATA";
             sheet.Cells("A" + (14 + stavke.Count + 2).ToString()).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Right;
+            sheet.Cells("A" + (14 + stavke.Count + 2).ToString()).Style.Font.Bold = false;
+            sheet.Cells("A" + (14 + stavke.Count + 2).ToString()).Style.Font.FontName  = "Arial";
+            sheet.Cells("A" + (14 + stavke.Count + 2).ToString()).Style.Font.FontSize = 10;
+            sheet.Cells("A" + (14 + stavke.Count + 2).ToString()).Style.Font.FontColor = XLColor.Black;
 
             sheet.Cells("A" + (14 + stavke.Count + 3).ToString()).Value = "IZNOS RABATA";
             sheet.Cells("A" + (14 + stavke.Count + 3).ToString()).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Right;
+            sheet.Cells("A" + (14 + stavke.Count + 3).ToString()).Style.Font.Bold = false;
+            sheet.Cells("A" + (14 + stavke.Count + 3).ToString()).Style.Font.FontName = "Arial";
+            sheet.Cells("A" + (14 + stavke.Count + 3).ToString()).Style.Font.FontSize = 10;
+            sheet.Cells("A" + (14 + stavke.Count + 3).ToString()).Style.Font.FontColor = XLColor.Black;
 
             sheet.Cells("A" + (14 + stavke.Count + 4).ToString()).Value = "UKUPAN IZNOS BEZ PDV";
             sheet.Cells("A" + (14 + stavke.Count + 4).ToString()).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Right;
+            sheet.Cells("A" + (14 + stavke.Count + 4).ToString()).Style.Font.Bold = false;
+            sheet.Cells("A" + (14 + stavke.Count + 4).ToString()).Style.Font.FontName = "Arial";
+            sheet.Cells("A" + (14 + stavke.Count + 4).ToString()).Style.Font.FontSize = 10;
+            sheet.Cells("A" + (14 + stavke.Count + 4).ToString()).Style.Font.FontColor = XLColor.Black;
 
             sheet.Cells("A" + (14 + stavke.Count + 5).ToString()).Value = "PDV";
             sheet.Cells("A" + (14 + stavke.Count + 5).ToString()).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Right;
+            sheet.Cells("A" + (14 + stavke.Count + 5).ToString()).Style.Font.Bold = false;
+            sheet.Cells("A" + (14 + stavke.Count + 5).ToString()).Style.Font.FontName = "Arial";
+            sheet.Cells("A" + (14 + stavke.Count + 5).ToString()).Style.Font.FontSize = 10;
+            sheet.Cells("A" + (14 + stavke.Count + 5).ToString()).Style.Font.FontColor = XLColor.Black;
 
             sheet.Cells("A" + (14 + stavke.Count + 6).ToString()).Value = "UKUPAN IZNOS SA PDV";
             sheet.Cells("A" + (14 + stavke.Count + 6).ToString()).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Right;
+            sheet.Cells("A" + (14 + stavke.Count + 6).ToString()).Style.Font.Bold = false;
+            sheet.Cells("A" + (14 + stavke.Count + 6).ToString()).Style.Font.FontName = "Arial";
+            sheet.Cells("A" + (14 + stavke.Count + 6).ToString()).Style.Font.FontSize = 10;
+            sheet.Cells("A" + (14 + stavke.Count + 6).ToString()).Style.Font.FontColor = XLColor.Black;
 
             sheet.Range("A" + (14 + stavke.Count + 2).ToString() + ":" + "F" + (14 + stavke.Count + 2).ToString()).Row(1).Merge();
             sheet.Range("A" + (14 + stavke.Count + 3).ToString() + ":" + "F" + (14 + stavke.Count + 3).ToString()).Row(1).Merge();
@@ -571,21 +630,67 @@ namespace Delos.Forme
             sheet.Range("A" + (14 + stavke.Count + 5).ToString() + ":" + "F" + (14 + stavke.Count + 5).ToString()).Row(1).Merge();
             sheet.Range("A" + (14 + stavke.Count + 6).ToString() + ":" + "F" + (14 + stavke.Count + 6).ToString()).Row(1).Merge();
 
+            sheet.Range("A" + (14 + stavke.Count + 2).ToString() + ":" + "F" + (14 + stavke.Count + 2).ToString()).Style.Border.OutsideBorder = XLBorderStyleValues.None;
+            sheet.Range("A" + (14 + stavke.Count + 3).ToString() + ":" + "F" + (14 + stavke.Count + 3).ToString()).Style.Border.OutsideBorder = XLBorderStyleValues.None;
+            sheet.Range("A" + (14 + stavke.Count + 4).ToString() + ":" + "F" + (14 + stavke.Count + 4).ToString()).Style.Border.OutsideBorder = XLBorderStyleValues.None;
+            sheet.Range("A" + (14 + stavke.Count + 5).ToString() + ":" + "F" + (14 + stavke.Count + 5).ToString()).Style.Border.OutsideBorder = XLBorderStyleValues.None;
+            sheet.Range("A" + (14 + stavke.Count + 6).ToString() + ":" + "F" + (14 + stavke.Count + 6).ToString()).Style.Border.OutsideBorder = XLBorderStyleValues.None;
+
 
             sheet.Cells("G" + (14 + stavke.Count + 2).ToString()).Value = iznos_bez_pdv;
-            sheet.Cells("G" + rowIndex).DataType = XLDataType.Text;
+            sheet.Cells("G" + (14 + stavke.Count + 2).ToString()).DataType = XLDataType.Number;
+            sheet.Cells("G" + (14 + stavke.Count + 2).ToString()).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Right;
+            sheet.Cells("G" + (14 + stavke.Count + 2).ToString()).Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
+            sheet.Cells("G" + (14 + stavke.Count + 2).ToString()).Style.Border.OutsideBorderColor = XLColor.FromArgb(216, 228, 188);
+            sheet.Cells("G" + (14 + stavke.Count + 2).ToString()).Style.NumberFormat.Format = "#,##0.00 \"KM\"";
+            sheet.Cells("G" + (14 + stavke.Count + 2).ToString()).Style.Font.Bold = true;
+            sheet.Cells("G" + (14 + stavke.Count + 2).ToString()).Style.Font.FontName = "Arial";
+            sheet.Cells("G" + (14 + stavke.Count + 2).ToString()).Style.Font.FontSize = 10;
+            sheet.Cells("G" + (14 + stavke.Count + 2).ToString()).Style.Font.FontColor = XLColor.Black;
 
             sheet.Cells("G" + (14 + stavke.Count + 3).ToString()).Value = rabat;
-            sheet.Cells("G" + rowIndex).DataType = XLDataType.Text;
+            sheet.Cells("G" + (14 + stavke.Count + 3).ToString()).DataType = XLDataType.Number;
+            sheet.Cells("G" + (14 + stavke.Count + 3).ToString()).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Right;
+            sheet.Cells("G" + (14 + stavke.Count + 3).ToString()).Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
+            sheet.Cells("G" + (14 + stavke.Count + 3).ToString()).Style.Border.OutsideBorderColor = XLColor.FromArgb(216, 228, 188);
+            sheet.Cells("G" + (14 + stavke.Count + 3).ToString()).Style.NumberFormat.Format = "#,##0.00 \"KM\"";
+            sheet.Cells("G" + (14 + stavke.Count + 3).ToString()).Style.Font.Bold = true;
+            sheet.Cells("G" + (14 + stavke.Count + 3).ToString()).Style.Font.FontName = "Arial";
+            sheet.Cells("G" + (14 + stavke.Count + 3).ToString()).Style.Font.FontSize = 10;
+            sheet.Cells("G" + (14 + stavke.Count + 3).ToString()).Style.Font.FontColor = XLColor.Black;
 
             sheet.Cells("G" + (14 + stavke.Count + 4).ToString()).Value = iznos_sa_rabatom;
-            sheet.Cells("G" + rowIndex).DataType = XLDataType.Text;
+            sheet.Cells("G" + (14 + stavke.Count + 4).ToString()).DataType = XLDataType.Number;
+            sheet.Cells("G" + (14 + stavke.Count + 4).ToString()).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Right;
+            sheet.Cells("G" + (14 + stavke.Count + 4).ToString()).Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
+            sheet.Cells("G" + (14 + stavke.Count + 4).ToString()).Style.Border.OutsideBorderColor = XLColor.FromArgb(216, 228, 188);
+            sheet.Cells("G" + (14 + stavke.Count + 4).ToString()).Style.NumberFormat.Format = "#,##0.00 \"KM\"";
+            sheet.Cells("G" + (14 + stavke.Count + 4).ToString()).Style.Font.Bold = true;
+            sheet.Cells("G" + (14 + stavke.Count + 4).ToString()).Style.Font.FontName = "Arial";
+            sheet.Cells("G" + (14 + stavke.Count + 4).ToString()).Style.Font.FontSize = 10;
+            sheet.Cells("G" + (14 + stavke.Count + 4).ToString()).Style.Font.FontColor = XLColor.Black;
 
             sheet.Cells("G" + (14 + stavke.Count + 5).ToString()).Value = pdv;
-            sheet.Cells("G" + rowIndex).DataType = XLDataType.Text;
+            sheet.Cells("G" + (14 + stavke.Count + 5).ToString()).DataType = XLDataType.Number;
+            sheet.Cells("G" + (14 + stavke.Count + 5).ToString()).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Right;
+            sheet.Cells("G" + (14 + stavke.Count + 5).ToString()).Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
+            sheet.Cells("G" + (14 + stavke.Count + 5).ToString()).Style.Border.OutsideBorderColor = XLColor.FromArgb(216, 228, 188);
+            sheet.Cells("G" + (14 + stavke.Count + 5).ToString()).Style.NumberFormat.Format = "#,##0.00 \"KM\"";
+            sheet.Cells("G" + (14 + stavke.Count + 5).ToString()).Style.Font.Bold = true;
+            sheet.Cells("G" + (14 + stavke.Count + 5).ToString()).Style.Font.FontName = "Arial";
+            sheet.Cells("G" + (14 + stavke.Count + 5).ToString()).Style.Font.FontSize = 10;
+            sheet.Cells("G" + (14 + stavke.Count + 5).ToString()).Style.Font.FontColor = XLColor.Black;
 
             sheet.Cells("G" + (14 + stavke.Count + 6).ToString()).Value = iznos_sa_pdv;
-            sheet.Cells("G" + rowIndex).DataType = XLDataType.Text;
+            sheet.Cells("G" + (14 + stavke.Count + 6).ToString()).DataType = XLDataType.Number;
+            sheet.Cells("G" + (14 + stavke.Count + 6).ToString()).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Right;
+            sheet.Cells("G" + (14 + stavke.Count + 6).ToString()).Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
+            sheet.Cells("G" + (14 + stavke.Count + 6).ToString()).Style.Border.OutsideBorderColor = XLColor.FromArgb(216, 228, 188);
+            sheet.Cells("G" + (14 + stavke.Count + 6).ToString()).Style.NumberFormat.Format = "#,##0.00 \"KM\"";
+            sheet.Cells("G" + (14 + stavke.Count + 6).ToString()).Style.Font.Bold = true;
+            sheet.Cells("G" + (14 + stavke.Count + 6).ToString()).Style.Font.FontName = "Arial";
+            sheet.Cells("G" + (14 + stavke.Count + 6).ToString()).Style.Font.FontSize = 10;
+            sheet.Cells("G" + (14 + stavke.Count + 6).ToString()).Style.Font.FontColor = XLColor.Black;
 
             sheet.Cells("E" + (14 + stavke.Count + 8).ToString()).Value = "Dokument sastavio:";
             sheet.Cells("F" + (14 + stavke.Count + 8).ToString()).Value = radnik;
@@ -860,7 +965,7 @@ namespace Delos.Forme
                         bool s1 = decimal.TryParse(newValueString, out kolicina);
                         if (s1 == true)
                         {
-                            stavka.VrijednostNabavna = Math.Round(stavka.Kolicina * stavka.CijenaNabavna, 2, MidpointRounding.AwayFromZero);
+                            stavka.VrijednostNabavna = Math.Round(stavka.Kolicina * stavka.CijenaNabavna == 0 ? stavka.CijenaBezPdvSaRabatom : stavka.CijenaNabavna, 2, MidpointRounding.AwayFromZero);
                             stavka.Ruc = Math.Round(stavka.VrijednostNabavna * stavka.MarzaProcenat / 100, 2, MidpointRounding.AwayFromZero);
                             stavka.IznosBezPdv = stavka.VrijednostNabavna + stavka.Ruc;
                             stavka.CijenaBezPdv = Math.Round(stavka.IznosBezPdv / stavka.Kolicina, 2, MidpointRounding.AwayFromZero);
@@ -881,7 +986,8 @@ namespace Delos.Forme
                         {
                             stavka.IznosBezPdv = Math.Round(stavka.Kolicina * stavka.CijenaBezPdv, 2, MidpointRounding.AwayFromZero);
                             stavka.Ruc = stavka.IznosBezPdv - stavka.VrijednostNabavna;
-                            stavka.MarzaProcenat = Math.Round(stavka.Ruc / stavka.VrijednostNabavna * 100, 2, MidpointRounding.AwayFromZero);
+                            stavka.MarzaProcenat = stavka.VrijednostNabavna == 0 ? 0 : Math.Round(stavka.Ruc / stavka.VrijednostNabavna * 100, 2, MidpointRounding.AwayFromZero);
+
                             stavka.RabatIznos = Math.Round(stavka.IznosBezPdv * stavka.RabatProcenat / 100, 2, MidpointRounding.AwayFromZero);
                             stavka.IznosBezPdvSaRabatom = stavka.IznosBezPdv - stavka.RabatIznos;
                             stavka.CijenaBezPdvSaRabatom = Math.Round(stavka.IznosBezPdvSaRabatom / stavka.Kolicina, 2, MidpointRounding.AwayFromZero);
@@ -948,12 +1054,12 @@ namespace Delos.Forme
                 //ReadPonuda("", "");
                 //dgvPrijave_CellDoubleClick(this, null);
             }
-
+            dgvStavkePonude.Refresh();
         }
 
         private void dgvStavkePonude_RowValidated(object sender, DataGridViewCellEventArgs e)
         {
-            MessageBox.Show("f");
+            //MessageBox.Show("f");
         }
 
         private void dgvStavkePonude_UserAddedRow(object sender, DataGridViewRowEventArgs e)
@@ -1026,6 +1132,12 @@ namespace Delos.Forme
             string statusPonude = ((DataRowView)dgvPrijave.SelectedRows[0].DataBoundItem).Row["status"].ToString();
             if (statusPonude != "E")
                 e.Cancel = true;
+            else
+            {
+                PonudaStavka stavka = (PonudaStavka)e.Row.DataBoundItem;
+                PersistanceManager.DeletePonudaStavka(stavka);
+                CalculateTotals();
+            }
         }
 
 
@@ -1043,9 +1155,7 @@ namespace Delos.Forme
 
         private void dgvStavkePonude_UserDeletedRow(object sender, DataGridViewRowEventArgs e)
         {
-            PonudaStavka stavka = (PonudaStavka)e.Row.DataBoundItem;
-            PersistanceManager.DeletePonudaStavka(stavka);
-            CalculateTotals();
+            
         }
 
         private void dataGridView1_DragDrop(object sender, DragEventArgs e)

@@ -105,8 +105,8 @@
             this.btnPonudaNerealizovana = new System.Windows.Forms.Button();
             this.tabControl2 = new System.Windows.Forms.TabControl();
             this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.tabPage4 = new System.Windows.Forms.TabPage();
             this.dgvStavkePonude = new System.Windows.Forms.DataGridView();
+            this.tabPage4 = new System.Windows.Forms.TabPage();
             this.dgvDokumenti = new System.Windows.Forms.DataGridView();
             this.btnDeleteCache = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
@@ -115,8 +115,8 @@
             this.tabPage2.SuspendLayout();
             this.tabControl2.SuspendLayout();
             this.tabPage3.SuspendLayout();
-            this.tabPage4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvStavkePonude)).BeginInit();
+            this.tabPage4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDokumenti)).BeginInit();
             this.SuspendLayout();
             // 
@@ -940,17 +940,6 @@
             this.tabPage3.Text = "Stavke ponude";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
-            // tabPage4
-            // 
-            this.tabPage4.Controls.Add(this.dgvDokumenti);
-            this.tabPage4.Location = new System.Drawing.Point(4, 22);
-            this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(1165, 253);
-            this.tabPage4.TabIndex = 1;
-            this.tabPage4.Text = "Dokumenti";
-            this.tabPage4.UseVisualStyleBackColor = true;
-            // 
             // dgvStavkePonude
             // 
             this.dgvStavkePonude.AllowUserToOrderColumns = true;
@@ -969,7 +958,24 @@
             this.dgvStavkePonude.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvStavkePonude.Size = new System.Drawing.Size(1159, 247);
             this.dgvStavkePonude.TabIndex = 29;
+            this.dgvStavkePonude.CellBeginEdit += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.dgvStavkePonude_CellBeginEdit);
+            this.dgvStavkePonude.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvStavkePonude_CellEndEdit);
+            this.dgvStavkePonude.ColumnAdded += new System.Windows.Forms.DataGridViewColumnEventHandler(this.dgvStavkePonude_ColumnAdded);
+            this.dgvStavkePonude.RowValidating += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.dgvStavkePonude_RowValidating);
+            this.dgvStavkePonude.UserDeletedRow += new System.Windows.Forms.DataGridViewRowEventHandler(this.dgvStavkePonude_UserDeletedRow);
+            this.dgvStavkePonude.UserDeletingRow += new System.Windows.Forms.DataGridViewRowCancelEventHandler(this.dgvStavkePonude_UserDeletingRow);
             this.dgvStavkePonude.DragDrop += new System.Windows.Forms.DragEventHandler(this.dgvStavkePonude_DragDrop);
+            // 
+            // tabPage4
+            // 
+            this.tabPage4.Controls.Add(this.dgvDokumenti);
+            this.tabPage4.Location = new System.Drawing.Point(4, 22);
+            this.tabPage4.Name = "tabPage4";
+            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage4.Size = new System.Drawing.Size(1165, 253);
+            this.tabPage4.TabIndex = 1;
+            this.tabPage4.Text = "Dokumenti";
+            this.tabPage4.UseVisualStyleBackColor = true;
             // 
             // dgvDokumenti
             // 
@@ -1028,8 +1034,8 @@
             this.tabPage2.PerformLayout();
             this.tabControl2.ResumeLayout(false);
             this.tabPage3.ResumeLayout(false);
-            this.tabPage4.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvStavkePonude)).EndInit();
+            this.tabPage4.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvDokumenti)).EndInit();
             this.ResumeLayout(false);
 

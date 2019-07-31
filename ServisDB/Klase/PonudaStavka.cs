@@ -11,6 +11,8 @@ namespace ServisDB.Klase
         public PonudaStavka()
         {
             PdvStopa = 17;
+            JedinicaMjere = "KOM";
+            Kolicina = 1;
         }
         public string PonudaBroj { get; set; }
         public int StavkaBroj { get; set; }
