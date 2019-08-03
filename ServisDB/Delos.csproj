@@ -145,6 +145,7 @@
     <Compile Include="Klase\Enums.cs" />
     <Compile Include="Klase\Partner.cs" />
     <Compile Include="Klase\PonudaDokument.cs" />
+    <Compile Include="Klase\Ponuda.cs" />
     <Compile Include="Klase\ReportBuilder.cs" />
     <Compile Include="Klase\ReportManager.cs" />
     <Compile Include="Klase\PonudaStavka.cs" />

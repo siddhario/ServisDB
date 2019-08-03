@@ -1,5 +1,6 @@
 ﻿using ClosedXML.Excel;
 using Npgsql;
+//using RawPrint;
 using ServisDB.Forme;
 using ServisDB.Klase;
 using System;
@@ -11,6 +12,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using TMS.Core.Helpers;
@@ -30,6 +32,25 @@ namespace Delos.Forme
         }
 
         private void ReadPonuda(string broj, string kupac)
+        {
+            List<Ponuda> ponude = PersistanceManager.ReadPonuda(broj, kupac);
+            dgvPrijave.DataSource = null;
+            dgvPrijave.AutoGenerateColumns = false;
+
+            dgvPrijave.Columns.Clear();
+            dgvPrijave.Columns.Add(new DataGridViewTextBoxColumn() { Name = "R.broj", DataPropertyName = "Broj", Width = 80 });
+            dgvPrijave.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Datum", DataPropertyName = "Datum", Width = 100, DefaultCellStyle = new DataGridViewCellStyle() { Format = "dd.MM.yyyy." } });
+            dgvPrijave.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Šifra partnera", DataPropertyName = "PartnerSifra", Width = 50, Visible = false });
+            dgvPrijave.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Partner", DataPropertyName = "PartnerNaziv", Width = 180 });
+
+            dgvPrijave.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Iznos sa PDV", DataPropertyName = "IznosSaPdv", DefaultCellStyle = new DataGridViewCellStyle() { Format = "N2" }, Width = 120 });
+            dgvPrijave.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Status", DataPropertyName = "Status", Width = 80 });
+            dgvPrijave.Columns.Add(new DataGridViewTextBoxColumn() { Name = "Predmet", DataPropertyName = "Predmet", Width = 500 });
+
+            dgvPrijave.DataSource = new BindingList<Ponuda>(ponude);
+        }
+
+        private void ReadPonuda2(string broj, string kupac)
         {
             StaticFilters = new List<string>();
             StaticFilters.Add("(broj like concat(@broj,'%') or @broj is null)");
@@ -106,6 +127,20 @@ namespace Delos.Forme
         private void FormPonuda_Load(object sender, EventArgs e)
         {
             ReadPonuda(textBox1.Text, textBox2.Text);
+            //            foreach (string printerName in System.Drawing.Printing.PrinterSettings.InstalledPrinters)
+            //            {
+            //                MessageBox.Show(printerName);
+            //            }
+
+            //            /** Outputs something like:
+
+            //Send To OneNote 2016
+            //Microsoft XPS Document Writer
+            //Microsoft Print to PDF
+            //Fax
+            //Brother HL-3172CDW series Printer
+
+            //*/
         }
 
         private void btnReload_Click(object sender, EventArgs e)
@@ -120,7 +155,7 @@ namespace Delos.Forme
 
         private void tabPage2_Click(object sender, EventArgs e)
         {
-            
+
         }
 
         private void Clear()
@@ -151,7 +186,7 @@ namespace Delos.Forme
             tbPartner.ReadOnly = false;
             tbPartner.Focus();
             SetVisibility();
-          
+
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -222,7 +257,7 @@ namespace Delos.Forme
             tabControl1.SelectedIndex = 0;
             tbRedniBroj.Text = "AUTO";
             Clear();
-         
+
         }
 
         private void tabControl1_KeyDown(object sender, KeyEventArgs e)
@@ -311,38 +346,39 @@ namespace Delos.Forme
         {
             if (dgvPrijave.SelectedRows.Count == 0)
                 return;
-            object o = dgvPrijave.SelectedRows[0].DataBoundItem;
-          
-            tbRedniBroj.Text = ((DataRowView)o).Row.ItemArray[0].ToString();
+            //object o = dgvPrijave.SelectedRows[0].DataBoundItem;
+            Ponuda o = (Ponuda)dgvPrijave.SelectedRows[0].DataBoundItem;
 
-            dtpDatum.Value = (DateTime)((DataRowView)o).Row["datum"];
-            tbPredmet.Text = ((DataRowView)o).Row["predmet"].ToString();
-            tbNapomena.Text = ((DataRowView)o).Row["napomena"].ToString();
-            tbStatus.Text = ((DataRowView)o).Row["status"].ToString();
-            tbRadnik.Text = ((DataRowView)o).Row["radnik"].ToString();
+            tbRedniBroj.Text = o.Broj;
 
-            tbValutaPlacanja.Text = ((DataRowView)o).Row["valuta_placanja"].ToString();
-            tbRokIsporuke.Text = ((DataRowView)o).Row["rok_isporuke"].ToString();
-            tbParitet.Text = ((DataRowView)o).Row["paritet"].ToString();
-            tbRokVazenja.Text = ((DataRowView)o).Row["rok_vazenja"].ToString();
-            cbParitetKod.SelectedItem = ((DataRowView)o).Row["paritet_kod"].ToString();
+            dtpDatum.Value = o.Datum;
+            tbPredmet.Text = o.Predmet;
+            tbNapomena.Text = o.Napomena;
+            tbStatus.Text = o.Status;
+            tbRadnik.Text = o.Radnik;
+
+            tbValutaPlacanja.Text = o.ValutaPlacanja;
+            tbRokIsporuke.Text = o.RokIsporuke;
+            tbParitet.Text = o.Paritet;
+            tbRokVazenja.Text = o.RokVazenja;
+            cbParitetKod.SelectedItem = o.ParitetKod;
             tabControl1.SelectedIndex = 1;
 
 
-            tbPartnerSifra.Text = ((DataRowView)o).Row["partner_sifra"].ToString();
-            tbPartner.Text = ((DataRowView)o).Row["partner_naziv"].ToString();
-            tbEmail.Text = ((DataRowView)o).Row["partner_email"].ToString();
-            tbJIB.Text = ((DataRowView)o).Row["partner_jib"].ToString();
-            tbAdresa.Text = ((DataRowView)o).Row["partner_adresa"].ToString();
-            tbTelefon.Text = ((DataRowView)o).Row["partner_telefon"].ToString();
+            tbPartnerSifra.Text = o.PartnerSifra.ToString();
+            tbPartner.Text = o.PartnerNaziv;
+            tbEmail.Text = o.PartnerEmail;
+            tbJIB.Text = o.PartnerJib;
+            tbAdresa.Text = o.PartnerAdresa;
+            tbTelefon.Text = o.PartnerTelefon;
 
-            tbIznosBezRabata.Text = ((DataRowView)o).Row["iznos_bez_rabata"].ToString();
-            tbRabat.Text = ((DataRowView)o).Row["rabat"].ToString();
-            tbIznosSaRabatom.Text = ((DataRowView)o).Row["iznos_sa_rabatom"].ToString();
-            tbNabavnaVrijednost.Text = ((DataRowView)o).Row["nabavna_vrijednost"].ToString();
-            tbRUC.Text = ((DataRowView)o).Row["ruc"].ToString();
-            tbPdv.Text = ((DataRowView)o).Row["pdv"].ToString();
-            tbIznosSaPdv.Text = ((DataRowView)o).Row["iznos_sa_pdv"].ToString();
+            tbIznosBezRabata.Text =o.IznosBezRabata.ToString();
+            tbRabat.Text = o.Rabat.ToString();
+            tbIznosSaRabatom.Text = o.IznosSaRabatom.ToString();
+            tbPdv.Text = o.Pdv.ToString();
+            tbRUC.Text =o.Ruc!=null? o.Ruc.ToString():"";
+            tbNabavnaVrijednost.Text = o.NabavnaVrijednost!=null? o.NabavnaVrijednost.ToString():"";
+            tbIznosSaPdv.Text = o.IznosSaPdv.ToString();
 
 
 
@@ -355,28 +391,28 @@ namespace Delos.Forme
             dgvStavkePonude.AutoGenerateColumns = false;
             dgvStavkePonude.Columns.Clear();
             dgvStavkePonude.Columns.Add(new DataGridViewTextBoxColumn() { ReadOnly = true, Name = "RB", DataPropertyName = "StavkaBroj", Width = 50 });
-            dgvStavkePonude.Columns.Add(new DataGridViewTextBoxColumn() { ReadOnly = false, Name = "Opis", DataPropertyName = "ArtikalNaziv", Width = 100 });
-            dgvStavkePonude.Columns.Add(new DataGridViewTextBoxColumn() { ReadOnly = false, Name = "JM", DataPropertyName = "JedinicaMjere", Width = 90 });
+            dgvStavkePonude.Columns.Add(new DataGridViewTextBoxColumn() { ReadOnly = false, Name = "Opis", DataPropertyName = "ArtikalNaziv", Width = 300 });
+            dgvStavkePonude.Columns.Add(new DataGridViewTextBoxColumn() { ReadOnly = false, Name = "JM", DataPropertyName = "JedinicaMjere", Width = 45 });
 
-            dgvStavkePonude.Columns.Add(new DataGridViewTextBoxColumn() { ReadOnly = false, Name = "Količina", DataPropertyName = "kolicina", Width = 100, DefaultCellStyle = new DataGridViewCellStyle() { Format = "N2" } });
+            dgvStavkePonude.Columns.Add(new DataGridViewTextBoxColumn() { ReadOnly = false, Name = "Količina", DataPropertyName = "kolicina", Width = 55, DefaultCellStyle = new DataGridViewCellStyle() { Format = "N2" } });
 
             dgvStavkePonude.Columns.Add(new DataGridViewTextBoxColumn() { ReadOnly = false, Name = "Nabavna cijena", DataPropertyName = "CijenaNabavna", Width = 90, DefaultCellStyle = new DataGridViewCellStyle() { Format = "N2" } });
             dgvStavkePonude.Columns.Add(new DataGridViewTextBoxColumn() { ReadOnly = true, Name = "Nabavna vrijednost", DataPropertyName = "VrijednostNabavna", Width = 90, DefaultCellStyle = new DataGridViewCellStyle() { Format = "N2" } });
 
-            dgvStavkePonude.Columns.Add(new DataGridViewTextBoxColumn() { ReadOnly = false, Name = "Margina %", DataPropertyName = "MarzaProcenat", Width = 90, DefaultCellStyle = new DataGridViewCellStyle() { Format = "N2" } });
+            dgvStavkePonude.Columns.Add(new DataGridViewTextBoxColumn() { ReadOnly = false, Name = "Margina %", DataPropertyName = "MarzaProcenat", Width = 60, DefaultCellStyle = new DataGridViewCellStyle() { Format = "N2" } });
             dgvStavkePonude.Columns.Add(new DataGridViewTextBoxColumn() { ReadOnly = true, Name = "RUC", DataPropertyName = "Ruc", Width = 90, DefaultCellStyle = new DataGridViewCellStyle() { Format = "N2" } });
 
             dgvStavkePonude.Columns.Add(new DataGridViewTextBoxColumn() { ReadOnly = false, Name = "Cijena bez PDV-a", DataPropertyName = "CijenaBezPdv", Width = 90, DefaultCellStyle = new DataGridViewCellStyle() { Format = "N2" } });
             dgvStavkePonude.Columns.Add(new DataGridViewTextBoxColumn() { ReadOnly = true, Name = "Iznos bez PDV-a", DataPropertyName = "IznosBezPdv", Width = 90, DefaultCellStyle = new DataGridViewCellStyle() { Format = "N2" } });
 
-            dgvStavkePonude.Columns.Add(new DataGridViewTextBoxColumn() { ReadOnly = false, Name = "Rabat %", DataPropertyName = "RabatProcenat", Width = 90, DefaultCellStyle = new DataGridViewCellStyle() { Format = "N2" } });
+            dgvStavkePonude.Columns.Add(new DataGridViewTextBoxColumn() { ReadOnly = false, Name = "Rabat %", DataPropertyName = "RabatProcenat", Width = 50, DefaultCellStyle = new DataGridViewCellStyle() { Format = "N2" } });
             dgvStavkePonude.Columns.Add(new DataGridViewTextBoxColumn() { ReadOnly = true, Name = "Rabat iznos", DataPropertyName = "RabatIznos", Width = 90, DefaultCellStyle = new DataGridViewCellStyle() { Format = "N2" } });
 
             dgvStavkePonude.Columns.Add(new DataGridViewTextBoxColumn() { ReadOnly = true, Name = "Cijena bez PDV-a sa rabatom", DataPropertyName = "CijenaBezPdvSaRabatom", Width = 90, DefaultCellStyle = new DataGridViewCellStyle() { Format = "N2" } });
             dgvStavkePonude.Columns.Add(new DataGridViewTextBoxColumn() { ReadOnly = true, Name = "Iznos bez PDV-a sa rabatom", DataPropertyName = "IznosBezPdvSaRabatom", Width = 90, DefaultCellStyle = new DataGridViewCellStyle() { Format = "N2" } });
 
 
-            dgvStavkePonude.Columns.Add(new DataGridViewTextBoxColumn() { ReadOnly = true, Name = "PDV %", DataPropertyName = "PdvStopa", Width = 90, DefaultCellStyle = new DataGridViewCellStyle() { Format = "N2" } });
+            dgvStavkePonude.Columns.Add(new DataGridViewTextBoxColumn() { ReadOnly = true, Name = "PDV %", DataPropertyName = "PdvStopa", Width = 50, DefaultCellStyle = new DataGridViewCellStyle() { Format = "N2" } });
             dgvStavkePonude.Columns.Add(new DataGridViewTextBoxColumn() { ReadOnly = true, Name = "PDV iznos", DataPropertyName = "Pdv", Width = 90, DefaultCellStyle = new DataGridViewCellStyle() { Format = "N2" } });
             dgvStavkePonude.Columns.Add(new DataGridViewTextBoxColumn() { ReadOnly = true, Name = "Iznos sa PDV", DataPropertyName = "IznosSaPdv", Width = 90, DefaultCellStyle = new DataGridViewCellStyle() { Format = "N2" } });
 
@@ -451,43 +487,30 @@ namespace Delos.Forme
             var sheet = doc.Worksheet(1);
 
             object o = dgvPrijave.SelectedRows[0].DataBoundItem;
+            string rednibroj = ((Ponuda)o).Broj;
 
-            string rednibroj = ((DataRowView)o).Row["broj"].ToString();
-            string datum = ((DateTime)((DataRowView)o).Row["datum"]).Date.ToString("dd.MM.yyyy");
-            string partner_naziv = ((DataRowView)o).Row["partner_naziv"].ToString();
-            string partner_jib = ((DataRowView)o).Row["partner_jib"].ToString();
-            string partner_adresa = ((DataRowView)o).Row["partner_adresa"].ToString();
+            Ponuda p = PersistanceManager.ReadPonuda(rednibroj, "").FirstOrDefault();
+        
 
-            string valuta = ((DataRowView)o).Row["valuta_placanja"].ToString();
-            string opcija_ponude = ((DataRowView)o).Row["rok_vazenja"].ToString();
-            string rok_isporuke = ((DataRowView)o).Row["rok_isporuke"].ToString();
-            string paritet = ((DataRowView)o).Row["paritet"].ToString();
-            string paritet_kod = ((DataRowView)o).Row["paritet_kod"].ToString();
-            string radnik = ((DataRowView)o).Row["radnik"].ToString();
+            //string rednibroj = p.Broj;
+            string datum = p.Datum.Date.ToString("dd.MM.yyyy");
+            string partner_naziv = p.PartnerNaziv;
+            string partner_jib = p.PartnerJib;
+            string partner_adresa = p.PartnerAdresa;
 
-            string iznos_bez_pdv = ((DataRowView)o).Row["iznos_bez_rabata"].ToString();
-            string rabat = ((DataRowView)o).Row["rabat"].ToString();
-            string iznos_sa_rabatom = ((DataRowView)o).Row["iznos_sa_rabatom"].ToString();
-            string pdv = ((DataRowView)o).Row["pdv"].ToString();
-            string iznos_sa_pdv = ((DataRowView)o).Row["iznos_sa_pdv"].ToString();
-            //string garantnilist = ((DataRowView)o).Row.ItemArray[21].ToString();
-            //string kupac = ((DataRowView)o).Row.ItemArray[4].ToString();
-            //string kupac_telefon = ((DataRowView)o).Row.ItemArray[6].ToString();
-            //string model = ((DataRowView)o).Row.ItemArray[8].ToString();
-            //string serijski_broj = ((DataRowView)o).Row.ItemArray[9].ToString();
-            //string dodatna_oprema = ((DataRowView)o).Row.ItemArray[10].ToString();
-            //string opis_kvara = ((DataRowView)o).Row.ItemArray[11].ToString();
-            //string napomena_servisera = ((DataRowView)o).Row.ItemArray[12].ToString();
-            //string serviser = ((DataRowView)o).Row.ItemArray[13].ToString();
-            //string zavrseno = "";
-            //if (((DataRowView)o).Row.ItemArray[15] == DBNull.Value)
-            //{
-            //    zavrseno = "";
-            //}
-            //else
-            //{
-            //    zavrseno = ((DateTime)((DataRowView)o).Row.ItemArray[15]).ToString();
-            //}
+            string valuta = p.ValutaPlacanja;
+            string opcija_ponude = p.RokVazenja;
+            string rok_isporuke = p.RokIsporuke;
+            string paritet = p.Paritet;
+            string paritet_kod = p.ParitetKod;
+            string radnik = p.Radnik;
+
+            string iznos_bez_pdv = p.IznosBezRabata.ToString();
+            string rabat = p.Rabat.ToString();
+            string iznos_sa_rabatom = p.IznosSaRabatom.ToString();
+            string pdv = p.Pdv.ToString();
+            string iznos_sa_pdv = p.IznosSaPdv.ToString();
+
             string broj = rednibroj;
             string[] parts = rednibroj.Split('/');
             string rb = parts[0];
@@ -594,7 +617,7 @@ namespace Delos.Forme
             sheet.Cells("A" + (14 + stavke.Count + 2).ToString()).Value = "UKUPAN IZNOS BEZ RABATA";
             sheet.Cells("A" + (14 + stavke.Count + 2).ToString()).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Right;
             sheet.Cells("A" + (14 + stavke.Count + 2).ToString()).Style.Font.Bold = false;
-            sheet.Cells("A" + (14 + stavke.Count + 2).ToString()).Style.Font.FontName  = "Arial";
+            sheet.Cells("A" + (14 + stavke.Count + 2).ToString()).Style.Font.FontName = "Arial";
             sheet.Cells("A" + (14 + stavke.Count + 2).ToString()).Style.Font.FontSize = 10;
             sheet.Cells("A" + (14 + stavke.Count + 2).ToString()).Style.Font.FontColor = XLColor.Black;
 
@@ -731,13 +754,19 @@ namespace Delos.Forme
                 doc.SaveAs(fileName);
                 Process.Start(fileName);
             }
+            //IPrinter printer = new Printer();
+            //StreamReader sr = new StreamReader(fileName);
+
+            //printer.PrintRawFile("Foxit Reader PDF Printer", "C:\\Users\\Dario\\Downloads\\PONUDA.xlsx", "Ponuda.pdf");
+            //printer.PrintRawStream("Microsoft Print to PDF", sr.BaseStream, "Ponuda.pdf");
+
         }
 
         private void btnBrisanje_Click(object sender, EventArgs e)
         {
 
             object o = dgvPrijave.SelectedRows[0].DataBoundItem;
-            string rb = ((DataRowView)o).Row.ItemArray[0].ToString();
+            string rb = ((Ponuda)o).Broj;
             if (MessageBox.Show(string.Format("Obrisati podnudu {0} ?", rb), "Potvrda", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.Yes)
             {
                 PersistanceManager.DeleteUgovor(rb);
@@ -753,7 +782,7 @@ namespace Delos.Forme
         private void btnZakljuciUgovor_Click(object sender, EventArgs e)
         {
             object o = dgvPrijave.SelectedRows[0].DataBoundItem;
-            string rb = ((DataRowView)o).Row.ItemArray[0].ToString();
+            string rb = ((Ponuda)o).Broj;
             if (MessageBox.Show(string.Format("Zaključiti ponudu {0} ?", rb), "Potvrda", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.Yes)
             {
                 PersistanceManager.UpdatePonuda(rb, "Z");
@@ -794,7 +823,7 @@ namespace Delos.Forme
         private void btnRealizovan_Click(object sender, EventArgs e)
         {
             object o = dgvPrijave.SelectedRows[0].DataBoundItem;
-            string rb = ((DataRowView)o).Row.ItemArray[0].ToString();
+            string rb = ((Ponuda)o).Broj;
             if (MessageBox.Show(string.Format("Proglasiti ponudu {0} realizovanom ?", rb), "Potvrda", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.Yes)
             {
                 // PersistanceManager.UpdateUgovor(rb, "Z");
@@ -811,7 +840,7 @@ namespace Delos.Forme
         private void btnOtkljucaj_Click(object sender, EventArgs e)
         {
             object o = dgvPrijave.SelectedRows[0].DataBoundItem;
-            string rb = ((DataRowView)o).Row.ItemArray[0].ToString();
+            string rb = ((Ponuda)o).Broj;
             if (MessageBox.Show(string.Format("Otključati ponudu {0} ?", rb), "Potvrda", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.Yes)
             {
                 PersistanceManager.UpdatePonuda(rb, "E");
@@ -833,7 +862,7 @@ namespace Delos.Forme
         private void btnPonudaNerealizovana_Click(object sender, EventArgs e)
         {
             object o = dgvPrijave.SelectedRows[0].DataBoundItem;
-            string rb = ((DataRowView)o).Row.ItemArray[0].ToString();
+            string rb = ((Ponuda)o).Broj;
             if (MessageBox.Show(string.Format("Proglasiti ponudu {0} nerealizovanom ?", rb), "Potvrda", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.Yes)
             {
                 // PersistanceManager.UpdateUgovor(rb, "Z");
@@ -850,8 +879,9 @@ namespace Delos.Forme
         private void dgvPrijave_RowPrePaint(object sender, DataGridViewRowPrePaintEventArgs e)
         {
             //= dgvPrijave.Rows[e.RowIndex].Cells[10].Value.ToString();
-            object o = dgvPrijave.Rows[e.RowIndex].DataBoundItem;
-            string i = ((DataRowView)o).Row["status"].ToString();
+            //object o = dgvPrijave.Rows[e.RowIndex].DataBoundItem;
+            Ponuda o = (Ponuda)dgvPrijave.Rows[e.RowIndex].DataBoundItem;
+            string i = o.Status;
             if (i == "R")
             {
                 //dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.PaleGreen;
@@ -898,8 +928,8 @@ namespace Delos.Forme
         {
             if (tabControl1.SelectedIndex == 1)
             {
-                tbPartner.Focus();  
-                if(tbRedniBroj.Text=="AUTO")
+                tbPartner.Focus();
+                if (tbRedniBroj.Text == "AUTO")
                 {
                     dgvStavkePonude.DataSource = null;
                     dgvDokumenti.DataSource = null;
@@ -917,8 +947,8 @@ namespace Delos.Forme
         {
             if (dgvPrijave.SelectedRows.Count == 0)
                 return;
-            object o = dgvPrijave.SelectedRows[0].DataBoundItem;
-            string status = (string)(((DataRowView)o).Row["status"].ToString());
+            Ponuda o = (Ponuda)dgvPrijave.SelectedRows[0].DataBoundItem;
+            string status = o.Status;
 
             if (status == "E")
             {
@@ -952,7 +982,7 @@ namespace Delos.Forme
                 btnPonudaNerealizovana.Enabled = true;
                 btnOtkljucaj.Enabled = true;
             }
-            string redni_broj = ((DataRowView)dgvPrijave.SelectedRows[0].DataBoundItem).Row["broj"].ToString();
+            string redni_broj = o.Broj;
             List<PonudaStavka> stavke = PersistanceManager.ReadPonudaStavka(redni_broj);
             BindPonudaStavka(stavke);
 
@@ -1061,10 +1091,30 @@ namespace Delos.Forme
             {
                 PersistanceManager.UpdatePonudaStavka(stavka);
                 CalculateTotals();
+                Ponuda p = PersistanceManager.ReadPonuda(stavka.PonudaBroj, "").FirstOrDefault();
+                Ponuda ponuda = (Ponuda)dgvPrijave.SelectedRows[0].DataBoundItem;
+                ponuda.IznosSaPdv = p.IznosSaPdv;
+                //BindingList<Ponuda> lista = (BindingList<Ponuda>)dgvPrijave.DataSource;
+                //lista.Where(l => l.Broj == p.Broj).FirstOrDefault() = p;
+                dgvPrijave.Refresh();
+
+
                 //ReadPonuda("", "");
                 //dgvPrijave_CellDoubleClick(this, null);
             }
             dgvStavkePonude.Refresh();
+
+            DataGridViewCell cell = dgvStavkePonude.Rows[e.RowIndex].Cells[e.ColumnIndex + 1];
+            ////int i = 0;
+            ////while (cell.OwningColumn.ReadOnly == true)
+            ////{
+            ////    cell = dgvStavkePonude.Rows[e.RowIndex].Cells[e.ColumnIndex + 1+i];
+            ////    i++;
+            ////}
+            ////if(dgvStavkePonude.CurrentCell!=cell)
+            //dgvStavkePonude.CurrentCell = cell;
+
+            //dgvStavkePonude.BeginEdit(true);
         }
 
         private void dgvStavkePonude_RowValidated(object sender, DataGridViewCellEventArgs e)
@@ -1087,8 +1137,8 @@ namespace Delos.Forme
             PonudaStavka stavka = null;
             try
             {
-                object o = dgvPrijave.SelectedRows[0].DataBoundItem;
-                string broj = ((DataRowView)o).Row["broj"].ToString();
+                Ponuda o = (Ponuda)dgvPrijave.SelectedRows[0].DataBoundItem;
+                string broj = o.Broj;
 
                 stavka = (PonudaStavka)dgvStavkePonude.Rows[e.RowIndex]?.DataBoundItem;
                 if (stavka == null)
@@ -1096,7 +1146,8 @@ namespace Delos.Forme
                 if (stavka.PonudaBroj == null)
                 {
 
-                    string statusPonude = ((DataRowView)dgvPrijave.SelectedRows[0].DataBoundItem).Row["status"].ToString();
+                    
+                    string statusPonude = o.Status;
                     if (statusPonude != "E")
                     {
                         e.Cancel = true;
@@ -1113,6 +1164,14 @@ namespace Delos.Forme
                     PersistanceManager.InsertPonudaStavka(stavka);
 
                     CalculateTotals();
+
+                    Ponuda p = PersistanceManager.ReadPonuda(stavka.PonudaBroj, "").FirstOrDefault();
+                    Ponuda ponuda = (Ponuda)dgvPrijave.SelectedRows[0].DataBoundItem;
+                    ponuda.IznosSaPdv = p.IznosSaPdv;
+                    //BindingList<Ponuda> lista = (BindingList<Ponuda>)dgvPrijave.DataSource;
+                    //lista.Where(l => l.Broj == p.Broj).FirstOrDefault() = p;
+                    dgvPrijave.Refresh();
+
                     //ReadPonuda("", "");
                     //FillDetailView();
                 }
@@ -1139,7 +1198,8 @@ namespace Delos.Forme
 
         private void dgvStavkePonude_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e)
         {
-            string statusPonude = ((DataRowView)dgvPrijave.SelectedRows[0].DataBoundItem).Row["status"].ToString();
+            object o = dgvPrijave.SelectedRows[0].DataBoundItem;
+            string statusPonude = ((Ponuda)o).Status;
             if (statusPonude != "E")
                 e.Cancel = true;
             else
@@ -1147,6 +1207,13 @@ namespace Delos.Forme
                 PonudaStavka stavka = (PonudaStavka)e.Row.DataBoundItem;
                 PersistanceManager.DeletePonudaStavka(stavka);
                 CalculateTotals();
+                Ponuda p = PersistanceManager.ReadPonuda(stavka.PonudaBroj, "").FirstOrDefault();
+                Ponuda ponuda = (Ponuda)dgvPrijave.SelectedRows[0].DataBoundItem;
+                ponuda.IznosSaPdv = p.IznosSaPdv;
+                //BindingList<Ponuda> lista = (BindingList<Ponuda>)dgvPrijave.DataSource;
+                //lista.Where(l => l.Broj == p.Broj).FirstOrDefault() = p;
+                dgvPrijave.Refresh();
+
             }
         }
 
@@ -1158,14 +1225,15 @@ namespace Delos.Forme
 
         private void dgvStavkePonude_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
         {
-            string statusPonude = ((DataRowView)dgvPrijave.SelectedRows[0].DataBoundItem).Row["status"].ToString();
+            object o = dgvPrijave.SelectedRows[0].DataBoundItem;
+            string statusPonude = ((Ponuda)o).Status;
             if (statusPonude != "E")
                 e.Cancel = true;
         }
 
         private void dgvStavkePonude_UserDeletedRow(object sender, DataGridViewRowEventArgs e)
         {
-            
+
         }
 
         private void dataGridView1_DragDrop(object sender, DragEventArgs e)
@@ -1218,12 +1286,12 @@ namespace Delos.Forme
 
         private void UploadFiles(DragEventArgs e)
         {
-            string statusPonude = ((DataRowView)dgvPrijave.SelectedRows[0].DataBoundItem).Row["status"].ToString();
+            string statusPonude = ((Ponuda)dgvPrijave.SelectedRows[0].DataBoundItem).Status;
             if (statusPonude != "E")
             {
                 return;
             }
-            string brojPonude = ((DataRowView)dgvPrijave.SelectedRows[0].DataBoundItem).Row["broj"].ToString();
+            string brojPonude = ((Ponuda)dgvPrijave.SelectedRows[0].DataBoundItem).Broj;
 
             List<PonudaDokument> dokumenti = ((BindingList<PonudaDokument>)dgvDokumenti.DataSource).Where(ps => ps.PonudaBroj != null).ToList();
             int maxBD = 0;
@@ -1302,5 +1370,8 @@ namespace Delos.Forme
                 MessageBox.Show("Dokumenti ne mogu obrisani! Pokušajte zatvori");
             }
         }
+
+
+     
     }
 }

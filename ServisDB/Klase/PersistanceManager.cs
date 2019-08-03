@@ -3,6 +3,7 @@ using NpgsqlTypes;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -285,7 +286,7 @@ where sifra=@sifra";
                     cmd.Parameters.AddWithValue("@dokument_broj", dokument.DokumentBroj);
                     cmd.Parameters.AddWithValue("@dokument", dokument.Dokument);
                     cmd.Parameters.AddWithValue("@naziv", dokument.Naziv);
-                    cmd.Parameters.AddWithValue("@opis", dokument.Opis!=null?dokument.Opis:(object)DBNull.Value);
+                    cmd.Parameters.AddWithValue("@opis", dokument.Opis != null ? dokument.Opis : (object)DBNull.Value);
 
                     cmd.CommandText = @"INSERT INTO ponuda_dokument (ponuda_broj, dokument_broj,
                   dokument,naziv, opis)
@@ -316,8 +317,94 @@ where sifra=@sifra";
             }
         }
 
+        public static List<Ponuda> ReadPonuda(string broj,string kupac)
+        {
+            List<string> StaticFilters = new List<string>();
+            StaticFilters.Add("(broj like concat(@broj,'%') or @broj is null)");
+            StaticFilters.Add("(broj in (select Ponuda_broj from ponuda_stavka where lower(artikal_naziv) like concat(lower(@kupac_ime),'%')) or (lower(partner_naziv) like concat(lower(@kupac_ime),'%') or @kupac_ime is null))");
 
-        public static List<PonudaStavka> ReadPonudaStavka(string  broj)
+            List<string> filters = new List<string>();
+            filters = filters.Concat(StaticFilters).ToList();
+
+            List<Ponuda> ponude = new List<Ponuda>();
+            
+            using (var conn = new NpgsqlConnection(_connectionString))
+            {
+                conn.Open();
+                using (var cmd = new NpgsqlCommand())
+                {
+                    cmd.Connection = conn;
+
+                    cmd.Parameters.Clear();
+                    Npgsql.NpgsqlParameter p1 = new NpgsqlParameter("@kupac_ime", DbType.String);
+                    cmd.Parameters.Add(p1);
+
+                    Npgsql.NpgsqlParameter p2 = new NpgsqlParameter("@broj", DbType.String);
+                    cmd.Parameters.Add(p2);
+
+                    if (kupac == "")
+                        p1.Value = DBNull.Value;
+                    else
+                        p1.Value = kupac;
+
+                    if (broj == "")
+                        p2.Value = DBNull.Value;
+                    else
+                        p2.Value = broj;
+
+                    cmd.CommandText = @"SELECT broj, datum, status, napomena, predmet, radnik, 
+                    partner_sifra, partner_jib, partner_adresa, partner_naziv, partner_telefon, partner_email, 
+                    valuta_placanja, rok_vazenja, paritet_kod, paritet, rok_isporuke, 
+                    iznos_bez_rabata, rabat, iznos_sa_rabatom, pdv, iznos_sa_pdv, nabavna_vrijednost, ruc 
+	FROM public.ponuda";
+                    if (filters.Count > 0)
+                    {
+                        cmd.CommandText += " WHERE ";
+                        foreach (string f in filters)
+                            cmd.CommandText += f + " AND ";
+                        cmd.CommandText = cmd.CommandText.Substring(0, cmd.CommandText.Length - 4);
+                    }
+                    cmd.CommandText += " order by datum desc,broj desc";
+                    var dr = cmd.ExecuteReader();
+                    while (dr.Read())
+                    {
+                        Ponuda r = new Ponuda();
+                        r.Broj = dr.GetString(0);
+                        r.Datum = dr.GetDateTime(1);
+                        r.Status = dr.GetString(2);
+                        r.Napomena = dr[3] == DBNull.Value ? null : dr.GetString(3);
+                        r.Predmet = dr[4] == DBNull.Value ? null : dr.GetString(4);
+                        r.Radnik = dr[5] == DBNull.Value ? null : dr.GetString(5);
+                        r.PartnerSifra = dr.GetInt32(6);
+                        r.PartnerJib = dr[7] == DBNull.Value ? null : dr.GetString(7);
+                        r.PartnerAdresa = dr[8] == DBNull.Value ? null : dr.GetString(8);
+                        r.PartnerNaziv = dr[9] == DBNull.Value ? null : dr.GetString(9);
+                        r.PartnerTelefon = dr[10] == DBNull.Value ? null : dr.GetString(10);
+                        r.PartnerEmail = dr[11] == DBNull.Value ? null : dr.GetString(11);
+                        r.ValutaPlacanja = dr[12] == DBNull.Value ? null : dr.GetString(12);
+                        r.RokVazenja = dr[13] == DBNull.Value ? null : dr.GetString(13);
+                        r.ParitetKod = dr[14] == DBNull.Value ? null : dr.GetString(14);
+                        r.Paritet = dr[15] == DBNull.Value ? null : dr.GetString(15);
+                        r.RokIsporuke = dr[16] == DBNull.Value ? null : dr.GetString(16);
+                        r.IznosBezRabata = dr.GetDecimal(17);
+                        r.Rabat = dr.GetDecimal(18);
+                        r.IznosSaRabatom = dr.GetDecimal(19);
+                        r.Pdv = dr.GetDecimal(20);
+                        r.IznosSaPdv = dr.GetDecimal(21);
+                        r.NabavnaVrijednost = dr[22] == DBNull.Value?(decimal?)null: dr.GetDecimal(22);
+                        r.Ruc = dr[23] == DBNull.Value ? (decimal?)null : dr.GetDecimal(23);
+
+                        ponude.Add(r);
+                    }
+
+                    dr.Close();
+                }
+            }
+            return ponude;
+        }
+
+
+        public static List<PonudaStavka> ReadPonudaStavka(string broj)
         {
             List<PonudaStavka> stavke = new List<PonudaStavka>();
             using (var conn = new NpgsqlConnection(_connectionString))
@@ -364,7 +451,7 @@ where sifra=@sifra";
 
         public static byte[] ReadPonudaDokumentSadrzaj(string ponuda_broj, int dokument_broj)
         {
-            byte[] sadrzaj  = null;
+            byte[] sadrzaj = null;
             using (var conn = new NpgsqlConnection(_connectionString))
             {
                 conn.Open();
@@ -402,7 +489,7 @@ where sifra=@sifra";
                         r.PonudaBroj = dr.GetString(0);
                         r.DokumentBroj = dr.GetInt32(1);
                         r.Naziv = dr.GetString(2);
-                        r.Opis = dr[3]!=DBNull.Value? dr.GetString(3):null;
+                        r.Opis = dr[3] != DBNull.Value ? dr.GetString(3) : null;
 
                         dokumenti.Add(r);
                     }
