@@ -91,6 +91,12 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Forme\dlgLogin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forme\dlgLogin.Designer.cs">
+      <DependentUpon>dlgLogin.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forme\dlgPregledDugovanja.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -139,8 +145,11 @@
     <Compile Include="Forme\FormPartner.Designer.cs">
       <DependentUpon>FormPartner.cs</DependentUpon>
     </Compile>
+    <Compile Include="Klase\CryptoProvider.cs" />
     <Compile Include="Klase\Helper.cs" />
     <Compile Include="Klase\Logger.cs" />
+    <Compile Include="Klase\Korisnik.cs" />
+    <Compile Include="Klase\MailUtility.cs" />
     <Compile Include="Klase\PersistanceManager.cs" />
     <Compile Include="Klase\Enums.cs" />
     <Compile Include="Klase\Partner.cs" />
@@ -153,6 +162,9 @@
     <Compile Include="Klase\WordDocumentBuilder.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Forme\dlgLogin.resx">
+      <DependentUpon>dlgLogin.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forme\dlgPregledDugovanja.resx">
       <DependentUpon>dlgPregledDugovanja.cs</DependentUpon>
     </EmbeddedResource>

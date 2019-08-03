@@ -108,6 +108,8 @@
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.dgvDokumenti = new System.Windows.Forms.DataGridView();
             this.btnDeleteCache = new System.Windows.Forms.Button();
+            this.btnCopyPonuda = new System.Windows.Forms.Button();
+            this.btnSendMail = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPrijave)).BeginInit();
@@ -574,6 +576,7 @@
             // 
             this.tbRadnik.Location = new System.Drawing.Point(905, 8);
             this.tbRadnik.Name = "tbRadnik";
+            this.tbRadnik.ReadOnly = true;
             this.tbRadnik.Size = new System.Drawing.Size(100, 22);
             this.tbRadnik.TabIndex = 93;
             // 
@@ -844,9 +847,9 @@
             // 
             this.btnOtkljucaj.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnOtkljucaj.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnOtkljucaj.Location = new System.Drawing.Point(1076, 317);
+            this.btnOtkljucaj.Location = new System.Drawing.Point(1076, 347);
             this.btnOtkljucaj.Name = "btnOtkljucaj";
-            this.btnOtkljucaj.Size = new System.Drawing.Size(101, 52);
+            this.btnOtkljucaj.Size = new System.Drawing.Size(101, 43);
             this.btnOtkljucaj.TabIndex = 36;
             this.btnOtkljucaj.Text = "Otključavanje [F9]";
             this.btnOtkljucaj.UseVisualStyleBackColor = true;
@@ -856,9 +859,9 @@
             // 
             this.btnRealizovan.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnRealizovan.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnRealizovan.Location = new System.Drawing.Point(1076, 173);
+            this.btnRealizovan.Location = new System.Drawing.Point(1076, 216);
             this.btnRealizovan.Name = "btnRealizovan";
-            this.btnRealizovan.Size = new System.Drawing.Size(101, 66);
+            this.btnRealizovan.Size = new System.Drawing.Size(101, 59);
             this.btnRealizovan.TabIndex = 35;
             this.btnRealizovan.Text = "Ponuda realizovana [F7]";
             this.btnRealizovan.UseVisualStyleBackColor = true;
@@ -868,9 +871,9 @@
             // 
             this.btnZakljuciUgovor.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnZakljuciUgovor.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnZakljuciUgovor.Location = new System.Drawing.Point(1076, 115);
+            this.btnZakljuciUgovor.Location = new System.Drawing.Point(1076, 167);
             this.btnZakljuciUgovor.Name = "btnZakljuciUgovor";
-            this.btnZakljuciUgovor.Size = new System.Drawing.Size(101, 52);
+            this.btnZakljuciUgovor.Size = new System.Drawing.Size(101, 43);
             this.btnZakljuciUgovor.TabIndex = 34;
             this.btnZakljuciUgovor.Text = "Zaključenje [F6]";
             this.btnZakljuciUgovor.UseVisualStyleBackColor = true;
@@ -880,7 +883,7 @@
             // 
             this.btnBrisanje.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnBrisanje.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnBrisanje.Location = new System.Drawing.Point(1076, 68);
+            this.btnBrisanje.Location = new System.Drawing.Point(1076, 120);
             this.btnBrisanje.Name = "btnBrisanje";
             this.btnBrisanje.Size = new System.Drawing.Size(101, 36);
             this.btnBrisanje.TabIndex = 33;
@@ -892,7 +895,7 @@
             // 
             this.btnStampa.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnStampa.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnStampa.Location = new System.Drawing.Point(1076, 25);
+            this.btnStampa.Location = new System.Drawing.Point(1076, 77);
             this.btnStampa.Name = "btnStampa";
             this.btnStampa.Size = new System.Drawing.Size(101, 37);
             this.btnStampa.TabIndex = 32;
@@ -904,9 +907,9 @@
             // 
             this.btnPonudaNerealizovana.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnPonudaNerealizovana.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnPonudaNerealizovana.Location = new System.Drawing.Point(1076, 245);
+            this.btnPonudaNerealizovana.Location = new System.Drawing.Point(1076, 281);
             this.btnPonudaNerealizovana.Name = "btnPonudaNerealizovana";
-            this.btnPonudaNerealizovana.Size = new System.Drawing.Size(101, 66);
+            this.btnPonudaNerealizovana.Size = new System.Drawing.Size(101, 60);
             this.btnPonudaNerealizovana.TabIndex = 37;
             this.btnPonudaNerealizovana.Text = "Ponuda nerealizovana [F8]";
             this.btnPonudaNerealizovana.UseVisualStyleBackColor = true;
@@ -924,7 +927,7 @@
             this.tabControl2.Location = new System.Drawing.Point(4, 378);
             this.tabControl2.Name = "tabControl2";
             this.tabControl2.SelectedIndex = 0;
-            this.tabControl2.Size = new System.Drawing.Size(1173, 279);
+            this.tabControl2.Size = new System.Drawing.Size(1066, 279);
             this.tabControl2.TabIndex = 38;
             this.tabControl2.DragDrop += new System.Windows.Forms.DragEventHandler(this.tabControl2_DragDrop);
             this.tabControl2.DragEnter += new System.Windows.Forms.DragEventHandler(this.tabControl2_DragEnter);
@@ -935,7 +938,7 @@
             this.tabPage3.Location = new System.Drawing.Point(4, 25);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(1165, 250);
+            this.tabPage3.Size = new System.Drawing.Size(1058, 250);
             this.tabPage3.TabIndex = 0;
             this.tabPage3.Text = "Stavke ponude";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -948,7 +951,7 @@
             this.dgvStavkePonude.Location = new System.Drawing.Point(3, 3);
             this.dgvStavkePonude.Name = "dgvStavkePonude";
             this.dgvStavkePonude.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvStavkePonude.Size = new System.Drawing.Size(1159, 244);
+            this.dgvStavkePonude.Size = new System.Drawing.Size(1052, 244);
             this.dgvStavkePonude.StandardTab = true;
             this.dgvStavkePonude.TabIndex = 29;
             this.dgvStavkePonude.CellBeginEdit += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.dgvStavkePonude_CellBeginEdit);
@@ -992,13 +995,38 @@
             // btnDeleteCache
             // 
             this.btnDeleteCache.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnDeleteCache.Location = new System.Drawing.Point(1076, 375);
+            this.btnDeleteCache.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnDeleteCache.Location = new System.Drawing.Point(1076, 395);
             this.btnDeleteCache.Name = "btnDeleteCache";
-            this.btnDeleteCache.Size = new System.Drawing.Size(101, 25);
+            this.btnDeleteCache.Size = new System.Drawing.Size(101, 41);
             this.btnDeleteCache.TabIndex = 39;
             this.btnDeleteCache.Text = "Očisti keš";
             this.btnDeleteCache.UseVisualStyleBackColor = true;
             this.btnDeleteCache.Click += new System.EventHandler(this.btnDeleteCache_Click);
+            // 
+            // btnCopyPonuda
+            // 
+            this.btnCopyPonuda.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnCopyPonuda.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCopyPonuda.Location = new System.Drawing.Point(1076, 442);
+            this.btnCopyPonuda.Name = "btnCopyPonuda";
+            this.btnCopyPonuda.Size = new System.Drawing.Size(101, 42);
+            this.btnCopyPonuda.TabIndex = 40;
+            this.btnCopyPonuda.Text = "Kopiraj";
+            this.btnCopyPonuda.UseVisualStyleBackColor = true;
+            this.btnCopyPonuda.Click += new System.EventHandler(this.btnCopyPonuda_Click);
+            // 
+            // btnSendMail
+            // 
+            this.btnSendMail.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnSendMail.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSendMail.Location = new System.Drawing.Point(1076, 21);
+            this.btnSendMail.Name = "btnSendMail";
+            this.btnSendMail.Size = new System.Drawing.Size(101, 50);
+            this.btnSendMail.TabIndex = 41;
+            this.btnSendMail.Text = "Slanje na e-mail";
+            this.btnSendMail.UseVisualStyleBackColor = true;
+            this.btnSendMail.Click += new System.EventHandler(this.btnSendMail_Click);
             // 
             // FormPonuda
             // 
@@ -1006,6 +1034,8 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1185, 659);
+            this.Controls.Add(this.btnSendMail);
+            this.Controls.Add(this.btnCopyPonuda);
             this.Controls.Add(this.btnDeleteCache);
             this.Controls.Add(this.tabControl2);
             this.Controls.Add(this.btnPonudaNerealizovana);
@@ -1118,5 +1148,7 @@
         private System.Windows.Forms.TabPage tabPage4;
         private System.Windows.Forms.DataGridView dgvDokumenti;
         private System.Windows.Forms.Button btnDeleteCache;
+        private System.Windows.Forms.Button btnCopyPonuda;
+        private System.Windows.Forms.Button btnSendMail;
     }
 }

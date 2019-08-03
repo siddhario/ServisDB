@@ -37,6 +37,13 @@
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.dgvPrijave = new System.Windows.Forms.DataGridView();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.lblInstalacija = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.tbInstalacija = new System.Windows.Forms.TextBox();
+            this.cbOstalo = new System.Windows.Forms.CheckBox();
+            this.cbOffice = new System.Windows.Forms.CheckBox();
+            this.cbOS = new System.Windows.Forms.CheckBox();
+            this.panel3 = new System.Windows.Forms.Panel();
             this.button4 = new System.Windows.Forms.Button();
             this.btnDpPoslatMejlDobavljacu = new System.Windows.Forms.Button();
             this.btnDpDatumVracanja = new System.Windows.Forms.Button();
@@ -95,13 +102,6 @@
             this.btnBrisanje = new System.Windows.Forms.Button();
             this.btnStampa = new System.Windows.Forms.Button();
             this.tmrDelay = new System.Windows.Forms.Timer(this.components);
-            this.panel3 = new System.Windows.Forms.Panel();
-            this.cbOS = new System.Windows.Forms.CheckBox();
-            this.cbOffice = new System.Windows.Forms.CheckBox();
-            this.cbOstalo = new System.Windows.Forms.CheckBox();
-            this.tbInstalacija = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.lblInstalacija = new System.Windows.Forms.Label();
             this.btnStampaRadnogNaloga = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -117,7 +117,7 @@
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tabControl1.Location = new System.Drawing.Point(0, 0);
+            this.tabControl1.Location = new System.Drawing.Point(-4, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(1073, 741);
@@ -269,6 +269,69 @@
             this.tabPage2.UseVisualStyleBackColor = true;
             this.tabPage2.Click += new System.EventHandler(this.tabPage2_Click);
             // 
+            // lblInstalacija
+            // 
+            this.lblInstalacija.AutoSize = true;
+            this.lblInstalacija.Location = new System.Drawing.Point(18, 418);
+            this.lblInstalacija.Name = "lblInstalacija";
+            this.lblInstalacija.Size = new System.Drawing.Size(0, 16);
+            this.lblInstalacija.TabIndex = 96;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(16, 388);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(71, 16);
+            this.label2.TabIndex = 95;
+            this.label2.Text = "Instalacija:";
+            // 
+            // tbInstalacija
+            // 
+            this.tbInstalacija.Location = new System.Drawing.Point(138, 418);
+            this.tbInstalacija.Multiline = true;
+            this.tbInstalacija.Name = "tbInstalacija";
+            this.tbInstalacija.Size = new System.Drawing.Size(328, 54);
+            this.tbInstalacija.TabIndex = 94;
+            // 
+            // cbOstalo
+            // 
+            this.cbOstalo.AutoSize = true;
+            this.cbOstalo.Location = new System.Drawing.Point(262, 387);
+            this.cbOstalo.Name = "cbOstalo";
+            this.cbOstalo.Size = new System.Drawing.Size(66, 20);
+            this.cbOstalo.TabIndex = 93;
+            this.cbOstalo.Text = "Ostalo";
+            this.cbOstalo.UseVisualStyleBackColor = true;
+            // 
+            // cbOffice
+            // 
+            this.cbOffice.AutoSize = true;
+            this.cbOffice.Location = new System.Drawing.Point(195, 387);
+            this.cbOffice.Name = "cbOffice";
+            this.cbOffice.Size = new System.Drawing.Size(61, 20);
+            this.cbOffice.TabIndex = 92;
+            this.cbOffice.Text = "Office";
+            this.cbOffice.UseVisualStyleBackColor = true;
+            // 
+            // cbOS
+            // 
+            this.cbOS.AutoSize = true;
+            this.cbOS.Location = new System.Drawing.Point(138, 387);
+            this.cbOS.Name = "cbOS";
+            this.cbOS.Size = new System.Drawing.Size(46, 20);
+            this.cbOS.TabIndex = 91;
+            this.cbOS.Text = "OS";
+            this.cbOS.UseVisualStyleBackColor = true;
+            // 
+            // panel3
+            // 
+            this.panel3.BackColor = System.Drawing.Color.LightSteelBlue;
+            this.panel3.Location = new System.Drawing.Point(16, 478);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(982, 1);
+            this.panel3.TabIndex = 90;
+            // 
             // button4
             // 
             this.button4.Location = new System.Drawing.Point(782, 8);
@@ -316,6 +379,7 @@
             this.tbServiserPrimio.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tbServiserPrimio.Location = new System.Drawing.Point(659, 340);
             this.tbServiserPrimio.Name = "tbServiserPrimio";
+            this.tbServiserPrimio.ReadOnly = true;
             this.tbServiserPrimio.Size = new System.Drawing.Size(225, 22);
             this.tbServiserPrimio.TabIndex = 85;
             // 
@@ -818,69 +882,6 @@
             this.btnStampa.Text = "Štampa [F4]";
             this.btnStampa.UseVisualStyleBackColor = true;
             this.btnStampa.Click += new System.EventHandler(this.btnStampa_Click);
-            // 
-            // panel3
-            // 
-            this.panel3.BackColor = System.Drawing.Color.LightSteelBlue;
-            this.panel3.Location = new System.Drawing.Point(16, 478);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(982, 1);
-            this.panel3.TabIndex = 90;
-            // 
-            // cbOS
-            // 
-            this.cbOS.AutoSize = true;
-            this.cbOS.Location = new System.Drawing.Point(138, 387);
-            this.cbOS.Name = "cbOS";
-            this.cbOS.Size = new System.Drawing.Size(46, 20);
-            this.cbOS.TabIndex = 91;
-            this.cbOS.Text = "OS";
-            this.cbOS.UseVisualStyleBackColor = true;
-            // 
-            // cbOffice
-            // 
-            this.cbOffice.AutoSize = true;
-            this.cbOffice.Location = new System.Drawing.Point(195, 387);
-            this.cbOffice.Name = "cbOffice";
-            this.cbOffice.Size = new System.Drawing.Size(61, 20);
-            this.cbOffice.TabIndex = 92;
-            this.cbOffice.Text = "Office";
-            this.cbOffice.UseVisualStyleBackColor = true;
-            // 
-            // cbOstalo
-            // 
-            this.cbOstalo.AutoSize = true;
-            this.cbOstalo.Location = new System.Drawing.Point(262, 387);
-            this.cbOstalo.Name = "cbOstalo";
-            this.cbOstalo.Size = new System.Drawing.Size(66, 20);
-            this.cbOstalo.TabIndex = 93;
-            this.cbOstalo.Text = "Ostalo";
-            this.cbOstalo.UseVisualStyleBackColor = true;
-            // 
-            // tbInstalacija
-            // 
-            this.tbInstalacija.Location = new System.Drawing.Point(138, 418);
-            this.tbInstalacija.Multiline = true;
-            this.tbInstalacija.Name = "tbInstalacija";
-            this.tbInstalacija.Size = new System.Drawing.Size(328, 54);
-            this.tbInstalacija.TabIndex = 94;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(16, 388);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(71, 16);
-            this.label2.TabIndex = 95;
-            this.label2.Text = "Instalacija:";
-            // 
-            // lblInstalacija
-            // 
-            this.lblInstalacija.AutoSize = true;
-            this.lblInstalacija.Location = new System.Drawing.Point(18, 418);
-            this.lblInstalacija.Name = "lblInstalacija";
-            this.lblInstalacija.Size = new System.Drawing.Size(0, 16);
-            this.lblInstalacija.TabIndex = 96;
             // 
             // btnStampaRadnogNaloga
             // 

@@ -18,12 +18,7 @@ namespace ServisDB.Forme
         {
             InitializeComponent();
 
-#if (DEBUG)
-            var connectionString = PersistanceManager.GetConnectionStringByName("ServisDBLocal");
-#else
-        var connectionString = PersistanceManager.GetConnectionStringByName("ServisDB");      
-#endif
-            PersistanceManager.SetConnection(connectionString);
+
 
         }
 
@@ -82,6 +77,11 @@ namespace ServisDB.Forme
         {
             FormPonuda frm = new FormPonuda();
             frm.ShowDialog();
+        }
+
+        private void FormGlavna_Load(object sender, EventArgs e)
+        {
+            lblKorisnik.Text = "Prijavljeni korisnik: " + PersistanceManager.GetKorisnik().Ime +" " +PersistanceManager.GetKorisnik().Prezime;
         }
     }
 }

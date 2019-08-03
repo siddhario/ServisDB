@@ -307,7 +307,13 @@ namespace ServisDB.Forme
         private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (tabControl1.SelectedIndex == 1)
+            {
                 tbKupac.Focus();
+                if(tbRedniBroj.Text=="AUTO")
+                {
+                    tbServiserPrimio.Text = PersistanceManager.GetKorisnik().KorisnickoIme;
+                }
+            }
             else
             {
                 textBox1.Focus();
@@ -446,6 +452,15 @@ namespace ServisDB.Forme
             string year = parts[1];
             int rrb = int.Parse(rb);
             rednibroj = rrb.ToString("D4") + "/" + year;
+
+            IXLRange titleRange = sheet.Range("C32:C32");
+            titleRange.Cells().Style
+                .Alignment.SetWrapText(true); // Its single statement
+
+            //sheet.Columns().AdjustToContents();
+            sheet.Rows().AdjustToContents();
+
+
             sheet.Cells("C17").Value = rednibroj;
             sheet.Cells("C17").DataType = XLDataType.Text;
             sheet.Cells("C15").Value = rednibroj;
@@ -459,6 +474,7 @@ namespace ServisDB.Forme
             sheet.Cells("C29").Value = serijski_broj;
             sheet.Cells("C31").Value = dodatna_oprema;
             sheet.Cells("C32").Value = opis_kvara;
+         
 
 
             string fileName = dir + "\\" + rednibroj.Replace("/", "-") + ".xlsx";

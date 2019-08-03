@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Net.Mail;
+using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -20,7 +22,7 @@ namespace ServisDB.Klase
       return "report_scripts";
 #endif
         }
-
+       
         public static string ListToString(List<string> list)
         {
             if (list == null || list.Count == 0)

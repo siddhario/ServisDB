@@ -408,7 +408,13 @@ namespace ServisDB.Forme
         private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (tabControl1.SelectedIndex == 1)
+            {
                 tbKupac.Focus();
+                if (tbRedniBroj.Text == "AUTO")
+                {
+                    tbRadnik.Text = PersistanceManager.GetKorisnik().KorisnickoIme;
+                }
+            }
             else
             {
                 textBox1.Focus();

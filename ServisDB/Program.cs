@@ -1,4 +1,6 @@
-﻿using ServisDB.Forme;
+﻿using Delos;
+using ServisDB.Forme;
+using ServisDB.Klase;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,8 +19,25 @@ namespace ServisDB
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+
+#if (DEBUG)
+            var connectionString = PersistanceManager.GetConnectionStringByName("ServisDBLocal");
+#else
+        var connectionString = PersistanceManager.GetConnectionStringByName("ServisDB");      
+#endif
+            PersistanceManager.SetConnection(connectionString);
+
+
+#if (!DEBUG)
             Application.Run(new FormGlavna());
-            
+#else
+            dlgLogin dlg = new dlgLogin();
+            if (dlg.ShowDialog() == DialogResult.OK)
+            {
+                Application.Run(new FormGlavna());
+            }
+#endif
+
         }
     }
 }

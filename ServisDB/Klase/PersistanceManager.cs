@@ -42,6 +42,17 @@ namespace ServisDB.Klase
         }
         private static string _connectionString;
         private static NpgsqlConnection _connection;
+        private static Korisnik _korisnik;
+
+        public static void SetKorisnik(Korisnik k)
+        {
+            _korisnik = k;
+        }
+
+        public static Korisnik GetKorisnik()
+        {
+            return _korisnik;
+        }
 
         public static void InsertPartner(string naziv, string tip, string maticni_broj, string adresa, string telefon, string email, bool kupac, bool dobavljac, string broj_lk, out int? kupacSifra)
         {
@@ -317,17 +328,91 @@ where sifra=@sifra";
             }
         }
 
-        public static List<Ponuda> ReadPonuda(string broj,string kupac)
+        public static Korisnik ReadKorisnik(string korisnicko_ime)
         {
-            List<string> StaticFilters = new List<string>();
-            StaticFilters.Add("(broj like concat(@broj,'%') or @broj is null)");
-            StaticFilters.Add("(broj in (select Ponuda_broj from ponuda_stavka where lower(artikal_naziv) like concat(lower(@kupac_ime),'%')) or (lower(partner_naziv) like concat(lower(@kupac_ime),'%') or @kupac_ime is null))");
+            Korisnik k = null;
+            using (var conn = new NpgsqlConnection(_connectionString))
+            {
+                conn.Open();
+                using (var cmd = new NpgsqlCommand())
+                {
+                    cmd.Connection = conn;
 
-            List<string> filters = new List<string>();
-            filters = filters.Concat(StaticFilters).ToList();
+                    cmd.Parameters.Clear();
+                    Npgsql.NpgsqlParameter p1 = new NpgsqlParameter("@korisnicko_ime", DbType.String);
+                    p1.Value = korisnicko_ime;
+                    cmd.Parameters.Add(p1);
 
+
+                    cmd.CommandText = @"SELECT korisnicko_ime,ime,prezime,lozinka
+	FROM public.korisnik where korisnicko_ime=@korisnicko_ime";
+
+                    var dr = cmd.ExecuteReader();
+                    if (dr.HasRows)
+                    {
+                        dr.Read();
+
+                        k = new Korisnik();
+                        k.KorisnickoIme = dr.GetString(0);
+                        k.Ime = dr.GetString(1);
+                        k.Prezime = dr.GetString(2);
+                        k.Lozinka = dr.GetString(3);
+                    }
+                    dr.Close();
+                }
+            }
+            return k;
+        }
+
+        public static void CopyPonuda(string brojPonude,string radnik)
+        {
+            string broj = null;
+            using (var conn = new NpgsqlConnection(_connectionString))
+            {
+                conn.Open();
+                using (var cmd = new NpgsqlCommand())
+                {
+                    cmd.Connection = conn;
+
+                    cmd.CommandText = "select concat((coalesce(max(substring(broj, 1, position('/' in broj) - 1)::int), 0) + 1)::text, '/', '" + DateTime.Now.Year.ToString() + @"') from ponuda where date_part('year', datum) = " + DateTime.Now.Year.ToString();
+
+                    string noviBroj = (string)cmd.ExecuteScalar();
+
+
+                    cmd.Parameters.Clear();
+                    Npgsql.NpgsqlParameter p1 = new NpgsqlParameter("@broj", DbType.String);
+                    p1.Value = brojPonude;
+                    cmd.Parameters.Add(p1);
+
+                    Npgsql.NpgsqlParameter p2 = new NpgsqlParameter("@radnik", DbType.String);
+                    p2.Value = radnik;
+                    cmd.Parameters.Add(p2);
+
+                    Npgsql.NpgsqlParameter p3 = new NpgsqlParameter("@noviBroj", DbType.String);
+                    p3.Value = noviBroj;
+                    cmd.Parameters.Add(p3);
+
+                    cmd.CommandText = @"INSERT INTO public.ponuda(
+	broj, datum, partner_sifra, partner_jib, partner_adresa, radnik, valuta_placanja, rok_vazenja, paritet_kod, paritet, rok_isporuke, iznos_bez_rabata, rabat, iznos_sa_rabatom, pdv, iznos_sa_pdv, nabavna_vrijednost, ruc, status, napomena, partner_naziv, predmet, partner_telefon, partner_email)
+	select 
+	 @noviBroj, datum, partner_sifra, partner_jib, partner_adresa, @radnik, valuta_placanja, rok_vazenja, paritet_kod, paritet, rok_isporuke, 0, 0, 0, 0, 0, 0, 0, status, napomena, partner_naziv, predmet, partner_telefon, partner_email
+	from public.ponuda where broj=@broj";
+                    cmd.ExecuteNonQuery();
+
+                    cmd.CommandText = @"INSERT INTO public.ponuda_stavka(
+	ponuda_broj, stavka_broj, artikal_sifra, artikal_naziv, kolicina, cijena_nabavna, cijena_bez_pdv, rabat_procenat, rabat_iznos, cijena_bez_pdv_sa_rabatom, iznos_bez_pdv, marza_procenat, ruc, jedinica_mjere, vrijednost_nabavna, pdv_stopa, pdv, iznos_sa_pdv, napomena, dokument, iznos_bez_pdv_sa_rabatom)
+	select @noviBroj, stavka_broj, artikal_sifra, artikal_naziv, kolicina, cijena_nabavna, cijena_bez_pdv, rabat_procenat, rabat_iznos, cijena_bez_pdv_sa_rabatom, iznos_bez_pdv, marza_procenat, ruc, jedinica_mjere, vrijednost_nabavna, pdv_stopa, pdv, iznos_sa_pdv, napomena, dokument, iznos_bez_pdv_sa_rabatom
+from public.ponuda_stavka where ponuda_broj=@broj";
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+      
+        }
+
+        public static List<Ponuda> ReadPonuda(string broj, string kupac, List<string> filters)
+        {
             List<Ponuda> ponude = new List<Ponuda>();
-            
             using (var conn = new NpgsqlConnection(_connectionString))
             {
                 conn.Open();
@@ -391,7 +476,7 @@ where sifra=@sifra";
                         r.IznosSaRabatom = dr.GetDecimal(19);
                         r.Pdv = dr.GetDecimal(20);
                         r.IznosSaPdv = dr.GetDecimal(21);
-                        r.NabavnaVrijednost = dr[22] == DBNull.Value?(decimal?)null: dr.GetDecimal(22);
+                        r.NabavnaVrijednost = dr[22] == DBNull.Value ? (decimal?)null : dr.GetDecimal(22);
                         r.Ruc = dr[23] == DBNull.Value ? (decimal?)null : dr.GetDecimal(23);
 
                         ponude.Add(r);

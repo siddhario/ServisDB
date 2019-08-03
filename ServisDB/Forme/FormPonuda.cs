@@ -1,4 +1,5 @@
 ﻿using ClosedXML.Excel;
+using Delos.Klase;
 using Npgsql;
 //using RawPrint;
 using ServisDB.Forme;
@@ -11,6 +12,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Net.Mail;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -33,7 +35,16 @@ namespace Delos.Forme
 
         private void ReadPonuda(string broj, string kupac)
         {
-            List<Ponuda> ponude = PersistanceManager.ReadPonuda(broj, kupac);
+            StaticFilters = new List<string>();
+            StaticFilters.Add("(broj like concat(@broj,'%') or @broj is null)");
+            StaticFilters.Add("(broj in (select Ponuda_broj from ponuda_stavka where lower(artikal_naziv) like concat(lower(@kupac_ime),'%')) or (lower(partner_naziv) like concat(lower(@kupac_ime),'%') or @kupac_ime is null))");
+
+            List<string> filters = new List<string>();
+            filters = filters.Concat(StaticFilters).ToList();
+            if (DynamicFilters != null)
+                filters = filters.Concat(DynamicFilters).ToList();
+
+            List<Ponuda> ponude = PersistanceManager.ReadPonuda(broj, kupac,filters);
             dgvPrijave.DataSource = null;
             dgvPrijave.AutoGenerateColumns = false;
 
@@ -179,7 +190,7 @@ namespace Delos.Forme
             tbIznosSaRabatom.Text = "";
             tbRUC.Text = "";
             tbIznosSaPdv.Text = "";
-            tbRadnik.Text = "";
+            tbRadnik.Text = PersistanceManager.GetKorisnik().KorisnickoIme;
             tbPredmet.Text = "";
             tbNapomena.Text = "";
             tbStatus.Text = "E";
@@ -447,7 +458,7 @@ namespace Delos.Forme
             cbParitetKod.Enabled = tbStatus.Text == "E";
 
             tbPredmet.ReadOnly = tbStatus.Text != "E";
-            tbRadnik.ReadOnly = tbStatus.Text != "E";
+            //tbRadnik.ReadOnly = tbStatus.Text != "E";
             dtpDatum.Enabled = tbStatus.Text == "E";
 
             tbPartner.ReadOnly = tbStatus.Text != "E";
@@ -465,14 +476,16 @@ namespace Delos.Forme
 
         private void btnStampa_Click(object sender, EventArgs e)
         {
-            Stampa();
+            string fileName = Stampa();
+            if (fileName != null)
+                Process.Start(fileName);
         }
-        private void Stampa()
+        private string Stampa()
         {
             //string dir = Environment.SpecialFolder.MyDocuments + "\\ServisDB\\";
 
             string dir = System.IO.Path.Combine(Environment.GetFolderPath(
-          Environment.SpecialFolder.MyDoc‌​uments), "ServisDB");
+          Environment.SpecialFolder.MyDoc‌​uments), "ServisDB\\temp");
 
             if (Directory.Exists(dir) == false)
             {
@@ -489,7 +502,17 @@ namespace Delos.Forme
             object o = dgvPrijave.SelectedRows[0].DataBoundItem;
             string rednibroj = ((Ponuda)o).Broj;
 
-            Ponuda p = PersistanceManager.ReadPonuda(rednibroj, "").FirstOrDefault();
+
+            StaticFilters = new List<string>();
+            StaticFilters.Add("(broj like concat(@broj,'%') or @broj is null)");
+            StaticFilters.Add("(broj in (select Ponuda_broj from ponuda_stavka where lower(artikal_naziv) like concat(lower(@kupac_ime),'%')) or (lower(partner_naziv) like concat(lower(@kupac_ime),'%') or @kupac_ime is null))");
+
+            List<string> filters = new List<string>();
+            filters = filters.Concat(StaticFilters).ToList();
+            if (DynamicFilters != null)
+                filters = filters.Concat(DynamicFilters).ToList();
+
+            Ponuda p = PersistanceManager.ReadPonuda(rednibroj, "", filters).FirstOrDefault();
         
 
             //string rednibroj = p.Broj;
@@ -733,9 +756,9 @@ namespace Delos.Forme
             string fileName = dir + "\\Ponuda_" + rednibroj.Replace("/", "-") + ".xlsx";
             if (File.Exists(fileName) == true)
             {
-                DialogResult dr = MessageBox.Show("Štampana verzija već postoji. Napraviti novu ?", "Upozorenje", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1);
-                if (dr == DialogResult.Yes)
-                {
+                //DialogResult dr = MessageBox.Show("Štampana verzija već postoji. Napraviti novu ?", "Upozorenje", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1);
+                //if (dr == DialogResult.Yes)
+                //{
                     try
                     {
                         File.Delete(fileName);
@@ -743,22 +766,26 @@ namespace Delos.Forme
                     catch (Exception ex)
                     {
                         MessageBox.Show("Zatvorite dokument pa pokušajte opet!");
-                        return;
+                        return null;
                     }
                     doc.SaveAs(fileName);
-                    Process.Start(fileName);
-                }
+                    //Process.Start(fileName);
+                //}
             }
             else
             {
                 doc.SaveAs(fileName);
-                Process.Start(fileName);
+                //Process.Start(fileName);
             }
+
+            return fileName;
             //IPrinter printer = new Printer();
             //StreamReader sr = new StreamReader(fileName);
 
             //printer.PrintRawFile("Foxit Reader PDF Printer", "C:\\Users\\Dario\\Downloads\\PONUDA.xlsx", "Ponuda.pdf");
             //printer.PrintRawStream("Microsoft Print to PDF", sr.BaseStream, "Ponuda.pdf");
+
+         
 
         }
 
@@ -933,6 +960,8 @@ namespace Delos.Forme
                 {
                     dgvStavkePonude.DataSource = null;
                     dgvDokumenti.DataSource = null;
+
+                    tbRadnik.Text = PersistanceManager.GetKorisnik().KorisnickoIme;
                 }
             }
             else
@@ -1091,7 +1120,7 @@ namespace Delos.Forme
             {
                 PersistanceManager.UpdatePonudaStavka(stavka);
                 CalculateTotals();
-                Ponuda p = PersistanceManager.ReadPonuda(stavka.PonudaBroj, "").FirstOrDefault();
+                Ponuda p = PersistanceManager.ReadPonuda(stavka.PonudaBroj, "",DynamicFilters).FirstOrDefault();
                 Ponuda ponuda = (Ponuda)dgvPrijave.SelectedRows[0].DataBoundItem;
                 ponuda.IznosSaPdv = p.IznosSaPdv;
                 //BindingList<Ponuda> lista = (BindingList<Ponuda>)dgvPrijave.DataSource;
@@ -1165,7 +1194,7 @@ namespace Delos.Forme
 
                     CalculateTotals();
 
-                    Ponuda p = PersistanceManager.ReadPonuda(stavka.PonudaBroj, "").FirstOrDefault();
+                    Ponuda p = PersistanceManager.ReadPonuda(stavka.PonudaBroj, "",DynamicFilters).FirstOrDefault();
                     Ponuda ponuda = (Ponuda)dgvPrijave.SelectedRows[0].DataBoundItem;
                     ponuda.IznosSaPdv = p.IznosSaPdv;
                     //BindingList<Ponuda> lista = (BindingList<Ponuda>)dgvPrijave.DataSource;
@@ -1207,7 +1236,7 @@ namespace Delos.Forme
                 PonudaStavka stavka = (PonudaStavka)e.Row.DataBoundItem;
                 PersistanceManager.DeletePonudaStavka(stavka);
                 CalculateTotals();
-                Ponuda p = PersistanceManager.ReadPonuda(stavka.PonudaBroj, "").FirstOrDefault();
+                Ponuda p = PersistanceManager.ReadPonuda(stavka.PonudaBroj, "",DynamicFilters).FirstOrDefault();
                 Ponuda ponuda = (Ponuda)dgvPrijave.SelectedRows[0].DataBoundItem;
                 ponuda.IznosSaPdv = p.IznosSaPdv;
                 //BindingList<Ponuda> lista = (BindingList<Ponuda>)dgvPrijave.DataSource;
@@ -1386,6 +1415,46 @@ namespace Delos.Forme
                 dgvStavkePonude.BeginEdit(true);
 
             }
+        }
+
+        private void btnCopyPonuda_Click(object sender, EventArgs e)
+        {
+            string broj = ((Ponuda)dgvPrijave.SelectedRows[0].DataBoundItem).Broj;
+           
+            if (MessageBox.Show(string.Format("Kopirati ponudu {0} ?", broj), "Potvrda", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.Yes)
+            {
+                PersistanceManager.CopyPonuda(broj, PersistanceManager.GetKorisnik().KorisnickoIme);
+
+                MessageBox.Show(string.Format("Ponuda {0} je kopirana!", broj), "Poruka", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1);
+        
+                ReadPonuda(textBox1.Text, textBox2.Text);
+                tabControl1.SelectedIndex = 0;
+                Clear();
+                ReadPonuda("", "");
+            }
+        }
+
+        private void btnSendMail_Click(object sender, EventArgs e)
+        {
+            string fileName = Stampa();
+            Ponuda p = (Ponuda)dgvPrijave.SelectedRows[0].DataBoundItem;
+            var mailMessage = new MailMessage();
+
+            mailMessage.From = new MailAddress("dariodjekic@gmail.com");
+            mailMessage.To.Add(p.PartnerEmail);
+            mailMessage.Subject = "Ponuda za " + p.Predmet;
+            mailMessage.IsBodyHtml = true;
+            mailMessage.Body = "<span style='font-size: 12pt; color: black;'>Poštovani ,<br/> u prilogu se nalazi ponuda. <br/><br/> Pozdrav</span>";
+
+            mailMessage.Attachments.Add(new Attachment(fileName));
+
+            var eml = fileName + ".eml";
+
+            //save the MailMessage to the filesystem
+            mailMessage.Save(eml);
+
+            //Open the file with the default associated application registered on the local machine
+            Process.Start(eml);
         }
     }
 }

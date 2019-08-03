@@ -40,6 +40,8 @@
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.dgvPrijave = new System.Windows.Forms.DataGridView();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.tbUplacenoPoRatama = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.cbMK = new System.Windows.Forms.CheckBox();
             this.gbRate = new System.Windows.Forms.GroupBox();
             this.lblBrojRate = new System.Windows.Forms.Label();
@@ -102,8 +104,6 @@
             this.btnZakljuciUgovor = new System.Windows.Forms.Button();
             this.btnRealizovan = new System.Windows.Forms.Button();
             this.btnOtkljucaj = new System.Windows.Forms.Button();
-            this.tbUplacenoPoRatama = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPrijave)).BeginInit();
@@ -297,6 +297,25 @@
             this.tabPage2.Text = "Unos [F2]";
             this.tabPage2.UseVisualStyleBackColor = true;
             this.tabPage2.Click += new System.EventHandler(this.tabPage2_Click);
+            // 
+            // tbUplacenoPoRatama
+            // 
+            this.tbUplacenoPoRatama.Location = new System.Drawing.Point(920, 125);
+            this.tbUplacenoPoRatama.Name = "tbUplacenoPoRatama";
+            this.tbUplacenoPoRatama.ReadOnly = true;
+            this.tbUplacenoPoRatama.Size = new System.Drawing.Size(100, 22);
+            this.tbUplacenoPoRatama.TabIndex = 122;
+            this.tbUplacenoPoRatama.Text = "0";
+            this.tbUplacenoPoRatama.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(776, 131);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(134, 16);
+            this.label2.TabIndex = 121;
+            this.label2.Text = "Uplaćeno po ratama:";
             // 
             // cbMK
             // 
@@ -799,6 +818,7 @@
             this.tbRadnik.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tbRadnik.Location = new System.Drawing.Point(653, 228);
             this.tbRadnik.Name = "tbRadnik";
+            this.tbRadnik.ReadOnly = true;
             this.tbRadnik.Size = new System.Drawing.Size(225, 22);
             this.tbRadnik.TabIndex = 11;
             // 
@@ -905,25 +925,6 @@
             this.btnOtkljucaj.Text = "Otključavanje [F8]";
             this.btnOtkljucaj.UseVisualStyleBackColor = true;
             this.btnOtkljucaj.Click += new System.EventHandler(this.btnOtkljucaj_Click);
-            // 
-            // tbUplacenoPoRatama
-            // 
-            this.tbUplacenoPoRatama.Location = new System.Drawing.Point(920, 125);
-            this.tbUplacenoPoRatama.Name = "tbUplacenoPoRatama";
-            this.tbUplacenoPoRatama.ReadOnly = true;
-            this.tbUplacenoPoRatama.Size = new System.Drawing.Size(100, 22);
-            this.tbUplacenoPoRatama.TabIndex = 122;
-            this.tbUplacenoPoRatama.Text = "0";
-            this.tbUplacenoPoRatama.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(776, 131);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(134, 16);
-            this.label2.TabIndex = 121;
-            this.label2.Text = "Uplaćeno po ratama:";
             // 
             // FormUgovor
             // 
