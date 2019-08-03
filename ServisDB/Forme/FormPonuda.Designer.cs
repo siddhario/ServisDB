@@ -958,7 +958,8 @@
             this.dgvStavkePonude.UserDeletedRow += new System.Windows.Forms.DataGridViewRowEventHandler(this.dgvStavkePonude_UserDeletedRow);
             this.dgvStavkePonude.UserDeletingRow += new System.Windows.Forms.DataGridViewRowCancelEventHandler(this.dgvStavkePonude_UserDeletingRow);
             this.dgvStavkePonude.DragDrop += new System.Windows.Forms.DragEventHandler(this.dgvStavkePonude_DragDrop);
-          // 
+            this.dgvStavkePonude.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgvStavkePonude_KeyDown);
+            // 
             // tabPage4
             // 
             this.tabPage4.Controls.Add(this.dgvDokumenti);

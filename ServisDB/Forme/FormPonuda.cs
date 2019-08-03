@@ -262,7 +262,7 @@ namespace Delos.Forme
 
         private void tabControl1_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyData == Keys.Enter)
+                if (e.KeyData == Keys.Enter)
             {
                 if (!textBox1.Focused)
                 {
@@ -1371,7 +1371,21 @@ namespace Delos.Forme
             }
         }
 
+        private void dgvStavkePonude_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Right)
+            {
+                e.SuppressKeyPress = true;
+                int iColumn = dgvStavkePonude.CurrentCell.ColumnIndex;
+                int iRow = dgvStavkePonude.CurrentCell.RowIndex;
+                if (iColumn == dgvStavkePonude.Columns.Count - 1)
+                    dgvStavkePonude.CurrentCell = dgvStavkePonude[0, iRow + 1];
+                else
+                    dgvStavkePonude.CurrentCell = dgvStavkePonude[iColumn + 1, iRow];
 
-     
+                dgvStavkePonude.BeginEdit(true);
+
+            }
+        }
     }
 }
