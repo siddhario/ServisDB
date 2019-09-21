@@ -103,6 +103,7 @@
             this.btnStampa = new System.Windows.Forms.Button();
             this.tmrDelay = new System.Windows.Forms.Timer(this.components);
             this.btnStampaRadnogNaloga = new System.Windows.Forms.Button();
+            this.btnSendMail = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPrijave)).BeginInit();
@@ -863,7 +864,7 @@
             // 
             this.btnBrisanje.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnBrisanje.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnBrisanje.Location = new System.Drawing.Point(1075, 71);
+            this.btnBrisanje.Location = new System.Drawing.Point(1071, 62);
             this.btnBrisanje.Name = "btnBrisanje";
             this.btnBrisanje.Size = new System.Drawing.Size(101, 36);
             this.btnBrisanje.TabIndex = 28;
@@ -875,7 +876,7 @@
             // 
             this.btnStampa.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnStampa.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnStampa.Location = new System.Drawing.Point(1075, 28);
+            this.btnStampa.Location = new System.Drawing.Point(1071, 19);
             this.btnStampa.Name = "btnStampa";
             this.btnStampa.Size = new System.Drawing.Size(101, 37);
             this.btnStampa.TabIndex = 27;
@@ -887,7 +888,7 @@
             // 
             this.btnStampaRadnogNaloga.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnStampaRadnogNaloga.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnStampaRadnogNaloga.Location = new System.Drawing.Point(1075, 113);
+            this.btnStampaRadnogNaloga.Location = new System.Drawing.Point(1071, 104);
             this.btnStampaRadnogNaloga.Name = "btnStampaRadnogNaloga";
             this.btnStampaRadnogNaloga.Size = new System.Drawing.Size(101, 46);
             this.btnStampaRadnogNaloga.TabIndex = 29;
@@ -895,11 +896,24 @@
             this.btnStampaRadnogNaloga.UseVisualStyleBackColor = true;
             this.btnStampaRadnogNaloga.Click += new System.EventHandler(this.btnStampaRadnogNaloga_Click);
             // 
+            // btnSendMail
+            // 
+            this.btnSendMail.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnSendMail.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSendMail.Location = new System.Drawing.Point(1071, 157);
+            this.btnSendMail.Name = "btnSendMail";
+            this.btnSendMail.Size = new System.Drawing.Size(101, 50);
+            this.btnSendMail.TabIndex = 42;
+            this.btnSendMail.Text = "Slanje e-maila [F8]";
+            this.btnSendMail.UseVisualStyleBackColor = true;
+            this.btnSendMail.Click += new System.EventHandler(this.btnSendMail_Click);
+            // 
             // frmServisnaPrijava
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1185, 741);
+            this.Controls.Add(this.btnSendMail);
             this.Controls.Add(this.btnStampaRadnogNaloga);
             this.Controls.Add(this.btnBrisanje);
             this.Controls.Add(this.btnStampa);
@@ -995,6 +1009,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label lblInstalacija;
         private System.Windows.Forms.Button btnStampaRadnogNaloga;
+        private System.Windows.Forms.Button btnSendMail;
     }
 }
 

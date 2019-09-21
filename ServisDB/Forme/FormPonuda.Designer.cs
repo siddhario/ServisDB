@@ -110,6 +110,8 @@
             this.btnDeleteCache = new System.Windows.Forms.Button();
             this.btnCopyPonuda = new System.Windows.Forms.Button();
             this.btnSendMail = new System.Windows.Forms.Button();
+            this.btnDjelimicnoRealizovan = new System.Windows.Forms.Button();
+            this.rbDjelimicnoNerealizovane = new System.Windows.Forms.RadioButton();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPrijave)).BeginInit();
@@ -139,6 +141,7 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.rbDjelimicnoNerealizovane);
             this.tabPage1.Controls.Add(this.radioButton1);
             this.tabPage1.Controls.Add(this.rbNerealizovani);
             this.tabPage1.Controls.Add(this.rbUtoku);
@@ -160,7 +163,7 @@
             // 
             this.radioButton1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.radioButton1.AutoSize = true;
-            this.radioButton1.Location = new System.Drawing.Point(652, 0);
+            this.radioButton1.Location = new System.Drawing.Point(546, 3);
             this.radioButton1.Name = "radioButton1";
             this.radioButton1.Size = new System.Drawing.Size(64, 20);
             this.radioButton1.TabIndex = 11;
@@ -172,7 +175,7 @@
             // 
             this.rbNerealizovani.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.rbNerealizovani.AutoSize = true;
-            this.rbNerealizovani.Location = new System.Drawing.Point(836, 0);
+            this.rbNerealizovani.Location = new System.Drawing.Point(823, 3);
             this.rbNerealizovani.Name = "rbNerealizovani";
             this.rbNerealizovani.Size = new System.Drawing.Size(114, 20);
             this.rbNerealizovani.TabIndex = 10;
@@ -184,12 +187,13 @@
             // 
             this.rbUtoku.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.rbUtoku.AutoSize = true;
-            this.rbUtoku.Location = new System.Drawing.Point(722, 0);
+            this.rbUtoku.Location = new System.Drawing.Point(618, 3);
             this.rbUtoku.Name = "rbUtoku";
             this.rbUtoku.Size = new System.Drawing.Size(102, 20);
             this.rbUtoku.TabIndex = 9;
             this.rbUtoku.Text = "Realizovane";
             this.rbUtoku.UseVisualStyleBackColor = true;
+            this.rbUtoku.CheckedChanged += new System.EventHandler(this.rbUtoku_CheckedChanged);
             this.rbUtoku.Click += new System.EventHandler(this.rbRealizovani_Click);
             // 
             // rbSviUgovori
@@ -197,7 +201,7 @@
             this.rbSviUgovori.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.rbSviUgovori.AutoSize = true;
             this.rbSviUgovori.Checked = true;
-            this.rbSviUgovori.Location = new System.Drawing.Point(950, 1);
+            this.rbSviUgovori.Location = new System.Drawing.Point(943, 3);
             this.rbSviUgovori.Name = "rbSviUgovori";
             this.rbSviUgovori.Size = new System.Drawing.Size(99, 20);
             this.rbSviUgovori.TabIndex = 8;
@@ -209,7 +213,7 @@
             // btnReload
             // 
             this.btnReload.Image = global::Delos.Properties.Resources.reload__1_;
-            this.btnReload.Location = new System.Drawing.Point(570, 3);
+            this.btnReload.Location = new System.Drawing.Point(494, 3);
             this.btnReload.Name = "btnReload";
             this.btnReload.Size = new System.Drawing.Size(46, 22);
             this.btnReload.TabIndex = 4;
@@ -231,7 +235,7 @@
             // 
             this.textBox2.Location = new System.Drawing.Point(184, 3);
             this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(380, 22);
+            this.textBox2.Size = new System.Drawing.Size(304, 22);
             this.textBox2.TabIndex = 2;
             this.textBox2.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
             // 
@@ -847,7 +851,7 @@
             // 
             this.btnOtkljucaj.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnOtkljucaj.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnOtkljucaj.Location = new System.Drawing.Point(1076, 347);
+            this.btnOtkljucaj.Location = new System.Drawing.Point(1076, 412);
             this.btnOtkljucaj.Name = "btnOtkljucaj";
             this.btnOtkljucaj.Size = new System.Drawing.Size(101, 43);
             this.btnOtkljucaj.TabIndex = 36;
@@ -907,7 +911,7 @@
             // 
             this.btnPonudaNerealizovana.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnPonudaNerealizovana.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnPonudaNerealizovana.Location = new System.Drawing.Point(1076, 281);
+            this.btnPonudaNerealizovana.Location = new System.Drawing.Point(1076, 346);
             this.btnPonudaNerealizovana.Name = "btnPonudaNerealizovana";
             this.btnPonudaNerealizovana.Size = new System.Drawing.Size(101, 60);
             this.btnPonudaNerealizovana.TabIndex = 37;
@@ -950,6 +954,8 @@
             this.dgvStavkePonude.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvStavkePonude.Location = new System.Drawing.Point(3, 3);
             this.dgvStavkePonude.Name = "dgvStavkePonude";
+            this.dgvStavkePonude.RowHeadersVisible = false;
+            this.dgvStavkePonude.RowTemplate.Height = 60;
             this.dgvStavkePonude.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvStavkePonude.Size = new System.Drawing.Size(1052, 244);
             this.dgvStavkePonude.StandardTab = true;
@@ -969,7 +975,7 @@
             this.tabPage4.Location = new System.Drawing.Point(4, 25);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(1165, 250);
+            this.tabPage4.Size = new System.Drawing.Size(1058, 250);
             this.tabPage4.TabIndex = 1;
             this.tabPage4.Text = "Dokumenti";
             this.tabPage4.UseVisualStyleBackColor = true;
@@ -984,7 +990,7 @@
             this.dgvDokumenti.Name = "dgvDokumenti";
             this.dgvDokumenti.ReadOnly = true;
             this.dgvDokumenti.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvDokumenti.Size = new System.Drawing.Size(1159, 244);
+            this.dgvDokumenti.Size = new System.Drawing.Size(1052, 244);
             this.dgvDokumenti.TabIndex = 0;
             this.dgvDokumenti.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvDokumenti_CellDoubleClick);
             this.dgvDokumenti.UserDeletedRow += new System.Windows.Forms.DataGridViewRowEventHandler(this.dgvDokumenti_UserDeletedRow);
@@ -996,7 +1002,7 @@
             // 
             this.btnDeleteCache.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnDeleteCache.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnDeleteCache.Location = new System.Drawing.Point(1076, 395);
+            this.btnDeleteCache.Location = new System.Drawing.Point(1076, 460);
             this.btnDeleteCache.Name = "btnDeleteCache";
             this.btnDeleteCache.Size = new System.Drawing.Size(101, 41);
             this.btnDeleteCache.TabIndex = 39;
@@ -1008,7 +1014,7 @@
             // 
             this.btnCopyPonuda.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCopyPonuda.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCopyPonuda.Location = new System.Drawing.Point(1076, 442);
+            this.btnCopyPonuda.Location = new System.Drawing.Point(1076, 507);
             this.btnCopyPonuda.Name = "btnCopyPonuda";
             this.btnCopyPonuda.Size = new System.Drawing.Size(101, 42);
             this.btnCopyPonuda.TabIndex = 40;
@@ -1028,12 +1034,37 @@
             this.btnSendMail.UseVisualStyleBackColor = true;
             this.btnSendMail.Click += new System.EventHandler(this.btnSendMail_Click);
             // 
+            // btnDjelimicnoRealizovan
+            // 
+            this.btnDjelimicnoRealizovan.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnDjelimicnoRealizovan.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnDjelimicnoRealizovan.Location = new System.Drawing.Point(1076, 281);
+            this.btnDjelimicnoRealizovan.Name = "btnDjelimicnoRealizovan";
+            this.btnDjelimicnoRealizovan.Size = new System.Drawing.Size(101, 59);
+            this.btnDjelimicnoRealizovan.TabIndex = 42;
+            this.btnDjelimicnoRealizovan.Text = "Ponuda djelimično realizovana [F7]";
+            this.btnDjelimicnoRealizovan.UseVisualStyleBackColor = true;
+            this.btnDjelimicnoRealizovan.Click += new System.EventHandler(this.btnDjelimicnoRealizovan_Click);
+            // 
+            // rbDjelimicnoNerealizovane
+            // 
+            this.rbDjelimicnoNerealizovane.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.rbDjelimicnoNerealizovane.AutoSize = true;
+            this.rbDjelimicnoNerealizovane.Location = new System.Drawing.Point(726, 3);
+            this.rbDjelimicnoNerealizovane.Name = "rbDjelimicnoNerealizovane";
+            this.rbDjelimicnoNerealizovane.Size = new System.Drawing.Size(91, 20);
+            this.rbDjelimicnoNerealizovane.TabIndex = 12;
+            this.rbDjelimicnoNerealizovane.Text = "Djel. realiz.";
+            this.rbDjelimicnoNerealizovane.UseVisualStyleBackColor = true;
+            this.rbDjelimicnoNerealizovane.Click += new System.EventHandler(this.rbDjelimicnoNerealizovane_Click);
+            // 
             // FormPonuda
             // 
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1185, 659);
+            this.Controls.Add(this.btnDjelimicnoRealizovan);
             this.Controls.Add(this.btnSendMail);
             this.Controls.Add(this.btnCopyPonuda);
             this.Controls.Add(this.btnDeleteCache);
@@ -1150,5 +1181,7 @@
         private System.Windows.Forms.Button btnDeleteCache;
         private System.Windows.Forms.Button btnCopyPonuda;
         private System.Windows.Forms.Button btnSendMail;
+        private System.Windows.Forms.Button btnDjelimicnoRealizovan;
+        private System.Windows.Forms.RadioButton rbDjelimicnoNerealizovane;
     }
 }

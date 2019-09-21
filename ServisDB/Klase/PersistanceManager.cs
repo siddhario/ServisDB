@@ -7,6 +7,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TMS.Core.Helpers;
 
 namespace ServisDB.Klase
 {
@@ -260,8 +261,8 @@ where sifra=@sifra";
                     cmd.Parameters.AddWithValue("@valuta_placanja", valuta_placanja);
                     cmd.Parameters.AddWithValue("@rok_vazenja", rok_vazenja);
                     cmd.Parameters.AddWithValue("@rok_isporuke", rok_isporuke);
-                    cmd.Parameters.AddWithValue("@paritet_kod", paritet_kod);
-                    cmd.Parameters.AddWithValue("@paritet", paritet);
+                    cmd.Parameters.AddWithValue("@paritet_kod", paritet_kod != null?paritet_kod:(object)DBNull.Value);
+                    cmd.Parameters.AddWithValue("@paritet", paritet != null ? paritet : (object)DBNull.Value);
                     cmd.Parameters.AddWithValue("@predmet", predmet);
                     cmd.Parameters.AddWithValue("@napomena", napomena);
                     // Insert some data
@@ -344,7 +345,7 @@ where sifra=@sifra";
                     cmd.Parameters.Add(p1);
 
 
-                    cmd.CommandText = @"SELECT korisnicko_ime,ime,prezime,lozinka
+                    cmd.CommandText = @"SELECT korisnicko_ime,ime,prezime,lozinka,email,admin
 	FROM public.korisnik where korisnicko_ime=@korisnicko_ime";
 
                     var dr = cmd.ExecuteReader();
@@ -357,6 +358,8 @@ where sifra=@sifra";
                         k.Ime = dr.GetString(1);
                         k.Prezime = dr.GetString(2);
                         k.Lozinka = dr.GetString(3);
+                        k.Email = dr.GetString(4);
+                        k.Admin = dr.GetBoolean(5);
                     }
                     dr.Close();
                 }
@@ -400,8 +403,8 @@ where sifra=@sifra";
                     cmd.ExecuteNonQuery();
 
                     cmd.CommandText = @"INSERT INTO public.ponuda_stavka(
-	ponuda_broj, stavka_broj, artikal_sifra, artikal_naziv, kolicina, cijena_nabavna, cijena_bez_pdv, rabat_procenat, rabat_iznos, cijena_bez_pdv_sa_rabatom, iznos_bez_pdv, marza_procenat, ruc, jedinica_mjere, vrijednost_nabavna, pdv_stopa, pdv, iznos_sa_pdv, napomena, dokument, iznos_bez_pdv_sa_rabatom)
-	select @noviBroj, stavka_broj, artikal_sifra, artikal_naziv, kolicina, cijena_nabavna, cijena_bez_pdv, rabat_procenat, rabat_iznos, cijena_bez_pdv_sa_rabatom, iznos_bez_pdv, marza_procenat, ruc, jedinica_mjere, vrijednost_nabavna, pdv_stopa, pdv, iznos_sa_pdv, napomena, dokument, iznos_bez_pdv_sa_rabatom
+	ponuda_broj, stavka_broj, artikal_sifra, artikal_naziv, kolicina, cijena_nabavna, cijena_bez_pdv, rabat_procenat, rabat_iznos, cijena_bez_pdv_sa_rabatom, iznos_bez_pdv, marza_procenat, ruc, jedinica_mjere, vrijednost_nabavna, pdv_stopa, pdv, iznos_sa_pdv, napomena, dokument, iznos_bez_pdv_sa_rabatom,opis)
+	select @noviBroj, stavka_broj, artikal_sifra, artikal_naziv, kolicina, cijena_nabavna, cijena_bez_pdv, rabat_procenat, rabat_iznos, cijena_bez_pdv_sa_rabatom, iznos_bez_pdv, marza_procenat, ruc, jedinica_mjere, vrijednost_nabavna, pdv_stopa, pdv, iznos_sa_pdv, napomena, dokument, iznos_bez_pdv_sa_rabatom,opis
 from public.ponuda_stavka where ponuda_broj=@broj";
 
                     cmd.ExecuteNonQuery();
@@ -501,7 +504,7 @@ from public.ponuda_stavka where ponuda_broj=@broj";
                     cmd.Parameters.AddWithValue("@broj", broj);
                     // Insert some data
                     cmd.CommandText = @"SELECT ponuda_broj,stavka_broj,artikal_naziv,kolicina,jedinica_mjere,cijena_bez_pdv,rabat_procenat,iznos_bez_pdv,iznos_bez_pdv_sa_rabatom
-,cijena_nabavna,vrijednost_nabavna,marza_procenat,ruc,pdv_stopa,pdv,iznos_sa_pdv,rabat_iznos,cijena_bez_pdv_sa_rabatom
+,cijena_nabavna,vrijednost_nabavna,marza_procenat,ruc,pdv_stopa,pdv,iznos_sa_pdv,rabat_iznos,cijena_bez_pdv_sa_rabatom,opis
 	FROM public.ponuda_stavka where ponuda_broj=@broj order by stavka_broj asc";
                     var dr = cmd.ExecuteReader();
                     while (dr.Read())
@@ -525,6 +528,7 @@ from public.ponuda_stavka where ponuda_broj=@broj";
                         r.IznosSaPdv = dr.GetDecimal(15);
                         r.RabatIznos = dr.GetDecimal(16);
                         r.CijenaBezPdvSaRabatom = dr.GetDecimal(17);
+                        r.Opis = dr[18] != DBNull.Value ? dr.GetString(18) : null ;
 
                         stavke.Add(r);
                     }
@@ -627,8 +631,8 @@ from public.ponuda_stavka where ponuda_broj=@broj";
                     cmd.Parameters.AddWithValue("@valuta_placanja", valuta_placanja);
                     cmd.Parameters.AddWithValue("@rok_vazenja", rok_vazenja);
                     cmd.Parameters.AddWithValue("@rok_isporuke", rok_isporuke);
-                    cmd.Parameters.AddWithValue("@paritet_kod", paritet_kod);
-                    cmd.Parameters.AddWithValue("@paritet", paritet);
+                    cmd.Parameters.AddWithValue("@paritet_kod", paritet_kod != null ? paritet_kod : (object)DBNull.Value);
+                    cmd.Parameters.AddWithValue("@paritet", paritet != null ? paritet : (object)DBNull.Value);
                     cmd.Parameters.AddWithValue("@predmet", predmet);
                     cmd.Parameters.AddWithValue("@napomena", napomena);
                     // Insert some data
@@ -647,37 +651,45 @@ from public.ponuda_stavka where ponuda_broj=@broj";
 
         public static void UpdatePonudaStavka(PonudaStavka stavka)
         {
-            using (var conn = new NpgsqlConnection(_connectionString))
+            try
             {
-                conn.Open();
-                using (var cmd = new NpgsqlCommand())
+                using (var conn = new NpgsqlConnection(_connectionString))
                 {
-                    cmd.Connection = conn;
-                    cmd.Parameters.AddWithValue("@ponuda_broj", stavka.PonudaBroj);
-                    cmd.Parameters.AddWithValue("@stavka_broj", stavka.StavkaBroj);
-                    cmd.Parameters.AddWithValue("@cijena_bez_pdv", stavka.CijenaBezPdv);
-                    cmd.Parameters.AddWithValue("@cijena_bez_pdv_sa_rabatom", stavka.CijenaBezPdvSaRabatom);
-                    cmd.Parameters.AddWithValue("@kolicina", stavka.Kolicina);
-                    cmd.Parameters.AddWithValue("@rabat_procenat", stavka.RabatProcenat);
-                    cmd.Parameters.AddWithValue("@rabat_iznos", stavka.RabatIznos);
-                    cmd.Parameters.AddWithValue("@iznos_bez_pdv", stavka.IznosBezPdv);
-                    cmd.Parameters.AddWithValue("@iznos_bez_pdv_sa_rabatom", stavka.IznosBezPdvSaRabatom);
-                    cmd.Parameters.AddWithValue("@cijena_nabavna", stavka.CijenaNabavna);
-                    cmd.Parameters.AddWithValue("@vrijednost_nabavna", stavka.VrijednostNabavna);
-                    cmd.Parameters.AddWithValue("@marza_procenat", stavka.MarzaProcenat);
-                    cmd.Parameters.AddWithValue("@ruc", stavka.Ruc);
-                    cmd.Parameters.AddWithValue("@pdv_stopa", stavka.PdvStopa);
-                    cmd.Parameters.AddWithValue("@pdv", stavka.Pdv);
-                    cmd.Parameters.AddWithValue("@iznos_sa_pdv", stavka.IznosSaPdv);
-                    // Insert some data
-                    cmd.CommandText = @"update ponuda_stavka set cijena_bez_pdv=@cijena_bez_pdv, cijena_bez_pdv_sa_rabatom=@cijena_bez_pdv_sa_rabatom, kolicina=@kolicina, 
+                    conn.Open();
+                    using (var cmd = new NpgsqlCommand())
+                    {
+                        cmd.Connection = conn;
+                        cmd.Parameters.AddWithValue("@ponuda_broj", stavka.PonudaBroj);
+                        cmd.Parameters.AddWithValue("@stavka_broj", stavka.StavkaBroj);
+                        cmd.Parameters.AddWithValue("@cijena_bez_pdv", stavka.CijenaBezPdv);
+                        cmd.Parameters.AddWithValue("@cijena_bez_pdv_sa_rabatom", stavka.CijenaBezPdvSaRabatom);
+                        cmd.Parameters.AddWithValue("@kolicina", stavka.Kolicina);
+                        cmd.Parameters.AddWithValue("@rabat_procenat", stavka.RabatProcenat);
+                        cmd.Parameters.AddWithValue("@rabat_iznos", stavka.RabatIznos);
+                        cmd.Parameters.AddWithValue("@iznos_bez_pdv", stavka.IznosBezPdv);
+                        cmd.Parameters.AddWithValue("@iznos_bez_pdv_sa_rabatom", stavka.IznosBezPdvSaRabatom);
+                        cmd.Parameters.AddWithValue("@cijena_nabavna", stavka.CijenaNabavna);
+                        cmd.Parameters.AddWithValue("@vrijednost_nabavna", stavka.VrijednostNabavna);
+                        cmd.Parameters.AddWithValue("@marza_procenat", stavka.MarzaProcenat);
+                        cmd.Parameters.AddWithValue("@ruc", stavka.Ruc);
+                        cmd.Parameters.AddWithValue("@pdv_stopa", stavka.PdvStopa);
+                        cmd.Parameters.AddWithValue("@pdv", stavka.Pdv);
+                        cmd.Parameters.AddWithValue("@iznos_sa_pdv", stavka.IznosSaPdv);
+                        cmd.Parameters.AddWithValue("@opis", stavka.Opis != null ? stavka.Opis : (object)DBNull.Value);
+                        // Insert some data
+                        cmd.CommandText = @"update ponuda_stavka set cijena_bez_pdv=@cijena_bez_pdv, cijena_bez_pdv_sa_rabatom=@cijena_bez_pdv_sa_rabatom, kolicina=@kolicina, 
 rabat_procenat=@rabat_procenat,iznos_bez_pdv=@iznos_bez_pdv,iznos_bez_pdv_sa_rabatom=@iznos_bez_pdv_sa_rabatom,
 cijena_nabavna=@cijena_nabavna,vrijednost_nabavna=@vrijednost_nabavna,marza_procenat=@marza_procenat,ruc=@ruc
-,pdv_stopa=@pdv_stopa,pdv=@pdv,iznos_sa_pdv=@iznos_sa_pdv,rabat_iznos=@rabat_iznos
+,pdv_stopa=@pdv_stopa,pdv=@pdv,iznos_sa_pdv=@iznos_sa_pdv,rabat_iznos=@rabat_iznos,opis = @opis
                     where ponuda_broj=@ponuda_broj and stavka_broj=@stavka_broj";
 
-                    cmd.ExecuteNonQuery();
+                        cmd.ExecuteNonQuery();
+                    }
                 }
+            }
+            catch(Exception ex)
+            {
+                Logger.Exception(ex);
             }
         }
 
@@ -1017,6 +1029,7 @@ where broj_ugovora=@broj_ugovora and broj_rate=@broj_rate";
                     cmd.Parameters.AddWithValue("@pdv_stopa", stavka.PdvStopa);
                     cmd.Parameters.AddWithValue("@pdv", stavka.Pdv);
                     cmd.Parameters.AddWithValue("@iznos_sa_pdv", stavka.IznosSaPdv);
+                    cmd.Parameters.AddWithValue("@opis", stavka.Opis != null ? stavka.Opis : (object)DBNull.Value);
                     //cmd.Parameters.AddWithValue("@partner_telefon", partner_telefon);
                     //cmd.Parameters.AddWithValue("@partner_email", partner_email);
                     //cmd.Parameters.AddWithValue("@valuta_placanja", valuta_placanja);
@@ -1030,12 +1043,12 @@ where broj_ugovora=@broj_ugovora and broj_rate=@broj_rate";
                     cmd.CommandText = @"INSERT INTO ponuda_stavka (ponuda_broj, stavka_broj,
                   artikal_naziv,jedinica_mjere, cijena_bez_pdv,cijena_bez_pdv_sa_rabatom, kolicina, rabat_procenat, iznos_bez_pdv,iznos_bez_pdv_sa_rabatom
 ,cijena_nabavna,vrijednost_nabavna,marza_procenat,ruc 
-,pdv_stopa,pdv,iznos_sa_pdv,rabat_iznos)
+,pdv_stopa,pdv,iznos_sa_pdv,rabat_iznos,opis)
                 VALUES (    
              @ponuda_broj, @stavka_broj,
                   @artikal_naziv,@jedinica_mjere, @cijena_bez_pdv,@cijena_bez_pdv_sa_rabatom, @kolicina, @rabat_procenat, @iznos_bez_pdv,@iznos_bez_pdv_sa_rabatom,@cijena_nabavna,
 @vrijednost_nabavna,@marza_procenat,@ruc 
-,@pdv_stopa,@pdv,@iznos_sa_pdv,@rabat_iznos)";
+,@pdv_stopa,@pdv,@iznos_sa_pdv,@rabat_iznos,@opis)";
 
                     cmd.ExecuteNonQuery();
 

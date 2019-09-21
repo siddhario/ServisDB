@@ -1,4 +1,5 @@
 ﻿using ClosedXML.Excel;
+using Delos.Klase;
 using Npgsql;
 using ServisDB.Klase;
 using System;
@@ -10,6 +11,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -28,7 +30,7 @@ namespace ServisDB.Forme
         public frmServisnaPrijava()
         {
             InitializeComponent();
-          
+
 
         }
 
@@ -37,7 +39,7 @@ namespace ServisDB.Forme
         {
             StaticFilters = new List<string>();
             StaticFilters.Add("(broj like concat(@broj,'%') or @broj is null)");
-            StaticFilters.Add("(lower(kupac_ime) like concat(lower(@kupac_ime),'%') or @kupac_ime is null)");
+            StaticFilters.Add("(lower(kupac_ime) like concat('%',lower(@kupac_ime),'%') or @kupac_ime is null)");
 
             List<string> filters = new List<string>();
             filters = filters.Concat(StaticFilters).ToList();
@@ -117,11 +119,13 @@ namespace ServisDB.Forme
         private void button1_Click(object sender, EventArgs e)
         {
             DateTime? zavrseno = null;
+
+            object zavrsenoCurrent = ((DataRowView)dgvPrijave.SelectedRows[0].DataBoundItem).Row["zavrseno"];
             if (dtpZavrseno.Format == DateTimePickerFormat.Custom)
             {
                 zavrseno = null;
             }
-            else if(dtpZavrseno.Checked==true)
+            else if (dtpZavrseno.Checked == true)
             {
                 zavrseno = dtpZavrseno.Value;
             }
@@ -154,7 +158,7 @@ namespace ServisDB.Forme
             int? kupacSifra;
             if (tbKupacSifra.Text == "")
             {
-                PersistanceManager.InsertPartner(tbKupac.Text, "F", "", tbAdresa.Text, tbKupacaTelefon.Text, tbEmail.Text, true, false,"", out kupacSifra);
+                PersistanceManager.InsertPartner(tbKupac.Text, "F", "", tbAdresa.Text, tbKupacaTelefon.Text, tbEmail.Text, true, false, "", out kupacSifra);
                 tbKupacSifra.Text = kupacSifra.ToString();
             }
             else
@@ -163,7 +167,7 @@ namespace ServisDB.Forme
             if (tbRedniBroj.Text == "AUTO")
                 PersistanceManager.InsertPrijava(dtpDatum.Value, tbBrojGarantnogLista.Text, (tbKupacSifra.Text != "" ? int.Parse(tbKupacSifra.Text) : (int?)null), tbKupac.Text, tbAdresa.Text, tbKupacaTelefon.Text, tbEmail.Text,
                     tbModel.Text, tbSerijskiBroj.Text, tbDodatnaOprema.Text, tbPredmet.Text, tbNapomenaServisera.Text, tbServiser.Text, tbServiserPrimio.Text, zavrseno, (tbDobavljacSifra.Text != "" ? int.Parse(tbDobavljacSifra.Text) : (int?)null)
-                    , tbDobavljac.Text, datumVracanja, poslatMejlDobavljacu, (tbGarantniRok.Text != "" ? int.Parse(tbGarantniRok.Text) : (int?)null), tbBrojRacuna.Text,cbOS.Checked,cbOffice.Checked,cbOstalo.Checked,tbInstalacija.Text);
+                    , tbDobavljac.Text, datumVracanja, poslatMejlDobavljacu, (tbGarantniRok.Text != "" ? int.Parse(tbGarantniRok.Text) : (int?)null), tbBrojRacuna.Text, cbOS.Checked, cbOffice.Checked, cbOstalo.Checked, tbInstalacija.Text);
             else
                 PersistanceManager.UpdatePrijava(tbRedniBroj.Text, dtpDatum.Value, tbBrojGarantnogLista.Text, (tbKupacSifra.Text != "" ? int.Parse(tbKupacSifra.Text) : (int?)null), tbKupac.Text, tbAdresa.Text, tbKupacaTelefon.Text, tbEmail.Text,
                     tbModel.Text, tbSerijskiBroj.Text, tbDodatnaOprema.Text, tbPredmet.Text, tbNapomenaServisera.Text, tbServiser.Text, tbServiserPrimio.Text, zavrseno, (tbDobavljacSifra.Text != "" ? int.Parse(tbDobavljacSifra.Text) : (int?)null)
@@ -171,6 +175,45 @@ namespace ServisDB.Forme
             tabControl1.SelectedIndex = 0;
             Clear();
             ReadPrijava("", "");
+
+            if (zavrseno != null && zavrsenoCurrent==DBNull.Value)
+            {
+                SendMail();
+              
+            }
+        }
+
+        private void SendMail()
+        {
+            if (MessageBox.Show("Poslati e-mail klijentu? ", "Potvrda", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.Yes)
+            {
+                string dir = System.IO.Path.Combine(Environment.GetFolderPath(
+  Environment.SpecialFolder.MyDoc‌​uments), "ServisDB\\temp");
+
+                if (Directory.Exists(dir) == false)
+                {
+                    Directory.CreateDirectory(dir);
+                }
+
+                string rednibroj = ((DataRowView)dgvPrijave.SelectedRows[0].DataBoundItem).Row["broj"].ToString();
+                string email = ((DataRowView)dgvPrijave.SelectedRows[0].DataBoundItem).Row["kupac_email"].ToString();
+                string fileName = dir + "\\Servisna prijava_" + rednibroj.Replace("/", "-");
+                var mailMessage = new MailMessage();
+
+                mailMessage.From = new MailAddress(PersistanceManager.GetKorisnik().Email);
+                mailMessage.To.Add(email);
+                mailMessage.Subject = "Obavještenje o završenom servisu";
+                mailMessage.IsBodyHtml = true;
+                mailMessage.Body = "<span style='font-size: 12pt; color: black;'>Poštovani ,<br/> servis je završen (Nalog br." + rednibroj + "). Molimo Vas da vašu robu preuzmete u roku od 15 dana. <br/><br/> Pozdrav</span>";
+
+                var eml = fileName + ".eml";
+
+                //save the MailMessage to the filesystem
+                mailMessage.Save(eml);
+
+                //Open the file with the default associated application registered on the local machine
+                Process.Start(eml);
+            }
         }
 
         private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
@@ -219,7 +262,7 @@ namespace ServisDB.Forme
             {
                 dtpDatumVracanja.Format = DateTimePickerFormat.Custom;
                 dtpDatumVracanja.CustomFormat = " ";
-            
+
 
             }
             else
@@ -309,7 +352,7 @@ namespace ServisDB.Forme
             if (tabControl1.SelectedIndex == 1)
             {
                 tbKupac.Focus();
-                if(tbRedniBroj.Text=="AUTO")
+                if (tbRedniBroj.Text == "AUTO")
                 {
                     tbServiserPrimio.Text = PersistanceManager.GetKorisnik().KorisnickoIme;
                 }
@@ -374,6 +417,10 @@ namespace ServisDB.Forme
             {
                 btnStampaRadnogNaloga_Click(this, null);
             }
+            else if (e.KeyData == Keys.F8)
+            {
+                btnSendMail_Click(this, null);
+            }
             else if (e.KeyData == Keys.Down)
             {
                 if (tabControl1.SelectedIndex == 0)
@@ -390,7 +437,7 @@ namespace ServisDB.Forme
             object o = dgvPrijave.Rows[e.RowIndex].DataBoundItem;
             string i = ((DataRowView)o).Row.ItemArray[15].ToString();
             //string i = dgvPrijave.Rows[e.RowIndex].Cells[9].Value.ToString();
-            if (i!="")
+            if (i != "")
             {
                 //dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.PaleGreen;
                 //dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.White;
@@ -453,12 +500,8 @@ namespace ServisDB.Forme
             int rrb = int.Parse(rb);
             rednibroj = rrb.ToString("D4") + "/" + year;
 
-            IXLRange titleRange = sheet.Range("C32:C32");
-            titleRange.Cells().Style
-                .Alignment.SetWrapText(true); // Its single statement
 
-            //sheet.Columns().AdjustToContents();
-            sheet.Rows().AdjustToContents();
+
 
 
             sheet.Cells("C17").Value = rednibroj;
@@ -469,12 +512,13 @@ namespace ServisDB.Forme
             sheet.Cells("C18").Value = garantnilist;
             sheet.Cells("C21").Value = datum;
             sheet.Cells("C24").Value = kupac;
+            sheet.Cells("C25").DataType = XLDataType.Text;
+            sheet.Cells("C25").Style.NumberFormat.Format = "@";
             sheet.Cells("C25").Value = kupac_telefon;
             sheet.Cells("C28").Value = model;
             sheet.Cells("C29").Value = serijski_broj;
             sheet.Cells("C31").Value = dodatna_oprema;
             sheet.Cells("C32").Value = opis_kvara;
-         
 
 
             string fileName = dir + "\\" + rednibroj.Replace("/", "-") + ".xlsx";
@@ -709,7 +753,7 @@ namespace ServisDB.Forme
             Dictionary<string, string> dict = new Dictionary<string, string>();
             dict.Add("BROJNALOGA", brojnaloga);
             dict.Add("PREDMET", predmet);
-            dict.Add("KUPAC", kupac+", "+telefon+", "+adresa);
+            dict.Add("KUPAC", kupac + ", " + telefon + ", " + adresa);
             dict.Add("SERVISER", serviser);
             dict.Add("DATUM", datum.ToString("dd.MM.yyyy"));
             dict.Add("DATUMNALOGA", datum.ToString("dd.MM.yyyy"));
@@ -723,6 +767,11 @@ namespace ServisDB.Forme
         private void btnStampaRadnogNaloga_Click(object sender, EventArgs e)
         {
             StampaRadnogNaloga();
+        }
+
+        private void btnSendMail_Click(object sender, EventArgs e)
+        {
+            SendMail();
         }
     }
 }

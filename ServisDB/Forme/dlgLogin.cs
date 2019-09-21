@@ -60,6 +60,10 @@ namespace Delos
 			base.DialogResult = DialogResult.Cancel;
 			base.Close();
 		}
-		
-	}
+
+        private void dlgLogin_Load(object sender, EventArgs e)
+        {
+
+        }
+    }
 }

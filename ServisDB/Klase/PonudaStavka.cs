@@ -17,6 +17,7 @@ namespace ServisDB.Klase
         public string PonudaBroj { get; set; }
         public int StavkaBroj { get; set; }
         public string ArtikalNaziv { get; set; }
+        public string Opis { get; set; }
         public string JedinicaMjere { get; set; }
         public decimal Kolicina { get; set; }
         public decimal CijenaBezPdv { get; set; }

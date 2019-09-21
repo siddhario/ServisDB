@@ -117,6 +117,7 @@ namespace Delos
             this.Name = "dlgLogin";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Delos - Prijava";
+            this.Load += new System.EventHandler(this.dlgLogin_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
