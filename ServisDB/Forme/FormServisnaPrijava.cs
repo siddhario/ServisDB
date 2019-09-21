@@ -39,7 +39,7 @@ namespace ServisDB.Forme
         {
             StaticFilters = new List<string>();
             StaticFilters.Add("(broj like concat(@broj,'%') or @broj is null)");
-            StaticFilters.Add("(lower(kupac_ime) like concat('%',lower(@kupac_ime),'%') or @kupac_ime is null)");
+            StaticFilters.Add("(lower(kupac_ime) like concat('%',lower(@kupac_ime),'%') or (lower(predmet) like concat('%',lower(@kupac_ime),'%')) or @kupac_ime is null)");
 
             List<string> filters = new List<string>();
             filters = filters.Concat(StaticFilters).ToList();
@@ -485,6 +485,7 @@ namespace ServisDB.Forme
             string napomena_servisera = ((DataRowView)o).Row.ItemArray[12].ToString();
             string serviser = ((DataRowView)o).Row.ItemArray[13].ToString();
             string zavrseno = "";
+            string serviser_primio = ((DataRowView)o).Row["serviser_primio"].ToString();
             if (((DataRowView)o).Row.ItemArray[15] == DBNull.Value)
             {
                 zavrseno = "";
@@ -519,6 +520,8 @@ namespace ServisDB.Forme
             sheet.Cells("C29").Value = serijski_broj;
             sheet.Cells("C31").Value = dodatna_oprema;
             sheet.Cells("C32").Value = opis_kvara;
+
+            sheet.Cells("G48").Value = serviser_primio;
 
 
             string fileName = dir + "\\" + rednibroj.Replace("/", "-") + ".xlsx";

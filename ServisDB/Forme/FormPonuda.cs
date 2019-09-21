@@ -44,7 +44,7 @@ namespace Delos.Forme
             if (DynamicFilters != null)
                 filters = filters.Concat(DynamicFilters).ToList();
 
-            List<Ponuda> ponude = PersistanceManager.ReadPonuda(broj, kupac,filters);
+            List<Ponuda> ponude = PersistanceManager.ReadPonuda(broj, kupac, filters);
             dgvPrijave.DataSource = null;
             dgvPrijave.AutoGenerateColumns = false;
 
@@ -216,7 +216,7 @@ namespace Delos.Forme
                     PersistanceManager.UpdatePartner(int.Parse(tbPartnerSifra.Text), tbAdresa.Text, tbTelefon.Text, tbEmail.Text);
 
 
-                if (tbTelefon.Text == "" || tbAdresa.Text == "" || tbPartner.Text==""|| tbJIB.Text=="")
+                if (tbTelefon.Text == "" || tbAdresa.Text == "" || tbPartner.Text == "" || tbJIB.Text == "")
                 {
                     MessageBox.Show("Validacija neuspješna! Obavezni podaci partnera za unos: Naziv, adresa, telefon i JIB.");
                     return;
@@ -291,7 +291,7 @@ namespace Delos.Forme
 
         private void tabControl1_KeyDown(object sender, KeyEventArgs e)
         {
-                if (e.KeyData == Keys.Enter)
+            if (e.KeyData == Keys.Enter)
             {
                 if (!textBox1.Focused)
                 {
@@ -349,6 +349,10 @@ namespace Delos.Forme
             {
                 btnOtkljucaj_Click(this, null);
             }
+            else if (e.KeyData == Keys.F10)
+            {
+                btnSendMail_Click(this, null);
+            }
             else if (e.KeyData == Keys.F1)
             {
                 if (tabControl1.SelectedIndex == 1)
@@ -401,12 +405,12 @@ namespace Delos.Forme
             tbAdresa.Text = o.PartnerAdresa;
             tbTelefon.Text = o.PartnerTelefon;
 
-            tbIznosBezRabata.Text =o.IznosBezRabata.ToString();
+            tbIznosBezRabata.Text = o.IznosBezRabata.ToString();
             tbRabat.Text = o.Rabat.ToString();
             tbIznosSaRabatom.Text = o.IznosSaRabatom.ToString();
             tbPdv.Text = o.Pdv.ToString();
-            tbRUC.Text =o.Ruc!=null? o.Ruc.ToString():"";
-            tbNabavnaVrijednost.Text = o.NabavnaVrijednost!=null? o.NabavnaVrijednost.ToString():"";
+            tbRUC.Text = o.Ruc != null ? o.Ruc.ToString() : "";
+            tbNabavnaVrijednost.Text = o.NabavnaVrijednost != null ? o.NabavnaVrijednost.ToString() : "";
             tbIznosSaPdv.Text = o.IznosSaPdv.ToString();
 
 
@@ -516,7 +520,7 @@ namespace Delos.Forme
 
 
 
-            XLWorkbook doc = new XLWorkbook("PONUDA.xlsx");
+            XLWorkbook doc = new XLWorkbook("PONUDA.xlsm");
             //doc.Worksheets.Add("PRIJAVA");
 
             var sheet = doc.Worksheet(1);
@@ -535,7 +539,7 @@ namespace Delos.Forme
                 filters = filters.Concat(DynamicFilters).ToList();
 
             Ponuda p = PersistanceManager.ReadPonuda(rednibroj, "", filters).FirstOrDefault();
-        
+
 
             //string rednibroj = p.Broj;
             string datum = p.Datum.Date.ToString("dd.MM.yyyy");
@@ -596,7 +600,7 @@ namespace Delos.Forme
             foreach (var stavka in stavke)
             {
                 rowIndex = (14 + index).ToString();
-              
+
                 sheet.Row(14 + index).Height = 20;
                 sheet.Row(14 + index).Style.Font.FontName = "Arial";
                 sheet.Row(14 + index).Style.Font.FontSize = 10;
@@ -612,7 +616,7 @@ namespace Delos.Forme
                 sheet.Cells("A" + rowIndex).Style.Border.OutsideBorderColor = XLColor.FromArgb(216, 228, 188);
 
 
-                sheet.Cells("B" + rowIndex).Value = stavka.ArtikalNaziv.ToString()+Environment.NewLine+stavka.Opis;
+                sheet.Cells("B" + rowIndex).Value = stavka.ArtikalNaziv.ToString() + Environment.NewLine + stavka.Opis;
                 sheet.Cells("B" + rowIndex).DataType = XLDataType.Text;
                 sheet.Cells("B" + rowIndex).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Left;
                 sheet.Cells("B" + rowIndex).Style.Alignment.Vertical = XLAlignmentVerticalValues.Top;
@@ -787,23 +791,23 @@ namespace Delos.Forme
             var image = sheet.AddPicture(imagePath)
                 .MoveTo(sheet.Cell("A" + (14 + stavke.Count + 16).ToString())).Scale(0.1);
 
-            string fileName = dir + "\\MINTICT_Ponuda_" + rednibroj.Replace("/", "-") + ".xlsx";
+            string fileName = dir + "\\MINTICT_Ponuda_" + rednibroj.Replace("/", "-") + ".xlsm";
             if (File.Exists(fileName) == true)
             {
                 //DialogResult dr = MessageBox.Show("Štampana verzija već postoji. Napraviti novu ?", "Upozorenje", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1);
                 //if (dr == DialogResult.Yes)
                 //{
-                    try
-                    {
-                        File.Delete(fileName);
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show("Zatvorite dokument pa pokušajte opet!");
-                        return null;
-                    }
-                    doc.SaveAs(fileName);
-                    //Process.Start(fileName);
+                try
+                {
+                    File.Delete(fileName);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Zatvorite dokument pa pokušajte opet!");
+                    return null;
+                }
+                doc.SaveAs(fileName);
+                //Process.Start(fileName);
                 //}
             }
             else
@@ -819,7 +823,7 @@ namespace Delos.Forme
             //printer.PrintRawFile("Foxit Reader PDF Printer", "C:\\Users\\Dario\\Downloads\\PONUDA.xlsx", "Ponuda.pdf");
             //printer.PrintRawStream("Microsoft Print to PDF", sr.BaseStream, "Ponuda.pdf");
 
-         
+
 
         }
 
@@ -843,7 +847,7 @@ namespace Delos.Forme
         private void btnZakljuciUgovor_Click(object sender, EventArgs e)
         {
             object o = dgvPrijave.SelectedRows[0].DataBoundItem;
-            if(((Ponuda)o).IznosSaRabatom>10000 && PersistanceManager.GetKorisnik().Admin==false)
+            if (((Ponuda)o).IznosSaRabatom > 10000 && PersistanceManager.GetKorisnik().Admin == false)
             {
                 MessageBox.Show("Ponudu na iznos od preko definisanog može odobriti samo ovlašteni korisnik sistema!");
                 return;
@@ -852,8 +856,9 @@ namespace Delos.Forme
             if (MessageBox.Show(string.Format("Zaključiti ponudu {0} ?", rb), "Potvrda", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.Yes)
             {
                 PersistanceManager.UpdatePonuda(rb, "Z");
-                MessageBox.Show(string.Format("Ponuda {0} je uspješno zaključena!", rb), "Poruka", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1);
+                //MessageBox.Show(string.Format("Ponuda {0} je uspješno zaključena!", rb), "Poruka", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1);
                 Stampa();
+                PosaljiMejl(false);
                 ReadPonuda(textBox1.Text, textBox2.Text);
                 tabControl1.SelectedIndex = 0;
                 Clear();
@@ -907,13 +912,13 @@ namespace Delos.Forme
         {
             object o = dgvPrijave.SelectedRows[0].DataBoundItem;
             Korisnik k = PersistanceManager.GetKorisnik();
-            if (k.KorisnickoIme!=((Ponuda)o).Radnik && !k.Admin==true)
+            if (k.KorisnickoIme != ((Ponuda)o).Radnik && !k.Admin == true)
             {
                 MessageBox.Show("Ponuda može biti otključana samo od korisnika koji ju je formirao ili od strane drugog ovlaštenog korisnika sistema!");
                 return;
             }
 
-          
+
             string rb = ((Ponuda)o).Broj;
             if (MessageBox.Show(string.Format("Otključati ponudu {0} ?", rb), "Potvrda", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.Yes)
             {
@@ -1206,11 +1211,11 @@ namespace Delos.Forme
                         break;
                     }
             }
-            if (stavka!=null && stavka.PonudaBroj != null)
+            if (stavka != null && stavka.PonudaBroj != null)
             {
                 PersistanceManager.UpdatePonudaStavka(stavka);
                 CalculateTotals();
-                Ponuda p = PersistanceManager.ReadPonuda(stavka.PonudaBroj, "",DynamicFilters).FirstOrDefault();
+                Ponuda p = PersistanceManager.ReadPonuda(stavka.PonudaBroj, "", DynamicFilters).FirstOrDefault();
                 Ponuda ponuda = (Ponuda)dgvPrijave.SelectedRows[0].DataBoundItem;
                 ponuda.IznosSaPdv = p.IznosSaPdv;
                 //BindingList<Ponuda> lista = (BindingList<Ponuda>)dgvPrijave.DataSource;
@@ -1265,7 +1270,7 @@ namespace Delos.Forme
                 if (stavka.PonudaBroj == null)
                 {
 
-                    
+
                     string statusPonude = o.Status;
                     if (statusPonude != "E")
                     {
@@ -1284,7 +1289,7 @@ namespace Delos.Forme
 
                     CalculateTotals();
 
-                    Ponuda p = PersistanceManager.ReadPonuda(stavka.PonudaBroj, "",DynamicFilters).FirstOrDefault();
+                    Ponuda p = PersistanceManager.ReadPonuda(stavka.PonudaBroj, "", DynamicFilters).FirstOrDefault();
                     Ponuda ponuda = (Ponuda)dgvPrijave.SelectedRows[0].DataBoundItem;
                     ponuda.IznosSaPdv = p.IznosSaPdv;
                     //BindingList<Ponuda> lista = (BindingList<Ponuda>)dgvPrijave.DataSource;
@@ -1326,7 +1331,7 @@ namespace Delos.Forme
                 PonudaStavka stavka = (PonudaStavka)e.Row.DataBoundItem;
                 PersistanceManager.DeletePonudaStavka(stavka);
                 CalculateTotals();
-                Ponuda p = PersistanceManager.ReadPonuda(stavka.PonudaBroj, "",DynamicFilters).FirstOrDefault();
+                Ponuda p = PersistanceManager.ReadPonuda(stavka.PonudaBroj, "", DynamicFilters).FirstOrDefault();
                 Ponuda ponuda = (Ponuda)dgvPrijave.SelectedRows[0].DataBoundItem;
                 ponuda.IznosSaPdv = p.IznosSaPdv;
                 //BindingList<Ponuda> lista = (BindingList<Ponuda>)dgvPrijave.DataSource;
@@ -1510,13 +1515,13 @@ namespace Delos.Forme
         private void btnCopyPonuda_Click(object sender, EventArgs e)
         {
             string broj = ((Ponuda)dgvPrijave.SelectedRows[0].DataBoundItem).Broj;
-           
+
             if (MessageBox.Show(string.Format("Kopirati ponudu {0} ?", broj), "Potvrda", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.Yes)
             {
                 PersistanceManager.CopyPonuda(broj, PersistanceManager.GetKorisnik().KorisnickoIme);
 
                 MessageBox.Show(string.Format("Ponuda {0} je kopirana!", broj), "Poruka", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1);
-        
+
                 ReadPonuda(textBox1.Text, textBox2.Text);
                 tabControl1.SelectedIndex = 0;
                 Clear();
@@ -1526,31 +1531,70 @@ namespace Delos.Forme
 
         private void btnSendMail_Click(object sender, EventArgs e)
         {
-            Ponuda p = (Ponuda)dgvPrijave.SelectedRows[0].DataBoundItem;
-            if (p.Status=="E")
+            PosaljiMejl(true);
+        }
+
+        private void PosaljiMejl(bool kontrolaStatusa)
+        {
+            Ponuda pO = (Ponuda)dgvPrijave.SelectedRows[0].DataBoundItem;
+            if (pO.Status == "E" && kontrolaStatusa==true)
             {
                 MessageBox.Show("Opcija slanja email-a je dostupna samo za zaključene ponude!");
                 return;
             }
 
-            string fileName = Stampa();
-            var mailMessage = new MailMessage();
+            try
+            {
 
-            mailMessage.From = new MailAddress(PersistanceManager.GetKorisnik().Email);
-            mailMessage.To.Add(p.PartnerEmail);
-            mailMessage.Subject = "Ponuda za " + p.Predmet;
-            mailMessage.IsBodyHtml = true;
-            mailMessage.Body = "<span style='font-size: 12pt; color: black;'>Poštovani ,<br/> u prilogu se nalazi ponuda. <br/><br/> Pozdrav</span>";
 
-            mailMessage.Attachments.Add(new Attachment(fileName));
 
-            var eml = fileName + ".eml";
+                string dir = System.IO.Path.Combine(Environment.GetFolderPath(
+              Environment.SpecialFolder.MyDoc‌​uments), "ServisDB\\temp");
 
-            //save the MailMessage to the filesystem
-            mailMessage.Save(eml);
+                string broj = pO.Broj;
+                string[] parts = pO.Broj.Split('/');
+                string rb = parts[0];
+                string year = parts[1];
+                int rrb = int.Parse(rb);
+                broj = rrb.ToString("D4") + "/" + year;
+                string fileName = dir + "\\MINTICT_Ponuda_" + broj.Replace("/", "-") + ".pdf";
 
-            //Open the file with the default associated application registered on the local machine
-            Process.Start(eml);
+
+                //FileInfo f = new FileInfo(fileName);
+                //if (f.Exists == false)
+                //{
+                //MessageBox.Show("PDF dokument sa ponudom ne postoji!");
+                //return;
+                string file = Stampa();
+                    Process p = Process.Start(file);
+                    Thread.Sleep(4000);
+                    p.CloseMainWindow();
+                //}
+
+                var mailMessage = new MailMessage();
+
+                mailMessage.From = new MailAddress(PersistanceManager.GetKorisnik().Email);
+                mailMessage.To.Add(pO.PartnerEmail);
+                mailMessage.Subject = "Ponuda za " + pO.Predmet;
+                mailMessage.IsBodyHtml = true;
+                mailMessage.Body = "<span style='font-size: 12pt; color: black;'>Poštovani ,<br/> u prilogu se nalazi ponuda. <br/><br/> Pozdrav</span>";
+
+
+                mailMessage.Attachments.Add(new Attachment(fileName));
+
+                var eml = fileName + ".eml";
+
+                //save the MailMessage to the filesystem
+                mailMessage.Save(eml);
+
+                //Open the file with the default associated application registered on the local machine
+                Process.Start(eml);
+            }
+            catch (Exception ex)
+            {
+                Logger.Exception(ex);
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void btnDjelimicnoRealizovan_Click(object sender, EventArgs e)

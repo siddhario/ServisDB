@@ -30,6 +30,7 @@
         {
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.rbDjelimicnoNerealizovane = new System.Windows.Forms.RadioButton();
             this.radioButton1 = new System.Windows.Forms.RadioButton();
             this.rbNerealizovani = new System.Windows.Forms.RadioButton();
             this.rbUtoku = new System.Windows.Forms.RadioButton();
@@ -111,7 +112,6 @@
             this.btnCopyPonuda = new System.Windows.Forms.Button();
             this.btnSendMail = new System.Windows.Forms.Button();
             this.btnDjelimicnoRealizovan = new System.Windows.Forms.Button();
-            this.rbDjelimicnoNerealizovane = new System.Windows.Forms.RadioButton();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPrijave)).BeginInit();
@@ -158,6 +158,18 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Pregled";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // rbDjelimicnoNerealizovane
+            // 
+            this.rbDjelimicnoNerealizovane.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.rbDjelimicnoNerealizovane.AutoSize = true;
+            this.rbDjelimicnoNerealizovane.Location = new System.Drawing.Point(726, 3);
+            this.rbDjelimicnoNerealizovane.Name = "rbDjelimicnoNerealizovane";
+            this.rbDjelimicnoNerealizovane.Size = new System.Drawing.Size(91, 20);
+            this.rbDjelimicnoNerealizovane.TabIndex = 12;
+            this.rbDjelimicnoNerealizovane.Text = "Djel. realiz.";
+            this.rbDjelimicnoNerealizovane.UseVisualStyleBackColor = true;
+            this.rbDjelimicnoNerealizovane.Click += new System.EventHandler(this.rbDjelimicnoNerealizovane_Click);
             // 
             // radioButton1
             // 
@@ -1030,7 +1042,7 @@
             this.btnSendMail.Name = "btnSendMail";
             this.btnSendMail.Size = new System.Drawing.Size(101, 50);
             this.btnSendMail.TabIndex = 41;
-            this.btnSendMail.Text = "Slanje na e-mail";
+            this.btnSendMail.Text = "Slanje na e-mail [F10]";
             this.btnSendMail.UseVisualStyleBackColor = true;
             this.btnSendMail.Click += new System.EventHandler(this.btnSendMail_Click);
             // 
@@ -1045,18 +1057,6 @@
             this.btnDjelimicnoRealizovan.Text = "Ponuda djelimično realizovana [F7]";
             this.btnDjelimicnoRealizovan.UseVisualStyleBackColor = true;
             this.btnDjelimicnoRealizovan.Click += new System.EventHandler(this.btnDjelimicnoRealizovan_Click);
-            // 
-            // rbDjelimicnoNerealizovane
-            // 
-            this.rbDjelimicnoNerealizovane.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.rbDjelimicnoNerealizovane.AutoSize = true;
-            this.rbDjelimicnoNerealizovane.Location = new System.Drawing.Point(726, 3);
-            this.rbDjelimicnoNerealizovane.Name = "rbDjelimicnoNerealizovane";
-            this.rbDjelimicnoNerealizovane.Size = new System.Drawing.Size(91, 20);
-            this.rbDjelimicnoNerealizovane.TabIndex = 12;
-            this.rbDjelimicnoNerealizovane.Text = "Djel. realiz.";
-            this.rbDjelimicnoNerealizovane.UseVisualStyleBackColor = true;
-            this.rbDjelimicnoNerealizovane.Click += new System.EventHandler(this.rbDjelimicnoNerealizovane_Click);
             // 
             // FormPonuda
             // 

@@ -398,7 +398,7 @@ where sifra=@sifra";
                     cmd.CommandText = @"INSERT INTO public.ponuda(
 	broj, datum, partner_sifra, partner_jib, partner_adresa, radnik, valuta_placanja, rok_vazenja, paritet_kod, paritet, rok_isporuke, iznos_bez_rabata, rabat, iznos_sa_rabatom, pdv, iznos_sa_pdv, nabavna_vrijednost, ruc, status, napomena, partner_naziv, predmet, partner_telefon, partner_email)
 	select 
-	 @noviBroj, datum, partner_sifra, partner_jib, partner_adresa, @radnik, valuta_placanja, rok_vazenja, paritet_kod, paritet, rok_isporuke, 0, 0, 0, 0, 0, 0, 0, status, napomena, partner_naziv, predmet, partner_telefon, partner_email
+	 @noviBroj, datum, partner_sifra, partner_jib, partner_adresa, @radnik, valuta_placanja, rok_vazenja, paritet_kod, paritet, rok_isporuke, 0, 0, 0, 0, 0, 0, 0, 'E', napomena, partner_naziv, predmet, partner_telefon, partner_email
 	from public.ponuda where broj=@broj";
                     cmd.ExecuteNonQuery();
 

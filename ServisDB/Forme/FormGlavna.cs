@@ -81,7 +81,8 @@ namespace ServisDB.Forme
 
         private void FormGlavna_Load(object sender, EventArgs e)
         {
-            lblKorisnik.Text = "Prijavljeni korisnik: " + PersistanceManager.GetKorisnik().Ime +" " +PersistanceManager.GetKorisnik().Prezime+(PersistanceManager.GetKorisnik().Admin==true?" (Sve privilegije)":"");
+            if (PersistanceManager.GetKorisnik() != null)
+                lblKorisnik.Text = "Prijavljeni korisnik: " + PersistanceManager.GetKorisnik().Ime + " " + PersistanceManager.GetKorisnik().Prezime + (PersistanceManager.GetKorisnik().Admin == true ? " (Sve privilegije)" : "");
         }
     }
 }
