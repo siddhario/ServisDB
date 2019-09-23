@@ -28,7 +28,7 @@ namespace ServisDB
             PersistanceManager.SetConnection(connectionString);
 
 
-#if (!DEBUG)
+#if (DEBUG)
             Application.Run(new FormGlavna());
 #else
             dlgLogin dlg = new dlgLogin();
