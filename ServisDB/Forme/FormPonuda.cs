@@ -61,6 +61,22 @@ namespace Delos.Forme
             dgvPrijave.DataSource = new BindingList<Ponuda>(ponude);
         }
 
+        private void dgGrid_RowPostPaint(object sender, DataGridViewRowPostPaintEventArgs e)
+        {
+            var grid = sender as DataGridView;
+            var rowIdx = (e.RowIndex + 1).ToString();
+
+            var centerFormat = new StringFormat()
+            {
+                // right alignment might actually make more sense for numbers
+                Alignment = StringAlignment.Center,
+                LineAlignment = StringAlignment.Center
+            };
+
+            var headerBounds = new Rectangle(e.RowBounds.Left, e.RowBounds.Top, grid.RowHeadersWidth, e.RowBounds.Height);
+            e.Graphics.DrawString(rowIdx, this.Font, SystemBrushes.ControlText, headerBounds, centerFormat);
+        }
+
         private void ReadPonuda2(string broj, string kupac)
         {
             StaticFilters = new List<string>();
@@ -423,31 +439,31 @@ namespace Delos.Forme
             dgvStavkePonude.DataSource = null;
             dgvStavkePonude.AutoGenerateColumns = false;
             dgvStavkePonude.Columns.Clear();
-            dgvStavkePonude.Columns.Add(new DataGridViewTextBoxColumn() { ReadOnly = true, Name = "RB", DataPropertyName = "StavkaBroj", Width = 35 });
-            dgvStavkePonude.Columns.Add(new DataGridViewTextBoxColumn() { ReadOnly = false, Name = "Artikal", DataPropertyName = "ArtikalNaziv", Width = 145 });
-            dgvStavkePonude.Columns.Add(new DataGridViewTextBoxColumn() { ReadOnly = false, Name = "Opis", DataPropertyName = "Opis", Width = 290 });
+            dgvStavkePonude.Columns.Add(new DataGridViewTextBoxColumn() { ReadOnly = true, Name = "RB", DataPropertyName = "StavkaBroj", Width = 35,Visible=false });
+            dgvStavkePonude.Columns.Add(new DataGridViewTextBoxColumn() { ReadOnly = false, Name = "Artikal", DataPropertyName = "ArtikalNaziv", Width = 140});
+            dgvStavkePonude.Columns.Add(new DataGridViewTextBoxColumn() { ReadOnly = false, Name = "Opis", DataPropertyName = "Opis", Width = 280 });
             dgvStavkePonude.Columns.Add(new DataGridViewTextBoxColumn() { ReadOnly = false, Name = "JM", DataPropertyName = "JedinicaMjere", Width = 40 });
 
-            dgvStavkePonude.Columns.Add(new DataGridViewTextBoxColumn() { ReadOnly = false, Name = "Količina", DataPropertyName = "kolicina", Width = 50, DefaultCellStyle = new DataGridViewCellStyle() { Format = "N2" } });
+            dgvStavkePonude.Columns.Add(new DataGridViewTextBoxColumn() { ReadOnly = false, Name = "Količina", DataPropertyName = "kolicina", Width = 55, DefaultCellStyle = new DataGridViewCellStyle() { Format = "N2" } });
 
             dgvStavkePonude.Columns.Add(new DataGridViewTextBoxColumn() { ReadOnly = false, Name = "Nabavna cijena", DataPropertyName = "CijenaNabavna", Width = 75, DefaultCellStyle = new DataGridViewCellStyle() { Format = "N2" } });
             dgvStavkePonude.Columns.Add(new DataGridViewTextBoxColumn() { ReadOnly = true, Name = "Nabavna vrijednost", DataPropertyName = "VrijednostNabavna", Width = 75, DefaultCellStyle = new DataGridViewCellStyle() { Format = "N2" } });
 
-            dgvStavkePonude.Columns.Add(new DataGridViewTextBoxColumn() { ReadOnly = false, Name = "Margina %", DataPropertyName = "MarzaProcenat", Width = 55, DefaultCellStyle = new DataGridViewCellStyle() { Format = "N2" } });
+            dgvStavkePonude.Columns.Add(new DataGridViewTextBoxColumn() { ReadOnly = false, Name = "Margina %", DataPropertyName = "MarzaProcenat", Width = 60, DefaultCellStyle = new DataGridViewCellStyle() { Format = "N4" } });
             dgvStavkePonude.Columns.Add(new DataGridViewTextBoxColumn() { ReadOnly = true, Name = "RUC", DataPropertyName = "Ruc", Width = 70, DefaultCellStyle = new DataGridViewCellStyle() { Format = "N2" } });
 
-            dgvStavkePonude.Columns.Add(new DataGridViewTextBoxColumn() { ReadOnly = false, Name = "Cijena bez PDV-a", DataPropertyName = "CijenaBezPdv", Width = 75, DefaultCellStyle = new DataGridViewCellStyle() { Format = "N2" } });
+            dgvStavkePonude.Columns.Add(new DataGridViewTextBoxColumn() { ReadOnly = false, Name = "Cijena bez PDV-a", DataPropertyName = "CijenaBezPdv", Width = 75, DefaultCellStyle = new DataGridViewCellStyle() { Format = "N4" } });
             dgvStavkePonude.Columns.Add(new DataGridViewTextBoxColumn() { ReadOnly = true, Name = "Iznos bez PDV-a", DataPropertyName = "IznosBezPdv", Width = 75, DefaultCellStyle = new DataGridViewCellStyle() { Format = "N2" } });
 
-            dgvStavkePonude.Columns.Add(new DataGridViewTextBoxColumn() { ReadOnly = false, Name = "Rabat %", DataPropertyName = "RabatProcenat", Width = 45, DefaultCellStyle = new DataGridViewCellStyle() { Format = "N2" } });
-            dgvStavkePonude.Columns.Add(new DataGridViewTextBoxColumn() { ReadOnly = true, Name = "Rabat iznos", DataPropertyName = "RabatIznos", Width = 75, DefaultCellStyle = new DataGridViewCellStyle() { Format = "N2" } });
+            dgvStavkePonude.Columns.Add(new DataGridViewTextBoxColumn() { ReadOnly = false, Name = "Rabat %", DataPropertyName = "RabatProcenat", Width = 50, DefaultCellStyle = new DataGridViewCellStyle() { Format = "N2" } });
+            dgvStavkePonude.Columns.Add(new DataGridViewTextBoxColumn() { ReadOnly = true, Name = "Rabat iznos", DataPropertyName = "RabatIznos", Width = 65, DefaultCellStyle = new DataGridViewCellStyle() { Format = "N2" } });
 
-            dgvStavkePonude.Columns.Add(new DataGridViewTextBoxColumn() { ReadOnly = true, Name = "Cijena bez PDV-a sa rabatom", DataPropertyName = "CijenaBezPdvSaRabatom", Width = 75, DefaultCellStyle = new DataGridViewCellStyle() { Format = "N2" } });
+            dgvStavkePonude.Columns.Add(new DataGridViewTextBoxColumn() { ReadOnly = true, Name = "Cijena bez PDV-a sa rabatom", DataPropertyName = "CijenaBezPdvSaRabatom", Width = 75, DefaultCellStyle = new DataGridViewCellStyle() { Format = "N4" } });
             dgvStavkePonude.Columns.Add(new DataGridViewTextBoxColumn() { ReadOnly = true, Name = "Iznos bez PDV-a sa rabatom", DataPropertyName = "IznosBezPdvSaRabatom", Width = 75, DefaultCellStyle = new DataGridViewCellStyle() { Format = "N2" } });
 
 
             dgvStavkePonude.Columns.Add(new DataGridViewTextBoxColumn() { ReadOnly = false, Name = "PDV %", DataPropertyName = "PdvStopa", Width = 45, DefaultCellStyle = new DataGridViewCellStyle() { Format = "N2" } });
-            dgvStavkePonude.Columns.Add(new DataGridViewTextBoxColumn() { ReadOnly = true, Name = "PDV iznos", DataPropertyName = "Pdv", Width = 75, DefaultCellStyle = new DataGridViewCellStyle() { Format = "N2" } });
+            dgvStavkePonude.Columns.Add(new DataGridViewTextBoxColumn() { ReadOnly = true, Name = "PDV iznos", DataPropertyName = "Pdv", Width = 65, DefaultCellStyle = new DataGridViewCellStyle() { Format = "N2" } });
             dgvStavkePonude.Columns.Add(new DataGridViewTextBoxColumn() { ReadOnly = true, Name = "Iznos sa PDV", DataPropertyName = "IznosSaPdv", Width = 85, DefaultCellStyle = new DataGridViewCellStyle() { Format = "N2" } });
 
 
@@ -542,7 +558,8 @@ namespace Delos.Forme
 
 
             //string rednibroj = p.Broj;
-            string datum = p.Datum.Date.ToString("dd.MM.yyyy");
+            DateTime datum = p.Datum.Date;
+            //MessageBox.Show(datum);
             string partner_naziv = p.PartnerNaziv;
             string partner_jib = p.PartnerJib;
             string partner_adresa = p.PartnerAdresa;
@@ -570,7 +587,8 @@ namespace Delos.Forme
             sheet.Cells("A3").DataType = XLDataType.Text;
 
             sheet.Cells("G2").Value = datum;
-            sheet.Cells("G2").DataType = XLDataType.Text;
+            sheet.Cells("G2").DataType = XLDataType.DateTime;
+            sheet.Cells("G2").Style.NumberFormat.Format = "dd.MM.yyyy";
 
             sheet.Cells("B7").Value = partner_naziv;
             sheet.Cells("B7").DataType = XLDataType.Text;
@@ -608,10 +626,10 @@ namespace Delos.Forme
                 sheet.Row(14 + index).Style.Font.Bold = false;
                 sheet.Row(14 + index).Style.Alignment.Vertical = XLAlignmentVerticalValues.Bottom;
 
-                sheet.Cells("A" + rowIndex).Value = stavka.StavkaBroj.ToString();
+                sheet.Cells("A" + rowIndex).Value = (index+1).ToString();
                 sheet.Cells("A" + rowIndex).DataType = XLDataType.Text;
                 sheet.Cells("A" + rowIndex).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
-                sheet.Cells("A" + rowIndex).Style.Alignment.Vertical = XLAlignmentVerticalValues.Top;
+                sheet.Cells("A" + rowIndex).Style.Alignment.Vertical = XLAlignmentVerticalValues.Center;
                 sheet.Cells("A" + rowIndex).Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
                 sheet.Cells("A" + rowIndex).Style.Border.OutsideBorderColor = XLColor.FromArgb(216, 228, 188);
 
@@ -619,7 +637,7 @@ namespace Delos.Forme
                 sheet.Cells("B" + rowIndex).Value = stavka.ArtikalNaziv.ToString() + Environment.NewLine + stavka.Opis;
                 sheet.Cells("B" + rowIndex).DataType = XLDataType.Text;
                 sheet.Cells("B" + rowIndex).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Left;
-                sheet.Cells("B" + rowIndex).Style.Alignment.Vertical = XLAlignmentVerticalValues.Top;
+                sheet.Cells("B" + rowIndex).Style.Alignment.Vertical = XLAlignmentVerticalValues.Center;
                 sheet.Cells("B" + rowIndex).Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
                 sheet.Cells("B" + rowIndex).Style.Border.OutsideBorderColor = XLColor.FromArgb(216, 228, 188);
 
@@ -630,21 +648,21 @@ namespace Delos.Forme
                 sheet.Cells("C" + rowIndex).Value = stavka.JedinicaMjere.ToString();
                 sheet.Cells("C" + rowIndex).DataType = XLDataType.Text;
                 sheet.Cells("C" + rowIndex).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
-                sheet.Cells("C" + rowIndex).Style.Alignment.Vertical = XLAlignmentVerticalValues.Top;
+                sheet.Cells("C" + rowIndex).Style.Alignment.Vertical = XLAlignmentVerticalValues.Center;
                 sheet.Cells("C" + rowIndex).Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
                 sheet.Cells("C" + rowIndex).Style.Border.OutsideBorderColor = XLColor.FromArgb(216, 228, 188);
 
                 sheet.Cells("D" + rowIndex).Value = stavka.Kolicina.ToString();
                 sheet.Cells("D" + rowIndex).DataType = XLDataType.Number;
                 sheet.Cells("D" + rowIndex).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
-                sheet.Cells("D" + rowIndex).Style.Alignment.Vertical = XLAlignmentVerticalValues.Top;
+                sheet.Cells("D" + rowIndex).Style.Alignment.Vertical = XLAlignmentVerticalValues.Center;
                 sheet.Cells("D" + rowIndex).Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
                 sheet.Cells("D" + rowIndex).Style.Border.OutsideBorderColor = XLColor.FromArgb(216, 228, 188);
 
                 sheet.Cells("E" + rowIndex).Value = stavka.CijenaBezPdv.ToString();
                 sheet.Cells("E" + rowIndex).DataType = XLDataType.Number;
                 sheet.Cells("E" + rowIndex).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Right;
-                sheet.Cells("E" + rowIndex).Style.Alignment.Vertical = XLAlignmentVerticalValues.Top;
+                sheet.Cells("E" + rowIndex).Style.Alignment.Vertical = XLAlignmentVerticalValues.Center;
                 sheet.Cells("E" + rowIndex).Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
                 sheet.Cells("E" + rowIndex).Style.Border.OutsideBorderColor = XLColor.FromArgb(216, 228, 188);
                 sheet.Cells("E" + rowIndex).Style.NumberFormat.Format = "#,##0.00 \"KM\"";
@@ -652,7 +670,7 @@ namespace Delos.Forme
                 sheet.Cells("F" + rowIndex).Value = stavka.RabatProcenat.ToString();
                 sheet.Cells("F" + rowIndex).DataType = XLDataType.Number;
                 sheet.Cells("F" + rowIndex).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Right;
-                sheet.Cells("F" + rowIndex).Style.Alignment.Vertical = XLAlignmentVerticalValues.Top;
+                sheet.Cells("F" + rowIndex).Style.Alignment.Vertical = XLAlignmentVerticalValues.Center;
                 sheet.Cells("F" + rowIndex).Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
                 sheet.Cells("F" + rowIndex).Style.Border.OutsideBorderColor = XLColor.FromArgb(216, 228, 188);
                 sheet.Cells("F" + rowIndex).Style.NumberFormat.Format = "0.00%";
@@ -660,7 +678,7 @@ namespace Delos.Forme
                 sheet.Cells("G" + rowIndex).Value = stavka.IznosBezPdvSaRabatom.ToString();
                 sheet.Cells("G" + rowIndex).DataType = XLDataType.Number;
                 sheet.Cells("G" + rowIndex).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Right;
-                sheet.Cells("G" + rowIndex).Style.Alignment.Vertical = XLAlignmentVerticalValues.Top;
+                sheet.Cells("G" + rowIndex).Style.Alignment.Vertical = XLAlignmentVerticalValues.Center;
                 sheet.Cells("G" + rowIndex).Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
                 sheet.Cells("G" + rowIndex).Style.Border.OutsideBorderColor = XLColor.FromArgb(216, 228, 188);
                 sheet.Cells("G" + rowIndex).Style.NumberFormat.Format = "#,##0.00 \"KM\"";
@@ -1112,7 +1130,8 @@ namespace Delos.Forme
                             stavka.VrijednostNabavna = Math.Round(stavka.Kolicina * stavka.CijenaNabavna == 0 ? stavka.CijenaBezPdvSaRabatom : stavka.CijenaNabavna, 2, MidpointRounding.AwayFromZero);
                             stavka.Ruc = Math.Round(stavka.VrijednostNabavna * stavka.MarzaProcenat / 100, 2, MidpointRounding.AwayFromZero);
                             stavka.IznosBezPdv = stavka.VrijednostNabavna + stavka.Ruc;
-                            stavka.CijenaBezPdv = Math.Round(stavka.IznosBezPdv / stavka.Kolicina, 2, MidpointRounding.AwayFromZero);
+                            //stavka.CijenaBezPdv = Math.Round(stavka.IznosBezPdv / stavka.Kolicina, 2, MidpointRounding.AwayFromZero);
+                            stavka.CijenaBezPdv = stavka.IznosBezPdv / stavka.Kolicina;
                             stavka.RabatIznos = Math.Round(stavka.IznosBezPdv * stavka.RabatProcenat / 100, 2, MidpointRounding.AwayFromZero);
                             stavka.IznosBezPdvSaRabatom = stavka.IznosBezPdv - stavka.RabatIznos;
                             stavka.CijenaBezPdvSaRabatom = Math.Round(stavka.IznosBezPdvSaRabatom / stavka.Kolicina, 2, MidpointRounding.AwayFromZero);
@@ -1163,7 +1182,8 @@ namespace Delos.Forme
                             stavka.VrijednostNabavna = Math.Round(stavka.Kolicina * stavka.CijenaNabavna, 2, MidpointRounding.AwayFromZero);
                             stavka.Ruc = Math.Round(stavka.VrijednostNabavna * stavka.MarzaProcenat / 100, 2, MidpointRounding.AwayFromZero);
                             stavka.IznosBezPdv = stavka.VrijednostNabavna + stavka.Ruc;
-                            stavka.CijenaBezPdv = Math.Round(stavka.IznosBezPdv / stavka.Kolicina, 2, MidpointRounding.AwayFromZero);
+                            //stavka.CijenaBezPdv = Math.Round(stavka.IznosBezPdv / stavka.Kolicina, 2, MidpointRounding.AwayFromZero);
+                            stavka.CijenaBezPdv = stavka.IznosBezPdv / stavka.Kolicina;
                             stavka.RabatIznos = Math.Round(stavka.IznosBezPdv * stavka.RabatProcenat / 100, 2, MidpointRounding.AwayFromZero);
                             stavka.IznosBezPdvSaRabatom = stavka.IznosBezPdv - stavka.RabatIznos;
                             stavka.CijenaBezPdvSaRabatom = Math.Round(stavka.IznosBezPdvSaRabatom / stavka.Kolicina, 2, MidpointRounding.AwayFromZero);
@@ -1181,7 +1201,8 @@ namespace Delos.Forme
                         {
                             stavka.Ruc = Math.Round(stavka.VrijednostNabavna * stavka.MarzaProcenat / 100, 2, MidpointRounding.AwayFromZero);
                             stavka.IznosBezPdv = stavka.VrijednostNabavna + stavka.Ruc;
-                            stavka.CijenaBezPdv = Math.Round(stavka.IznosBezPdv / stavka.Kolicina, 2, MidpointRounding.AwayFromZero);
+                            //stavka.CijenaBezPdv = Math.Round(stavka.IznosBezPdv / stavka.Kolicina, 2, MidpointRounding.AwayFromZero);
+                            stavka.CijenaBezPdv = stavka.IznosBezPdv / stavka.Kolicina;
                             stavka.RabatIznos = Math.Round(stavka.IznosBezPdv * stavka.RabatProcenat / 100, 2, MidpointRounding.AwayFromZero);
                             stavka.IznosBezPdvSaRabatom = stavka.IznosBezPdv - stavka.RabatIznos;
                             stavka.CijenaBezPdvSaRabatom = Math.Round(stavka.IznosBezPdvSaRabatom / stavka.Kolicina, 2, MidpointRounding.AwayFromZero);
@@ -1240,7 +1261,22 @@ namespace Delos.Forme
 
             //dgvStavkePonude.BeginEdit(true);
         }
-
+        public static class MathDecimals
+        {
+            public static int GetDecimalPlaces(decimal n)
+            {
+                n = Math.Abs(n); //make sure it is positive.
+                n -= (int)n;     //remove the integer part of the number.
+                var decimalPlaces = 0;
+                while (n > 0)
+                {
+                    decimalPlaces++;
+                    n *= 10;
+                    n -= (int)n;
+                }
+                return decimalPlaces;
+            }
+        }
         private void dgvStavkePonude_RowValidated(object sender, DataGridViewCellEventArgs e)
         {
             //MessageBox.Show("f");
@@ -1624,6 +1660,19 @@ namespace Delos.Forme
             DynamicFilters.Clear();
             DynamicFilters.Add("status='D'");
             ReadPonuda("", "");
+        }
+
+        private void dgvStavkePonude_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            if (dgvStavkePonude.Columns[e.ColumnIndex].DataPropertyName == "CijenaBezPdv")
+            {
+                if (e.Value != null&&MathDecimals.GetDecimalPlaces((decimal)e.Value) > 2)
+                {
+                    e.CellStyle.ForeColor = Color.Red;
+                    e.CellStyle.SelectionBackColor = Color.White;
+                    e.CellStyle.SelectionForeColor = Color.Red;
+                }
+            }
         }
     }
 }

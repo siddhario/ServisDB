@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.rbDjelimicnoNerealizovane = new System.Windows.Forms.RadioButton();
@@ -963,10 +964,17 @@
             // 
             this.dgvStavkePonude.AllowUserToOrderColumns = true;
             this.dgvStavkePonude.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvStavkePonude.DefaultCellStyle = dataGridViewCellStyle1;
             this.dgvStavkePonude.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvStavkePonude.Location = new System.Drawing.Point(3, 3);
             this.dgvStavkePonude.Name = "dgvStavkePonude";
-            this.dgvStavkePonude.RowHeadersVisible = false;
             this.dgvStavkePonude.RowTemplate.Height = 60;
             this.dgvStavkePonude.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvStavkePonude.Size = new System.Drawing.Size(1052, 244);
@@ -974,7 +982,9 @@
             this.dgvStavkePonude.TabIndex = 29;
             this.dgvStavkePonude.CellBeginEdit += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.dgvStavkePonude_CellBeginEdit);
             this.dgvStavkePonude.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvStavkePonude_CellEndEdit);
+            this.dgvStavkePonude.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvStavkePonude_CellFormatting);
             this.dgvStavkePonude.ColumnAdded += new System.Windows.Forms.DataGridViewColumnEventHandler(this.dgvStavkePonude_ColumnAdded);
+            this.dgvStavkePonude.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.dgGrid_RowPostPaint);
             this.dgvStavkePonude.RowValidating += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.dgvStavkePonude_RowValidating);
             this.dgvStavkePonude.UserDeletedRow += new System.Windows.Forms.DataGridViewRowEventHandler(this.dgvStavkePonude_UserDeletedRow);
             this.dgvStavkePonude.UserDeletingRow += new System.Windows.Forms.DataGridViewRowCancelEventHandler(this.dgvStavkePonude_UserDeletingRow);
