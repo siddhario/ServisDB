@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 namespace ServisDB.Klase
 {
     //broj, datum, status, napomena, predmet, radnik, 
-                    //partner_sifra, partner_jib, partner_adresa, partner_naziv, partner_telefon, partner_email, 
-                    //valuta_placanja, rok_vazenja, paritet_kod, paritet, rok_isporuke, 
-                    //iznos_bez_rabata, rabat, iznos_sa_rabatom, pdv, iznos_sa_pdv, nabavna_vrijednost, ruc
+    //partner_sifra, partner_jib, partner_adresa, partner_naziv, partner_telefon, partner_email, 
+    //valuta_placanja, rok_vazenja, paritet_kod, paritet, rok_isporuke, 
+    //iznos_bez_rabata, rabat, iznos_sa_rabatom, pdv, iznos_sa_pdv, nabavna_vrijednost, ruc
     public class Ponuda
-    {   
+    {
         public string Broj { get; set; }
         public string Status { get; set; }
         public string Napomena { get; set; }
@@ -36,5 +36,7 @@ namespace ServisDB.Klase
         public decimal IznosSaPdv { get; set; }
         public decimal? NabavnaVrijednost { get; set; }
         public decimal? Ruc { get; set; }
+
+        public Korisnik RadnikIzradio { get; set; }
     }
 }

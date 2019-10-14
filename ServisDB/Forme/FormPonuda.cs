@@ -570,6 +570,7 @@ namespace Delos.Forme
             string paritet = p.Paritet;
             string paritet_kod = p.ParitetKod;
             string radnik = p.Radnik;
+           
 
             string iznos_bez_pdv = p.IznosBezRabata.ToString();
             string rabat = p.Rabat.ToString();
@@ -796,8 +797,13 @@ namespace Delos.Forme
             sheet.Cells("G" + (14 + stavke.Count + 6).ToString()).Style.Font.FontSize = 10;
             sheet.Cells("G" + (14 + stavke.Count + 6).ToString()).Style.Font.FontColor = XLColor.Black;
 
-            sheet.Cells("E" + (14 + stavke.Count + 8).ToString()).Value = "Dokument sastavio:";
-            sheet.Cells("F" + (14 + stavke.Count + 8).ToString()).Value = radnik;
+            sheet.Cells("E" + (14 + stavke.Count + 8).ToString()).Style.Font.FontName = "Arial";
+            sheet.Cells("E" + (14 + stavke.Count + 8).ToString()).Style.Font.FontSize = 10;
+            sheet.Cells("E" + (14 + stavke.Count + 8).ToString()).Style.Font.FontColor = XLColor.Black;
+
+            sheet.Cells("E" + (14 + stavke.Count + 8)).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Right;
+            sheet.Cells("E" + (14 + stavke.Count + 8).ToString()).Value = "Dokument sastavio: "+ p.RadnikIzradio.Ime + " " + p.RadnikIzradio.Prezime;
+            sheet.Range("E" + (14 + stavke.Count + 8) + ":G" + (14 + stavke.Count + 8)).Row(1).Merge();
 
             sheet.Cells("F" + (14 + stavke.Count + 12).ToString()).Value = "M.P.";
             sheet.Cells("A" + (14 + stavke.Count + 16).ToString()).Value = "Hvala na povjerenju!";

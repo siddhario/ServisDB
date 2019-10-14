@@ -443,8 +443,8 @@ from public.ponuda_stavka where ponuda_broj=@broj";
                     cmd.CommandText = @"SELECT broj, datum, status, napomena, predmet, radnik, 
                     partner_sifra, partner_jib, partner_adresa, partner_naziv, partner_telefon, partner_email, 
                     valuta_placanja, rok_vazenja, paritet_kod, paritet, rok_isporuke, 
-                    iznos_bez_rabata, rabat, iznos_sa_rabatom, pdv, iznos_sa_pdv, nabavna_vrijednost, ruc 
-	FROM public.ponuda";
+                    iznos_bez_rabata, rabat, iznos_sa_rabatom, pdv, iznos_sa_pdv, nabavna_vrijednost, ruc,k.ime,k.prezime
+	FROM public.ponuda p left join public.korisnik k on (p.radnik=k.korisnicko_ime)";
                     if (filters.Count > 0)
                     {
                         cmd.CommandText += " WHERE ";
@@ -481,6 +481,7 @@ from public.ponuda_stavka where ponuda_broj=@broj";
                         r.IznosSaPdv = dr.GetDecimal(21);
                         r.NabavnaVrijednost = dr[22] == DBNull.Value ? (decimal?)null : dr.GetDecimal(22);
                         r.Ruc = dr[23] == DBNull.Value ? (decimal?)null : dr.GetDecimal(23);
+                        r.RadnikIzradio = new Korisnik() { Ime = (dr[24] == DBNull.Value ? null : dr.GetString(24)), Prezime = (dr[25] == DBNull.Value ? null : dr.GetString(25)) };
 
                         ponude.Add(r);
                     }
